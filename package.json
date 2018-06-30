@@ -4,8 +4,8 @@
   "description": "```\r npm init --yes\r ```",
   "main": "index.js",
   "scripts": {
-  	"dev": "webpack --mode development",
-  	"build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +24,8 @@
     "webpack-cli": "^3.0.8"
   },
   "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-loader": "^2.0.0",
     "jshint-loader": "^0.8.4",
     "webpack": "^4.14.0"
   }

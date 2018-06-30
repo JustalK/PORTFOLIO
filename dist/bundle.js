@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("function component() {\r\n  var element = document.createElement('div');\r\n\r\n  // Lodash, currently included via a script, is required for this line to work\r\n  element.innerHTML = _.join(['Hello', 'webpack'], ' ');\r\n\r\n  return element;\r\n}\r\n\r\ndocument.body.appendChild(component());\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("function component() {\r\n    var element = document.createElement('div');\r\n\r\n    // Lodash, currently included via a script, is required for this line to work\r\n    element.innerHTML = [].join(['Hello', 'webpack'], ' ');\r\n\r\n    return element;\r\n}\r\n\r\ndocument.body.appendChild(component());\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
