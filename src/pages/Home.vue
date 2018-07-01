@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  Test Kevin
+  <my-header></my-header>
   <router-view>
   </router-view>
   </div>
