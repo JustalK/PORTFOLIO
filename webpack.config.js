@@ -9,12 +9,13 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   module: {
-    rules: [
-	  {
-	    test: /\.js$/,
-	    exclude: /node_modules/,
-	    loader: "eslint-loader"
-	  },
-    ],
+    rules: [ {
+	  test: /\.js$/,
+	  exclude: /node_modules/,
+	  use : [
+	    { loader: "eslint-loader" },
+	    { loader: "babel-loader", query : { presets: ["es2015"]} }
+	  ]
+    } ]
   }
 };

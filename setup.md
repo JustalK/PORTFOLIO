@@ -4,6 +4,7 @@
 
 * webpack - for creating a good build version optimised for the web
 * eslint - for keeping the code in the same style
+* babel - for transforming ES6 modern into ES5
 
 ### webpack
 
@@ -73,8 +74,32 @@ module: {
 }
 ```
 
+### babel
+> https://github.com/babel/babel-loader
 
+```
+$ npm install babel-core babel-loader --save-dev
+```
 
+And the webpack configuration become
+```
+module: {
+  rules: [ {
+	test: /\.js$/,
+	exclude: /node_modules/,
+	use : [
+	  { loader: "eslint-loader" },
+	  { loader: "babel-loader", query : { presets: ["es2015"]} }
+	]
+  } ]
+}
+```
+
+> Couldn't find preset "es2015"
+Then we just add the presets :
+```
+npm i babel-preset-es2015 --save-dev
+```
 
 
 
