@@ -2,9 +2,16 @@
 
 ## Setting the repository with the important tools
 
+Here a good list of the awesome loader of webpack : https://github.com/webpack-contrib/awesome-webpack
+
+I'm currently using this ones :
 * webpack - for creating a good build version optimised for the web
 * eslint - for keeping the code in the same style
 * babel - for transforming ES6 modern into ES5
+* less-loader - for compiling less to css
+* postcss - for automaticaly adding the autoprefixer (I'm lazy)
+* css-loader - for translating css into commonJs
+* style-loader - for creating styles node from js String
 
 ### webpack
 
@@ -78,7 +85,7 @@ module: {
 > https://github.com/babel/babel-loader
 
 ```
-$ npm install babel-core babel-loader --save-dev
+$ npm i babel-core babel-loader --save-dev
 ```
 
 And the webpack configuration become
@@ -101,9 +108,39 @@ Then we just add the presets :
 npm i babel-preset-es2015 --save-dev
 ```
 
+### Css process
 
+```
+$ npm i postcss-loader postcss css-loader less less-loader style-loader --save-dev
+```
 
+Add the following line in the webpack
+```
+{
+    test: /\.less/,
+    exclude: /node_modules/,
+    use: [ "style-loader","css-loader","postcss-loader","less-loader" ]
+}
+```
 
+Then, we can add the import in the component that way :
+```
+import './assets/less/main.less'
+```
+
+>   3:1  error  'require' is not defined  no-undef
+For fixing this error, we just have to change one global variable in the eslintrc.yml
+```
+env:
+  amd: true
+```
+
+> Cannot read property 'context' of undefined
+The autoprefixer that I use at this moment was deprecated, so I switch for postcss
+> https://github.com/postcss/postcss-loader
+
+> No PostCSS Config found
+Simply add a file "postcss.config.js" at the root of the project with this line inside : "module.exports = {};"
 
 
 

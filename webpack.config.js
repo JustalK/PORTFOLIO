@@ -16,6 +16,11 @@ module.exports = {
 	    { loader: "eslint-loader" },
 	    { loader: "babel-loader", query : { presets: ["es2015"]} }
 	  ]
+    },
+    {
+        test: /\.less/,
+        exclude: /node_modules/,
+        use: [ "style-loader","css-loader","postcss-loader","less-loader" ]
     } ]
   }
 };
