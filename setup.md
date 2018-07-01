@@ -12,6 +12,7 @@ I'm currently using this ones :
 * postcss - for automaticaly adding the autoprefixer (I'm lazy)
 * css-loader - for translating css into commonJs
 * style-loader - for creating styles node from js String
+* vuejs - for managing the templates and the components of my SPA
 
 ### webpack
 
@@ -142,5 +143,22 @@ The autoprefixer that I use at this moment was deprecated, so I switch for postc
 > No PostCSS Config found
 Simply add a file "postcss.config.js" at the root of the project with this line inside : "module.exports = {};"
 
+### vue and vue-router
 
+```
+$ npm i vue vue-router --save-dev
+```
+
+> vue-loader was used without the corresponding plugin. Make sure to include VueLoaderPlugin in your webpack config.
+Since the version 15, a plugin is now required. So in the webpack.config.js we have to add :
+```
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+module.exports = {
+  // ...
+  plugins: [
+    new VueLoaderPlugin()
+  ]
+}
+```
 

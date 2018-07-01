@@ -1,13 +1,26 @@
-import './assets/less/main.less';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from './pages/Home'
 
-function component() {
-    var element = document.createElement('div');
-    element.setAttribute('id', 'main-element' );
-    
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = 'Hello, world 2!';
+Vue.use(VueRouter)
 
-    return element;
-}
+const routes = [
+  { path: '/' }
+]
 
-document.body.appendChild(component());
+const router = new VueRouter({
+    routes,
+    mode: 'history'
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = 'GitHub Check System Kevin Justal'
+  next()
+})
+
+new Vue({
+    el: '#app',
+    template: '<Home/>',
+    components: { Home },
+    router
+}).$mount('#app')
