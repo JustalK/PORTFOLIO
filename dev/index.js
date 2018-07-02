@@ -106,7 +106,7 @@ eval("//\n//\n//\n//\n//\n\n\n//# sourceURL=webpack:///./src/components/Header.v
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("//\n//\n//\n//\n//\n//\n//\n\n\n//# sourceURL=webpack:///./src/pages/Home.vue?./node_modules/babel-loader/lib??ref--2-1!./node_modules/vue-loader/lib??vue-loader-options");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _campingcar = __webpack_require__(/*! ../assets/imgs/campingcar.png */ \"./src/assets/imgs/campingcar.png\");\n\nvar _campingcar2 = _interopRequireDefault(_campingcar);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    data: function data() {\n        return {\n            image: _campingcar2.default.preSrc\n        };\n    }\n}; //\n//\n//\n//\n//\n//\n//\n//\n\n//# sourceURL=webpack:///./src/pages/Home.vue?./node_modules/babel-loader/lib??ref--2-1!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
@@ -218,7 +218,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { attrs: { id: \"app\" } },\n    [_c(\"my-header\"), _vm._v(\" \"), _c(\"router-view\")],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack:///./src/pages/Home.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { attrs: { id: \"app\" } },\n    [\n      _c(\"my-header\"),\n      _vm._v(\" \"),\n      _c(\"img\", { attrs: { src: _vm.image } }),\n      _vm._v(\" \"),\n      _c(\"router-view\")\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack:///./src/pages/Home.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
@@ -266,6 +266,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(f
 /***/ (function(module, exports) {
 
 eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || Function(\"return this\")() || (1, eval)(\"this\");\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
+
+/***/ }),
+
+/***/ "./src/assets/imgs/campingcar.png":
+/*!****************************************!*\
+  !*** ./src/assets/imgs/campingcar.png ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = { \"src\": __webpack_require__.p + \"assets/imgs/campingcar.png\", \"preSrc\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAIAAABGc1mbAAAACXBIWXMAAArrAAAK6wGCiw1aAAABY0lEQVQY0wFYAaf+AN7SsNrQteTcwdfRuezjvvDmu+7juOzfs+/itfPoucWsgMu1i9HBl7CcdQD89NPt5cnt5sz48NHx6Mfp4cDn4L/i1qzWxZrMuInBqHiym3WYf1yZhmQA9+3Q7OTI5t7B3Na3y8Wnxb6dxbiSvq2Bv6Zyxap1zLeGmX5XY0kvim5KANPFpcu/pMi+osW8ncG6mb2zjrGkfrSgc7qcZqmPY5h+WXBYO3BWOm9UNgDk17rYzLLXzLLVyKvFuJu2qYmml3W5nmzWsm7CoGOXdkZyVzRaQSlQOiUA7uHF0cStx7qkxredqpqBrJyAppV2p41mqYhVtJBYrIdOn3pGiGQ5d1UwAObVtr2rlKibi62gjrGkjambgqGRdaKMaYxxT5R2T6GCU6WDT5FvQXxbNQDi0LCnk36ikH+xn4qwnIC4oX66onq8onSxlWmfg122l2alhVaujFWVc0QSKtPYpxw+EwAAAABJRU5ErkJggg==\" };\n\n//# sourceURL=webpack:///./src/assets/imgs/campingcar.png?");
 
 /***/ }),
 

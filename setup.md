@@ -16,6 +16,9 @@ I'm currently using this ones :
 * nodemon - For building my dev config on a change in src
 * html-webpack-plugin - For automatically create the index.html with the good entry point
 * minifier-html - For minifying the html in the prod build
+* file-loader - For naming the img file with a specific naming convention
+* image-webpack-loader - For reducing the size of the image
+* lqip-loader - For creating a low version of the image that we gonna replace later with the original
 
 ### webpack
 
@@ -229,4 +232,110 @@ And then simply add the loader for the html.
 
 ```
 $ npm i html-minfier html-minifier-loader --save-dev
+```
+
+### File-loader
+> https://github.com/webpack-contrib/file-loader
+
+```
+$ npm i file-loader --save-dev
+```
+
+And then, I add this in my base.config.js
+```
+  module: {
+    rules: [ 
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/imgs/'
+            }
+          }
+        ]
+      }
+	]
+```
+
+### image-webpack-loader - Cannot work without file-loader
+> https://github.com/tcoopman/image-webpack-loader
+
+```
+$ npm i image-webpack-loader --save-dev
+```
+
+And then specify the rules inside base.config.js
+```
+  {
+    test: /\.(png|jpg|jpeg|gif)$/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'assets/imgs/'
+        }
+      },
+      {
+    	loader: 'image-webpack-loader',
+    	options: {
+    	  mozjpeg: {
+            progressive: true,
+    	    quality: 65
+    	  },
+    	  optipng: {
+    	    enabled: false,
+    	  },
+    	  pngquant: {
+    	    quality: '1',
+    	    speed: 4
+    	  }
+        }
+      }
+    ]
+  }
+```
+
+### lqip-loader
+> https://github.com/zouhir/lqip-loader
+
+```
+$ npm i lqip-loader --save-dev
+```
+
+Then we can chain that with the file-loader
+```
+test: /\.(png|jpe?g)$/,
+loaders: [
+  {
+    loader: 'lqip-loader',
+    options: {
+      base64: true,
+      palette: false
+    }
+  },
+  {
+  ... The file-loader
+  } 
+]
+```
+
+In the vue, we can then use it like this :
+```
+<img :src="image" />
+
+<script>
+import image from '../assets/imgs/campingcar.png'
+
+export default {
+    data: function () {
+        return {
+            image: image.preSrc
+        }
+    }
+}
+</script>
 ```
