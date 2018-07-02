@@ -17,7 +17,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = 'GitHub Check System Kevin Justal'
+  document.title = 'GitHub Check System Kevin Justal 2'
   next()
 })
 

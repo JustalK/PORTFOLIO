@@ -13,6 +13,7 @@ I'm currently using this ones :
 * css-loader - for translating css into commonJs
 * style-loader - for creating styles node from js String
 * vuejs - for managing the templates and the components of my SPA
+* nodemon - For building my dev config on a change in src
 
 ### webpack
 
@@ -43,6 +44,20 @@ Inside package.json set "scripts"
 }
 ```
 Now for running "webpack" with the mode, I have just to run : "run npm dev" or "run npm build"
+
+For going further, I'm gonna create a config for both the dev and prod, I create a config file inside the repository "config" and change a little my package.json
+```
+"scripts": {
+  "dev": "webpack --mode development --config config/dev.config.js",
+  "build": "webpack --mode production --config config/prod.config.js"
+}
+```
+
+Then, I install the webpack-merge for merge the base config with the prod or the dev
+```
+npm i webpack-merge --save-dev
+```
+
 
 ## Running the dev version
 
@@ -161,4 +176,26 @@ module.exports = {
   ]
 }
 ```
+
+### nodemon
+
+```
+$ npm i nodemon -g
+```
+
+And then, I add in my package.json
+```
+"scripts": {
+  "watch": "nodemon --watch src/ -x \"npm run dev\""
+}
+```
+
+> The nodemon does not look for change other than *js
+Look with the option --verbose or just change the -e option
+```
+"scripts": {
+  "watch": "nodemon --watch src/ -x \"npm run dev\" -e *"
+}
+```
+
 
