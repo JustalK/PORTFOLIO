@@ -1,5 +1,6 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -12,13 +13,21 @@ module.exports = {
     }
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+    	title: 'Custom template',
+    	template: 'src/pages/index.html'
+    })
   ],
   module: {
     rules: [ 
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+    	test: /\.html$/,
+    	loader: 'html-loader'
       },
       {
 	    test: /\.js$/,
@@ -29,7 +38,7 @@ module.exports = {
 	    ]
       },
       {
-        test: /\.less/,
+        test: /\.less$/,
         exclude: /node_modules/,
         use: [ "style-loader","css-loader","postcss-loader","less-loader" ]
       } 

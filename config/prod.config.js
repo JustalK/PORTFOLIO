@@ -6,5 +6,23 @@ module.exports = merge(baseConfig, {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname+'/../', 'build')
+  },
+  module: {
+    rules: [ 
+	  {
+	    test: /\.html$/,
+	    use: {
+	    	loader: 'html-minifier-loader',
+	    	options: {
+	          'html-minifier-loader': {
+	    	    removeComments: false,
+	    		collapseWhitespace: true,
+	    		conservativeCollapse: false,
+	    		preserveLineBreaks: false
+	    	  }
+	    	}
+	    }
+	  }
+	]
   }
 });

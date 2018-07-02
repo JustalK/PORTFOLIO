@@ -14,6 +14,8 @@ I'm currently using this ones :
 * style-loader - for creating styles node from js String
 * vuejs - for managing the templates and the components of my SPA
 * nodemon - For building my dev config on a change in src
+* html-webpack-plugin - For automatically create the index.html with the good entry point
+* minifier-html - For minifying the html in the prod build
 
 ### webpack
 
@@ -198,4 +200,33 @@ Look with the option --verbose or just change the -e option
 }
 ```
 
+### html-webpack-plugin
+> https://github.com/jantimon/html-webpack-plugin
 
+```
+$ npm i --save-dev html-webpack-plugin
+```
+
+And then, add in the base config 
+```
+  plugins: [
+    new HtmlWebpackPlugin({
+    	title: 'Latsuj Plugin',
+    	templates: 'src/pages/index.html'
+    })
+  ],
+```
+
+> Module parse failed: Unexpected token 
+I have simply forget to add the good loader for the html
+```
+$ npm i --save-dev html html-loader
+```
+
+And then simply add the loader for the html.
+
+### html-minifier
+
+```
+$ npm i html-minfier html-minifier-loader --save-dev
+```
