@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import App from './pages/App'
 import Home from './pages/Home'
 import Test from './pages/Test'
 import Header from './components/Header'
@@ -9,7 +10,7 @@ Vue.use(VueRouter);
 Vue.component('my-header', Header);
 
 const routes = [
-  { path: '/' },
+  { path: '/', component: Home },
   { path: '/all', component: Test }
 ]
 
@@ -25,7 +26,7 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     el: '#app',
-    template: '<Home/>',
-    components: { Home },
+    template: '<App/>',
+    components: { App },
     router
 }).$mount('#app')
