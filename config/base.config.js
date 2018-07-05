@@ -16,6 +16,7 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
     	title: 'Custom template',
+    	filename: '../index.html',
     	template: 'src/pages/index.html'
     })
   ],

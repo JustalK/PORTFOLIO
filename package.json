@@ -2,12 +2,12 @@
   "name": "Latsuj",
   "version": "1.0.0",
   "description": "```\r npm init --yes\r ```",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "webpack --mode development --config config/dev.config.js",
     "build": "webpack --mode production --config config/prod.config.js",
     "watch": "nodemon --watch src/ -x \"npm run dev\" -e *",
-    "server": "http-server -c-1",
+    "server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -42,6 +42,8 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lqip-loader": "^2.1.1",
+    "mongodb": "^3.1.0",
+    "mongoose": "^5.2.1",
     "nodemon": "^1.17.5",
     "postcss": "^6.0.23",
     "postcss-loader": "^2.1.5",
