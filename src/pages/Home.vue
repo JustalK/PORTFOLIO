@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <my-header></my-header>
+    <router-link v-bind:to="'/all'">Test</router-link>
     <img :src="image" />
   <router-view>
   </router-view>

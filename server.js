@@ -15,7 +15,11 @@ app.use('/api', routes)
 
 // An url for the index
 app.get("/", (req, res) =>
-	res.sendfile('./dev/index.html')
+	res.sendFile('dev/index.html', { root: __dirname })
+);
+
+app.get("/all", (req, res) =>
+	res.sendFile('dev/index.html', { root: __dirname })
 );
 
 // Start and listen the server
