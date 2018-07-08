@@ -1,6 +1,96 @@
-#app {
-	background-color: #FFF0F0;
-	padding: 15px;
+// MIXINS
+
+.full {
+	height: 100%;
+	width: 100%;
+}
+
+.topleft {
+	position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.topright {
+	position: absolute;
+    right: 0;
+    top: 0;	
+}
+
+// GLOBAL
+
+html,
+body,
+#app,
+#HOME {
+	margin: 0;
+	.full();
+}
+
+#HOME {
+	background: red;
+	perspective: 1000px;
+}
+
+
+
+#TITLE {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bloc {
+	width: 50%;
+    height: 100%;
+    background: rebeccapurple;
+    overflow: hidden;
+    transform-style: flat;
+    transition: transform .5s cubic-bezier(.8,0,.25,1);
+    
+    &.left {
+    	.topleft();
+    	transform-origin: left;
+    	
+    	& > div {
+    		.topleft();
+    		width: 200%;
+    		height: 100%;
+    	}
+    	
+    	&.active {
+	    	transform: rotateY(45deg);
+    	}
+    }
+    
+    &.right {
+    	.topright();
+    	transform-origin: right;
+    	
+    	& > div {
+    		.topright();
+    		width: 200%;
+    		height: 100%;
+    		
+    	}
+    	
+    	&.active {
+	    	transform: rotateY(-45deg);
+    	}
+    }
+}
+
+a {
+	position: absolute;
+    left: 50%;
+    z-index: 10;
+    bottom: 100px;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
 }
 
 #header {
