@@ -1,5 +1,5 @@
 <template>
-    <span>qsdqsdqsd</span>
+    <span>Articles</span>
 </template>
 <script>
 

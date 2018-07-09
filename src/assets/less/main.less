@@ -95,16 +95,116 @@ body,
     }
 }
 
-a {
+a.links-open-door {
 	position: absolute;
-    left: 50%;
     z-index: 10;
     bottom: 100px;
-    transform: translateX(-50%);
-    background: white;
-    padding: 20px;
+    height: 40px;
+    line-height: 40px;
+    user-select: none;
+    width: 200px;
+    text-align: center;
+    
+    &.portfolio {
+    	right: 10%;
+    }
+    
+    &.articles {
+    	left: 10%;
+    }
 }
 
+.links-blocks {
+   position: absolute;
+   width: 20px;
+   height: 20px;
+   overflow: hidden;
+   background: red;
+}
+
+.lb-inside {
+	position: absolute;
+	width: 1000%;
+}
+
+
+.generate-lb(@n, @i: 0) when (@i =< @n) {
+	.lb-@{i} {
+		& when (@i < 10) {
+	    	top: 0;
+		    left: @i*20px;
+		    
+		    & .lb-inside {
+		    	left: -@i*20px;
+		    }
+		}
+		
+		& when (@i >= 10) {
+			top: 20px;
+	    	left: @i*20-200px;
+			
+		    & .lb-inside {
+		    	top: -20px;
+	    		left: 200-@i*20px;
+		    }
+		}
+	    
+	}
+	.generate-lb(@n, (@i + 1));
+}
+
+.generate-lb(20);
+
+.links-open-door:hover .lb-0 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(-40px,-40px);
+}
+
+.links-open-door:hover .lb-1 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(-30px,-30px);
+}
+
+.links-open-door:hover .lb-2 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(-20px,-20px);
+}
+
+.links-open-door:hover .lb-3 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(-10px,-10px);
+}
+
+.links-open-door:hover .lb-4 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(0px,-10px);
+}
+
+.links-open-door:hover .lb-5 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(10px,-10px);
+}
+
+.links-open-door:hover .lb-6 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(20px,-10px);
+}
+
+.links-open-door:hover .lb-7 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(30px,-10px);
+}
+
+.links-open-door:hover .lb-8 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(40px,-10px);
+}
+
+.links-open-door:hover .lb-9 {
+	transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	transform: translate(-15px,-10px);
+}
+		
 #header {
 	position: absolute;
     top: 0;

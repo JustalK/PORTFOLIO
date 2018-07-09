@@ -1,39 +1,40 @@
 <template>
 	<div id="HOME">
-		<div class="wrap" :class={active:goPortfolioZoom}>
+		<div class="wrap" :class={active:goZoom}>
 			<div class="bloc left" :class={active:goPortfolio}>
 				<div>
 					<span id="TITLE">I'm Latsuj</span>
 		    	</div>
+			    <a class="links-open-door portfolio" @click.stop="open('portfolio')">Liens</a>
 		    </div>
 		    <div class="bloc right" :class={active:goPortfolio} ref="bloc-right">
 		    	<div>
 					<span id="TITLE">I'm Latsuj</span>
 				</div>	    
+			    <a class="links-open-door articles" @click.stop="open('articles')">
+			    	<div v-for="index in 20" :key="index" class="links-blocks" :class="['lb-' + (index*1-1)]"><div class="lb-inside">Liens 2</div></div>
+			    </a>
 		    </div>
-		    <a @click.stop="portfolio">Liens</a>
-		    <img :src="image" />
+		    <span>Press START for playing</span>
 	    </div>
 	</div>
 </template>
 <script>
-import image from '../assets/imgs/campingcar.png'
 
 export default {
     data: () => {
     	return {
-			image: image.preSrc,
 			goPortfolio: false,
-			goPortfolioZoom: false
+			goZoom: false
 		}
     },
     methods: {
-    	portfolio: function() {
+    	open: function(direction) {
     		this.goPortfolio = true
     		setTimeout(() => {
-    			this.goPortfolioZoom = true
+    			this.goZoom = true
     			setTimeout(() => {
-    				this.$router.push('portfolio')
+    				direction=="portfolio" ? this.$router.push('portfolio') : this.$router.push('articles') 
     			}, 500);
     		}, 500)
     	}

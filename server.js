@@ -22,6 +22,10 @@ app.get("/portfolio", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
 );
 
+app.get("/articles", (req, res) =>
+	res.sendFile('dev/index.html', { root: __dirname })
+);
+
 // Start and listen the server
 app.listen(port, () => {
 	console.log("Listening on port : "+port)

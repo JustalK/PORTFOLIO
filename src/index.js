@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './pages/App'
 import Home from './pages/Home'
-import Test from './pages/Test'
+import Articles from './pages/Articles'
+import Portfolio from './pages/Portfolio'
 import Header from './components/Header'
 
 Vue.use(VueRouter);
@@ -11,7 +12,8 @@ Vue.component('my-header', Header);
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
-  { path: '/portfolio', name: 'portfolio', component: Test }
+  { path: '/portfolio', name: 'portfolio', component: Portfolio },
+  { path: '/articles', name: 'articles', component: Articles }
 ]
 
 const router = new VueRouter({
