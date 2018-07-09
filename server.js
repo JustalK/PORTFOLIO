@@ -18,7 +18,7 @@ app.get("/", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
 );
 
-app.get("/all", (req, res) =>
+app.get("/portfolio", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
 );
 

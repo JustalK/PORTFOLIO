@@ -28,11 +28,23 @@ body,
 }
 
 #HOME {
-	background: red;
-	perspective: 1000px;
+	perspective: 100px;
+	overflow: hidden;
+	
+	&.fade-leave-active {
+		display: none;
+	}
+	
+	& .wrap {
+		transition: transform .5s cubic-bezier(.8,0,.25,1);
+		perspective: 1000px;
+		height: 100%;	
+		
+		&.active {
+			transform: translateZ(100px);
+		}
+	}
 }
-
-
 
 #TITLE {
     position: relative;
@@ -46,7 +58,7 @@ body,
 .bloc {
 	width: 50%;
     height: 100%;
-    background: rebeccapurple;
+    background: #E5E5E5;
     overflow: hidden;
     transform-style: flat;
     transition: transform .5s cubic-bezier(.8,0,.25,1);

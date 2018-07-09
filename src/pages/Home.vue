@@ -1,17 +1,19 @@
 <template>
 	<div id="HOME">
-		<div class="bloc left" :class={active:goPortfolio}>
-			<div>
-				<span id="TITLE">I'm Latsuj</span>
-	    	</div>
+		<div class="wrap" :class={active:goPortfolioZoom}>
+			<div class="bloc left" :class={active:goPortfolio}>
+				<div>
+					<span id="TITLE">I'm Latsuj</span>
+		    	</div>
+		    </div>
+		    <div class="bloc right" :class={active:goPortfolio} ref="bloc-right">
+		    	<div>
+					<span id="TITLE">I'm Latsuj</span>
+				</div>	    
+		    </div>
+		    <a @click.stop="portfolio">Liens</a>
+		    <img :src="image" />
 	    </div>
-	    <div class="bloc right" :class={active:goPortfolio} ref="bloc-right">
-	    	<div>
-				<span id="TITLE">I'm Latsuj</span>
-			</div>	    
-	    </div>
-	    <a @click.stop="portfolio">Portfolio</a>
-	    <img :src="image" />
 	</div>
 </template>
 <script>
@@ -21,13 +23,19 @@ export default {
     data: () => {
     	return {
 			image: image.preSrc,
-			goPortfolio: false
+			goPortfolio: false,
+			goPortfolioZoom: false
 		}
     },
     methods: {
     	portfolio: function() {
-    	 	console.log(this.goPortfolio);
     		this.goPortfolio = true
+    		setTimeout(() => {
+    			this.goPortfolioZoom = true
+    			setTimeout(() => {
+    				this.$router.push('portfolio')
+    			}, 500);
+    		}, 500)
     	}
     }
 }

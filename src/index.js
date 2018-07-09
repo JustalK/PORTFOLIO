@@ -10,8 +10,8 @@ Vue.use(VueRouter);
 Vue.component('my-header', Header);
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/all', component: Test }
+  { path: '/', name: 'Home', component: Home },
+  { path: '/portfolio', name: 'portfolio', component: Test }
 ]
 
 const router = new VueRouter({
