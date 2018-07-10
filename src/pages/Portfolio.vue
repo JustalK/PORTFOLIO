@@ -1,11 +1,37 @@
 <template>
 	<div id="PORTFOLIO" class="content">
-		<transition name="fade">
-			<div class="informations">
-				<h1 class="informations-title">Simple Test</h1>
-				<div class="informations-description">Simple Test</div>
+		<div class="informations">
+			<div class="informations-title_size">
+				<transition name="fade" appear>
+					<h1 v-if="!goProject" key="data" class="informations-title">Simple projects lists</h1>
+				</transition>
 			</div>
-		</transition>
+			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
+			<div class="informations-tags">
+				<div class="informations-tag">HTML</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+				<div class="informations-tag">CSS</div>
+			</div>
+		</div>
 		<div class="projects">
 			<div class="projects-project">
 				<a href="#" class="projects-windows" @click.stop="project(0)">
@@ -36,6 +62,14 @@
 				</a>
 			</div>
     	</div>
+    	<div class="pubs">
+    		<p class="pubs-contact">
+    			<b>Wanna talk about something ? Feel free to contact me !</b><br />
+    			latsuj@gmail.com<br />
+    			linkedinglink<br />
+    			contactformlink
+    		</p>
+    	</div>
     </div>
 </template>
 <script>
@@ -47,6 +81,7 @@ export default {
     },
     methods: {
     	project: function(id) {
+    		this.goProject = true;
     		var projects = document.querySelector(".projects");
     		var projectsProject = document.querySelectorAll(".projects-project");
     		for(var i=projectsProject.length;i--;) {

@@ -2,7 +2,9 @@
 	<div id="PROJECT" class="content">
 		<transition name="fade">
 			<div class="informations">
-				<h1 class="informations-title">Simple Test 2</h1>
+				<transition name="fade" appear>
+					<h1 class="informations-title">Simple Test 2</h1>
+				</transition>
 				<div class="informations-description">Simple Test</div>
 			</div>
 		</transition>

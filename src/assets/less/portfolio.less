@@ -1,37 +1,47 @@
 .content {
-	padding: 0 15%;
-	max-width: 1600px;
+	max-width: 1000px;
+	margin: auto;
 }
 
 @LAYER-ANIMATION: 4;
 
 #PORTFOLIO {
 	height: 100%;
-	
-	& h1 {
-		margin: 0;
-	}
-	
-	& description {
-	
-	}
 }
 
 .informations {
-	height: 20%;
+	height: 300px;
+	
+	&-title_size {	
+	    padding-top: 40px;
+	    height: 50px;
+	}
 	
 	&-title {
-		margin: 0;
+	    margin: 0;
+	    line-height: 50px;
 	}
 	
 	&-description {
+		padding-top: 25px;
+	}
 	
+	&-tags {
+		padding-top: 20px;
+    	overflow: hidden;
+	}
+	
+	&-tag {
+		float: left;
+	    padding: 10px;
+	    background: red;
+	    margin-right: 10px;
+	    margin-bottom: 10px;
 	}
 }
 
 .projects {
-	height: calc(80% - 40px);
-   	min-height: 400px;
+	height: 600px;
 	position: relative;
 	overflow: hidden;
 	
@@ -42,8 +52,8 @@
 	&-project {
 		transition: all 0.5s cubic-bezier(.8,0,.25,1);
 		float: left;
-    	width: 45%;
-    	height: calc(50% - 10px);
+		width: 48%;
+    	height: 280px;
     	position: absolute;
     	
 		&--remove {
@@ -100,4 +110,20 @@
     	text-align: center;
     	margin: 0;
 	}
+}
+
+.pubs {
+    padding: 40px;
+    
+    &-contact {
+		margin: 0;
+	    text-align: center;
+    }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
