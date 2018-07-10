@@ -3,7 +3,7 @@
 		<div class="wrap" :class={active:goZoom}>
 			<div class="bloc left" :class={active:goPortfolio}>
 				<div>
-					<span id="TITLE">I'm Latsuj</span>
+					<span id="TITLE">- - - -</span>
 		    	</div>
 			    <a class="links-open-door left portfolio" @click.stop="open('portfolio')">
 			    	<div v-for="index in 20" :key="index" class="links-blocks" :class="['lb-' + (index*1-1)]"><div class="lb-inside">Liens 2</div></div>
@@ -12,7 +12,7 @@
 		    </div>
 		    <div class="bloc right" :class={active:goPortfolio} ref="bloc-right">
 		    	<div>
-					<span id="TITLE">I'm Latsuj</span>
+					<span id="TITLE">- - - -</span>
 				</div>	    
 			    <a class="links-open-door right articles" @click.stop="open('articles')">
 			    	<div v-for="index in 20" :key="index" class="links-blocks" :class="['lb-' + (index*1-1)]"><div class="lb-inside">Liens 2</div></div>

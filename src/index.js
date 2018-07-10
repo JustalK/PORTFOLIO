@@ -4,6 +4,7 @@ import App from './pages/App'
 import Home from './pages/Home'
 import Articles from './pages/Articles'
 import Portfolio from './pages/Portfolio'
+import Project from './pages/Project'
 import Header from './components/Header'
 
 Vue.use(VueRouter);
@@ -11,9 +12,10 @@ Vue.use(VueRouter);
 Vue.component('my-header', Header);
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/portfolio', name: 'portfolio', component: Portfolio },
-  { path: '/articles', name: 'articles', component: Articles }
+    { path: '/', name: 'Home', component: Home },
+    { path: '/portfolio', name: 'portfolio', component: Portfolio },
+    { path: '/project', name: 'project', component: Project },
+    { path: '/articles', name: 'articles', component: Articles }
 ]
 
 const router = new VueRouter({
