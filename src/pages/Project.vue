@@ -1,13 +1,6 @@
 <template>
 	<div id="PROJECT" class="content">
-		<transition name="fade">
-			<div class="informations">
-				<transition name="fade" appear>
-					<h1 class="informations-title">Simple Test 2</h1>
-				</transition>
-				<div class="informations-description">Simple Test</div>
-			</div>
-		</transition>
+		<my-informations :title="title"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows">
@@ -30,5 +23,17 @@
 	</div>
 </template>
 <script>
+import Informations from '../components/Informations'
+
+export default {
+    data: () => {
+    	return {
+    		title: 'Title 2',
+		}
+    },
+    components: {
+    	'my-informations': Informations
+    }
+}
 </script>
 <style src="../assets/less/project.less"></style>
