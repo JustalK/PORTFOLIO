@@ -1,37 +1,8 @@
 <template>
 	<div id="PORTFOLIO" class="content">
-		<div class="informations">
-			<div class="informations-title_size">
-				<transition name="fade" appear>
-					<h1 v-if="!goProject" key="data" class="informations-title">Simple projects lists</h1>
-				</transition>
-			</div>
-			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
-			<div class="informations-tags">
-				<div class="informations-tag">HTML</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-				<div class="informations-tag">CSS</div>
-			</div>
-		</div>
+		<transition name="fade" mode="out-in">
+			<my-informations :title="title"></my-informations>
+		</transition>
 		<div class="projects">
 			<div class="projects-project">
 				<a href="#" class="projects-windows" @click.stop="project(0)">
@@ -73,11 +44,17 @@
     </div>
 </template>
 <script>
+import Informations from '../components/Informations'
+
 export default {
     data: () => {
     	return {
+    		title: 'AzeAze',
 			goProject: false
 		}
+    },
+    components: {
+    	'my-informations': Informations
     },
     methods: {
     	project: function(id) {
