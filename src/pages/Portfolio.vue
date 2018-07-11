@@ -49,7 +49,7 @@ import Informations from '../components/Informations'
 export default {
     data: () => {
     	return {
-    		title: 'AzeAze',
+    		title: 'Title',
 			goProject: false
 		}
     },
