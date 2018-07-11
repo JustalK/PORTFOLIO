@@ -1,30 +1,32 @@
 <template>	
 	<div class="informations">
-		<transition name="fade" mode="out-in" appear>
-			<h1 v-show="!goProject" key="data" class="informations-title">{{title}}</h1>
-		</transition>
-		<transition name="fade" mode="out-in" appear>
-			<div v-show="!goProject" class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
-		</transition>
+		<div class="informations-title_size">
+			<div class="informations-title_transition"></div>
+			<h1 key="data" class="informations-title">{{title}}</h1>
+		</div>
+		<div class="informations-description_size">
+			<div class="informations-description_transition"></div>
+			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
+		</div>
 		<div class="informations-tags">
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('HTML') !=-1">HTML</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('PHP') !=-1">PHP</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('WORDPRESS') !=-1">WORDPRESS</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('NODE.JS') !=-1">NODE.JS</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('THREE.JS') !=-1">THREE.JS</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('EXPRESS') !=-1">EXPRESS</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('CSS') !=-1">CSS</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('MONGODB') !=-1">MONGODB</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('MYSQL') !=-1">MYSQL</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('PRESTASHOP') !=-1">PRESTASHOP</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('ANGULAR') !=-1">ANGULAR</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('C++') !=-1">C++</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('ANDROID') !=-1">ANDROID</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('REACT') !=-1">REACT</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('C#') !=-1">C#</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('.NET') !=-1">.NET</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('PYTHON') !=-1">PYTHON</div>
-			<div class="informations-tag" v-show="tags.length == 0 || tags.indexOf('CORDOVA') !=-1">CORDOVA</div>
+			<div class="informations-tag">HTML</div>
+			<div class="informations-tag">PHP</div>
+			<div class="informations-tag">WORDPRESS</div>
+			<div class="informations-tag">NODE.JS</div>
+			<div class="informations-tag">THREE.JS</div>
+			<div class="informations-tag">EXPRESS</div>
+			<div class="informations-tag">CSS</div>
+			<div class="informations-tag">MONGODB</div>
+			<div class="informations-tag">MYSQL</div>
+			<div class="informations-tag">PRESTASHOP</div>
+			<div class="informations-tag">ANGULAR</div>
+			<div class="informations-tag">C++</div>
+			<div class="informations-tag">ANDROID</div>
+			<div class="informations-tag">REACT</div>
+			<div class="informations-tag">C#</div>
+			<div class="informations-tag">.NET</div>
+			<div class="informations-tag">PYTHON</div>
+			<div class="informations-tag">CORDOVA</div>
 		</div>
 	</div>
 </template>
@@ -32,8 +34,7 @@
 export default {
 	props: {
 		'title': { default: 'Default' },
-		'goProject': { default: false },
-		'tags': { default: () => ["HTML","CSS"] }
+		'goProject': { default: false }
 	}
 }
 </script>

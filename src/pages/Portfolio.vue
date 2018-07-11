@@ -52,6 +52,18 @@ export default {
     	'my-informations': Informations,
     	'my-pubs': Pubs
     },
+    watch: {
+    	tags: function() {
+    		var tags = document.querySelectorAll(".informations-tag");
+    		for(var i=tags.length;i--;) {
+    			if(this.tags.indexOf(tags[i].innerHTML) !== -1) {
+    				tags[i].classList.add('informations-tag--inside');
+    			} else {
+    				tags[i].classList.add('informations-tag--not_inside');    				
+    			}
+    		}
+    	}
+    },
     methods: {
     	project: function(id) {
     		this.goProject = true;
@@ -59,7 +71,6 @@ export default {
     		var projectsProject = document.querySelectorAll(".projects-project");
     		var tags = projectsProject[id].dataset.tags;
     		this.tags = tags.split(',');
-    		console.log(this.tags);
     		for(var i=projectsProject.length;i--;) {
     			i!=id && projectsProject[i].classList.add("projects-project--remove")
     		}
@@ -67,7 +78,7 @@ export default {
 	    		projects.classList.add("projects--extend")
 	    		projectsProject[id].classList.add("projects-project--extend")
 	    		setTimeout(() => {
-	    			//this.$router.push('project')
+	    			this.$router.push('project')
 	    		},500);
     		}, 500);
     	}
