@@ -1,7 +1,7 @@
 <template>
 	<div id="PORTFOLIO" class="content">
 		<transition name="fade" mode="out-in">
-			<my-informations :title="title"></my-informations>
+			<my-informations v-show="!goProject" :title="title"></my-informations>
 		</transition>
 		<div class="projects">
 			<div class="projects-project">
