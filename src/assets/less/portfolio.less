@@ -54,6 +54,7 @@
 	}
 	
 	&-description {
+		text-align: justify;
 	}	
 	
 	&-description_transition {
@@ -72,7 +73,7 @@
 	}
 	
 	&-tags {
-		padding-top: 20px;
+		padding: 20px 0 0 0;
     	overflow: hidden;
 	}
 	
@@ -100,7 +101,6 @@
 	transition: all 0.5s cubic-bezier(.8,0,.25,1);
 	height: 600px;
 	position: relative;
-	overflow: hidden;
 	
 	&--extend {
 		width: 100%;
@@ -119,6 +119,10 @@
     	
 		&--remove {
 			opacity: 0;
+		}
+		
+		&--selected {
+			opacity: 1;
 		}
 		
 		&--destroy {
@@ -174,6 +178,22 @@
 		line-height: 30px;
     	text-align: center;
     	margin: 0;
+	}
+	
+	&-right {
+	    position: absolute;
+	    right: -220px;
+	    width: 200px;
+	    height: 100%;
+	    background: #00ff68;
+	}
+	
+	&-left {
+	    position: absolute;
+	    left: -220px;
+	    width: 200px;
+	    height: 100%;
+	    background: #00ff68;
 	}
 }
 

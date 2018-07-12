@@ -8,9 +8,9 @@
 			<div class="informations-description_transition informations-description_transition--init"></div>
 			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
 		</div>
-		<div class="informations-tags">
-			<div v-for="tag in informationsTag" class="informations-tag">{{tag}}</div>
-		</div>
+		<ul class="informations-tags">
+			<li v-for="tag in informationsTag" class="informations-tag">{{tag}}</li>
+		</ul>
 	</div>
 </template>
 <script>
