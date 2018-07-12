@@ -1,30 +1,9 @@
 <template>
 	<div id="PORTFOLIO" class="content">
 		<my-informations :goProject="goProject" :tags="tags" :title="title"></my-informations>
-		<div class="projects">
-			<div class="projects-project" data-tags="HTML,CSS">
-				<a href="#" class="projects-windows" @click.stop="project(0)">
-					<div class="projects-header">
-						<h2 class="projects-title">Simple Test</h2>
-					</div>
-				</a>
-			</div>
-			<div class="projects-project" data-tags="HTML,CSS">
-				<a href="#" class="projects-windows" @click.stop="project(1)">
-					<div class="projects-header">
-						<h2 class="projects-title">Simple Test</h2>
-					</div>
-				</a>
-			</div>
-			<div class="projects-project" data-tags="HTML,CSS">
-				<a href="#" class="projects-windows" @click.stop="project(2)">
-					<div class="projects-header">
-						<h2 class="projects-title">Simple Test</h2>
-					</div>
-				</a>
-			</div>
-			<div class="projects-project" data-tags="HTML,CSS">
-				<a href="#" class="projects-windows" @click.stop="project(3)">
+		<div class="projects projects--active">
+			<div v-for="(p, index) in projects" class="projects-project projects-project--active" data-tags="HTML,CSS">
+				<a href="#" class="projects-windows" @click.stop="project(index)">
 					<div class="projects-header">
 						<h2 class="projects-title">Simple Test</h2>
 					</div>
@@ -38,6 +17,7 @@
 </template>
 <script>
 import Informations from '../components/Informations'
+import Sliders from '../components/Sliders'
 import Pubs from '../components/Pubs'
 
 export default {
@@ -45,11 +25,13 @@ export default {
     	return {
     		title: 'Title',
     		tags: [],
-			goProject: false
+			goProject: false,
+			projects: ["0","1","2","3"]
 		}
     },
     components: {
     	'my-informations': Informations,
+    	'my-sliders': Sliders,
     	'my-pubs': Pubs
     },
     methods: {
@@ -70,6 +52,14 @@ export default {
 	    		},500);
     		}, 500);
     	}
+    },
+    mounted: function() {
+		var projects = document.querySelector(".projects");
+		var projectsProject = document.querySelectorAll(".projects-project");
+		projects.classList.remove("projects--active");
+		for(var i=projectsProject.length;i--;) {
+			projectsProject[i].classList.remove("projects-project--active");
+		}
     }
 }
 </script>

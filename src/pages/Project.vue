@@ -1,6 +1,9 @@
 <template>
 	<div id="PROJECT" class="content">
-		<my-informations :title="title"></my-informations>
+		<a href="#" class="back" @click.stop="projects">
+			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
+		</a>
+		<my-informations :title="title" :goProject="goProject"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows">
@@ -29,10 +32,23 @@ export default {
     data: () => {
     	return {
     		title: 'Title 2',
+    		goProject: false
 		}
     },
     components: {
     	'my-informations': Informations
+    },
+	methods: {
+    	projects: function(id) {
+    		this.goProject = true;
+    	   	var projects = document.querySelector(".projects"),
+    		projectsProject = document.querySelector(".projects-project");
+			projects.classList.add("projects--active")
+    		projectsProject.classList.add("projects-project--active")
+    		setTimeout(() => {
+    			this.$router.push('portfolio')
+	    	},1000);
+    	}
     }
 }
 </script>

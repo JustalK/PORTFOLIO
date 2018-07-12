@@ -41,7 +41,6 @@ export default {
     		informationsTitleSize = document.querySelector('.informations-title_transition');
     		informationsDescriptionTransition.classList.add('informations-description_transition--active');
     		informationsTitleSize.classList.add('informations-title_transition--active');
-    		
     	}
     },
     mounted: function() {
