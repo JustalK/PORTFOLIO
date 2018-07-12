@@ -11,11 +11,10 @@
 
 .line-transition() {
 	position: absolute;
-    left: 0;
+    right: 0;
     height: 100%;
     width: 0%;
     background: red;
-	transition: all 0.5s cubic-bezier(.8,0,.25,1);
 }
 
 .informations {
@@ -33,10 +32,17 @@
 	}
 	
 	&-title_transition {
+		transition: all 1s cubic-bezier(.8,0,.25,1);
 		.line-transition();
+		
+		&--init {
+			width: 100%;
+		}
 		
 		&--active {
 			width: 100%;
+			right: inherit;
+			left: 0;
 		}
 	}
 	
@@ -51,9 +57,16 @@
 	}	
 	
 	&-description_transition {
+		transition: all 0.5s cubic-bezier(.8,0,.25,1);
 		.line-transition();
 		
+		&--init {
+			width: 100%;
+		}
+		
 		&--active {
+			right: inherit;
+			left: 0;
 			width: 100%;
 		}
 	}

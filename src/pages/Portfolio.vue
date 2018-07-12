@@ -52,18 +52,6 @@ export default {
     	'my-informations': Informations,
     	'my-pubs': Pubs
     },
-    watch: {
-    	tags: function() {
-    		var tags = document.querySelectorAll(".informations-tag");
-    		for(var i=tags.length;i--;) {
-    			if(this.tags.indexOf(tags[i].innerHTML) !== -1) {
-    				tags[i].classList.add('informations-tag--inside');
-    			} else {
-    				tags[i].classList.add('informations-tag--not_inside');    				
-    			}
-    		}
-    	}
-    },
     methods: {
     	project: function(id) {
     		this.goProject = true;
