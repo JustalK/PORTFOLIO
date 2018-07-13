@@ -32,12 +32,17 @@ export default {
     watch: {
     	goProject: function() {
     		var projects = this.$el;
-			var projectsProject = this.$el.childNodes;	
+			var projectsProject = document.querySelectorAll('.projects-project');	
 			var id = 0;
+			console.log(projectsProject);
     		for(var i=projectsProject.length;i--;) {
-    			if(projectsProject[i].classList.contains("projects-project--selected")) id=i; 
-    			projectsProject[i].classList.add("projects-project--remove")
+    			if(projectsProject[i].classList.contains("projects-project--selected")) {
+    				id=i;
+    			} else { 
+    				projectsProject[i].classList.add("projects-project--remove")
+    			}
     		}
+    		console.log(id);
     		setTimeout(() => {
 	    		projects.classList.add("projects--extend")
 	    		projectsProject[id].classList.add("projects-project--extend")

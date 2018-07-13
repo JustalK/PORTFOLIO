@@ -5,12 +5,18 @@
 		</a>
 		<my-informations :title="title" :goProject="goProject"></my-informations>
 		<div class="projects projects--extend">
+			<div class="projects-left">
+				<	
+			</div>
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows">
 					<div class="projects-header">
 						<h2 class="projects-title">Simple Test</h2>
 					</div>
 				</div>
+			</div>
+			<div class="projects-right">
+				>	
 			</div>
 		</div>
 		<transition name="fade">
