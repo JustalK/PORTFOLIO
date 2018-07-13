@@ -11,6 +11,7 @@
 import Informations from '../components/Informations'
 import Sliders from '../components/Sliders'
 import Pubs from '../components/Pubs'
+import API from '../services/Api'
 
 export default {
     data: () => {
@@ -21,6 +22,12 @@ export default {
 			projects: ["0","1","2","3"]
 		}
     },
+	created: function () {
+		API.getProjects()
+	    	.then(rsl => {
+	        	console.log(rsl);
+	    })
+	},
     components: {
     	'my-informations': Informations,
     	'my-sliders': Sliders,
