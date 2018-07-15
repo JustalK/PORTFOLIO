@@ -1063,7 +1063,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n\nvar _axios2 = _interopRequireDefault(_axios);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    getProjects: function getProjects() {\n        _axios2.default.get('/api/all').then(function (response) {\n            return response.data;\n        });\n    }\n};\n\n//# sourceURL=webpack:///./src/services/Api.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n\nvar _axios2 = _interopRequireDefault(_axios);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    getProjects: function getProjects() {\n        _axios2.default.get('/api/all').then(function (response) {\n            return response.data;\n        });\n    }\n}; /* eslint-disable */\n\n//# sourceURL=webpack:///./src/services/Api.js?");
 
 /***/ })
 
