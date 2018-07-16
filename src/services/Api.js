@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const getProjects = function () {
-    Axios.get('/api/all')
+    return Axios.get('http://localhost:8080/api/all')
     .then(response => {
         return response.data;
     })

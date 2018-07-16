@@ -12,7 +12,6 @@ import Informations from '../components/Informations'
 import Sliders from '../components/Sliders'
 import Pubs from '../components/Pubs'
 import API from '../services/Api'
-console.log(API.getProjects);
 
 export default {
     data: () => {
@@ -20,13 +19,13 @@ export default {
     		title: 'Title',
     		tags: [],
 			goProject: false,
-			projects: ["0","1","2","3"]
+			projects: []
 		}
     },
-	created: function () {
+	mounted: function () {
 		API.getProjects()
 	    	.then(rsl => {
-	        	console.log(rsl);
+	        	this.projects = rsl;
 	    })
 	},
     components: {

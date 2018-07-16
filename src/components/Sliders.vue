@@ -3,13 +3,15 @@
 		<div class="projects-left">
 			<	
 		</div>
-		<div v-for="(p, index) in projects" class="projects-project projects-project--active" data-tags="HTML,CSS">
-			<a href="#" class="projects-windows" @click.stop="project($event)">
-				<div class="projects-header">
-					<h2 class="projects-title">Simple Test</h2>
-				</div>
-			</a>
-		</div>
+		<ul class="projects-list">
+			<li v-for="(p, index) in projects" class="projects-project projects-project--active" data-tags="HTML,CSS">
+				<a href="#" class="projects-windows" @click.stop="project($event)">
+					<div class="projects-header">
+						<h2 class="projects-title">Simple Test</h2>
+					</div>
+				</a>
+			</li>
+		</ul>
 		<div class="projects-right">
 			>	
 		</div>
@@ -42,7 +44,6 @@ export default {
     				projectsProject[i].classList.add("projects-project--remove")
     			}
     		}
-    		console.log(id);
     		setTimeout(() => {
 	    		projects.classList.add("projects--extend")
 	    		projectsProject[id].classList.add("projects-project--extend")
@@ -52,7 +53,7 @@ export default {
     		}, 500);
     	}
     },
-    mounted: function() {
+    updated: function() {
 		var projects = document.querySelector(".projects");
 		var projectsProject = document.querySelectorAll(".projects-project");
 		projects.classList.remove("projects--active");
