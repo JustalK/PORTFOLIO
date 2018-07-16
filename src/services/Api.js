@@ -1,11 +1,12 @@
-/* eslint-disable */
-import axios from 'axios'
+import Axios from 'axios'
+
+const getProjects = function () {
+    Axios.get('/api/all')
+    .then(response => {
+        return response.data;
+    })
+}
 
 export default {
-	getProjects () {
-    	axios.get('/api/all')
-    	.then(response => {
-        	return response.data;
-    	})
-    }
+    getProjects: getProjects
 }

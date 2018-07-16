@@ -12,6 +12,7 @@ import Informations from '../components/Informations'
 import Sliders from '../components/Sliders'
 import Pubs from '../components/Pubs'
 import API from '../services/Api'
+console.log(API.getProjects);
 
 export default {
     data: () => {
