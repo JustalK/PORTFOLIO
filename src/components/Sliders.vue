@@ -48,7 +48,7 @@ export default {
 	    		projects.classList.add("projects--extend")
 	    		projectsProject[id].classList.add("projects-project--extend")
 	    		setTimeout(() => {
-	    			this.$router.push('project')
+	    			this.$router.push({ name: 'project', params: {name:'latsuj-3'} })
 	    		},500);
     		}, 500);
     	}

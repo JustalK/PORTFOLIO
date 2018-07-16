@@ -6,7 +6,7 @@
 		<my-informations :title="title" :goProject="goProject"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left">
-				<	
+				
 			</div>
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows">
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div class="projects-right">
-				>	
+					
 			</div>
 		</div>
 		<transition name="fade">
@@ -33,11 +33,12 @@
 </template>
 <script>
 import Informations from '../components/Informations'
+import API from '../services/Api'
 
 export default {
     data: () => {
     	return {
-    		title: 'Title 2',
+    		title: '',
     		goProject: false
 		}
     },
@@ -55,6 +56,13 @@ export default {
     			this.$router.push('portfolio')
 	    	},1000);
     	}
+    },
+    created: function () {
+    	var name = this.$route.params.name;
+    	API.getProject(name)
+	    	.then(rsl => {
+	        this.title = rsl[0].title
+	    })
     }
 }
 </script>

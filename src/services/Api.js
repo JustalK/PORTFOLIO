@@ -7,6 +7,13 @@ const getProjects = function () {
     })
 }
 
+const getProject = function (name) {
+    return Axios.get('http://localhost:8080/api/article/' + name)
+    .then(response => {
+        return response.data;
+    })
+}
+
 const getTags = function () {
     return Axios.get('http://localhost:8080/api/tags/all')
     .then(response => {
@@ -16,5 +23,6 @@ const getTags = function () {
 
 export default {
     getProjects: getProjects,
+    getProject: getProject,
     getTags: getTags
 }

@@ -18,13 +18,14 @@ app.get("/", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
 );
 
+app.get("/portfolio/:name", (req, res) =>
+res.sendFile('dev/index.html', { root: __dirname })
+);
+
 app.get("/portfolio", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
 );
 
-app.get("/project", (req, res) =>
-	res.sendFile('dev/index.html', { root: __dirname })
-);
 
 app.get("/articles", (req, res) =>
 	res.sendFile('dev/index.html', { root: __dirname })
