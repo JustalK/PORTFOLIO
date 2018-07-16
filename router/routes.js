@@ -5,13 +5,22 @@ var routes = express.Router()
 
 // Get the schema from mongoose in the models folder
 var Article = require('../models/Article')
+var Tag = require('../models/Tag')
 
 // Return the list of all the articles
-routes.route('/all').get((req, res, next) => {
-	Article.find((err, articles) => {
+routes.route('/articles/all').get((req, res, next) => {
+	Article.find().populate({path: 'tags',select: 'name'}).exec((err, articles) => {
 		if (err) return next(new Error(err))
 
 		res.json(articles)
+	})
+})
+
+routes.route('/tags/all').get((req, res, next) => {
+	Tag.find((err, tags) => {
+		if (err) return next(new Error(err))
+
+		res.json(tags)
 	})
 })
 

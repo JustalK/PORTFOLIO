@@ -25,6 +25,13 @@ export default {
 	mounted: function () {
 		API.getProjects()
 	    	.then(rsl => {
+	    		console.log(rsl);
+	    		for(var i=rsl.length,tmpTags,tmpStringTags;i--;) {
+	    			tmpTags = rsl[i].tags;
+	    			tmpStringTags=[];
+	    			for(var j=0;j<tmpTags.length;j++) tmpStringTags.push(tmpTags[j].name);
+	    			rsl[i].tags = tmpStringTags.join(',');
+	    		}
 	        	this.projects = rsl;
 	    })
 	},

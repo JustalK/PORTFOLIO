@@ -4,10 +4,10 @@
 			<	
 		</div>
 		<ul class="projects-list">
-			<li v-for="(p, index) in projects" class="projects-project projects-project--active" data-tags="HTML,CSS">
+			<li v-for="(p, index) in projects" class="projects-project projects-project--active" :data-tags="p.tags">
 				<a href="#" class="projects-windows" @click.stop="project($event)">
 					<div class="projects-header">
-						<h2 class="projects-title">Simple Test</h2>
+						<h2 class="projects-title">{{ p.title }}</h2>
 					</div>
 				</a>
 			</li>

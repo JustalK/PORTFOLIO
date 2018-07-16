@@ -9,11 +9,13 @@
 			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
 		</div>
 		<ul class="informations-tags">
-			<li v-for="tag in informationsTag" class="informations-tag">{{tag}}</li>
+			<li v-for="tag in informationsTag" class="informations-tag">{{ tag.name }}</li>
 		</ul>
 	</div>
 </template>
 <script>
+import API from '../services/Api'
+
 export default {
 	props: {
 		'title': { default: 'Default' },
@@ -22,7 +24,7 @@ export default {
 	},
 	data: function() {
 		return {
-			'informationsTag': ['HTML','PHP','CSS','WORDPRESS','NODE.JS','EXPRESS','MONGODB','MYSQL','PRESTASHOP','ANGULAR','C++','ANDROID','REACT','C#']
+			'informationsTag': []
 		}
 	},
     watch: {
@@ -48,6 +50,11 @@ export default {
     		informationsTitleSize = document.querySelector('.informations-title_transition');
     		informationsDescriptionTransition.classList.remove('informations-description_transition--init');
     		informationsTitleSize.classList.remove('informations-title_transition--init');
+    		
+    		API.getTags()
+	    	.then(rsl => {
+	        	this.informationsTag = rsl;
+	    	})
     }
 }
 </script>
