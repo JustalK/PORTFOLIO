@@ -10,10 +10,20 @@ var article = new mongoose.Schema(
 		slug: {
 			type: String
 		},
+		shortDescription: {
+			type: String
+		},
+		longDescription: {
+			type: String
+		},
 		tags: [{
 			type: Schema.Types.ObjectId,
 			ref: 'Tag'
-		}]
+		}],
+		images: [{
+			type: Schema.Types.ObjectId,
+			ref: 'Image'
+		}] 
 	},
 	{
 		collection: 'articles'

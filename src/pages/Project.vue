@@ -3,7 +3,7 @@
 		<a href="#" class="back" @click.stop="projects">
 			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
 		</a>
-		<my-informations :title="title" :goProject="goProject" :tags="tags" :informationsTag="informationsTag"></my-informations>
+		<my-informations :title="title" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left">
 				
@@ -20,13 +20,8 @@
 			</div>
 		</div>
 		<transition name="fade">
-			<div class="additional">
-				<h3>azdadaz dazd azd azd </h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut elementum nunc, ac lobortis risus. Nullam tincidunt mi arcu, eget bibendum velit viverra eu. Cras ac quam nibh. Duis mauris nisl, luctus vitae arcu at, efficitur luctus libero. Pellentesque fermentum arcu diam, eu elementum turpis venenatis vitae. Donec sem ipsum, lacinia vel vestibulum vel, mattis in felis. Fusce ac metus purus. Fusce placerat mattis tempus. Morbi dictum tortor magna, ac cursus velit iaculis at. Donec viverra massa augue, eu mattis nunc rutrum non. Ut sed nunc vitae velit hendrerit suscipit sed sed erat. Vestibulum consectetur porta libero et consectetur.
-	
-					Pellentesque vitae felis eu enim feugiat tristique in sit amet dui. Donec dapibus cursus ullamcorper. Curabitur nisi tellus, porta non arcu nec, aliquet rutrum ligula. Proin non varius justo. Sed diam arcu, tempus quis molestie vitae, congue eget nisl. Vestibulum viverra leo varius semper sodales. Pellentesque mauris purus, lobortis sed vestibulum vitae, posuere at nisl. Sed blandit rhoncus nulla eu malesuada. Maecenas ut eros quis est mollis suscipit. Nullam lacinia, leo commodo dapibus molestie, lacus nibh maximus nisi, nec ornare quam ipsum sit amet eros. Donec vestibulum ut orci vitae sagittis. Fusce commodo lacus odio. Donec vitae mauris hendrerit, mattis nibh nec, cursus mauris. Vestibulum sollicitudin posuere elementum. Quisque aliquam massa vel tortor suscipit, nec consequat tortor luctus. Vivamus nec aliquam erat.
-				</p>
+			<div class="additional" v-html="this.longDescription">
+				{{ this.longDescription }}
 			</div>
 		</transition>
 	</div>
@@ -39,6 +34,9 @@ export default {
     data: () => {
     	return {
     		title: '',
+    		shortDescription: '',
+    		longDescription: '',
+    		tags: [],
     		goProject: false,
     		tags: [],
     		informationsTag: []
@@ -74,6 +72,8 @@ export default {
 	        	this.informationsTag = informationsTagTmp;
 		        this.title = rsl[0].title
 		        this.tags = rsl[0].v_strTags
+		        this.shortDescription = rsl[0].shortDescription
+		        this.longDescription = rsl[0].longDescription
 		    })
     	})
     }

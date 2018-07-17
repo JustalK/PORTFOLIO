@@ -6,6 +6,7 @@ var routes = express.Router()
 // Get the schema from mongoose in the models folder
 var Article = require('../models/Article')
 var Tag = require('../models/Tag')
+var Image = require('../models/Image')
 
 // Return the list of all the articles
 routes.route('/articles/all').get((req, res, next) => {
