@@ -74,6 +74,9 @@ export default {
 		        this.tags = rsl[0].v_strTags
 		        this.shortDescription = rsl[0].shortDescription
 		        this.longDescription = rsl[0].longDescription
+		        
+		        var projectsWindows = document.querySelector(".projects-windows");
+		        projectsWindows.style.cssText = "background-image: url('"+rsl[0].images[0].path+"')";
 		    })
     	})
     }
