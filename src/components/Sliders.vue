@@ -4,7 +4,7 @@
 			<	
 		</div>
 		<ul class="projects-list">
-			<li v-for="(p, index) in projects" class="projects-project projects-project--active" :data-tags="p.tags">
+			<li v-for="(p, index) in projects" class="projects-project projects-project--active" :data-name="p.slug" :data-tags="p.v_strTags">
 				<a href="#" class="projects-windows" @click.stop="project($event)">
 					<div class="projects-header">
 						<h2 class="projects-title">{{ p.title }}</h2>
@@ -47,8 +47,9 @@ export default {
     		setTimeout(() => {
 	    		projects.classList.add("projects--extend")
 	    		projectsProject[id].classList.add("projects-project--extend")
+	    		var paramName = projectsProject[id].dataset.name;
 	    		setTimeout(() => {
-	    			this.$router.push({ name: 'project', params: {name:'latsuj-3'} })
+	    			this.$router.push({ name: 'project', params: {name:paramName} })
 	    		},500);
     		}, 500);
     	}

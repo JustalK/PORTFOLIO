@@ -3,7 +3,7 @@
 		<a href="#" class="back" @click.stop="projects">
 			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
 		</a>
-		<my-informations :title="title" :goProject="goProject"></my-informations>
+		<my-informations :title="title" :goProject="goProject" :tags="tags"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left">
 				
@@ -11,7 +11,7 @@
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows">
 					<div class="projects-header">
-						<h2 class="projects-title">Simple Test</h2>
+						<h2 class="projects-title">{{ this.title }}</h2>
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,8 @@ export default {
     data: () => {
     	return {
     		title: '',
-    		goProject: false
+    		goProject: false,
+    		tags: []
 		}
     },
     components: {
@@ -53,7 +54,7 @@ export default {
 			projects.classList.add("projects--active")
     		projectsProject.classList.add("projects-project--active")
     		setTimeout(() => {
-    			this.$router.push('portfolio')
+    			this.$router.push({ name: 'portfolio' })
 	    	},1000);
     	}
     },
@@ -62,6 +63,7 @@ export default {
     	API.getProject(name)
 	    	.then(rsl => {
 	        this.title = rsl[0].title
+	        this.tags = rsl[0].v_strTags
 	    })
     }
 }

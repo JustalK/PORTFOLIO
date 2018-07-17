@@ -17,8 +17,7 @@ routes.route('/articles/all').get((req, res, next) => {
 })
 
 routes.route('/article/:name').get((req, res, next) => {
-	var name = req.params.name.replace(/-/g,' ');
-	Article.find({title: name }).populate({path: 'tags',select: 'name'}).exec((err, article) => {
+	Article.find({slug: req.params.name }).populate({path: 'tags',select: 'name'}).exec((err, article) => {
 		if (err) return next(new Error(err))
 
 		res.json(article)
@@ -35,6 +34,20 @@ routes.route('/tags/all').get((req, res, next) => {
 
 // Adding an article with the title "Latsuj"
 routes.route('/add').post((req, res, next) => {
+	Tag.create(
+			{ name: "PHP" },
+			(err, article) => {
+				if(err) res.status(400).send('Unable to create')
+				res.status(200).json(article)
+			}
+	)
+	Tag.create(
+			{ name: "HTML" },
+			(err, article) => {
+				if(err) res.status(400).send('Unable to create')
+				res.status(200).json(article)
+			}
+	)
 	Article.create(
 		{ title: "latsuj" },
 		(err, article) => {
