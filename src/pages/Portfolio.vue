@@ -1,6 +1,6 @@
 <template>
 	<div id="PORTFOLIO" class="content">
-		<my-informations :goProject="goProject" :tags="tags" :title="title"></my-informations>
+		<my-informations :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
     	<my-sliders :goProject="goProject" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
     		<my-pubs v-show="!goProject"></my-pubs>
@@ -19,6 +19,7 @@ export default {
     		title: 'Title',
     		tags: [],
 			goProject: false,
+			informationsTag: [],
 			projects: []
 		}
     },
@@ -27,6 +28,10 @@ export default {
 	    	.then(rsl => {
 	        	this.projects = rsl;
 	    })
+	    API.getTags()
+    	.then(rsl => {
+    		this.informationsTag = rsl;
+    	});
 	},
     components: {
     	'my-informations': Informations,

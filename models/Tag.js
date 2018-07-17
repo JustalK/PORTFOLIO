@@ -12,4 +12,10 @@ var tag = new mongoose.Schema(
 	}
 )
 
+tag.virtual('v_tagUse').get(function() {
+	return false;
+});
+tag.set('toObject', { virtuals: true });
+tag.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model('Tag', tag)

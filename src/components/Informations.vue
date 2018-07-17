@@ -9,7 +9,7 @@
 			<div class="informations-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tempus mi lectus, vitae lacinia metus imperdiet ut. Suspendisse placerat dui et aliquam rutrum.</div>
 		</div>
 		<ul class="informations-tags">
-			<li v-for="tag in informationsTag" class="informations-tag">{{ tag.name }}</li>
+			<li v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}">{{ tag.name }}</li>
 		</ul>
 	</div>
 </template>
@@ -20,12 +20,8 @@ export default {
 	props: {
 		'title': { default: 'Default' },
 		'goProject': { default: false },
-		'tags': { default: () => [] }
-	},
-	data: function() {
-		return {
-			'informationsTag': []
-		}
+		'tags': { default: () => [] },
+		'informationsTag': { default: () => [] }
 	},
     watch: {
     	tags: function() {
@@ -50,11 +46,6 @@ export default {
     		informationsTitleSize = document.querySelector('.informations-title_transition');
     		informationsDescriptionTransition.classList.remove('informations-description_transition--init');
     		informationsTitleSize.classList.remove('informations-title_transition--init');
-    		
-    		API.getTags()
-	    	.then(rsl => {
-	        	this.informationsTag = rsl;
-	    	})
     }
 }
 </script>

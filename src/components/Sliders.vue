@@ -28,6 +28,9 @@ export default {
     		e.target.parentNode.classList.add("projects-project--selected");
     		var tags = e.target.parentNode.dataset.tags;
     		this.$parent.tags=tags;
+    		for(var i=this.$parent.informationsTag.length;i--;) {
+    			if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
+    		}
     		this.$parent.goProject=true;
     	}
     },

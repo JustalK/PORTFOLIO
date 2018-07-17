@@ -3,7 +3,7 @@
 		<a href="#" class="back" @click.stop="projects">
 			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
 		</a>
-		<my-informations :title="title" :goProject="goProject" :tags="tags"></my-informations>
+		<my-informations :title="title" :goProject="goProject" :tags="tags" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left">
 				
@@ -40,7 +40,8 @@ export default {
     	return {
     		title: '',
     		goProject: false,
-    		tags: []
+    		tags: [],
+    		informationsTag: []
 		}
     },
     components: {
@@ -58,13 +59,23 @@ export default {
 	    	},1000);
     	}
     },
-    created: function () {
+    mounted: function () {
     	var name = this.$route.params.name;
-    	API.getProject(name)
-	    	.then(rsl => {
-	        this.title = rsl[0].title
-	        this.tags = rsl[0].v_strTags
-	    })
+    	var informationsTagTmp = [];
+	    API.getTags()
+    	.then(rsl => {
+			informationsTagTmp = rsl;
+	    	API.getProject(name)
+		    	.then(rsl => {
+		    	var strTags = rsl[0].v_strTags.split(',');
+	        	for(var i=informationsTagTmp.length;i--;) {
+	        		if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
+	        	}
+	        	this.informationsTag = informationsTagTmp;
+		        this.title = rsl[0].title
+		        this.tags = rsl[0].v_strTags
+		    })
+    	})
     }
 }
 </script>
