@@ -9,9 +9,21 @@
 				
 			</div>
 			<div class="projects-project projects-project--extend">
-				<div class="projects-windows">
-					<div class="projects-header">
-						<h2 class="projects-title">{{ this.title }}</h2>
+				<div class="projects-windows" @click="slideUp">
+					<div class="projects-background projects-background--up">
+						<div class="projects-header">
+							<h2 class="projects-title">{{ this.title }}</h2>
+						</div>
+					</div>
+					<div class="projects-background projects-background--down">
+						<div class="projects-header">
+							<h2 class="projects-title">{{ this.title }}</h2>
+						</div>
+					</div>
+					<div class="projects-background projects-background--tooup">
+						<div class="projects-header">
+							<h2 class="projects-title">{{ this.title }}</h2>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -55,6 +67,25 @@ export default {
     		setTimeout(() => {
     			this.$router.push({ name: 'portfolio' })
 	    	},1000);
+    	},
+    	slideUp: function() {
+    		var projectsBackgroundTooUp = document.querySelector(".projects-background--tooup");
+			projectsBackgroundTooUp.classList.remove("projects-background--tooup");
+			projectsBackgroundTooUp.classList.add("projects-background--downdown");
+    			
+    		setTimeout(function() {
+	    		var projectsBackgroundUp = document.querySelector(".projects-background--up");
+	    		var projectsBackgroundDown = document.querySelector(".projects-background--down");
+	    		var projectsBackgroundDownDown = document.querySelector(".projects-background--downdown");
+	    		
+	    		projectsBackgroundUp.classList.remove("projects-background--up");
+	    		projectsBackgroundDown.classList.remove("projects-background--down");
+	    		projectsBackgroundDownDown.classList.remove("projects-background--downdown");
+	    		
+	    		projectsBackgroundUp.classList.add("projects-background--tooup");
+	    		projectsBackgroundDown.classList.add("projects-background--up");
+	    		projectsBackgroundDownDown.classList.add("projects-background--down");
+    		}, 0);
     	}
     },
     mounted: function () {
@@ -75,8 +106,10 @@ export default {
 		        this.shortDescription = rsl[0].shortDescription
 		        this.longDescription = rsl[0].longDescription
 		        
-		        var projectsWindows = document.querySelector(".projects-windows");
-		        projectsWindows.style.cssText = "background-image: url('"+rsl[0].images[0].path+"')";
+		        var projectsBackground = document.querySelector(".projects-background");
+		        var projectsBackgroundDown = document.querySelector(".projects-background--down");
+		        projectsBackground.style.cssText = "background-image: url('"+rsl[0].images[0].path+"')";
+		        projectsBackgroundDown.style.cssText = "background-image: url('"+rsl[0].images[1].path+"')";
 		    })
     	})
     }

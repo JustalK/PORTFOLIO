@@ -3,7 +3,11 @@
 	margin: auto;
 }
 
-@LAYER-ANIMATION: 4;
+@LAYER-ANIMATION: 5;
+@LAYER-COUCHE--2: 1;
+@LAYER-COUCHE--1: 2;
+@LAYER-COUCHE-1: 3;
+@LAYER-COUCHE-2: 4;
 
 #PORTFOLIO {
 	height: 100%;
@@ -177,15 +181,59 @@
 	
 	
 	&-header {
+		position: absolute;
+		width: 100%;
+		top: 0;
 	    background: red;
     	height: 30px;
     	pointer-events: none;
+		z-index: @LAYER-COUCHE-2;
 	}
 	
 	&-title {
 		line-height: 30px;
     	text-align: center;
     	margin: 0;
+	}
+	
+	&-background {
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    left: 0px;
+	    top: 0px;
+	    background-size: cover;
+	    background-position: center center;
+	    z-index: @LAYER-COUCHE-1;
+	    opacity: 0;
+	    transition: all 0.5s cubic-bezier(.8,0,.25,1);
+	    
+	    &--tooup {
+	    	background-color: pink;
+	    	transform: translate(-10px,-10px) scale(1.1,1.1);
+	    	opacity: 0;
+	    }
+	    
+	    &--up {
+	    	background-color: pink;
+	    	transform: translate(0,0);
+	    	opacity: 1;
+	    }
+	    
+	    &--down {
+	    	opacity: 1;
+	    	transform: translate(10px,10px);
+	    	background-color: blue;
+	    	z-index: @LAYER-COUCHE--1;
+	    }
+	    
+	    &--downdown {
+	    	transition: all 0s;
+	    	opacity: 0;
+	    	transform: translate(15px,15px);
+	    	background-color: orange;
+	    	z-index: @LAYER-COUCHE--2;
+	    }
 	}
 	
 	&-right {

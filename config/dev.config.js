@@ -10,13 +10,7 @@ module.exports = merge(baseConfig, {
 	module : {
 		rules : [ {
 			test : /\.(png|jpg|jpeg|gif)$/,
-			use : [ {
-				loader : 'lqip-loader',
-				options : {
-					base64 : true,
-					palette : false
-				}
-			}, {
+			use : [{
 				loader : 'file-loader',
 				options : {
 					name : '[name].[ext]',
