@@ -12,7 +12,7 @@
 				</a>
 			</li>
 		</ul>
-		<div class="projects-right">
+		<div class="projects-right" @click.stop="next()">
 			>	
 		</div>
 	</div>
@@ -32,6 +32,12 @@ export default {
     			if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
     		}
     		this.$parent.goProject=true;
+    	},
+    	next: function() {
+            var projectsProject = document.querySelectorAll('.projects-project');
+            for(var i=projectsProject.length;i--;) {
+                projectsProject[i].classList.add("projects-project--change");
+            }
     	}
     },
     watch: {
@@ -39,7 +45,6 @@ export default {
     		var projects = this.$el;
 			var projectsProject = document.querySelectorAll('.projects-project');	
 			var id = 0;
-			console.log(projectsProject);
     		for(var i=projectsProject.length;i--;) {
     			if(projectsProject[i].classList.contains("projects-project--selected")) {
     				id=i;
