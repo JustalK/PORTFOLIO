@@ -17,11 +17,11 @@ routes.route('/articles/all').get((req, res, next) => {
 	})
 })
 
-// Return the list of all the articles
+// Return the list of 4 articles max by page
 routes.route('/articles/:page').get((req, res, next) => {
 	Article.count().exec((err, nbr) => {
-		let maxpage = Math.floor((nbr - 1) / 4);
-		let skip = (req.params.page%(maxpage+1))*4;
+		let maxpage = Math.floor((nbr - 1) / 4)+1;
+		let skip = req.params.page<0 ? ((maxpage - (-req.params.page%maxpage))%(maxpage))*4 : (req.params.page%(maxpage))*4;
 		Article.find().skip(skip).limit(4).populate({path: 'tags',select: 'name'}).exec((err, articles) => {
 			if (err) return next(new Error(err))
 			

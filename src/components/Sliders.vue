@@ -1,6 +1,6 @@
 <template>
 	<div class="projects projects--active">
-		<div class="projects-left">
+		<div class="projects-left" @click.stop="prev()">
 			<	
 		</div>
 		<ul class="projects-list">
@@ -51,6 +51,22 @@ export default {
                 this.skip++;
                 setTimeout(() => {
                     API.getProjectsPage(this.skip)
+                        .then(rsl => {
+                            this.projects = rsl;
+                        })
+                },500)
+            }
+    	},
+    	prev: function() {
+            if(!this.lock) {
+                this.lock=true;
+                var projectsProject = document.querySelectorAll('.projects-project');
+                for(var i=projectsProject.length;i--;) {
+                    projectsProject[i].classList.add("projects-project--change");
+                }
+                this.skip--;
+                setTimeout(() => {
+                    API.getProjectsPage(Math.max(this.skip))
                         .then(rsl => {
                             this.projects = rsl;
                         })
