@@ -18,7 +18,14 @@
 	</div>
 </template>
 <script>
+import API from '../services/Api'
+
 export default {
+    data: () => {
+        return {
+            skip: 0
+        }
+    },
 	props: {
 		'goProject': { default: false },
 		'projects': { default: () => [] }
@@ -34,10 +41,22 @@ export default {
     		this.$parent.goProject=true;
     	},
     	next: function() {
+    	    // I HAVE TO LOCK THE FUNCTION HERE WITH A VARIABLE
+    	    
             var projectsProject = document.querySelectorAll('.projects-project');
             for(var i=projectsProject.length;i--;) {
                 projectsProject[i].classList.add("projects-project--change");
             }
+            this.skip++;
+            setTimeout(() => {
+                API.getProjectsPage(this.skip)
+                    .then(rsl => {
+                        this.projects = rsl;
+                        for(var i=projectsProject.length;i--;) {
+                            projectsProject[i].classList.remove("projects-project--change");
+                        }
+                    })
+            },500)
     	}
     },
     watch: {
