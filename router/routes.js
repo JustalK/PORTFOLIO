@@ -19,12 +19,15 @@ routes.route('/articles/all').get((req, res, next) => {
 
 // Return the list of all the articles
 routes.route('/articles/:page').get((req, res, next) => {
-	let skip = req.params.page*4;
-	Article.find().skip(skip).limit(4).populate({path: 'tags',select: 'name'}).exec((err, articles) => {
-		if (err) return next(new Error(err))
-
-		res.json(articles)
-	})
+	Article.count().exec((err, nbr) => {
+		let maxpage = Math.floor((nbr - 1) / 4);
+		let skip = (req.params.page%(maxpage+1))*4;
+		Article.find().skip(skip).limit(4).populate({path: 'tags',select: 'name'}).exec((err, articles) => {
+			if (err) return next(new Error(err))
+			
+			res.json(articles)
+		})
+	});
 })
 
 routes.route('/article/:name').get((req, res, next) => {

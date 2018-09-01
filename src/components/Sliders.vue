@@ -4,7 +4,7 @@
 			<	
 		</div>
 		<ul class="projects-list">
-			<li v-for="(p, index) in projects" class="projects-project projects-project--active" :data-name="p.slug" :data-tags="p.v_strTags">
+			<li v-for="(p, index) in projects" class="projects-project projects-project--active projects-project--change" :data-name="p.slug" :data-tags="p.v_strTags">
 				<a href="#" class="projects-windows" @click.stop="project($event)">
 					<div class="projects-header">
 						<h2 class="projects-title">{{ p.title }}</h2>
@@ -23,7 +23,8 @@ import API from '../services/Api'
 export default {
     data: () => {
         return {
-            skip: 0
+            skip: 0,
+            lock: false
         }
     },
 	props: {
@@ -41,22 +42,20 @@ export default {
     		this.$parent.goProject=true;
     	},
     	next: function() {
-    	    // I HAVE TO LOCK THE FUNCTION HERE WITH A VARIABLE
-    	    
-            var projectsProject = document.querySelectorAll('.projects-project');
-            for(var i=projectsProject.length;i--;) {
-                projectsProject[i].classList.add("projects-project--change");
+    	    if(!this.lock) {
+    	        this.lock=true;
+                var projectsProject = document.querySelectorAll('.projects-project');
+                for(var i=projectsProject.length;i--;) {
+                    projectsProject[i].classList.add("projects-project--change");
+                }
+                this.skip++;
+                setTimeout(() => {
+                    API.getProjectsPage(this.skip)
+                        .then(rsl => {
+                            this.projects = rsl;
+                        })
+                },500)
             }
-            this.skip++;
-            setTimeout(() => {
-                API.getProjectsPage(this.skip)
-                    .then(rsl => {
-                        this.projects = rsl;
-                        for(var i=projectsProject.length;i--;) {
-                            projectsProject[i].classList.remove("projects-project--change");
-                        }
-                    })
-            },500)
     	}
     },
     watch: {
@@ -79,6 +78,15 @@ export default {
 	    			this.$router.push({ name: 'project', params: {name:paramName} })
 	    		},500);
     		}, 500);
+    	},
+    	projects: function() {
+    	    setTimeout(() => {
+                var projectsProject = document.querySelectorAll('.projects-project');
+                for(var i=projectsProject.length;i--;) {
+                    projectsProject[i].classList.remove("projects-project--change");
+                }
+                this.lock=false;
+            },100);
     	}
     },
     updated: function() {
