@@ -12,7 +12,7 @@
     "js": "node --harmony"
   },
   "events": {
-    "restart": "osascript -e 'RESTART'"
+    "restart": "RESTART"
   },
   "watch": [
     "src/"
@@ -20,5 +20,5 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js,json,vue"
+  "ext": "js,json,vue,less"
 }

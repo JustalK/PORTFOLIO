@@ -24,7 +24,7 @@ export default {
 		}
     },
 	mounted: function () {
-		API.getProjects()
+		API.getProjectsPage()
 	    	.then(rsl => {
 	        	this.projects = rsl;
 	    })
