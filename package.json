@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development --config config/dev.config.js",
     "build": "webpack --mode production --config config/prod.config.js",
-    "watch": "nodemon --watch src/ -x \"npm run dev\" -e *",
+    "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
     "server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
