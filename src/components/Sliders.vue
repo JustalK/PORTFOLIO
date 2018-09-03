@@ -78,7 +78,7 @@ export default {
     watch: {
     	goProject: function() {
     		var projects = this.$el;
-			var projectsProject = document.querySelectorAll('.projects-project');	
+			var projectsProject = document.querySelectorAll('.projects-project');
 			var id = 0;
     		for(var i=projectsProject.length;i--;) {
     			if(projectsProject[i].classList.contains("projects-project--selected")) {

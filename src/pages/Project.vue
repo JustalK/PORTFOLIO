@@ -12,17 +12,17 @@
 				<div class="projects-windows" @click="slideUp">
 					<div class="projects-background projects-background--up">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.title }}</h2>
+							<h2 class="projects-title">{{ this.legend }}</h2>
 						</div>
 					</div>
 					<div class="projects-background projects-background--down">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.title }}</h2>
+							<h2 class="projects-title">{{ this.legend }}</h2>
 						</div>
 					</div>
 					<div class="projects-background projects-background--tooup">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.title }}</h2>
+							<h2 class="projects-title">{{ this.legend }}</h2>
 						</div>
 					</div>
 				</div>
@@ -46,6 +46,7 @@ export default {
     data: () => {
     	return {
     		title: '',
+            legend: '',
     		shortDescription: '',
     		longDescription: '',
     		tags: [],
@@ -103,6 +104,7 @@ export default {
 	        	this.informationsTag = informationsTagTmp;
 		        this.title = rsl[0].title
 		        this.tags = rsl[0].v_strTags
+		        this.legend = rsl[0].images[0].name
 		        this.shortDescription = rsl[0].shortDescription
 		        this.longDescription = rsl[0].longDescription
 		        
