@@ -4,7 +4,7 @@
 			<	
 		</div>
 		<ul class="projects-list">
-			<li v-for="(p, index) in projects" class="projects-project projects-project--active projects-project--change" :data-name="p.slug" :data-tags="p.v_strTags">
+			<li v-for="(p, index) in projectsSelecteds" class="projects-project projects-project--active projects-project--change" :data-name="p.slug" :data-tags="p.v_strTags">
 				<a href="#" class="projects-windows" @click.stop="project($event)">
 					<div class="projects-header">
 						<h2 class="projects-title">{{ p.title }}</h2>
@@ -21,16 +21,17 @@
 import API from '../services/Api'
 
 export default {
-    data: () => {
-        return {
-            skip: 0,
-            lock: false
-        }
-    },
 	props: {
 		'goProject': { default: false },
 		'projects': { default: () => [] }
 	},
+    data: () => {
+        return {
+            skip: 0,
+            lock: false,
+            projectsSelecteds: { default: () => [] }
+        }
+    },
     methods: {
     	project: function(e) {
     		e.target.parentNode.classList.add("projects-project--selected");
@@ -52,7 +53,7 @@ export default {
                 setTimeout(() => {
                     API.getProjectsPage(this.skip)
                         .then(rsl => {
-                            this.projects = rsl;
+                            this.projectsSelecteds = rsl;
                         })
                 },500)
             }
@@ -68,7 +69,7 @@ export default {
                 setTimeout(() => {
                     API.getProjectsPage(Math.max(this.skip))
                         .then(rsl => {
-                            this.projects = rsl;
+                            this.projectsSelecteds = rsl;
                         })
                 },500)
             }
@@ -96,6 +97,9 @@ export default {
     		}, 500);
     	},
     	projects: function() {
+    	   this.projectsSelecteds= this.projects;
+    	},
+    	projectsSelecteds: function() {
     	    setTimeout(() => {
                 var projectsProject = document.querySelectorAll('.projects-project');
                 for(var i=projectsProject.length;i--;) {
