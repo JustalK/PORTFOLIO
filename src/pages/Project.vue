@@ -17,12 +17,12 @@
 					</div>
 					<div class="projects-background projects-background--down">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.legend }}</h2>
+							<h2 class="projects-title">{{ this.legend2 }}</h2>
 						</div>
 					</div>
 					<div class="projects-background projects-background--tooup">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.legend }}</h2>
+							<h2 class="projects-title">{{ this.legend2 }}</h2>
 						</div>
 					</div>
 				</div>
@@ -45,14 +45,17 @@ import API from '../services/Api'
 export default {
     data: () => {
     	return {
+    	    article: '',
     		title: '',
             legend: '',
+            legend2: '',
     		shortDescription: '',
     		longDescription: '',
     		tags: [],
     		goProject: false,
     		tags: [],
-    		informationsTag: []
+    		informationsTag: [],
+    		positionSlider: 0
 		}
     },
     components: {
@@ -70,10 +73,13 @@ export default {
 	    	},1000);
     	},
     	slideUp: function() {
+    		this.positionSlider = this.positionSlider+1<this.article.images.length ? this.positionSlider++ : 0;
     		var projectsBackgroundTooUp = document.querySelector(".projects-background--tooup");
+            this.legend2 = this.article.images[this.positionSlider].name;
 			projectsBackgroundTooUp.classList.remove("projects-background--tooup");
 			projectsBackgroundTooUp.classList.add("projects-background--downdown");
-    			
+    		projectsBackgroundTooUp.style.cssText = "background-image: url('"+this.article.images[this.positionSlider].path+"')";
+			
     		setTimeout(function() {
 	    		var projectsBackgroundUp = document.querySelector(".projects-background--up");
 	    		var projectsBackgroundDown = document.querySelector(".projects-background--down");
@@ -97,21 +103,23 @@ export default {
 			informationsTagTmp = rsl;
 	    	API.getProject(name)
 		    	.then(rsl => {
-		    	var strTags = rsl[0].v_strTags.split(',');
+		    	var strTags = rsl.v_strTags.split(',');
 	        	for(var i=informationsTagTmp.length;i--;) {
 	        		if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
 	        	}
+	        	this.article = rsl;
 	        	this.informationsTag = informationsTagTmp;
-		        this.title = rsl[0].title
-		        this.tags = rsl[0].v_strTags
-		        this.legend = rsl[0].images[0].name
-		        this.shortDescription = rsl[0].shortDescription
-		        this.longDescription = rsl[0].longDescription
+		        this.title = rsl.title
+		        this.tags = rsl.v_strTags
+		        this.legend = rsl.images[0].name
+		        this.shortDescription = rsl.shortDescription
+		        this.longDescription = rsl.longDescription
 		        
 		        var projectsBackground = document.querySelector(".projects-background");
 		        var projectsBackgroundDown = document.querySelector(".projects-background--down");
-		        projectsBackground.style.cssText = "background-image: url('"+rsl[0].images[0].path+"')";
-		        projectsBackgroundDown.style.cssText = "background-image: url('"+rsl[0].images[1].path+"')";
+		        projectsBackground.style.cssText = "background-image: url('"+rsl.images[0].path+"')";
+                this.legend2 = rsl.images[rsl.images.lenght==1 ? 0 : 1].name;
+		        projectsBackgroundDown.style.cssText = "background-image: url('"+rsl.images[rsl.images.lenght==1 ? 0 : 1].path+"')";
 		    })
     	})
     }

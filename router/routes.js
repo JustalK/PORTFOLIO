@@ -31,7 +31,7 @@ routes.route('/articles/:page').get((req, res, next) => {
 })
 
 routes.route('/article/:name').get((req, res, next) => {
-	Article.find({slug: req.params.name }).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, article) => {
+	Article.findOne({slug: req.params.name }).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, article) => {
 		if (err) return next(new Error(err))
 
 		res.json(article)
