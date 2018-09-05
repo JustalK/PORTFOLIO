@@ -96,16 +96,22 @@ export default {
     		}, 0);
     	},
     	next: function() {
-    	       console.log(this);
     	    API.getNextProject(this.article.order)
             .then(rsl => {
                 this.goProject = true;
-                var projects = document.querySelector(".projects"),
-                projectsProject = document.querySelector(".projects-project");
-                projects.classList.add("projects--active")
-                projectsProject.classList.add("projects-project--active")
                 setTimeout(() => {
+                    console.log(rsl);
+                    this.article = rsl;
+                    this.title = rsl.title;
+                    this.shortDescription = rsl.shortDescription;
+                    /**
+                    var projects = document.querySelector(".projects"),
+                    projectsProject = document.querySelector(".projects-project");
+                    projects.classList.add("projects--active")
+                    projectsProject.classList.add("projects-project--active")
+                    **/
                     this.$router.push({ name: 'project', params: {name:rsl.slug} });
+                    this.goProject = false;
                 },1000);
             })
     	}

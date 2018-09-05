@@ -38,8 +38,15 @@ export default {
     	goProject: function() {
     		var informationsDescriptionTransition = document.querySelector('.informations-description_transition'),
     		informationsTitleSize = document.querySelector('.informations-title_transition');
-    		informationsDescriptionTransition.classList.add('informations-description_transition--active');
-    		informationsTitleSize.classList.add('informations-title_transition--active');
+    		if(this.goProject) {
+        		informationsDescriptionTransition.classList.add('informations-description_transition--active');
+        		informationsTitleSize.classList.add('informations-title_transition--active');    		
+    		} else {    		
+                informationsDescriptionTransition.classList.remove('informations-description_transition--init');
+                informationsTitleSize.classList.remove('informations-title_transition--init');
+                informationsDescriptionTransition.classList.remove('informations-description_transition--active');
+                informationsTitleSize.classList.remove('informations-title_transition--active');
+    		}
     	}
     },
     mounted: function() {
