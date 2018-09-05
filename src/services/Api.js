@@ -21,6 +21,13 @@ const getProject = function (name) {
     })
 }
 
+const getNextProject = function (order) {
+    return Axios.get('http://localhost:8080/api/article/next/' + order)
+    .then(response => {
+        return response.data;
+    })
+}
+
 const getTags = function () {
     return Axios.get('http://localhost:8080/api/tags/all')
     .then(response => {
@@ -32,5 +39,6 @@ export default {
     getProjects: getProjects,
     getProjectsPage: getProjectsPage,
     getProject: getProject,
+    getNextProject: getNextProject,
     getTags: getTags
 }

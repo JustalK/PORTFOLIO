@@ -23,7 +23,10 @@ var article = new mongoose.Schema(
 		images: [{
 			type: Schema.Types.ObjectId,
 			ref: 'Image'
-		}] 
+		}],
+		order: {
+			type: Number
+		}
 	},
 	{
 		collection: 'articles'

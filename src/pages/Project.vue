@@ -12,22 +12,22 @@
 				<div class="projects-windows" @click="slideUp">
 					<div class="projects-background projects-background--up">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.legend }}</h2>
+							<h2 class="projects-title"></h2>
 						</div>
 					</div>
 					<div class="projects-background projects-background--down">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.legend2 }}</h2>
+							<h2 class="projects-title"></h2>
 						</div>
 					</div>
 					<div class="projects-background projects-background--tooup">
 						<div class="projects-header">
-							<h2 class="projects-title">{{ this.legend2 }}</h2>
+							<h2 class="projects-title"></h2>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="projects-right">
+			<div class="projects-right" @click.stop="next()">
 					
 			</div>
 		</div>
@@ -55,7 +55,7 @@ export default {
     		goProject: false,
     		tags: [],
     		informationsTag: [],
-    		positionSlider: 0
+    		positionSlider: 1
 		}
     },
     components: {
@@ -73,9 +73,10 @@ export default {
 	    	},1000);
     	},
     	slideUp: function() {
-    		this.positionSlider = this.positionSlider+1<this.article.images.length ? this.positionSlider++ : 0;
+    		this.positionSlider = this.positionSlider+1<this.article.images.length ? this.positionSlider+1 : 0;
     		var projectsBackgroundTooUp = document.querySelector(".projects-background--tooup");
-            this.legend2 = this.article.images[this.positionSlider].name;
+            var projectsBackgroundTooUpTitle = document.querySelector(".projects-background--tooup h2");
+            projectsBackgroundTooUpTitle.innerText = this.article.images[this.positionSlider].name;
 			projectsBackgroundTooUp.classList.remove("projects-background--tooup");
 			projectsBackgroundTooUp.classList.add("projects-background--downdown");
     		projectsBackgroundTooUp.style.cssText = "background-image: url('"+this.article.images[this.positionSlider].path+"')";
@@ -93,6 +94,20 @@ export default {
 	    		projectsBackgroundDown.classList.add("projects-background--up");
 	    		projectsBackgroundDownDown.classList.add("projects-background--down");
     		}, 0);
+    	},
+    	next: function() {
+    	       console.log(this);
+    	    API.getNextProject(this.article.order)
+            .then(rsl => {
+                this.goProject = true;
+                var projects = document.querySelector(".projects"),
+                projectsProject = document.querySelector(".projects-project");
+                projects.classList.add("projects--active")
+                projectsProject.classList.add("projects-project--active")
+                setTimeout(() => {
+                    this.$router.push({ name: 'project', params: {name:rsl.slug} });
+                },1000);
+            })
     	}
     },
     mounted: function () {
@@ -111,14 +126,16 @@ export default {
 	        	this.informationsTag = informationsTagTmp;
 		        this.title = rsl.title
 		        this.tags = rsl.v_strTags
-		        this.legend = rsl.images[0].name
 		        this.shortDescription = rsl.shortDescription
 		        this.longDescription = rsl.longDescription
 		        
 		        var projectsBackground = document.querySelector(".projects-background");
 		        var projectsBackgroundDown = document.querySelector(".projects-background--down");
+		        var projectsBackgroundTitle = document.querySelector(".projects-background--up h2");
+		        var projectsBackgroundDownTitle = document.querySelector(".projects-background--down h2");
 		        projectsBackground.style.cssText = "background-image: url('"+rsl.images[0].path+"')";
-                this.legend2 = rsl.images[rsl.images.lenght==1 ? 0 : 1].name;
+                projectsBackgroundTitle.innerText = rsl.images[0].name
+                projectsBackgroundDownTitle.innerText = rsl.images[rsl.images.lenght==1 ? 0 : 1].name;
 		        projectsBackgroundDown.style.cssText = "background-image: url('"+rsl.images[rsl.images.lenght==1 ? 0 : 1].path+"')";
 		    })
     	})

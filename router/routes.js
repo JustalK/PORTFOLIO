@@ -30,14 +30,27 @@ routes.route('/articles/:page').get((req, res, next) => {
 	});
 })
 
+// Return the article with a particular slug
 routes.route('/article/:name').get((req, res, next) => {
 	Article.findOne({slug: req.params.name }).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, article) => {
 		if (err) return next(new Error(err))
-
 		res.json(article)
 	})
 })
 
+// Return the next article
+routes.route('/article/next/:order').get((req, res, next) => {
+	Article.count().exec((err, nbr) => {
+		let order = req.params.order*1+1<nbr ? req.params.order*1+1 : 0;
+		Article.findOne({order: order }).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, article) => {
+			if (err) return next(new Error(err))
+			res.json(article)
+		})
+	})
+})
+
+
+// return all the tage of the application
 routes.route('/tags/all').get((req, res, next) => {
 	Tag.find((err, tags) => {
 		if (err) return next(new Error(err))
