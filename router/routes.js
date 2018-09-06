@@ -49,6 +49,18 @@ routes.route('/article/next/:order').get((req, res, next) => {
 	})
 })
 
+// Return the previous article
+routes.route('/article/prev/:order').get((req, res, next) => {
+	Article.count().exec((err, nbr) => {
+		console.log(req.params.order);
+		let order = req.params.order*1-1>=0 ? req.params.order*1-1 : nbr-1;
+		Article.findOne({order: order }).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, article) => {
+			if (err) return next(new Error(err))
+			res.json(article)
+		})
+	})
+})
+
 
 // return all the tage of the application
 routes.route('/tags/all').get((req, res, next) => {

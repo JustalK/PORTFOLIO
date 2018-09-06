@@ -5,7 +5,7 @@
 		</a>
 		<my-informations :title="title" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
-			<div class="projects-left">
+			<div class="projects-left" @click.stop="prev()">
 				
 			</div>
 			<div class="projects-project projects-project--extend">
@@ -109,9 +109,20 @@ export default {
                 },1000);
               })
     	},
-    	updateArticle: function() {
-    	
-    	}
+        prev: function() {
+            API.getPrevProject(this.article.order)
+            .then(rsl => {
+                this.goProject = true;
+                var projectsProject = document.querySelector(".projects-project");
+                projectsProject.classList.add("projects-project--active")
+                setTimeout(() => {
+                    this.article = rsl;
+                    projectsProject.classList.remove("projects-project--active")
+                    this.$router.push({ name: 'project', params: {name:rsl.slug} });
+                    this.goProject = false;
+                },1000);
+              })
+        }
     },
     watch: {
         article: function() {
