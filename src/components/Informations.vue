@@ -30,8 +30,10 @@ export default {
     		for(var i=tags.length;i--;) {
     			if(this.tags.indexOf(tags[i].innerHTML) !== -1) {
     				tags[i].classList.add('informations-tag--inside');
+    				tags[i].classList.remove('informations-tag--not_inside');
     			} else {
-    				tags[i].classList.add('informations-tag--not_inside');    				
+    				tags[i].classList.add('informations-tag--not_inside');
+    				tags[i].classList.remove('informations-tag--inside');    				
     			}
     		}
     	},

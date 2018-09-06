@@ -104,6 +104,7 @@ export default {
                     this.article = rsl;
                     this.title = rsl.title;
                     this.shortDescription = rsl.shortDescription;
+                    this.tags = rsl.v_strTags
                     /**
                     var projects = document.querySelector(".projects"),
                     projectsProject = document.querySelector(".projects-project");
@@ -113,7 +114,7 @@ export default {
                     this.$router.push({ name: 'project', params: {name:rsl.slug} });
                     this.goProject = false;
                 },1000);
-            })
+              })
     	}
     },
     mounted: function () {
