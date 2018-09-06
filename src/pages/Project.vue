@@ -99,23 +99,36 @@ export default {
     	    API.getNextProject(this.article.order)
             .then(rsl => {
                 this.goProject = true;
+                var projectsProject = document.querySelector(".projects-project");
+                projectsProject.classList.add("projects-project--active")
                 setTimeout(() => {
-                    console.log(rsl);
                     this.article = rsl;
-                    this.title = rsl.title;
-                    this.shortDescription = rsl.shortDescription;
-                    this.tags = rsl.v_strTags
-                    /**
-                    var projects = document.querySelector(".projects"),
-                    projectsProject = document.querySelector(".projects-project");
-                    projects.classList.add("projects--active")
-                    projectsProject.classList.add("projects-project--active")
-                    **/
+                    projectsProject.classList.remove("projects-project--active")
                     this.$router.push({ name: 'project', params: {name:rsl.slug} });
                     this.goProject = false;
                 },1000);
               })
+    	},
+    	updateArticle: function() {
+    	
     	}
+    },
+    watch: {
+        article: function() {
+            this.title = this.article.title
+            this.tags = this.article.v_strTags
+            this.shortDescription = this.article.shortDescription
+            this.longDescription = this.article.longDescription
+            
+            var projectsBackground = document.querySelector(".projects-background");
+            var projectsBackgroundDown = document.querySelector(".projects-background--down");
+            var projectsBackgroundTitle = document.querySelector(".projects-background--up h2");
+            var projectsBackgroundDownTitle = document.querySelector(".projects-background--down h2");
+            projectsBackground.style.cssText = "background-image: url('"+this.article.images[0].path+"')";
+            projectsBackgroundTitle.innerText = this.article.images[0].name
+            projectsBackgroundDownTitle.innerText = this.article.images[this.article.images.length==1 ? 0 : 1].name;
+            projectsBackgroundDown.style.cssText = "background-image: url('"+this.article.images[this.article.images.length==1 ? 0 : 1].path+"')";
+        }
     },
     mounted: function () {
     	var name = this.$route.params.name;
@@ -129,21 +142,8 @@ export default {
 	        	for(var i=informationsTagTmp.length;i--;) {
 	        		if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
 	        	}
-	        	this.article = rsl;
 	        	this.informationsTag = informationsTagTmp;
-		        this.title = rsl.title
-		        this.tags = rsl.v_strTags
-		        this.shortDescription = rsl.shortDescription
-		        this.longDescription = rsl.longDescription
-		        
-		        var projectsBackground = document.querySelector(".projects-background");
-		        var projectsBackgroundDown = document.querySelector(".projects-background--down");
-		        var projectsBackgroundTitle = document.querySelector(".projects-background--up h2");
-		        var projectsBackgroundDownTitle = document.querySelector(".projects-background--down h2");
-		        projectsBackground.style.cssText = "background-image: url('"+rsl.images[0].path+"')";
-                projectsBackgroundTitle.innerText = rsl.images[0].name
-                projectsBackgroundDownTitle.innerText = rsl.images[rsl.images.lenght==1 ? 0 : 1].name;
-		        projectsBackgroundDown.style.cssText = "background-image: url('"+rsl.images[rsl.images.lenght==1 ? 0 : 1].path+"')";
+	        	this.article = rsl;
 		    })
     	})
     }
