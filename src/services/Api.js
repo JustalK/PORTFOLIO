@@ -7,8 +7,8 @@ const getProjects = function () {
     })
 }
 
-const getProjectsPage = function (page) {
-    return Axios.get('http://localhost:8080/api/articles/' + page)
+const getProjectsPage = function (page,tags='') {
+    return Axios.get('http://localhost:8080/api/articles/' + page + tags)
     .then(response => {
         return response.data;
     })
