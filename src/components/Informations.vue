@@ -9,7 +9,7 @@
 			<div class="informations-description">{{ this.description }}</div>
 		</div>
 		<ul class="informations-tags">
-			<li v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}">{{ tag.name }}</li>
+			<li @click.stop="filter($event)" v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}">{{ tag.name }}</li>
 		</ul>
 	</div>
 </template>
@@ -17,12 +17,23 @@
 import API from '../services/Api'
 
 export default {
+    data: () => {
+        return {
+            tagsSelected: []
+        }
+    },
 	props: {
 		'title': { default: 'Default' },
 		'description': { default: 'Default' },
 		'goProject': { default: false },
 		'tags': { default: () => [] },
 		'informationsTag': { default: () => [] }
+	},
+	methods: {
+	    filter: function(e) {
+	       tagsSelected.push(e.target.innerHTML);
+	       this.$parent.filter();
+	    }
 	},
     watch: {
     	tags: function() {

@@ -23,6 +23,11 @@ export default {
 			projects: []
 		}
     },
+    methods: {
+        filter: function(e) {
+           console.log('test');
+        }
+    },
 	mounted: function () {
 		API.getProjectsPage()
 	    	.then(rsl => {
