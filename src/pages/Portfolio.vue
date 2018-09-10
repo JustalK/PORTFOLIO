@@ -1,6 +1,6 @@
 <template>
 	<div id="PORTFOLIO" class="content">
-		<my-informations :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
+		<my-informations v-on:filter="filter" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
     	<my-sliders :goProject="goProject" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
     		<my-pubs v-show="!goProject"></my-pubs>
@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         filter: function(e) {
-           console.log('test');
+           console.log(e);
         }
     },
 	mounted: function () {

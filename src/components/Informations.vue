@@ -31,8 +31,24 @@ export default {
 	},
 	methods: {
 	    filter: function(e) {
-	       tagsSelected.push(e.target.innerHTML);
-	       this.$parent.filter();
+	        let index = this.tagsSelected.indexOf(e.target.innerHTML);
+	        if(index===-1) {
+    	        this.tagsSelected.push(e.target.innerHTML);
+	        } else {
+                this.tagsSelected.splice(index,1);
+	        }
+            var tags = document.querySelectorAll('.informations-tag');
+            for(var i=tags.length;i--;) {
+                if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
+                    tags[i].classList.add('informations-tag--inside');
+                    tags[i].classList.remove('informations-tag--not_inside');
+                } else {
+                    tags[i].classList.add('informations-tag--not_inside');
+                    tags[i].classList.remove('informations-tag--inside');                   
+                }
+            }
+            this.$emit('filter',this.tagsSelected);
+	       //this.$parent.filter();
 	    }
 	},
     watch: {
