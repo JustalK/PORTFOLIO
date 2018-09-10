@@ -19,7 +19,7 @@ routes.route('/articles/all').get((req, res, next) => {
 
 // Return the list of 4 articles max by page
 routes.route('/articles/:page').get((req, res, next) => {
-	console.log(req.query.request);
+	console.log(req.query.tags);
 	Article.count().exec((err, nbr) => {
 		let maxpage = Math.floor((nbr - 1) / 4)+1;
 		let skip = req.params.page<0 ? ((maxpage - (-req.params.page%maxpage))%(maxpage))*4 : (req.params.page%(maxpage))*4;

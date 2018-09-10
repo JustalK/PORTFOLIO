@@ -48,7 +48,6 @@ export default {
                 }
             }
             this.$emit('filter',this.tagsSelected);
-	       //this.$parent.filter();
 	    }
 	},
     watch: {
