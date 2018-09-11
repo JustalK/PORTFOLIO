@@ -1,7 +1,7 @@
 <template>
 	<div id="PORTFOLIO" class="content">
 		<my-informations v-on:filter="filter" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
-    	<my-sliders :goProject="goProject" :projects="projects"></my-sliders>
+    	<my-sliders :goProject="goProject" :tagsSelectedId="tagsSelectedId" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
     		<my-pubs v-show="!goProject"></my-pubs>
     	</transition>
@@ -20,7 +20,8 @@ export default {
     		tags: [],
 			goProject: false,
 			informationsTag: [],
-			projects: []
+			projects: [],
+			tagsSelectedId: []
 		}
     },
     methods: {
@@ -28,6 +29,7 @@ export default {
             for(var i=e.length,rsl=[];i--;) {
                 rsl.push('tags='+e[i])
             }
+            this.tagsSelectedId = e;
             API.getProjectsPage(0,'?'+rsl.join('&'))
                 .then(rsl => {
                     this.projects = rsl;

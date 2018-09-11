@@ -23,7 +23,8 @@ import API from '../services/Api'
 export default {
 	props: {
 		'goProject': { default: false },
-		'projects': { default: () => [] }
+		'projects': { default: () => [] },
+		'tagsSelectedId': { default: () => [] }
 	},
     data: () => {
         return {
@@ -50,8 +51,11 @@ export default {
                     projectsProject[i].classList.add("projects-project--change");
                 }
                 this.skip++;
+                for(var i=this.tagsSelectedId.length,rsl=[];i--;) {
+                    rsl.push('tags='+this.tagsSelectedId[i])
+                }
                 setTimeout(() => {
-                    API.getProjectsPage(this.skip)
+                    API.getProjectsPage(this.skip,'?'+rsl.join('&'))
                         .then(rsl => {
                             this.projectsSelecteds = rsl;
                         })
@@ -66,8 +70,11 @@ export default {
                     projectsProject[i].classList.add("projects-project--change");
                 }
                 this.skip--;
+                for(var i=this.tagsSelectedId.length,rsl=[];i--;) {
+                    rsl.push('tags='+this.tagsSelectedId[i])
+                }
                 setTimeout(() => {
-                    API.getProjectsPage(Math.max(this.skip))
+                    API.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
                         .then(rsl => {
                             this.projectsSelecteds = rsl;
                         })
