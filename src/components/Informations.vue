@@ -9,7 +9,7 @@
 			<div class="informations-description">{{ this.description }}</div>
 		</div>
 		<ul class="informations-tags">
-			<li @click.stop="filter($event)" v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}">{{ tag.name }}</li>
+			<li @click.stop="filter($event)" v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}" :data-id="tag._id">{{ tag.name }}</li>
 		</ul>
 	</div>
 </template>
@@ -38,16 +38,17 @@ export default {
                 this.tagsSelected.splice(index,1);
 	        }
             var tags = document.querySelectorAll('.informations-tag');
-            for(var i=tags.length;i--;) {
+            for(var i=tags.length,rsl=[];i--;) {
                 if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
                     tags[i].classList.add('informations-tag--inside');
                     tags[i].classList.remove('informations-tag--not_inside');
+                    rsl.push(tags[i].dataset.id);
                 } else {
                     tags[i].classList.add('informations-tag--not_inside');
                     tags[i].classList.remove('informations-tag--inside');                   
                 }
             }
-            this.$emit('filter',this.tagsSelected);
+            this.$emit('filter',rsl);
 	    }
 	},
     watch: {
