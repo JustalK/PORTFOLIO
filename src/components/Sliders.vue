@@ -28,7 +28,7 @@ export default {
 	},
     data: () => {
         return {
-            skip: 0,
+            skip: { default: 0 },
             lock: false,
             projectsSelecteds: { default: () => [] }
         }
@@ -70,6 +70,7 @@ export default {
                     projectsProject[i].classList.add("projects-project--change");
                 }
                 this.skip--;
+                console.log(this.skip);
                 for(var i=this.tagsSelectedId.length,rsl=[];i--;) {
                     rsl.push('tags='+this.tagsSelectedId[i])
                 }
@@ -106,6 +107,9 @@ export default {
     	projects: function() {
     	   this.projectsSelecteds= this.projects;
     	},
+    	tagsSelectedId: function() {
+           this.skip = 0;
+        },
     	projectsSelecteds: function() {
     	    setTimeout(() => {
                 var projectsProject = document.querySelectorAll('.projects-project');

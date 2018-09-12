@@ -27,7 +27,7 @@ export default {
     methods: {
         filter: function(e) {
             for(var i=e.length,rsl=[];i--;) {
-                rsl.push('tags='+e[i])
+                rsl.push('tags='+e[i]);
             }
             this.tagsSelectedId = e;
             API.getProjectsPage(0,'?'+rsl.join('&'))
