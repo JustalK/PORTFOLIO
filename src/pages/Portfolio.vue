@@ -1,6 +1,6 @@
 <template>
 	<div id="PORTFOLIO" class="content">
-		<my-informations v-on:filter="filter" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
+		<my-informations v-on:filter="filter" :activeTags="activeTags" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
     	<my-sliders :goProject="goProject" :tagsSelectedId="tagsSelectedId" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
     		<my-pubs v-show="!goProject"></my-pubs>
@@ -21,7 +21,8 @@ export default {
 			goProject: false,
 			informationsTag: [],
 			projects: [],
-			tagsSelectedId: []
+			tagsSelectedId: [],
+			activeTags: true
 		}
     },
     methods: {

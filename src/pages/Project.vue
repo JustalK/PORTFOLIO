@@ -3,7 +3,7 @@
 		<a href="#" class="back" @click.stop="projects">
 			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
 		</a>
-		<my-informations :title="title" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
+		<my-informations v-on:filter="" :title="title" :activeTags="activeTags" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left" @click.stop="prev()">
 				
@@ -55,7 +55,8 @@ export default {
     		goProject: false,
     		tags: [],
     		informationsTag: [],
-    		positionSlider: 1
+    		positionSlider: 1,
+            activeTags: false
 		}
     },
     components: {

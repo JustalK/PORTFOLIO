@@ -27,28 +27,31 @@ export default {
 		'description': { default: 'Default' },
 		'goProject': { default: false },
 		'tags': { default: () => [] },
-		'informationsTag': { default: () => [] }
+		'informationsTag': { default: () => [] },
+		'activeTags': { default: false }
 	},
 	methods: {
 	    filter: function(e) {
-	        let index = this.tagsSelected.indexOf(e.target.innerHTML);
-	        if(index===-1) {
-    	        this.tagsSelected.push(e.target.innerHTML);
-	        } else {
-                this.tagsSelected.splice(index,1);
-	        }
-            var tags = document.querySelectorAll('.informations-tag');
-            for(var i=tags.length,rsl=[];i--;) {
-                if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
-                    tags[i].classList.add('informations-tag--inside');
-                    tags[i].classList.remove('informations-tag--not_inside');
-                    rsl.push(tags[i].dataset.id);
-                } else {
-                    tags[i].classList.add('informations-tag--not_inside');
-                    tags[i].classList.remove('informations-tag--inside');                   
+	        if(this.activeTags) {
+    	        let index = this.tagsSelected.indexOf(e.target.innerHTML);
+    	        if(index===-1) {
+        	        this.tagsSelected.push(e.target.innerHTML);
+    	        } else {
+                    this.tagsSelected.splice(index,1);
+    	        }
+                var tags = document.querySelectorAll('.informations-tag');
+                for(var i=tags.length,rsl=[];i--;) {
+                    if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
+                        tags[i].classList.add('informations-tag--inside');
+                        tags[i].classList.remove('informations-tag--not_inside');
+                        rsl.push(tags[i].dataset.id);
+                    } else {
+                        tags[i].classList.add('informations-tag--not_inside');
+                        tags[i].classList.remove('informations-tag--inside');                   
+                    }
                 }
+                this.$emit('filter',rsl);
             }
-            this.$emit('filter',rsl);
 	    }
 	},
     watch: {
