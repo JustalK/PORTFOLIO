@@ -13,6 +13,11 @@ For using this project, a server mongo has to be running
 ```
 $ mongod
 ```
+if an error appear when you run this command that is about the permission of the file :
+```
+exception in initAndListen: IllegalOperation: Attempted to create a lock file on a read-only directory: /data/db, terminating
+```
+In this case, use sudo mongod.
 
 ## Build
 
