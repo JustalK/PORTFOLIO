@@ -105,7 +105,13 @@ export default {
     		}, 500);
     	},
     	projects: function() {
-    	   this.projectsSelecteds= this.projects;
+	        var projectsProject = document.querySelectorAll('.projects-project');
+            for(var i=projectsProject.length;i--;) {
+                projectsProject[i].classList.add("projects-project--change");
+            }
+           setTimeout(() => {
+    	       this.projectsSelecteds= this.projects;
+    	   },300);
     	},
     	tagsSelectedId: function() {
            this.skip = 0;
