@@ -105,13 +105,15 @@ export default {
     		}, 500);
     	},
     	projects: function() {
-	        var projectsProject = document.querySelectorAll('.projects-project');
-            for(var i=projectsProject.length;i--;) {
-                projectsProject[i].classList.add("projects-project--change");
-            }
-           setTimeout(() => {
-    	       this.projectsSelecteds= this.projects;
-    	   },300);
+    	   if(this.projects!=1) {
+    	        var projectsProject = document.querySelectorAll('.projects-project');
+                for(var i=projectsProject.length;i--;) {
+                    projectsProject[i].classList.add("projects-project--change");
+                }
+               setTimeout(() => {
+        	       this.projectsSelecteds= this.projects;
+        	   },300);
+    	   }
     	},
     	tagsSelectedId: function() {
            this.skip = 0;
