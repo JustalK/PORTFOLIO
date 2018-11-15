@@ -30,7 +30,7 @@ export default {
 	},
     data: () => {
         return {
-            skip: { default: 0 },
+            skip: 0,
             lock: false,
             projectsSelecteds: { default: () => [] }
         }
@@ -107,15 +107,7 @@ export default {
     		}, 500);
     	},
     	projects: function() {
-    	   if(this.projects!=1) {
-    	        var projectsProject = document.querySelectorAll('.projects-project');
-                for(var i=projectsProject.length;i--;) {
-                    projectsProject[i].classList.add("projects-project--change");
-                }
-               setTimeout(() => {
-        	       this.projectsSelecteds= this.projects;
-        	   },300);
-    	   }
+	       this.projectsSelecteds= this.projects;
     	},
     	tagsSelectedId: function() {
            this.skip = 0;
