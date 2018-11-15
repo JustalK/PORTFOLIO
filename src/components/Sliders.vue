@@ -9,6 +9,8 @@
 					<div class="projects-header">
 						<h2 class="projects-title">{{ p.title }}</h2>
 					</div>
+				    <div class="projects-windowsbg" :data-bgHQ="p.images[0].path">
+					</div>
 				</a>
 			</li>
 		</ul>
@@ -131,10 +133,20 @@ export default {
     updated: function() {
 		var projects = document.querySelector(".projects");
 		var projectsProject = document.querySelectorAll(".projects-project");
+        var projectsWindows = document.querySelectorAll(".projects-windowsbg");
 		projects.classList.remove("projects--active");
 		for(var i=projectsProject.length;i--;) {
 			projectsProject[i].classList.remove("projects-project--active");
 		}
+		var backgroundHQ = [];
+        for(var i=0,countI=projectsWindows.length;i<countI;i++) {
+            backgroundHQ.push(new Image());
+            backgroundHQ[i].src = projectsWindows[i].dataset.bghq;
+            backgroundHQ[i].addEventListener('load',function() {
+                projectsWindows[this].style.backgroundImage = "url("+projectsWindows[this].dataset.bghq+")";
+                projectsWindows[this].classList.add("projects-windowsbg--active");
+            }.bind(i));
+        }
     }
 }
 </script>

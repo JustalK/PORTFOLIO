@@ -23,7 +23,7 @@ routes.route('/articles/:page').get((req, res, next) => {
 	Article.find(findQuery).countDocuments().exec((err, nbr) => {
 		let maxpage = Math.floor((nbr - 1) / 4)+1;
 		let skip = req.params.page<0 ? ((maxpage - (-req.params.page%maxpage))%(maxpage))*4 : (req.params.page%(maxpage))*4;
-		Article.find(findQuery).skip(skip).limit(4).populate({path: 'tags',select: 'name'}).exec((err, articles) => {
+		Article.find(findQuery).skip(skip).limit(4).populate({path: 'tags',select: 'name'}).populate({path: 'images'}).exec((err, articles) => {
 			if (err) return next(new Error(err))
 			
 			res.json(articles)
