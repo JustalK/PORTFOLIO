@@ -9,7 +9,7 @@
 					<div class="projects-header">
 						<h2 class="projects-title">{{ p.title }}</h2>
 					</div>
-				    <div class="projects-windowsbg" :data-bgHQ="p.images[0].path">
+				    <div class="projects-windowsbg">
 					</div>
 				</a>
 			</li>
@@ -133,9 +133,9 @@ export default {
 		var backgroundHQ = [];
         for(var i=0,countI=projectsWindows.length;i<countI;i++) {
             backgroundHQ.push(new Image());
-            backgroundHQ[i].src = projectsWindows[i].dataset.bghq;
+            backgroundHQ[i].src = this.projectsSelecteds[i].images[0].path;
             backgroundHQ[i].addEventListener('load',function() {
-                projectsWindows[this].style.backgroundImage = "url("+projectsWindows[this].dataset.bghq+")";
+                projectsWindows[this].style.backgroundImage = "url("+backgroundHQ[this].src+")";
                 projectsWindows[this].classList.add("projects-windowsbg--active");
             }.bind(i));
         }
