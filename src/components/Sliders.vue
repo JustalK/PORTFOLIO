@@ -11,6 +11,9 @@
 					</div>
 				    <div class="projects-windowsbg">
 					</div>
+					<div class="projects-informations">
+					   <div class="projects-informations_description">{{ p.shortDescription }}</div>
+                    </div>
 				</a>
 			</li>
 		</ul>
