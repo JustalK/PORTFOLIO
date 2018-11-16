@@ -1,5 +1,8 @@
 <template>
 	<div id="PORTFOLIO" class="content">
+	    <a href="#" class="back" @click.stop="back">
+            <div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
+        </a>
 		<my-informations v-on:filter="filter" :activeTags="activeTags" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
     	<my-sliders :goProject="goProject" :tagsSelectedId="tagsSelectedId" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
@@ -26,6 +29,11 @@ export default {
 		}
     },
     methods: {
+        back: function() {
+            setTimeout(() => {
+                this.$router.push({ name: 'Home' })
+            },1000);
+        },
         filter: function(e) {
             for(var i=e.length,rsl=[];i--;) {
                 rsl.push('tags='+e[i]);
