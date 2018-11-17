@@ -40,6 +40,10 @@ export default {
     },
     methods: {
     	project: function(e) {
+    		var projectsInformations = document.querySelectorAll(".projects-informations");
+    		for(var i=projectsInformations.length;i--;) {
+                projectsInformations[i].classList.add("projects-informations--remove");
+            }
     		e.target.parentNode.classList.add("projects-project--selected");
     		var tags = e.target.parentNode.dataset.tags;
     		this.$parent.tags=tags;
