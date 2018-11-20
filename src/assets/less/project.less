@@ -8,14 +8,14 @@
     height: 50px;
     cursor: pointer;
     transition: all 0.5s cubic-bezier(.8,0,.25,1);
+    transform: rotateZ(45deg);
     
     &:hover {
-        transform: rotateZ(45deg) scale(0.8);
+        transform: rotateZ(-45deg) scale(0.8);
     }
     
     &-blocks {
 	    position: absolute;
-	    background: @text-color;
 	    width: 20px;
 	    height: 20px;
 	    transition: all 0.5s cubic-bezier(.8,0,.25,1);
@@ -23,18 +23,22 @@
 	    &_0 {
 		    left:@BACK_BLOCKS_DISTANCE;
 		    top:@BACK_BLOCKS_DISTANCE;
+            background: @background-bloc-0;
 	    }
 	    &_1 {
 	    	right:@BACK_BLOCKS_DISTANCE;
 	    	top:@BACK_BLOCKS_DISTANCE;
+            background: @background-bloc-1;
 	    }
 	    &_2 {
 	    	right:@BACK_BLOCKS_DISTANCE;
 	    	bottom:@BACK_BLOCKS_DISTANCE;
+	    	background: @background-bloc-2;
 	    }
 	    &_3 {
 	    	left:@BACK_BLOCKS_DISTANCE;
 	    	bottom:@BACK_BLOCKS_DISTANCE;
+            background: @background-bloc-3;
 	    }
 	    
     }

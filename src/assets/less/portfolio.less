@@ -40,7 +40,7 @@
 }
 
 .informations {
-	height: 300px;
+	height: 250px;
 	
 	&-title_size {	
 		position: relative;
@@ -51,6 +51,8 @@
 	&-title {
 	    margin: 0;
 	    line-height: 50px;
+	    color: @text-color-white;
+	    text-transform: uppercase;
 	}
 	
 	&-title_transition {
@@ -200,6 +202,39 @@
 		left:0;
 	}
 	
+	&-header {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        color: @text-color;
+        background: @title-color-gradient;
+        height: 40px;
+        pointer-events: none;
+        z-index: @LAYER-COUCHE-2;
+        overflow: hidden;
+        
+        &:before,&:after {
+            content: '';
+            transition: all 0.5s cubic-bezier(.8,0,.25,1);
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            position: absolute;
+            top: 0;
+        }
+        
+        &:before {
+            border-right: 40px solid @background-arrow-slider;
+            right: -40px;
+        }
+        
+        &:after {
+            border-left: 40px solid @background-arrow-slider;
+            left: -40px;
+        }
+    }
+	
 	&-windows {
 	    overflow: hidden;
 	    position: relative;
@@ -215,11 +250,21 @@
 	   
 	   &:hover {
 	       box-shadow: 0px 0px @background-shadow;
+	       
+	       & .projects-header:before {
+	           right: 0;
+	       }
+	       
+	       & .projects-header:after {
+               left: 0;
+           }
 	   }
 	   
 	   &_fix {
 	       overflow: inherit;
 	   }
+	   
+	   
 	}
 	
 	&-windowsbg {
@@ -234,17 +279,6 @@
         &--active {
             opacity: 1;
         }
-	}
-	
-	&-header {
-		position: absolute;
-		width: 100%;
-		top: 0;
-	    color: @text-color;
-	    background: @title-color-gradient;
-    	height: 40px;
-    	pointer-events: none;
-		z-index: @LAYER-COUCHE-2;
 	}
 	
 	&-title {
@@ -293,16 +327,6 @@
 	    }
 	}
 	
-	&-right {
-	    right: -220px;
-	    .navigations();
-	}
-	
-	&-left {
-	    left: -220px;
-	    .navigations();
-	}
-	
 	&-informations {
        transition: all 0.5s cubic-bezier(.8,0,.25,1);
 	   position: absolute;
@@ -329,6 +353,57 @@
        transform: translateY(0);
 	}
 	
+	&-lines {
+        background: @text-color-white;
+        width: 62px;
+        height: 2px;
+        transition: all 0.5s cubic-bezier(.8,0,.25,1);
+        
+        &_1 {
+            transform: translateY(-12px) translateX(30px) rotateZ(45deg);
+            width: 40px;
+        }
+        
+        &_3 {
+            transform: translateY(12px) translateX(30px) rotateZ(-45deg);
+            width: 40px;
+        }
+	}
+	
+	&-right {
+        right: -220px;
+        .navigations();
+        
+        &:hover .projects-lines_1 {
+            transform: translateY(-12px) translateX(10px) rotateZ(0deg);
+        }
+        
+        &:hover .projects-lines_2 {
+            transform: translateX(30px);
+        }
+        
+        &:hover .projects-lines_3 {
+            transform: translateY(12px) translateX(10px) rotateZ(0deg);
+        }
+    }
+    
+    &-left {
+        left: -220px;
+        transform: rotateZ(180deg);
+        .navigations();
+        
+        &:hover .projects-lines_1 {
+            transform: translateY(-12px) translateX(10px) rotateZ(0deg);
+        }
+        
+        &:hover .projects-lines_2 {
+            transform: translateX(30px);
+        }
+        
+        &:hover .projects-lines_3 {
+            transform: translateY(12px) translateX(10px) rotateZ(0deg);
+        }
+    }
 }
 
 .pubs {

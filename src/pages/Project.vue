@@ -6,7 +6,11 @@
 		<my-informations v-on:filter="" :title="title" :activeTags="activeTags" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left" @click.stop="prev()">
-				<div class="projects-left_effects">&lt;</div>
+				<div class="projects-left_effects">
+				    <div class="projects-lines projects-lines_1"></div>
+                    <div class="projects-lines projects-lines_2"></div>
+                    <div class="projects-lines projects-lines_3"></div>
+				</div>
 			</div>
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows projects-windows_fix" @click="slideUp">
@@ -28,7 +32,11 @@
 				</div>
 			</div>
 			<div class="projects-right" @click.stop="next()">
-				<div class="projects-right_effects">&gt;</div>	
+				<div class="projects-right_effects">
+				    <div class="projects-lines projects-lines_1"></div>
+                    <div class="projects-lines projects-lines_2"></div>
+                    <div class="projects-lines projects-lines_3"></div>
+				</div>	
 			</div>
 		</div>
 		<transition name="fade">
