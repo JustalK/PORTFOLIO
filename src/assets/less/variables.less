@@ -1,3 +1,10 @@
 @background-color: #111116;
-@text-color: #FF1461;
-@text-color-dark:  darken(@text-color, 50%);
+@text-color: #61C3FF;
+@text-color-white: #FFF;
+@text-color-less-dark:  darken(@text-color, 20%);
+@text-color-before-dark:  darken(@text-color, 40%);
+@text-color-dark:  darken(@text-color, 70%);
+@text-color-light:  lighten(@text-color, 5%);
+@nav-color-right: linear-gradient(to right, @background-color 20%, @text-color-less-dark 80%);
+@nav-color-left: linear-gradient(to left, @background-color 20%, @text-color-less-dark 80%);
+@title-color-gradient: linear-gradient(to right, @text-color, @text-color-before-dark, @text-color);
