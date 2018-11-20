@@ -1,4 +1,4 @@
-// MIXINS
+@import (reference) "variables.less";
 
 .full {
 	height: 100%;
@@ -24,6 +24,8 @@ body,
 #app,
 #HOME {
 	margin: 0;
+	background-color: @background-color;
+	color: @text-color;
 	.full();
 }
 
