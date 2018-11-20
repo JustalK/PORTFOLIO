@@ -1,7 +1,7 @@
 <template>
 	<div class="projects projects--active">
 		<div class="projects-left" @click.stop="prev()">
-			<	
+			<div class="projects-left_effects">&lt;</div>
 		</div>
 		<ul class="projects-list">
 			<li v-for="(p, index) in projectsSelecteds" class="projects-project projects-project--active projects-project--change" :data-name="p.slug" :data-tags="p.v_strTags">
@@ -18,7 +18,7 @@
 			</li>
 		</ul>
 		<div class="projects-right" @click.stop="next()">
-			>	
+			<div class="projects-left_effects">&gt;</div>	
 		</div>
 	</div>
 </template>

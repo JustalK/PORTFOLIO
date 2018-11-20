@@ -6,10 +6,10 @@
 		<my-informations v-on:filter="" :title="title" :activeTags="activeTags" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
 		<div class="projects projects--extend">
 			<div class="projects-left" @click.stop="prev()">
-				
+				<div class="projects-left_effects">&lt;</div>
 			</div>
 			<div class="projects-project projects-project--extend">
-				<div class="projects-windows" @click="slideUp">
+				<div class="projects-windows projects-windows_fix" @click="slideUp">
 					<div class="projects-background projects-background--up">
 						<div class="projects-header">
 							<h2 class="projects-title"></h2>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="projects-right" @click.stop="next()">
-					
+				<div class="projects-right_effects">&gt;</div>	
 			</div>
 		</div>
 		<transition name="fade">
