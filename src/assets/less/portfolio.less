@@ -207,7 +207,7 @@
         width: 100%;
         top: 0;
         color: @text-color;
-        background: @title-color-gradient;
+        background: @background-color;
         height: 40px;
         pointer-events: none;
         z-index: @LAYER-COUCHE-2;
@@ -245,6 +245,7 @@
 	    text-decoration: none;
 	    background-size: cover;
     	background-position: center center;
+    	border: 1px solid @text-color;
     	box-shadow: 10px 10px @background-shadow;
 	    transition: all 0.5s cubic-bezier(.8,0,.25,1);
 	   
@@ -354,7 +355,7 @@
 	}
 	
 	&-lines {
-        background: @text-color-white;
+        background: @text-color;
         width: 62px;
         height: 2px;
         transition: all 0.5s cubic-bezier(.8,0,.25,1);
