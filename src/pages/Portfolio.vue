@@ -3,7 +3,9 @@
 	    <a href="#" class="back" @click.stop="back">
             <div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
         </a>
-		<my-informations v-on:filter="filter" :activeTags="activeTags" :goProject="goProject" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
+        <span class="back_text">back</span>
+		<my-informations v-on:filter="filter" :activeTags="activeTags" :goProject="goProject" :description="description" :tags="tags" :title="title" :informationsTag="informationsTag"></my-informations>
+    	<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
     	<my-sliders :goProject="goProject" :tagsSelectedId="tagsSelectedId" :projects="projects"></my-sliders>
     	<transition name="fade" mode="out-in">
     		<my-pubs v-show="!goProject"></my-pubs>
@@ -19,13 +21,14 @@ import API from '../services/Api'
 export default {
     data: () => {
     	return {
-    		title: 'Title',
+    		title: 'Works',
     		tags: [],
 			goProject: false,
 			informationsTag: [],
 			projects: [],
 			tagsSelectedId: [],
-			activeTags: true
+			activeTags: true,
+			description: 'From Web Components and UI/UX animations to React.JS, Redux, Vue.JS, and Node.JS. Check out my latest web software development portfolio projects.'
 		}
     },
     methods: {

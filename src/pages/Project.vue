@@ -3,7 +3,9 @@
 		<a href="#" class="back" @click.stop="projects">
 			<div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
 		</a>
+		<span class="back_text">back</span>
 		<my-informations v-on:filter="" :title="title" :activeTags="activeTags" :goProject="goProject" :tags="tags" :description="shortDescription" :informationsTag="informationsTag"></my-informations>
+		<span class="filter_sentance">Click on the image below for switching to the next one.</span>
 		<div class="projects projects--extend">
 			<div class="projects-left" @click.stop="prev()">
 				<div class="projects-left_effects">

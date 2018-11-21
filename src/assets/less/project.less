@@ -10,6 +10,15 @@
     transition: all 0.5s cubic-bezier(.8,0,.25,1);
     transform: rotateZ(45deg);
     
+    &_text {
+        position: absolute;
+        left: 76px;
+        top: 76px;
+        transform: rotateZ(-45deg);
+        font-size: 14px;
+        color: @background-bloc-2;
+    }
+    
     &:hover {
         transform: rotateZ(-45deg) scale(0.8);
     }

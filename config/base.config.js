@@ -31,6 +31,15 @@ module.exports = {
     	loader: 'html-loader'
       },
       {
+    	test: /\.(ttf|otf|eot|woff|woff2)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "src/assets/fonts/[name].[ext]",
+          },
+        },
+      },
+      {
 	    test: /\.js$/,
 	    exclude: /node_modules/,
 	    use : [

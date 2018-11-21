@@ -1,5 +1,5 @@
 @background-color: #111116;
-@background-transparent: #009bfa90;
+@background-transparent: fade(#009bfa,50);
 @background-transparent-opaque: #0d1b29;
 @background-shadow: #000;
 @background-arrow-slider: #20a8fd;
@@ -7,7 +7,7 @@
 @text-color-white: #FFF;
 @text-color-less-dark:  darken(@text-color, 20%);
 @text-color-before-dark:  darken(@text-color, 40%);
-@text-color-dark:  #003c6140;
+@text-color-dark:  fade(#003c61,40);
 @text-color-light:  lighten(@text-color, 5%);
 @nav-color-right: linear-gradient(to right, @background-color 20%, @text-color-less-dark 80%);
 @nav-color-left: linear-gradient(to left, @background-color 20%, @text-color-less-dark 80%);
@@ -18,3 +18,11 @@
 @background-bloc-1: darken(@text-color, 20%);
 @background-bloc-2: darken(@text-color, 40%);
 @background-bloc-3: darken(@text-color, 60%);
+.font-face(@font-family, @filepath, @font-weight, @font-style){
+    @font-face {
+        font-family: @font-family;
+        src: url('@{filepath}.ttf')  format('truetype');
+        font-weight:@font-weight;
+        font-style:@font-style;
+    }
+}
