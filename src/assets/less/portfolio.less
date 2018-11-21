@@ -206,33 +206,12 @@
         position: absolute;
         width: 100%;
         top: 0;
-        color: @text-color;
-        background: @background-color;
+        color: @text-color-white;
+        background: @background-transparent-opaque;
         height: 40px;
         pointer-events: none;
         z-index: @LAYER-COUCHE-2;
         overflow: hidden;
-        
-        &:before,&:after {
-            content: '';
-            transition: all 0.5s cubic-bezier(.8,0,.25,1);
-            width: 0;
-            height: 0;
-            border-top: 20px solid transparent;
-            border-bottom: 20px solid transparent;
-            position: absolute;
-            top: 0;
-        }
-        
-        &:before {
-            border-right: 40px solid @background-arrow-slider;
-            right: -40px;
-        }
-        
-        &:after {
-            border-left: 40px solid @background-arrow-slider;
-            left: -40px;
-        }
     }
 	
 	&-windows {
@@ -245,15 +224,14 @@
 	    text-decoration: none;
 	    background-size: cover;
     	background-position: center center;
-    	border: 1px solid @text-color;
     	box-shadow: 10px 10px @background-shadow;
 	    transition: all 0.5s cubic-bezier(.8,0,.25,1);
 	   
 	   &:hover {
 	       box-shadow: 0px 0px @background-shadow;
 	       
-	       & .projects-header:before {
-	           right: 0;
+	       & .projects-header {
+	           color: @text-color;
 	       }
 	       
 	       & .projects-header:after {
