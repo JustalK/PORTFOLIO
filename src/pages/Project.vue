@@ -9,6 +9,7 @@
 		<div class="projects projects--extend">
 			<div class="projects-left" @click.stop="prev()">
 				<div class="projects-left_effects">
+				    <span class="projects-lines_info">prev</span>
 				    <div class="projects-lines projects-lines_1"></div>
                     <div class="projects-lines projects-lines_2"></div>
                     <div class="projects-lines projects-lines_3"></div>
@@ -35,6 +36,7 @@
 			</div>
 			<div class="projects-right" @click.stop="next()">
 				<div class="projects-right_effects">
+				    <span class="projects-lines_info">next</span>
 				    <div class="projects-lines projects-lines_1"></div>
                     <div class="projects-lines projects-lines_2"></div>
                     <div class="projects-lines projects-lines_3"></div>

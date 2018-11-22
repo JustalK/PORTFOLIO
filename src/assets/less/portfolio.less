@@ -232,6 +232,7 @@
 	    background: @text-color-dark;
 	    width: 100%;
 	    height: 100%;
+	    cursor: pointer;
 	    text-decoration: none;
 	    background-size: cover;
     	background-position: center center;
@@ -362,6 +363,17 @@
             transform: translateY(12px) translateX(30px) rotateZ(-45deg);
             width: 40px;
         }
+        
+        &_info {
+            position: absolute;
+            left: -6px;
+            top: 0px;
+            transform: translateY(-50%);
+            color: #61c2fc;
+            font-size: 16px;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+        }
 	}
 	
 	&-right {
@@ -379,12 +391,20 @@
         &:hover .projects-lines_3 {
             transform: translateY(12px) translateX(10px) rotateZ(0deg);
         }
+        
+        &:hover .projects-lines_info {
+            opacity: 1;
+        }
     }
     
     &-left {
         left: -220px;
-        transform: rotateZ(180deg);
+        transform: rotateZ(180deg) rotateX(180deg);
         .navigations();
+        
+        & .projects-lines_info {
+            transform: translateY(-50%) rotateY(180deg);
+        }
         
         &:hover .projects-lines_1 {
             transform: translateY(-12px) translateX(10px) rotateZ(0deg);
@@ -396,6 +416,10 @@
         
         &:hover .projects-lines_3 {
             transform: translateY(12px) translateX(10px) rotateZ(0deg);
+        }
+        
+        &:hover .projects-lines_info {
+            opacity: 1;
         }
     }
 }
