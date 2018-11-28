@@ -1,5 +1,7 @@
 <template>
-	<div id="HOME">
+	<div id="HOME" class="home">
+	    <div class="home-cover home-cover_1 home-cover_1 home-cover--active"></div>
+        <div class="home-cover home-cover_2 home-cover--active"></div> 
 		<div class="wrap" :class={active:goZoom}>
 			<div class="bloc left" :class={active:goPortfolio}>
 				<div>
@@ -42,6 +44,15 @@ export default {
     			}, 500);
     		}, 500)
     	}
+    },
+    mounted: function () {
+        setTimeout(() => {
+            var cover = document.querySelectorAll(".home-cover");
+            for(var i=cover.length;i--;) {
+                cover[i].classList.remove("home-cover--active");
+            }
+        }, 200);
     }
 }
 </script>
+<style src="../assets/less/home.less"></style>
