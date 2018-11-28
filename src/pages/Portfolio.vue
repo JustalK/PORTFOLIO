@@ -1,5 +1,8 @@
 <template>
 	<div id="PORTFOLIO" class="content">
+	    <div class="content-cover content-cover_1"></div>
+	    <div class="content-cover content-cover_2"></div>
+	
 	    <a href="#" class="back" @click.stop="back">
             <div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
         </a>
@@ -33,6 +36,10 @@ export default {
     },
     methods: {
         back: function() {
+            var cover = document.querySelectorAll(".content-cover");
+            for(var i=cover.length;i--;) {
+                cover[i].classList.add("content-cover--active");
+            }
             setTimeout(() => {
                 this.$router.push({ name: 'Home' })
             },1000);
