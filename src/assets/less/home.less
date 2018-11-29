@@ -39,14 +39,30 @@
         display: block;
     }
     
+    &-links_effect, &-links_effect_2 {
+        position: absolute;
+        left: 0;
+        height: 50%;
+        width: 0;
+        background: @background-transparent;
+        transition: all .5s cubic-bezier(.8,0,.25,1);
+    }
+    
+    &-links_effect_2 {
+        left: initial;
+        right: 0;
+    }
+    
     &-name, &-email {
         font-family: 'Lato-Bold', sans-serif;
         color: @text-color-light;
         text-decoration: none;
-    }
-    
-    &-links_effect {
+        display: inline-block;
+        position: relative;
         
+        &:hover .intro-links_effect {
+            width: 100%;
+        }
     }
 }
 

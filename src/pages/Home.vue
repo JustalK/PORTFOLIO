@@ -21,7 +21,7 @@
 					<span class="intro">
                        <span class="intro-first_sentance">Hello, I'm <a href="#" class="intro-name">Justal Kevin</a>.</span>
                        <span class="intro-second_sentance">I'm a full stack web developer.</span>
-                       <span class="intro-third_sentance">Contact me at <a href="#" class="intro-email"><div class="intro-links_effect"></div>justal.kevin@gmail.com</a></span>
+                       <span class="intro-third_sentance">Contact me at <a href="#" class="intro-email"><div class="intro-links_effect"></div><div class="intro-links_effect_2"></div>justal.kevin@gmail.com</a></span>
 					</span>
 				</div>	    
 			    <a class="links-open-door right articles" @click.stop="open('articles')">
