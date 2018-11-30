@@ -27,6 +27,7 @@
 .intro {
     position: relative;
     display: block;
+    line-height: 1.4em;
     width: 100%;
     text-align: center;
     top: 50%;
@@ -44,13 +45,14 @@
         left: 0;
         height: 50%;
         width: 0;
-        background: @background-transparent;
+        background: @background-transparent-title;
         transition: all .5s cubic-bezier(.8,0,.25,1);
     }
     
     &-links_effect_2 {
         left: initial;
         right: 0;
+        bottom: 0;
     }
     
     &-name, &-email {
@@ -60,7 +62,7 @@
         display: inline-block;
         position: relative;
         
-        &:hover .intro-links_effect {
+        &:hover .intro-links_effect, &:hover .intro-links_effect_2 {
             width: 100%;
         }
     }
