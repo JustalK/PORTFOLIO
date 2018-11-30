@@ -24,11 +24,11 @@
     }
 }
 
-a.links-open-door {
+.links-open-door {
     font-family: 'Lato-Bold', sans-serif;
     position: absolute;
     z-index: 10;
-    top: 70%;
+    top: 110%;
     height: 40px;
     background: @text-color-dark;
     color: @text-color;
@@ -40,6 +40,10 @@ a.links-open-door {
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.5s cubic-bezier(.8,0,.25,1);
+    
+    &--active {
+        top: 70%;
+    }
     
     &:hover {
        background: @text-color;

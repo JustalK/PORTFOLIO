@@ -54,9 +54,15 @@ export default {
     mounted: function () {
         setTimeout(() => {
             var cover = document.querySelectorAll(".home-cover");
+            var buttonLink = document.querySelectorAll(".links-open-door");
             for(var i=cover.length;i--;) {
                 cover[i].classList.remove("home-cover--active");
             }
+            setTimeout(() => {
+                for(var i=buttonLink.length;i--;) {
+                    buttonLink[i].classList.add("links-open-door--active");
+                }
+            },350);
         }, 200);
     }
 }
