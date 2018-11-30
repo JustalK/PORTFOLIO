@@ -89,34 +89,13 @@ body,
     }
 }
 
-a.links-open-door {
-	position: absolute;
-    z-index: 10;
-    bottom: 100px;
-    height: 40px;
-    line-height: 40px;
-    user-select: none;
-    width: 200px;
-    text-align: center;
-    text-transform: uppercase;
-    cursor: pointer;
-    
-    &.portfolio {
-    	right: 10%;
-    }
-    
-    &.articles {
-    	left: 10%;
-    }
-}
-
 .links-blocks {
 	position: absolute;
     width: 20px;
     height: 20px;
     color: #111116;
     overflow: hidden;
-    background: #5EF3FB;
+    background: @text-color;
     transition: all 1.5s cubic-bezier(0.1, 0.59, 0.02, 0.6);
     font-weight: bold;
 }

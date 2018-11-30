@@ -24,13 +24,45 @@
     }
 }
 
+a.links-open-door {
+    font-family: 'Lato-Bold', sans-serif;
+    position: absolute;
+    z-index: 10;
+    top: 70%;
+    height: 40px;
+    background: @text-color-dark;
+    color: @text-color;
+    box-shadow: 10px 10px @background-shadow;
+    line-height: 40px;
+    user-select: none;
+    width: 200px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(.8,0,.25,1);
+    
+    &:hover {
+       background: @text-color;
+       color: @text-color-white;
+       box-shadow: none;
+    }
+    
+    &.portfolio {
+        right: 10%;
+    }
+    
+    &.articles {
+        left: 10%;
+    }
+}
+
 .intro {
     position: relative;
     display: block;
     line-height: 1.4em;
     width: 100%;
     text-align: center;
-    top: 50%;
+    top: 40%;
     color: @text-color;
     transform: translateY(-50%);
     font-size: 2.0em;
