@@ -8,7 +8,7 @@
                     <span class="intro">
                        <span class="intro-first_sentance">Hello world, I'm <a href="#" class="intro-name"><div class="intro-links_effect"></div><div class="intro-links_effect_2"></div>Justal Kevin</a>.</span>
                        <span class="intro-second_sentance">I'm a full stack web developer.</span>
-                       <span class="intro-third_sentance">If any questions, contact me at <a href="#" class="intro-email"><div class="intro-links_effect"></div><div class="intro-links_effect_2"></div>justal.kevin@gmail.com</a></span>
+                       <span class="intro-third_sentance"><span class="intro-matrix">If any questions, contact me at </span><a href="#" class="intro-email"><div class="intro-links_effect"></div><div class="intro-links_effect_2"></div>justal.kevin@gmail.com</a></span>
                     </span>
 		    	</div>
 			    <a class="links-open-door left portfolio" @click.stop="open('portfolio')">
@@ -49,12 +49,20 @@ export default {
     				direction=="portfolio" ? this.$router.push('portfolio') : this.$router.push('articles') 
     			}, 500);
     		}, 500)
+    	},
+    	convertIntoNumbers: function(sentances) {
+    	   for(let sentance of sentances) {
+    	       console.log(sentance.innerHTML);
+    	       sentance.innerHTML = "#".repeat(sentance.innerHTML.length);
+    	   }
     	}
     },
     mounted: function () {
         setTimeout(() => {
             var cover = document.querySelectorAll(".home-cover");
             var buttonLink = document.querySelectorAll(".links-open-door");
+            var introMatrix = document.querySelectorAll(".intro-matrix");
+            this.convertIntoNumbers(introMatrix);
             for(var i=cover.length;i--;) {
                 cover[i].classList.remove("home-cover--active");
             }
