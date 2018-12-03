@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<transition name="fade">
-			<div class="additional" v-html="this.longDescription">
+			<div id="additional" class="additional" v-html="this.longDescription">
 				{{ this.longDescription }}
 			</div>
 		</transition>

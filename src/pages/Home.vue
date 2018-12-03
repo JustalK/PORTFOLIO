@@ -49,20 +49,12 @@ export default {
     				direction=="portfolio" ? this.$router.push('portfolio') : this.$router.push('articles') 
     			}, 500);
     		}, 500)
-    	},
-    	convertIntoNumbers: function(sentances) {
-    	   for(let sentance of sentances) {
-    	       console.log(sentance.innerHTML);
-    	       sentance.innerHTML = "#".repeat(sentance.innerHTML.length);
-    	   }
     	}
     },
     mounted: function () {
         setTimeout(() => {
             var cover = document.querySelectorAll(".home-cover");
             var buttonLink = document.querySelectorAll(".links-open-door");
-            var introMatrix = document.querySelectorAll(".intro-matrix");
-            this.convertIntoNumbers(introMatrix);
             for(var i=cover.length;i--;) {
                 cover[i].classList.remove("home-cover--active");
             }
