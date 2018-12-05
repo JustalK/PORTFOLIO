@@ -75,9 +75,13 @@
 
 .additional {
 	margin-bottom: 100px;
-	margin-top: 50px;
+	margin-top: 70px;
 	
-	& > h2 {
+	&-section {
+	    margin-bottom: 60px;
+	}
+	
+	& h2 {
     	color: #FFF;
         text-transform: capitalize;
         font-family: 'Lato-Bold', sans-serif;
@@ -85,7 +89,7 @@
         margin: 0 0 20px;
 	}
 	
-	& > hr {
+	& hr {
     	display: block;
         height: 1px;
         width: 50%;
@@ -97,12 +101,22 @@
 	
 	&-wrap {
 	     padding: 0 15px;
+         font-size: 1.2em;
 	     
          &_paragraph {
-           margin-bottom: 50px;
            line-height: 25px;
-           font-size: 1.2em;
            text-align: justify;
          }
+	}
+	
+	& ul {
+        padding: 0 20px;
+	       
+	   & li {
+            list-style: circle;
+            margin-bottom: .6em;
+            padding: 0 5px;
+            text-transform: capitalize;
+	   }
 	}
 }
