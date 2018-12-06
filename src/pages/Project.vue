@@ -17,6 +17,7 @@
 			</div>
 			<div class="projects-project projects-project--extend">
 				<div class="projects-windows projects-windows_fix" @click="slideUp">
+				    <div class="projects-windows_fix_cover"></div>
 					<div class="projects-background projects-background--up">
 						<div class="projects-header">
 							<h2 class="projects-title"></h2>
