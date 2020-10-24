@@ -22,5 +22,8 @@ $RECYCLE.BIN/
 # Operating System Files
 # =========================
 node_modules
-build
-dev
+build/*
+dev/assets/*
+dev/index.html
+v8-compile-cache-0
+package-lock.json
