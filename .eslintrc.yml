@@ -1,11 +1,14 @@
+parser: 'babel-eslint'
 env:
   browser: true
   amd: true
 extends: 'eslint:recommended'
 parserOptions:
+  sourceType: 'module'
   ecmaFeatures:
     jsx: true
-  ecmaVersion: 5
+    modules: true
+  ecmaVersion: 6
 rules:
   no-unused-expressions: 2
   indent:
