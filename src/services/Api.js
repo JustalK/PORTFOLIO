@@ -8,7 +8,7 @@ const getProjects = function () {
 };
 
 const getProjectsPage = function (page=0,tags='') {
-    return Axios.get('http://localhost:8080/api/articles/' + page + tags)
+    return Axios.get('http://localhost:8080/api/articles', {page: page, tags: tags})
         .then(response => {
             return response.data;
         });
@@ -36,7 +36,7 @@ const getPrevProject = function (order) {
 };
 
 const getTags = function () {
-    return Axios.get('http://localhost:8080/api/tags/all')
+    return Axios.get('http://localhost:8080/api/tags')
         .then(response => {
             return response.data;
         });

@@ -7,10 +7,18 @@ const filename = path.basename(__filename, '.js');
 const dbs = require('../dbs/' + filename);
 const services = require('../services/' + filename)(dbs);
 const constants = require('../libs/consts');
+const utils = require('../libs/utils');
 
 // Return the list of all the articles
-routes.route('/all').get(async (req, res, next) => {
-    const datas = await services.get_all();
+routes.route('/').get(async (request, response, next) => {
+	const params = {}
+	utils.add_tags_filter(params, 'tags', request.query.tags);
+	const limit = constants.NUMBER_ARTICLES_BY_PAGE;
+
+	const total_number_articles = await services.get_count(params);
+	const max_page = Math.floor( (total_number_articles - 1) / limit ) + 1;
+	const skip = request.params.page < 0 ? ( (max_page - (-request.params.page % max_page) ) % (max_page) ) * limit : (request.params.page % (max_page) ) * limit;
+    const datas = await services.get_all(params, skip, limit);
     response.json(datas);
 });
 
