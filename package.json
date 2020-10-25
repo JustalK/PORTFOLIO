@@ -7,7 +7,8 @@
     "dev": "webpack --mode development --config config/dev.config.js",
     "build": "webpack --mode production --config config/prod.config.js",
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
-    "server": "nodemon server.js",
+    "server-watch": "nodemon --exec 'npm run server'",
+    "server": "node -e 'require(\"./server/index\").start()'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,8 +23,12 @@
   },
   "homepage": "https://github.com/Latsuj/Lj2#readme",
   "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
+    "dotenv": "^8.2.0",
     "express": "~4.16.3",
-    "webpack-cli": "~3.0.8"
+    "mongo-uri-builder": "^3.2.2",
+    "webpack-cli": "~3.0.8",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
