@@ -4,10 +4,11 @@
   "description": "```\r npm init --yes\r ```",
   "main": "server.js",
   "scripts": {
+    "seed": "node ./seeding/seeder.js",
     "dev": "webpack --mode development --config config/dev.config.js",
     "build": "webpack --mode production --config config/prod.config.js",
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
-    "server-watch": "nodemon --exec 'npm run server'",
+    "watch-server": "nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,12 +29,15 @@
     "express": "~4.16.3",
     "mongo-uri-builder": "^3.2.2",
     "webpack-cli": "~3.0.8",
-    "winston": "^3.3.3"
+    "axios": "^0.21.0",
+    "winston": "^3.3.3",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.10",
+    "nodemon": "^2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
-    "axios": "^0.21.0",
     "babel-core": "*",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -53,9 +57,7 @@
     "less": "^3.12.2",
     "less-loader": "^7.0.2",
     "lqip-loader": "^2.2.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.10",
-    "nodemon": "^2.0.6",
+    "mongo-seeding": "^3.4.1",
     "postcss": "^8.1.4",
     "postcss-loader": "^4.0.4",
     "style-loader": "^2.0.0",
