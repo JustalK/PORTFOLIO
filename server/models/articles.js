@@ -12,7 +12,8 @@ const schema = new mongoose.Schema(
             type: String
         },
         shortDescription: {
-            type: String
+            type: String,
+            require: true
         },
         longDescription: {
             type: String
