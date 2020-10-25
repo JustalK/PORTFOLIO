@@ -23,6 +23,7 @@ $RECYCLE.BIN/
 # =========================
 node_modules
 build/*
+logs/*
 dev/assets/*
 dev/index.html
 v8-compile-cache-0
