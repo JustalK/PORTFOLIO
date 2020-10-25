@@ -1,0 +1,44 @@
+const express = require("express");
+const history = require('connect-history-api-fallback');
+const logs = require('./libs/logs');
+const path = require('path');
+
+module.exports = {
+	create_server: (name, port) => {
+		const server = express();
+        server.set('port', port);
+        server.set('name', name);
+		return server;
+	},
+	adding_route: (filename_routes, routes_url, server) => {
+		const routes = require('./routes/' + filename_routes);
+        server.use(routes_url, routes);
+	},
+	start: async (name, host, port) => {
+		return new Promise((resolve, reject) => {
+			const server = module.exports.create_server(name, port);
+			module.exports.adding_route('apps', '/apps', server);
+			module.exports.adding_route('articles', '/articles', server);
+			module.exports.adding_route('tags', '/tags', server);
+            server.use(history());
+            server.use(express.static("dev"))
+
+            const routes_app = require('./routes/apps');
+            const routes_articles = require('./routes/articles');
+            const routes_tags = require('./routes/tags');
+
+            server.use('/apps', routes_app);
+            server.use('/articles', routes_articles);
+            server.use('/tags', routes_tags);
+
+            server.get("/", (req, res) =>
+            	res.sendFile('index.html', { root: '/dev' })
+            );
+
+			server.listen(port, host, () => {
+				logs.info(name + ' listening at ' + port);
+				resolve(server);
+			});
+		});
+	}
+};
