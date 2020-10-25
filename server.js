@@ -7,7 +7,7 @@ const port = config.APP_PORT || 4000;
 app.use(express.static('dev'));
 
 // Connection to the mongodb
-mongoose.connect(config.DB, { useNewUrlParser: true });
+mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Take all the routes from router folder
 var routes = require('./router/routes');
