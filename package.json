@@ -11,7 +11,7 @@
     "watch-server": "nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
     "test": "nyc --reporter=html --reporter=text ava tests/**/*.js ava tests/**/**/*.js --verbose --timeout=1m",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
     "node": ">=12.0"
