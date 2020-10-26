@@ -11,7 +11,7 @@ const utils = require('../libs/utils');
 
 // Return the list of all the articles
 routes.route('/').get(async (request, response, next) => {
-	const params = {}
+	const params = {};
 	utils.add_tags_filter(params, 'tags', request.query.tags);
 	const limit = constants.NUMBER_ARTICLES_BY_PAGE;
 

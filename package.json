@@ -1,8 +1,8 @@
 {
   "name": "Latsuj",
   "version": "1.0.0",
-  "description": "```\r npm init --yes\r ```",
-  "main": "server.js",
+  "description": "My Portfolio",
+  "main": "server/index.js",
   "scripts": {
     "seed": "node ./seeding/seeder.js",
     "dev": "webpack --mode development --config config/dev.config.js",
@@ -10,7 +10,11 @@
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
     "watch-server": "nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js --verbose --timeout=1m",
+	"coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "engines": {
+    "node": ">=12.0"
   },
   "repository": {
     "type": "git",
@@ -38,11 +42,13 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "ava": "^3.13.0",
     "babel-core": "*",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-preset-es2015": "*",
     "babel-preset-es2016": "*",
+    "coveralls": "^3.1.0",
     "css-loader": "^5.0.0",
     "eslint": "^7.12.0",
     "eslint-config-es2015": "*",
@@ -58,6 +64,7 @@
     "less-loader": "^7.0.2",
     "lqip-loader": "^2.2.1",
     "mongo-seeding": "^3.4.1",
+    "nyc": "^15.1.0",
     "postcss": "^8.1.4",
     "postcss-loader": "^4.0.4",
     "style-loader": "^2.0.0",

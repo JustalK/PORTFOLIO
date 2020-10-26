@@ -24,8 +24,11 @@ $RECYCLE.BIN/
 node_modules
 build/*
 logs
-server/logs/*
+server/logs/*.log
 dev/assets/*
 dev/index.html
 v8-compile-cache-0
 package-lock.json
+coverage
+.nyc_output
+index.html
