@@ -2,7 +2,7 @@ const path = require('path');
 const filename = path.basename(__filename, '.js');
 const model = require('../models/' + filename);
 
-const dbs = {
+module.exports = {
 	get_all: (find, skip, limit) => {
 		return model
 			.find(find)
@@ -14,5 +14,3 @@ const dbs = {
 			.countDocuments(find);
 	}
 };
-
-module.exports = dbs;
