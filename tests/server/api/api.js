@@ -15,19 +15,6 @@ test.before(async () => {
 	await m_seed.seed();
 });
 
-test('[STATIC] Testing the call on the frontend', async t => {
-	const response = await new Promise((resolve, reject) => {
-		chai.request(server).get('/')
-			.end((err, response) => {
-				resolve(response);
-			});
-	});
-
-	t.is(response.status, 200);
-	const datas = response.body;
-	console.log(datas);
-});
-
 test('[STATIC] Testing the checker of the api apps', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/apps')
