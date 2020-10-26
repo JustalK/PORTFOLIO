@@ -10,8 +10,8 @@
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
     "watch-server": "nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
-    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js --verbose --timeout=1m",
-	"coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js ava tests/**/**/*.js --verbose --timeout=1m",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
     "node": ">=12.0"
@@ -48,6 +48,8 @@
     "babel-loader": "^8.1.0",
     "babel-preset-es2015": "*",
     "babel-preset-es2016": "*",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "coveralls": "^3.1.0",
     "css-loader": "^5.0.0",
     "eslint": "^7.12.0",
