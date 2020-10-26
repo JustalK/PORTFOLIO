@@ -23,14 +23,6 @@ module.exports = {
             server.use(history());
             server.use(express.static("dev"))
 
-            const routes_app = require('./routes/apps');
-            const routes_articles = require('./routes/articles');
-            const routes_tags = require('./routes/tags');
-
-            server.use('/api/apps', routes_app);
-            server.use('/api/articles', routes_articles);
-            server.use('/api/tags', routes_tags);
-
             server.get("/", (req, res) =>
             	res.sendFile('index.html', { root: '/dev' })
             );
