@@ -17,9 +17,9 @@ module.exports = {
 	start: async (name, host, port) => {
 		return new Promise((resolve, reject) => {
 			const server = module.exports.create_server(name, port);
-			module.exports.adding_route('apps', '/apps', server);
-			module.exports.adding_route('articles', '/articles', server);
-			module.exports.adding_route('tags', '/tags', server);
+			module.exports.adding_route('apps', '/api/apps', server);
+			module.exports.adding_route('articles', '/api/articles', server);
+			module.exports.adding_route('tags', '/api/tags', server);
             server.use(history());
             server.use(express.static("dev"))
 
@@ -27,9 +27,9 @@ module.exports = {
             const routes_articles = require('./routes/articles');
             const routes_tags = require('./routes/tags');
 
-            server.use('/apps', routes_app);
-            server.use('/articles', routes_articles);
-            server.use('/tags', routes_tags);
+            server.use('/api/apps', routes_app);
+            server.use('/api/articles', routes_articles);
+            server.use('/api/tags', routes_tags);
 
             server.get("/", (req, res) =>
             	res.sendFile('index.html', { root: '/dev' })

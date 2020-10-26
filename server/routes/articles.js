@@ -9,8 +9,19 @@ const services = require('../services/' + filename)(dbs);
 const constants = require('../libs/consts');
 
 // Return the list of all the articles
-routes.route('/all').get(async (req, res, next) => {
-    const datas = await services.get_all();
+routes.route('/').get(async (request, response, next) => {
+	const params = {}
+	const param_tags = request.query.tags === undefined ? {} : {'tags' : { '$all' : request.query.tags }};
+	const limit = constants.NUMBER_ARTICLES_BY_PAGE;
+
+	if (request.query.tags !== undefined) {
+		params.tags = { '$all' : request.query.tags };
+	}
+
+	const total_number_articles = await services.get_count(params);
+	const max_page = Math.floor( (total_number_articles - 1) / 4 ) + 1;
+	const skip = request.params.page < 0 ? ( (max_page - (-request.params.page % max_page) ) % (max_page) ) * 4 : (request.params.page % (max_page) ) * 4;
+    const datas = await services.get_all(params, skip, limit);
     response.json(datas);
 });
 

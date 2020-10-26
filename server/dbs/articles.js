@@ -3,9 +3,15 @@ const filename = path.basename(__filename, '.js');
 const model = require('../models/' + filename);
 
 const dbs = {
-	get_all: (find) => {
+	get_all: (find, skip, limit) => {
 		return model
-			.find(find);
+			.find(find)
+			.skip(skip)
+			.limit(limit);
+	},
+	get_count: (find) => {
+		return model
+			.countDocuments(find);
 	}
 };
 

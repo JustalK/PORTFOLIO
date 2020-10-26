@@ -9,7 +9,7 @@ const services = require('../services/' + filename)(dbs);
 const constants = require('../libs/consts');
 
 // Return the list of all the articles
-routes.route('/all').get(async (req, res, next) => {
+routes.route('/').get(async (request, response, next) => {
     const datas = await services.get_all();
     response.json(datas);
 });

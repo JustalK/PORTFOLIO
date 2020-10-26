@@ -2,7 +2,7 @@
 	<div id="PORTFOLIO" class="content">
 	    <div class="content-cover content-cover_1"></div>
 	    <div class="content-cover content-cover_2"></div>
-	
+
 	    <a href="#" class="back" @click.stop="back">
             <div v-for="index in 4" :key="index" :class="['back-blocks back-blocks_' + (index*1-1)]"></div>
         </a>
@@ -58,6 +58,7 @@ export default {
 	mounted: function () {
 		API.getProjectsPage()
 	    	.then(rsl => {
+				console.log(rsl);
 	        	this.projects = rsl;
 	    })
 	    API.getTags()
