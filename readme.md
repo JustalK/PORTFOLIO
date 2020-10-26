@@ -1,11 +1,9 @@
 # Latsuj
 
 ![Last version](https://img.shields.io/github/v/tag/justalk/portfolio.svg?style=flat-square)
-[![Node version](https://img.shields.io/node/v/@justalk/portfolio.svg?style=flat-square)](https://www.npmjs.com/package/@justalk/portfolio)
 [![Travis](https://img.shields.io/travis/com/justalk/portfolio.svg?style=flat-square)](https://travis-ci.com/github/JustalK/portfolio)
-[![Coverage Status](https://coveralls.io/repos/github/JustalK/PORTFOLIO/badge.svg?branch=master&style=flat-square)](https://coveralls.io/github/JustalK/PORTFOLIO?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/JustalK/PORTFOLIO/badge.svg?branch=dev&style=flat-square)](https://coveralls.io/github/JustalK/PORTFOLIO?branch=dev)
 [![Dependency status](http://img.shields.io/david/justalk/portfolio.svg?style=flat-square)](https://david-dm.org/justalk/portfolio.svg)
-![Last version](https://img.shields.io/github/license/justalk/portfolio.svg?style=flat-square)
 
 ## Installation
 
