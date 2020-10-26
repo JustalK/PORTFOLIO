@@ -4,7 +4,7 @@
   "description": "My Portfolio",
   "main": "server/index.js",
   "scripts": {
-    "seed": "node ./seeding/seeder.js",
+    "seed": "node -e 'require(\"./seeding/seeder.js\").seed()'",
     "dev": "webpack --mode development --config config/dev.config.js",
     "build": "webpack --mode production --config config/prod.config.js",
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
