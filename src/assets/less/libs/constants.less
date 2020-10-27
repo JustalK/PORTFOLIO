@@ -22,17 +22,10 @@
 @nav-color-left: linear-gradient(to left, @background-color 20%, @text-color-less-dark 80%);
 @title-color-gradient: linear-gradient(to right, @text-color, @text-color-before-dark, @text-color);
 
+@font-name-1: 'Lato-Light-I';
+
 @BACK_BLOCKS_DISTANCE: 4px;
 @background-bloc-0: @text-color;
 @background-bloc-1: darken(@text-color, 20%);
 @background-bloc-2: darken(@text-color, 40%);
 @background-bloc-3: darken(@text-color, 60%);
-.font-face(@font-family, @filepath, @font-weight, @font-style){
-    @font-face {
-        font-family: @font-family;
-        src: url('@{filepath}.ttf')  format('truetype');
-        font-weight:@font-weight;
-        font-style:@font-style;
-        font-display: swap;
-    }
-}

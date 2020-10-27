@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     el: '#app',
-    template: '<App/>',
     components: { App },
+    template: '<App/>',
     router
 }).$mount('#app');

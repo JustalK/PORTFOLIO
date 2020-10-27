@@ -1,110 +1,110 @@
-@import (reference) "variables.less";
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
 
 .home-cover {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 0;
-    width: 100%;
-    z-index: @LAYER-ANIMATION;
-    
-    &--active {
-        height: 100%;
-    }
-    
-    &_1 {
-        transition: all 1s cubic-bezier(0.87, 0.32, 0.81, 0.36);
-        opacity: 0.7;
-        background: @background-color-transition-d;
-    }
-    
-    &_2 {
-        transition: all 0.6s cubic-bezier(0.87, 0.32, 0.81, 0.36);
-        background: @background-color-transition-l;
-    }
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 0;
+	width: 100%;
+	z-index: @LAYER-ANIMATION;
+
+	&--active {
+		height: 100%;
+	}
+
+	&_1 {
+		transition: all 1s cubic-bezier(0.87, 0.32, 0.81, 0.36);
+		opacity: 0.7;
+		background: @background-color-transition-d;
+	}
+
+	&_2 {
+		transition: all 0.6s cubic-bezier(0.87, 0.32, 0.81, 0.36);
+		background: @background-color-transition-l;
+	}
 }
 
 .links-open-door {
-    font-family: 'Lato-Bold', sans-serif;
-    position: absolute;
-    z-index: 10;
-    top: 110%;
-    height: 40px;
-    background: @text-color-dark;
-    color: @text-color;
-    box-shadow: 10px 10px @background-shadow;
-    line-height: 40px;
-    user-select: none;
-    width: 200px;
-    text-align: center;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(.8,0,.25,1);
-    
-    &--active {
-        top: 70%;
-    }
-    
-    &:hover {
-       background: @text-color;
-       color: @text-color-white;
-       box-shadow: none;
-    }
-    
-    &.portfolio {
-        right: 10%;
-    }
-    
-    &.articles {
-        left: 10%;
-    }
+	font-family: 'Lato-Bold', sans-serif;
+	position: absolute;
+	z-index: 10;
+	top: 110%;
+	height: 40px;
+	background: @text-color-dark;
+	color: @text-color;
+	box-shadow: 10px 10px @background-shadow;
+	line-height: 40px;
+	user-select: none;
+	width: 200px;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+
+	&--active {
+		top: 70%;
+	}
+
+	&:hover {
+		background: @text-color;
+		color: @text-color-white;
+		box-shadow: none;
+	}
+
+	&.portfolio {
+		right: 10%;
+	}
+
+	&.articles {
+		left: 10%;
+	}
 }
 
 .intro {
-    position: relative;
-    display: block;
-    line-height: 1.4em;
-    width: 100%;
-    text-align: center;
-    top: 40%;
-    color: @text-color;
-    transform: translateY(-50%);
-    font-size: 2.0em;
-    font-family: 'Lato-Light', sans-serif;
-    
-    &-first_sentance, &-second_sentance {
-        display: block;
-    }
-    
-    &-links_effect, &-links_effect_2 {
-        position: absolute;
-        left: 0;
-        height: 50%;
-        width: 0;
-        background: @background-transparent-title;
-        transition: all .5s cubic-bezier(.8,0,.25,1);
-    }
-    
-    &-links_effect_2 {
-        left: initial;
-        right: 0;
-        bottom: 0;
-    }
-    
-    &-name, &-email {
-        font-family: 'Lato-Bold', sans-serif;
-        color: @text-color-light;
-        text-decoration: none;
-        display: inline-block;
-        position: relative;
-        
-        &:hover .intro-links_effect, &:hover .intro-links_effect_2 {
-            width: 100%;
-        }
-    }
+	position: relative;
+	display: block;
+	line-height: 1.4em;
+	width: 100%;
+	text-align: center;
+	top: 40%;
+	color: @text-color;
+	transform: translateY(-50%);
+	font-size: 2em;
+	font-family: 'Lato-Light', sans-serif;
+
+	&-first_sentance,
+	&-second_sentance {
+		display: block;
+	}
+
+	&-links_effect,
+	&-links_effect_2 {
+		position: absolute;
+		left: 0;
+		height: 50%;
+		width: 0;
+		background: @background-transparent-title;
+		transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+	}
+
+	&-links_effect_2 {
+		left: initial;
+		right: 0;
+		bottom: 0;
+	}
+
+	&-name,
+	&-email {
+		font-family: 'Lato-Bold', sans-serif;
+		color: @text-color-light;
+		text-decoration: none;
+		display: inline-block;
+		position: relative;
+
+		&:hover .intro-links_effect,
+		&:hover .intro-links_effect_2 {
+			width: 100%;
+		}
+	}
 }
-
-
-
-
-

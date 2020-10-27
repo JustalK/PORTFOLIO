@@ -2,6 +2,7 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -15,12 +16,19 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new ESLintPlugin({ fix: true, files: "src/*.js" }),
+        new ESLintPlugin({ fix: true, files: "src/*.js", extensions: ['js', 'vue']}),
         new HtmlWebpackPlugin({
-    	title: 'Custom template',
-    	filename: '../index.html',
-    	template: 'src/pages/index.html'
-        })
+    		title: 'Custom template',
+    		filename: '../index.html',
+    		template: 'src/pages/index.html'
+		}),
+		new StyleLintPlugin({
+			files: [
+				'src/**/*.{css,sss,less,scss,sass}',
+				'src/**/**/*.{css,sss,less,scss,sass}'
+			],
+			fix: true
+	    })
     ],
     module: {
         rules: [
