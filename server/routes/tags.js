@@ -9,8 +9,8 @@ const services = require('../services/' + filename)(dbs);
 
 // Return the list of all the articles
 routes.route('/').get(async (request, response) => {
-    const datas = await services.get_all();
-    response.json(datas);
+	const datas = await services.get_all();
+	response.json(datas);
 });
 
 module.exports = routes;
