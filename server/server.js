@@ -20,18 +20,8 @@ module.exports = {
             module.exports.adding_route('articles', '/api/articles', server);
             module.exports.adding_route('tags', '/api/tags', server);
             server.use(history());
-            server.use(express.static('dev'));
-            server.use(express.static('documentation'));
-
-            server.get('/api/documentation', (req, res) => {
-                console.log('hey');
-                res.sendFile('index.html', { root: '/documentation' });
-            });
-
-            server.get('/', (req, res) => {
-                console.log('hey2');
-                res.sendFile('index.html', { root: '/dev' });
-            });
+            server.use('/api/documentation', express.static('documentation'));
+            server.use('/', express.static('dev'));
 
             server.listen(port, host, () => {
                 logs.info(name + ' listening at ' + port);

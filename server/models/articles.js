@@ -11,11 +11,11 @@ const schema = new mongoose.Schema(
         slug: {
             type: String
         },
-        shortDescription: {
+        short_description: {
             type: String,
             require: true
         },
-        longDescription: {
+        long_description: {
             type: String
         },
         tags: [{
