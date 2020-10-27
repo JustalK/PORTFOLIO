@@ -4,7 +4,7 @@ const filename = path.basename(__filename, '.js');
 
 // Define the article schema
 const schema = new mongoose.Schema(
-	{
+    {
         title: {
             type: String
         },
@@ -29,16 +29,16 @@ const schema = new mongoose.Schema(
         order: {
             type: Number
         }
-	},
-	{
+    },
+    {
         timestamps: {
-    		createdAt: 'created_at',
-    		updatedAt: 'updated_at'
-    	},
-    	collection: filename,
-    	toJSON: {virtuals: true},
-    	toObject: {virtuals: true}
-	}
-)
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        },
+        collection: filename,
+        toJSON: {virtuals: true},
+        toObject: {virtuals: true}
+    }
+);
 
 module.exports = mongoose.model(filename, schema);
