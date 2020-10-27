@@ -16,18 +16,26 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new ESLintPlugin({ fix: true, files: "src/*.js", extensions: ['js', 'vue']}),
+        new ESLintPlugin({
+			fix: true,
+			files: [
+				"src/*.js",
+				"server/*js",
+				"server/**/*.js"
+			],
+			extensions: ['js', 'vue']
+		}),
         new HtmlWebpackPlugin({
     		title: 'Custom template',
     		filename: '../index.html',
     		template: 'src/pages/index.html'
 		}),
 		new StyleLintPlugin({
+			fix: true,
 			files: [
 				'src/**/*.{css,sss,less,scss,sass}',
 				'src/**/**/*.{css,sss,less,scss,sass}'
-			],
-			fix: true
+			]
 	    })
     ],
     module: {
