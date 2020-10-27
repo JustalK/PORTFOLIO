@@ -23,7 +23,11 @@ module.exports = {
     		template: 'src/pages/index.html'
 		}),
 		new StyleLintPlugin({
-			files: ['src/**/*.{css,sss,less,scss,sass}'],
+			files: [
+				'src/**/*.{css,sss,less,scss,sass}',
+				'src/**/**/*.{css,sss,less,scss,sass}'
+			],
+			fix: true
 	    })
     ],
     module: {

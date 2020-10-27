@@ -1,4 +1,5 @@
-@import (reference) "variables.less";
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
 
 .full {
 	height: 100%;
@@ -7,20 +8,20 @@
 
 .topleft {
 	position: absolute;
-    left: 0;
-    top: 0;
+	left: 0;
+	top: 0;
 }
 
 .topright {
 	position: absolute;
-    right: 0;
-    top: 0;	
+	right: 0;
+	top: 0;
 }
 
 .font-face('Lato-Light','http://localhost:8080/src/assets/fonts/Lato-Light', normal, normal);
 .font-face('Lato-Bold','http://localhost:8080/src/assets/fonts/Lato-Bold', normal, normal);
 .font-face('Lato-Black','http://localhost:8080/src/assets/fonts/Lato-Black', normal, normal);
-.font-face('Lato-Light-I','http://localhost:8080/src/assets/fonts/Lato-LightItalic', normal, normal);
+.font-face(@font-name-1,'http://localhost:8080/src/assets/fonts/Lato-LightItalic', normal, normal);
 
 html,
 body,
@@ -37,12 +38,12 @@ body,
 #HOME {
 	perspective: 100px;
 	overflow: hidden;
-	
+
 	& .wrap {
-		transition: transform .5s cubic-bezier(.8,0,.25,1);
+		transition: transform 0.5s cubic-bezier(0.8, 0, 0.25, 1);
 		perspective: 1000px;
-		height: 100%;	
-		
+		height: 100%;
+
 		&.active {
 			transform: translateZ(100px);
 		}
@@ -51,62 +52,65 @@ body,
 
 .bloc {
 	width: 50%;
-    height: 100%;
-    background: @background-color;
-    overflow: hidden;
-    transform-style: flat;
-    transition: transform .5s cubic-bezier(.8,0,.25,1);
-    
-    &.left {
-    	.topleft();
-    	transform-origin: left;
-    	
-    	& > div {
-    		.topleft();
-    		width: 200%;
-    		height: 100%;
-    	}
-    	
-    	&.active {
-	    	transform: rotateY(45deg);
-    	}
-    }
-    
-    &.right {
-    	.topright();
-    	transform-origin: right;
-    	
-    	& > div {
-    		.topright();
-    		width: 200%;
-    		height: 100%;
-    		
-    	}
-    	
-    	&.active {
-	    	transform: rotateY(-45deg);
-    	}
-    }
+	height: 100%;
+	background: @background-color;
+	overflow: hidden;
+	transform-style: flat;
+	transition: transform 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+
+	&.left {
+		.topleft();
+
+		transform-origin: left;
+
+		& > div {
+			.topleft();
+
+			width: 200%;
+			height: 100%;
+		}
+
+		&.active {
+			transform: rotateY(45deg);
+		}
+	}
+
+	&.right {
+		.topright();
+
+		transform-origin: right;
+
+		& > div {
+			.topright();
+
+			width: 200%;
+			height: 100%;
+		}
+
+		&.active {
+			transform: rotateY(-45deg);
+		}
+	}
 }
 
 .links-blocks {
 	position: absolute;
-    width: 20px;
-    height: 20px;
-    color: #111116;
-    overflow: hidden;
-    background: @text-color;
-    transition: all 1.5s cubic-bezier(0.1, 0.59, 0.02, 0.6);
-    font-weight: bold;
+	width: 20px;
+	height: 20px;
+	color: #111116;
+	overflow: hidden;
+	background: @text-color;
+	transition: all 1.5s cubic-bezier(0.1, 0.59, 0.02, 0.6);
+	font-weight: bold;
 }
 
 .links-background {
-	color: #5EF3FB;
-    font-weight: bold;	
+	color: #5ef3fb;
+	font-weight: bold;
 }
 
 .links-open-door:hover .links-blocks {
-   transition: all 20s cubic-bezier(0, 1.07, 0.01, 0.88);
+	transition: all 20s cubic-bezier(0, 1.07, 0.01, 0.88);
 }
 
 .lb-inside {
@@ -161,34 +165,33 @@ body,
 .generate-lb(@n, @i: 0) when (@i =< @n) {
 	.lb-@{i} {
 		& when (@i < 10) {
-	    	top: 0;
-		    left: @i*20px;
-		    
-		    & .lb-inside {
-		    	left: -@i*20px;
-		    }
+			top: 0;
+			left: @i*20px;
+
+			& .lb-inside {
+				left: -@i*20px;
+			}
 		}
-		
+
 		& when (@i >= 10) {
 			top: 20px;
-	    	left: @i*20-200px;
-			
-		    & .lb-inside {
-		    	top: -20px;
-	    		left: 200-@i*20px;
-		    }
+			left: @i*20 - 200px;
+
+			& .lb-inside {
+				top: -20px;
+				left: 200 - @i*20px;
+			}
 		}
-	    
 	}
-	
-	@positionFullRight: extract(@position-explosion-right,(@i+1)); 
-	@positionFullLeft: extract(@position-explosion-left,(@i+1)); 
-	@positionXright: extract(@positionFullRight, 1); 
-	@positionYright: extract(@positionFullRight, 2); 
-	@rotationZright: extract(@positionFullRight, 3); 
-	@positionXleft: extract(@positionFullLeft, 1); 
-	@positionYleft: extract(@positionFullLeft, 2); 
-	@rotationZleft: extract(@positionFullLeft, 3); 
+
+	@positionFullRight: extract(@position-explosion-right,(@i+1));
+	@positionFullLeft: extract(@position-explosion-left,(@i+1));
+	@positionXright: extract(@positionFullRight, 1);
+	@positionYright: extract(@positionFullRight, 2);
+	@rotationZright: extract(@positionFullRight, 3);
+	@positionXleft: extract(@positionFullLeft, 1);
+	@positionYleft: extract(@positionFullLeft, 2);
+	@rotationZleft: extract(@positionFullLeft, 3);
 	.links-open-door.left:hover .lb-@{i} {
 		transform: translate(@positionXleft, @positionYleft) rotateZ(@rotationZleft);
 	}
@@ -199,9 +202,9 @@ body,
 }
 
 .generate-lb(20);
-		
+
 #header {
 	position: absolute;
-    top: 0;
-    right: 0;
+	top: 0;
+	right: 0;
 }
