@@ -1,86 +1,86 @@
 <template>
-  <div
-    id="PROJECT"
-    class="content"
-  >
-    <a
-      href="#"
-      class="back"
-      @click.stop="projects"
-    >
-      <div
-        v-for="index in 4"
-        :key="index"
-        :class="['back-blocks back-blocks_' + (index*1-1)]"
-      />
-    </a>
-    <span class="back_text">back</span>
-    <my-informations
-      :title="title"
-      :active-tags="activeTags"
-      :go-project="goProject"
-      :tags="tags"
-      :description="shortDescription"
-      :informations-tag="informationsTag"
-    />
-    <span class="filter_sentance">Click on the image below for switching to the next one.</span>
-    <div class="projects projects--extend">
-      <div
-        class="projects-left"
-        @click.stop="prev()"
-      >
-        <div class="projects-left_effects">
-          <span class="projects-lines_info">prev</span>
-          <div class="projects-lines projects-lines_1" />
-          <div class="projects-lines projects-lines_2" />
-          <div class="projects-lines projects-lines_3" />
-        </div>
-      </div>
-      <div class="projects-project projects-project--extend">
-        <div
-          class="projects-windows projects-windows_fix"
-          @click="slideUp"
-        >
-          <div class="projects-windows_fix_cover" />
-          <div class="projects-background projects-background--up">
-            <div class="projects-header">
-              <h2 class="projects-title" />
-            </div>
-          </div>
-          <div class="projects-background projects-background--down">
-            <div class="projects-header">
-              <h2 class="projects-title" />
-            </div>
-          </div>
-          <div class="projects-background projects-background--tooup">
-            <div class="projects-header">
-              <h2 class="projects-title" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="projects-right"
-        @click.stop="next()"
-      >
-        <div class="projects-right_effects">
-          <span class="projects-lines_info">next</span>
-          <div class="projects-lines projects-lines_1" />
-          <div class="projects-lines projects-lines_2" />
-          <div class="projects-lines projects-lines_3" />
-        </div>
-      </div>
-    </div>
-    <transition name="fade">
-      <div
-        id="additional"
-        class="additional"
-        v-html="this.longDescription"
-      >
-        {{ this.longDescription }}
-      </div>
-    </transition>
-  </div>
+	<div
+		id="PROJECT"
+		class="content"
+	>
+		<a
+			href="#"
+			class="back"
+			@click.stop="projects"
+		>
+			<div
+				v-for="index in 4"
+				:key="index"
+				:class="['back-blocks back-blocks_' + (index*1-1)]"
+			/>
+		</a>
+		<span class="back_text">back</span>
+		<my-informations
+			:title="title"
+			:active-tags="activeTags"
+			:go-project="goProject"
+			:tags="tags"
+			:description="shortDescription"
+			:informations-tag="informationsTag"
+		/>
+		<span class="filter_sentance">Click on the image below for switching to the next one.</span>
+		<div class="projects projects--extend">
+			<div
+				class="projects-left"
+				@click.stop="prev()"
+			>
+				<div class="projects-left_effects">
+					<span class="projects-lines_info">prev</span>
+					<div class="projects-lines projects-lines_1" />
+					<div class="projects-lines projects-lines_2" />
+					<div class="projects-lines projects-lines_3" />
+				</div>
+			</div>
+			<div class="projects-project projects-project--extend">
+				<div
+					class="projects-windows projects-windows_fix"
+					@click="slideUp"
+				>
+					<div class="projects-windows_fix_cover" />
+					<div class="projects-background projects-background--up">
+						<div class="projects-header">
+							<h2 class="projects-title" />
+						</div>
+					</div>
+					<div class="projects-background projects-background--down">
+						<div class="projects-header">
+							<h2 class="projects-title" />
+						</div>
+					</div>
+					<div class="projects-background projects-background--tooup">
+						<div class="projects-header">
+							<h2 class="projects-title" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="projects-right"
+				@click.stop="next()"
+			>
+				<div class="projects-right_effects">
+					<span class="projects-lines_info">next</span>
+					<div class="projects-lines projects-lines_1" />
+					<div class="projects-lines projects-lines_2" />
+					<div class="projects-lines projects-lines_3" />
+				</div>
+			</div>
+		</div>
+		<transition name="fade">
+			<div
+				id="additional"
+				class="additional"
+				v-html="this.longDescription"
+			>
+				{{ this.longDescription }}
+			</div>
+		</transition>
+	</div>
 </template>
 <script>
 import Informations from '../components/Informations'

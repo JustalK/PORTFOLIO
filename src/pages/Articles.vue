@@ -1,5 +1,5 @@
 <template>
-  <span>Articles</span>
+	<span>Articles</span>
 </template>
 <script>
 

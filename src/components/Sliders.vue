@@ -1,51 +1,51 @@
 <template>
-  <div class="projects projects--active">
-    <div
-      class="projects-left"
-      @click.stop="prev()"
-    >
-      <div class="projects-left_effects">
-        <span class="projects-lines_info">prev</span>
-        <div class="projects-lines projects-lines_1" />
-        <div class="projects-lines projects-lines_2" />
-        <div class="projects-lines projects-lines_3" />
-      </div>
-    </div>
-    <ul class="projects-list">
-      <li
-        v-for="p in projectsSelecteds"
-        :key="p.id"
-        class="projects-project projects-project--active projects-project--change"
-        :data-name="p.slug"
-        :data-tags="p.v_strTags"
-      >
-        <a
-          href="#"
-          class="projects-windows"
-          @click.stop="project($event)"
-        >
-          <div class="projects-header">
-            <h2 class="projects-title">{{ p.title }}</h2>
-          </div>
-          <div class="projects-windowsbg" />
-          <div class="projects-informations">
-            <div class="projects-informations_description">{{ p.shortDescription }}</div>
-          </div>
-        </a>
-      </li>
-    </ul>
-    <div
-      class="projects-right"
-      @click.stop="next()"
-    >
-      <div class="projects-left_effects">
-        <span class="projects-lines_info">next</span>
-        <div class="projects-lines projects-lines_1" />
-        <div class="projects-lines projects-lines_2" />
-        <div class="projects-lines projects-lines_3" />
-      </div>
-    </div>
-  </div>
+	<div class="projects projects--active">
+		<div
+			class="projects-left"
+			@click.stop="prev()"
+		>
+			<div class="projects-left_effects">
+				<span class="projects-lines_info">prev</span>
+				<div class="projects-lines projects-lines_1" />
+				<div class="projects-lines projects-lines_2" />
+				<div class="projects-lines projects-lines_3" />
+			</div>
+		</div>
+		<ul class="projects-list">
+			<li
+				v-for="p in projectsSelecteds"
+				:key="p.id"
+				class="projects-project projects-project--active projects-project--change"
+				:data-name="p.slug"
+				:data-tags="p.v_strTags"
+			>
+				<a
+					href="#"
+					class="projects-windows"
+					@click.stop="project($event)"
+				>
+					<div class="projects-header">
+						<h2 class="projects-title">{{ p.title }}</h2>
+					</div>
+					<div class="projects-windowsbg" />
+					<div class="projects-informations">
+						<div class="projects-informations_description">{{ p.shortDescription }}</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+		<div
+			class="projects-right"
+			@click.stop="next()"
+		>
+			<div class="projects-left_effects">
+				<span class="projects-lines_info">next</span>
+				<div class="projects-lines projects-lines_1" />
+				<div class="projects-lines projects-lines_2" />
+				<div class="projects-lines projects-lines_3" />
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 import API from '../services/Api'

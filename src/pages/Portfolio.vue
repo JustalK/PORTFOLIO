@@ -1,45 +1,45 @@
 <template>
-  <div
-    id="PORTFOLIO"
-    class="content"
-  >
-    <div class="content-cover content-cover_1" />
-    <div class="content-cover content-cover_2" />
+	<div
+		id="PORTFOLIO"
+		class="content"
+	>
+		<div class="content-cover content-cover_1" />
+		<div class="content-cover content-cover_2" />
 
-    <a
-      href="#"
-      class="back"
-      @click.stop="back"
-    >
-      <div
-        v-for="index in 4"
-        :key="index"
-        :class="['back-blocks back-blocks_' + (index*1-1)]"
-      />
-    </a>
-    <span class="back_text">back</span>
-    <my-informations
-      @filter="filter"
-      :active-tags="activeTags"
-      :go-project="goProject"
-      :description="description"
-      :tags="tags"
-      :title="title"
-      :informations-tag="informationsTag"
-    />
-    <span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
-    <my-sliders
-      :go-project="goProject"
-      :tags-selected-id="tagsSelectedId"
-      :projects="projects"
-    />
-    <transition
-      name="fade"
-      mode="out-in"
-    >
-      <my-pubs v-show="!goProject" />
-    </transition>
-  </div>
+		<a
+			href="#"
+			class="back"
+			@click.stop="back"
+		>
+			<div
+				v-for="index in 4"
+				:key="index"
+				:class="['back-blocks back-blocks_' + (index*1-1)]"
+			/>
+		</a>
+		<span class="back_text">back</span>
+		<my-informations
+			@filter="filter"
+			:active-tags="activeTags"
+			:go-project="goProject"
+			:description="description"
+			:tags="tags"
+			:title="title"
+			:informations-tag="informationsTag"
+		/>
+		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
+		<my-sliders
+			:go-project="goProject"
+			:tags-selected-id="tagsSelectedId"
+			:projects="projects"
+		/>
+		<transition
+			name="fade"
+			mode="out-in"
+		>
+			<my-pubs v-show="!goProject" />
+		</transition>
+	</div>
 </template>
 <script>
 import Informations from '../components/Informations'

@@ -1,33 +1,33 @@
 <template>
-  <div class="informations">
-    <div class="informations-title_size">
-      <div class="informations-title_transition informations-title_transition--init" />
-      <h1
-        key="data"
-        class="informations-title"
-      >
-        {{ title }}
-      </h1>
-    </div>
-    <div class="informations-description_size">
-      <div class="informations-description_transition informations-description_transition--init" />
-      <div class="informations-description">
-        {{ this.description }}
-      </div>
-    </div>
-    <ul class="informations-tags">
-      <li
-        @click.stop="filter($event)"
-        v-for="tag in informationsTag"
-        :key="tag.id"
-        class="informations-tag"
-        :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
-        :data-id="tag._id"
-      >
-        {{ tag.name }}
-      </li>
-    </ul>
-  </div>
+	<div class="informations">
+		<div class="informations-title_size">
+			<div class="informations-title_transition informations-title_transition--init" />
+			<h1
+				key="data"
+				class="informations-title"
+			>
+				{{ title }}
+			</h1>
+		</div>
+		<div class="informations-description_size">
+			<div class="informations-description_transition informations-description_transition--init" />
+			<div class="informations-description">
+				{{ this.description }}
+			</div>
+		</div>
+		<ul class="informations-tags">
+			<li
+				@click.stop="filter($event)"
+				v-for="tag in informationsTag"
+				:key="tag.id"
+				class="informations-tag"
+				:class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
+				:data-id="tag._id"
+			>
+				{{ tag.name }}
+			</li>
+		</ul>
+	</div>
 </template>
 <script>
 
