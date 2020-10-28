@@ -1,27 +1,42 @@
 <template>	
-	<div class="informations">
-		<div class="informations-title_size">
-			<div class="informations-title_transition informations-title_transition--init"></div>
-			<h1 key="data" class="informations-title">{{title}}</h1>
-		</div>
-		<div class="informations-description_size">
-			<div class="informations-description_transition informations-description_transition--init"></div>
-			<div class="informations-description">{{ this.description }}</div>
-		</div>
-		<ul class="informations-tags">
-			<li @click.stop="filter($event)" v-for="tag in informationsTag" class="informations-tag" :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}" :data-id="tag._id">{{ tag.name }}</li>
-		</ul>
-	</div>
+  <div class="informations">
+    <div class="informations-title_size">
+      <div class="informations-title_transition informations-title_transition--init" />
+      <h1
+        key="data"
+        class="informations-title"
+      >
+        {{ title }}
+      </h1>
+    </div>
+    <div class="informations-description_size">
+      <div class="informations-description_transition informations-description_transition--init" />
+      <div class="informations-description">
+        {{ this.description }}
+      </div>
+    </div>
+    <ul class="informations-tags">
+      <li
+        @click.stop="filter($event)"
+        v-for="tag in informationsTag"
+        class="informations-tag"
+        :class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
+        :data-id="tag._id"
+      >
+        {{ tag.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import API from '../services/Api'
 
 export default {
-    data: () => {
-        return {
-            tagsSelected: []
-        }
-    },
+	data: () => {
+		return {
+			tagsSelected: []
+		}
+	},
 	props: {
 		'title': { default: 'Default' },
 		'description': { default: 'Default' },
@@ -37,27 +52,27 @@ export default {
     	        if(index===-1) {
         	        this.tagsSelected.push(e.target.innerHTML);
     	        } else {
-                    this.tagsSelected.splice(index,1);
+					this.tagsSelected.splice(index,1);
     	        }
-                var tags = document.querySelectorAll('.informations-tag');
-                for(var i=tags.length,rsl=[];i--;) {
-                    if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
-                        tags[i].classList.add('informations-tag--inside');
-                        tags[i].classList.remove('informations-tag--not_inside');
-                        rsl.push(tags[i].dataset.id);
-                    } else {
-                        tags[i].classList.add('informations-tag--not_inside');
-                        tags[i].classList.remove('informations-tag--inside');                   
-                    }
-                }
-                this.$emit('filter',rsl);
-            }
+				var tags = document.querySelectorAll('.informations-tag');
+				for(var i=tags.length,rsl=[]; i--;) {
+					if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
+						tags[i].classList.add('informations-tag--inside');
+						tags[i].classList.remove('informations-tag--not_inside');
+						rsl.push(tags[i].dataset.id);
+					} else {
+						tags[i].classList.add('informations-tag--not_inside');
+						tags[i].classList.remove('informations-tag--inside');                   
+					}
+				}
+				this.$emit('filter',rsl);
+			}
 	    }
 	},
-    watch: {
+	watch: {
     	tags: function() {
     		var tags = document.querySelectorAll('.informations-tag');
-    		for(var i=tags.length;i--;) {
+    		for(var i=tags.length; i--;) {
     			if(this.tags.indexOf(tags[i].innerHTML) !== -1) {
     				tags[i].classList.add('informations-tag--inside');
     				tags[i].classList.remove('informations-tag--not_inside');
@@ -74,18 +89,18 @@ export default {
         		informationsDescriptionTransition.classList.add('informations-description_transition--active');
         		informationsTitleSize.classList.add('informations-title_transition--active');    		
     		} else {    		
-                informationsDescriptionTransition.classList.remove('informations-description_transition--init');
-                informationsTitleSize.classList.remove('informations-title_transition--init');
-                informationsDescriptionTransition.classList.remove('informations-description_transition--active');
-                informationsTitleSize.classList.remove('informations-title_transition--active');
+				informationsDescriptionTransition.classList.remove('informations-description_transition--init');
+				informationsTitleSize.classList.remove('informations-title_transition--init');
+				informationsDescriptionTransition.classList.remove('informations-description_transition--active');
+				informationsTitleSize.classList.remove('informations-title_transition--active');
     		}
     	}
-    },
-    mounted: function() {
+	},
+	mounted: function() {
     		var informationsDescriptionTransition = document.querySelector('.informations-description_transition'),
     		informationsTitleSize = document.querySelector('.informations-title_transition');
     		informationsDescriptionTransition.classList.remove('informations-description_transition--init');
     		informationsTitleSize.classList.remove('informations-title_transition--init');
-    }
+	}
 }
 </script>

@@ -18,6 +18,7 @@ module.exports = {
 		new ESLintPlugin({
 			fix: true,
 			files: [
+				'src/**/*.vue',
 				'src/*.js',
 				'server/*js',
 				'server/**/*.js',
