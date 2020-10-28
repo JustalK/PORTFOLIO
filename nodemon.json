@@ -11,9 +11,6 @@
   "execMap": {
     "js": "node --harmony"
   },
-  "events": {
-    "restart": "RESTART"
-  },
   "watch": [
     "src/"
   ],
