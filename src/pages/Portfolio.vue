@@ -49,9 +49,9 @@ import API from '../services/Api'
 
 export default {
 	data: () => {
-    	return {
-    		title: 'Works',
-    		tags: [],
+		return {
+			title: 'Works',
+			tags: [],
 			goProject: false,
 			informationsTag: [],
 			projects: [],
@@ -83,19 +83,19 @@ export default {
 	},
 	mounted: function () {
 		API.getProjectsPage()
-	    	.then(rsl => {
+			.then(rsl => {
 				console.log(rsl);
-	        	this.projects = rsl;
-	    })
-	    API.getTags()
-    	.then(rsl => {
-    		this.informationsTag = rsl;
-    	});
+				this.projects = rsl;
+			})
+		API.getTags()
+			.then(rsl => {
+				this.informationsTag = rsl;
+			});
 	},
 	components: {
-    	'my-informations': Informations,
-    	'my-sliders': Sliders,
-    	'my-pubs': Pubs
+		'my-informations': Informations,
+		'my-sliders': Sliders,
+		'my-pubs': Pubs
 	}
 }
 </script>

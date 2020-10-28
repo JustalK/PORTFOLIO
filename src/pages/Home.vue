@@ -4,7 +4,7 @@
     class="home"
   >
     <div class="home-cover home-cover_1 home-cover_1 home-cover--active" />
-    <div class="home-cover home-cover_2 home-cover--active" /> 
+    <div class="home-cover home-cover_2 home-cover--active" />
     <div
       class="wrap"
       :class="{active:goZoom}"
@@ -50,7 +50,7 @@
               class="intro-email"
             ><div class="intro-links_effect" /><div class="intro-links_effect_2" />justal.kevin@gmail.com</a></span>
           </span>
-        </div>	    
+        </div>
         <a
           class="links-open-door right articles"
           @click.stop="open('articles')"
@@ -65,22 +65,22 @@
 
 export default {
 	data: () => {
-    	return {
+		return {
 			goPortfolio: false,
 			goZoom: false,
 			intro: 'Hello, I\'m Justal Kevin.<br>I\'m a full stack web developer.'
 		}
 	},
 	methods: {
-    	open: function(direction) {
-    		this.goPortfolio = true
-    		setTimeout(() => {
-    			this.goZoom = true
-    			setTimeout(() => {
-    				direction=='portfolio' ? this.$router.push('portfolio') : this.$router.push('articles') 
-    			}, 500);
-    		}, 500)
-    	}
+		open: function(direction) {
+			this.goPortfolio = true
+			setTimeout(() => {
+				this.goZoom = true
+				setTimeout(() => {
+					return direction == 'portfolio' ? this.$router.push('portfolio') : this.$router.push('articles')
+				}, 500);
+			}, 500)
+		}
 	},
 	mounted: function () {
 		setTimeout(() => {

@@ -16,7 +16,6 @@
     </a>
     <span class="back_text">back</span>
     <my-informations
-      @filter=""
       :title="title"
       :active-tags="activeTags"
       :go-project="goProject"
@@ -69,7 +68,7 @@
           <div class="projects-lines projects-lines_1" />
           <div class="projects-lines projects-lines_2" />
           <div class="projects-lines projects-lines_3" />
-        </div>	
+        </div>
       </div>
     </div>
     <transition name="fade">
@@ -89,60 +88,59 @@ import API from '../services/Api'
 
 export default {
 	data: () => {
-    	return {
-    	    article: '',
-    		title: '',
+		return {
+			article: '',
+			title: '',
 			legend: '',
 			legend2: '',
-    		shortDescription: '',
-    		longDescription: '',
-    		tags: [],
-    		goProject: false,
-    		tags: [],
-    		informationsTag: [],
-    		positionSlider: 1,
+			shortDescription: '',
+			longDescription: '',
+			tags: [],
+			goProject: false,
+			informationsTag: [],
+			positionSlider: 1,
 			activeTags: false
 		}
 	},
 	components: {
-    	'my-informations': Informations
+		'my-informations': Informations
 	},
 	methods: {
-    	projects: function(id) {
-    		this.goProject = true;
-    	   	var projects = document.querySelector('.projects'),
-    		projectsProject = document.querySelector('.projects-project');
+		projects: function() {
+			this.goProject = true;
+			var projects = document.querySelector('.projects'),
+				projectsProject = document.querySelector('.projects-project');
 			projects.classList.add('projects--active')
-    		projectsProject.classList.add('projects-project--active')
-    		setTimeout(() => {
-    			this.$router.push({ name: 'portfolio' })
-	    	},1000);
-    	},
-    	slideUp: function() {
-    		this.positionSlider = this.positionSlider+1<this.article.images.length ? this.positionSlider+1 : 0;
-    		var projectsBackgroundTooUp = document.querySelector('.projects-background--tooup');
+			projectsProject.classList.add('projects-project--active')
+			setTimeout(() => {
+				this.$router.push({ name: 'portfolio' })
+			},1000);
+		},
+		slideUp: function() {
+			this.positionSlider = this.positionSlider+1<this.article.images.length ? this.positionSlider+1 : 0;
+			var projectsBackgroundTooUp = document.querySelector('.projects-background--tooup');
 			var projectsBackgroundTooUpTitle = document.querySelector('.projects-background--tooup h2');
 			projectsBackgroundTooUpTitle.innerText = this.article.images[this.positionSlider].name;
 			projectsBackgroundTooUp.classList.remove('projects-background--tooup');
 			projectsBackgroundTooUp.classList.add('projects-background--downdown');
-    		projectsBackgroundTooUp.style.cssText = 'background-image: url(\''+this.article.images[this.positionSlider].path+'\')';
-			
-    		setTimeout(function() {
-	    		var projectsBackgroundUp = document.querySelector('.projects-background--up');
-	    		var projectsBackgroundDown = document.querySelector('.projects-background--down');
-	    		var projectsBackgroundDownDown = document.querySelector('.projects-background--downdown');
-	    		
-	    		projectsBackgroundUp.classList.remove('projects-background--up');
-	    		projectsBackgroundDown.classList.remove('projects-background--down');
-	    		projectsBackgroundDownDown.classList.remove('projects-background--downdown');
-	    		
-	    		projectsBackgroundUp.classList.add('projects-background--tooup');
-	    		projectsBackgroundDown.classList.add('projects-background--up');
-	    		projectsBackgroundDownDown.classList.add('projects-background--down');
-    		}, 0);
-    	},
-    	next: function() {
-    	    API.getNextProject(this.article.order)
+			projectsBackgroundTooUp.style.cssText = 'background-image: url(\''+this.article.images[this.positionSlider].path+'\')';
+
+			setTimeout(function() {
+				var projectsBackgroundUp = document.querySelector('.projects-background--up');
+				var projectsBackgroundDown = document.querySelector('.projects-background--down');
+				var projectsBackgroundDownDown = document.querySelector('.projects-background--downdown');
+
+				projectsBackgroundUp.classList.remove('projects-background--up');
+				projectsBackgroundDown.classList.remove('projects-background--down');
+				projectsBackgroundDownDown.classList.remove('projects-background--downdown');
+
+				projectsBackgroundUp.classList.add('projects-background--tooup');
+				projectsBackgroundDown.classList.add('projects-background--up');
+				projectsBackgroundDownDown.classList.add('projects-background--down');
+			}, 0);
+		},
+		next: function() {
+			API.getNextProject(this.article.order)
 				.then(rsl => {
 					this.goProject = true;
 					var projectsProject = document.querySelector('.projects-project');
@@ -154,7 +152,7 @@ export default {
 						this.goProject = false;
 					},1000);
 				})
-    	},
+		},
 		prev: function() {
 			API.getPrevProject(this.article.order)
 				.then(rsl => {
@@ -176,7 +174,7 @@ export default {
 			this.tags = this.article.v_strTags
 			this.shortDescription = this.article.shortDescription
 			this.longDescription = this.article.longDescription
-            
+
 			var projectsBackground = document.querySelector('.projects-background');
 			var projectsBackgroundDown = document.querySelector('.projects-background--down');
 			var projectsBackgroundTitle = document.querySelector('.projects-background--up h2');
@@ -188,21 +186,21 @@ export default {
 		}
 	},
 	mounted: function () {
-    	var name = this.$route.params.name;
-    	var informationsTagTmp = [];
-	    API.getTags()
-    	.then(rsl => {
+		var name = this.$route.params.name;
+		var informationsTagTmp = [];
+		API.getTags()
+			.then(rsl => {
 				informationsTagTmp = rsl;
-	    	API.getProject(name)
-		    	.then(rsl => {
-		    	var strTags = rsl.v_strTags.split(',');
-	        	for(var i=informationsTagTmp.length; i--;) {
-	        		if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
-	        	}
-	        	this.informationsTag = informationsTagTmp;
-	        	this.article = rsl;
-		    })
-    	})
+				API.getProject(name)
+					.then(rsl => {
+						var strTags = rsl.v_strTags.split(',');
+						for(var i=informationsTagTmp.length; i--;) {
+							if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
+						}
+						this.informationsTag = informationsTagTmp;
+						this.article = rsl;
+					})
+			})
 	}
 }
 </script>

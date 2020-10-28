@@ -13,7 +13,8 @@
     </div>
     <ul class="projects-list">
       <li
-        v-for="(p, index) in projectsSelecteds"
+        v-for="p in projectsSelecteds"
+        :key="p.id"
         class="projects-project projects-project--active projects-project--change"
         :data-name="p.slug"
         :data-tags="p.v_strTags"
@@ -42,7 +43,7 @@
         <div class="projects-lines projects-lines_1" />
         <div class="projects-lines projects-lines_2" />
         <div class="projects-lines projects-lines_3" />
-      </div>	
+      </div>
     </div>
   </div>
 </template>
@@ -63,28 +64,29 @@ export default {
 		}
 	},
 	methods: {
-    	project: function(e) {
-    		var projectsInformations = document.querySelectorAll('.projects-informations');
-    		for(var i=projectsInformations.length; i--;) {
+		project: function(e) {
+			var projectsInformations = document.querySelectorAll('.projects-informations');
+			for(var i=projectsInformations.length; i--;) {
 				projectsInformations[i].classList.add('projects-informations--remove');
 			}
-    		e.target.parentNode.classList.add('projects-project--selected');
-    		var tags = e.target.parentNode.dataset.tags;
-    		this.$parent.tags=tags;
-    		for(var i=this.$parent.informationsTag.length; i--;) {
-    			if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
-    		}
-    		this.$parent.goProject=true;
-    	},
-    	next: function() {
-    	    if(!this.lock) {
-    	        this.lock=true;
+			e.target.parentNode.classList.add('projects-project--selected');
+			var tags = e.target.parentNode.dataset.tags;
+			this.$parent.tags=tags;
+			for(i=this.$parent.informationsTag.length; i--;) {
+				if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
+			}
+			this.$parent.goProject=true;
+		},
+		next: function() {
+			if(!this.lock) {
+				this.lock=true;
 				var projectsProject = document.querySelectorAll('.projects-project');
 				for(var i=projectsProject.length; i--;) {
 					projectsProject[i].classList.add('projects-project--change');
 				}
 				this.skip++;
-				for(var i=this.tagsSelectedId.length,rsl=[]; i--;) {
+				let rsl = [];
+				for(i=this.tagsSelectedId.length; i--;) {
 					rsl.push('tags='+this.tagsSelectedId[i])
 				}
 				setTimeout(() => {
@@ -94,8 +96,8 @@ export default {
 						})
 				},500)
 			}
-    	},
-    	prev: function() {
+		},
+		prev: function() {
 			if(!this.lock) {
 				this.lock=true;
 				var projectsProject = document.querySelectorAll('.projects-project');
@@ -103,8 +105,8 @@ export default {
 					projectsProject[i].classList.add('projects-project--change');
 				}
 				this.skip--;
-				console.log(this.skip);
-				for(var i=this.tagsSelectedId.length,rsl=[]; i--;) {
+				let rsl = [];
+				for(i=this.tagsSelectedId.length; i--;) {
 					rsl.push('tags='+this.tagsSelectedId[i])
 				}
 				setTimeout(() => {
@@ -114,44 +116,44 @@ export default {
 						})
 				},500)
 			}
-    	}
+		}
 	},
 	watch: {
-    	goProject: function() {
-    		var projects = this.$el;
+		goProject: function() {
+			var projects = this.$el;
 			var projectsProject = document.querySelectorAll('.projects-project');
 			var id = 0;
-    		for(var i=projectsProject.length; i--;) {
-    			if(projectsProject[i].classList.contains('projects-project--selected')) {
-    				id=i;
-    			} else { 
-    				projectsProject[i].classList.add('projects-project--remove')
-    			}
-    		}
-    		setTimeout(() => {
-	    		projects.classList.add('projects--extend')
-	    		projectsProject[id].classList.add('projects-project--extend')
-	    		var paramName = projectsProject[id].dataset.name;
-	    		setTimeout(() => {
-	    			this.$router.push({ name: 'project', params: { name: paramName } })
-	    		},500);
-    		}, 500);
-    	},
-    	projects: function() {
-	       this.projectsSelecteds= this.projects;
-    	},
-    	tagsSelectedId: function() {
+			for(var i=projectsProject.length; i--;) {
+				if(projectsProject[i].classList.contains('projects-project--selected')) {
+					id=i;
+				} else {
+					projectsProject[i].classList.add('projects-project--remove')
+				}
+			}
+			setTimeout(() => {
+				projects.classList.add('projects--extend')
+				projectsProject[id].classList.add('projects-project--extend')
+				var paramName = projectsProject[id].dataset.name;
+				setTimeout(() => {
+					this.$router.push({ name: 'project', params: { name: paramName } })
+				},500);
+			}, 500);
+		},
+		projects: function() {
+			this.projectsSelecteds= this.projects;
+		},
+		tagsSelectedId: function() {
 			this.skip = 0;
 		},
-    	projectsSelecteds: function() {
-    	    setTimeout(() => {
+		projectsSelecteds: function() {
+			setTimeout(() => {
 				var projectsProject = document.querySelectorAll('.projects-project');
 				for(var i=projectsProject.length; i--;) {
 					projectsProject[i].classList.remove('projects-project--change');
 				}
 				this.lock=false;
 			},100);
-    	}
+		}
 	},
 	updated: function() {
 		var projects = document.querySelector('.projects');
@@ -162,7 +164,8 @@ export default {
 			projectsProject[i].classList.remove('projects-project--active');
 		}
 		var backgroundHQ = [];
-		for(var i=0,countI=projectsWindows.length; i<countI; i++) {
+		let countI=projectsWindows.length;
+		for(i=0; i<countI; i++) {
 			backgroundHQ.push(new Image());
 			backgroundHQ[i].src = this.projectsSelecteds[i].images[0].path;
 			backgroundHQ[i].addEventListener('load',function() {
