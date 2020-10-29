@@ -1,0 +1,9 @@
+.font-face(@font-family, @filepath, @font-weight, @font-style) {
+	@font-face {
+		font-family: @font-family;
+		src: url('@{filepath}.ttf')  format('truetype');
+		font-weight: @font-weight;
+		font-style: @font-style;
+		font-display: swap;
+	}
+}

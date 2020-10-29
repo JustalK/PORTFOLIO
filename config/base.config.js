@@ -2,13 +2,16 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
+	target: 'node',
+	externals: [ nodeExternals() ],
 	entry: {
-		app: './src/index.js'
+		app: './src/router.ts'
 	},
 	resolve: {
-		extensions: [ '.js', '.vue', '.json' ],
+		extensions: [ '.js', '.vue', '.json', '.ts', '.d.ts' ],
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js'
 		}
@@ -19,7 +22,6 @@ module.exports = {
 			fix: true,
 			files: [
 				'src/**/*.vue',
-				'src/*.js',
 				'server/*js',
 				'server/**/*.js',
 				'config/*.js'
@@ -41,6 +43,11 @@ module.exports = {
 	],
 	module: {
 		rules: [
+			{
+				test: /\.tsx?$/,
+				exclude: /node_modules/,
+				use: 'ts-loader'
+			},
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader'
