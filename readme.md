@@ -4,6 +4,7 @@
 [![Travis](https://img.shields.io/travis/com/justalk/portfolio.svg?style=flat-square)](https://travis-ci.com/github/JustalK/portfolio)
 [![Coverage Status](https://coveralls.io/repos/github/JustalK/PORTFOLIO/badge.svg?branch=master&style=flat-square)](https://coveralls.io/github/JustalK/PORTFOLIO?branch=master)
 [![Dependency status](http://img.shields.io/david/justalk/portfolio.svg?style=flat-square)](https://david-dm.org/justalk/portfolio.svg)
+[![Maintainability Status](https://api.codeclimate.com/v1/badges/45c256d13f79636ec78f/maintainability)](https://codeclimate.com/github/JustalK/PORTFOLIO/maintainability)
 
 A project from presenting my professional work to the world in a single page application. As a fullstack developer, I have coded both side of the application. The frontend has been made with `Vue.js` and the backend is made with `Express` and `MongoDB`. The entire project is compiled through `Webpack`.
 
