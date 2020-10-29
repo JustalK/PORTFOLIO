@@ -1,21 +1,18 @@
 <template>
 	<div
 		id="PORTFOLIO"
-		class="content"
-	>
+		class="content">
 		<div class="content-cover content-cover_1" />
 		<div class="content-cover content-cover_2" />
 
 		<a
 			href="#"
 			class="back"
-			@click.stop="back"
-		>
+			@click.stop="back">
 			<div
 				v-for="index in 4"
 				:key="index"
-				:class="['back-blocks back-blocks_' + (index*1-1)]"
-			/>
+				:class="['back-blocks back-blocks_' + (index*1-1)]" />
 		</a>
 		<span class="back_text">back</span>
 		<my-informations
@@ -25,18 +22,15 @@
 			:tags="tags"
 			:title="title"
 			:informations-tag="informationsTag"
-			@filter="filter"
-		/>
+			@filter="filter" />
 		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
 		<my-sliders
 			:go-project="goProject"
 			:tags-selected-id="tagsSelectedId"
-			:projects="projects"
-		/>
+			:projects="projects" />
 		<transition
 			name="fade"
-			mode="out-in"
-		>
+			mode="out-in">
 			<my-pubs v-show="!goProject" />
 		</transition>
 	</div>

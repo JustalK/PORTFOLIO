@@ -1,18 +1,15 @@
 <template>
 	<div
 		id="PROJECT"
-		class="content"
-	>
+		class="content">
 		<a
 			href="#"
 			class="back"
-			@click.stop="projects"
-		>
+			@click.stop="projects">
 			<div
 				v-for="index in 4"
 				:key="index"
-				:class="['back-blocks back-blocks_' + (index*1-1)]"
-			/>
+				:class="['back-blocks back-blocks_' + (index*1-1)]" />
 		</a>
 		<span class="back_text">back</span>
 		<my-informations
@@ -21,14 +18,12 @@
 			:go-project="goProject"
 			:tags="tags"
 			:description="shortDescription"
-			:informations-tag="informationsTag"
-		/>
+			:informations-tag="informationsTag" />
 		<span class="filter_sentance">Click on the image below for switching to the next one.</span>
 		<div class="projects projects--extend">
 			<div
 				class="projects-left"
-				@click.stop="prev()"
-			>
+				@click.stop="prev()">
 				<div class="projects-left_effects">
 					<span class="projects-lines_info">prev</span>
 					<div class="projects-lines projects-lines_1" />
@@ -39,8 +34,7 @@
 			<div class="projects-project projects-project--extend">
 				<div
 					class="projects-windows projects-windows_fix"
-					@click="slideUp"
-				>
+					@click="slideUp">
 					<div class="projects-windows_fix_cover" />
 					<div class="projects-background projects-background--up">
 						<div class="projects-header">
@@ -61,8 +55,7 @@
 			</div>
 			<div
 				class="projects-right"
-				@click.stop="next()"
-			>
+				@click.stop="next()">
 				<div class="projects-right_effects">
 					<span class="projects-lines_info">next</span>
 					<div class="projects-lines projects-lines_1" />
@@ -75,8 +68,7 @@
 			<div
 				id="additional"
 				class="additional"
-				v-html="this.longDescription"
-			>
+				v-html="this.longDescription">
 				{{ this.longDescription }}
 			</div>
 		</transition>
