@@ -1,19 +1,31 @@
-parser: 'babel-eslint'
+parser: 'vue-eslint-parser'
 env:
   browser: true
-  amd: true
-extends: 'eslint:recommended'
+  amd: true,
+  es6: true,
+  node: true
+extends:
+    - 'eslint:recommended'
+    - 'plugin:vue/vue3-recommended'
 parserOptions:
+  parser: 'babel-eslint'
   sourceType: 'module'
   ecmaFeatures:
     jsx: true
     modules: true
-  ecmaVersion: 6
+  ecmaVersion: 11
 rules:
   no-unused-expressions: 2
+  vue/script-indent:
+    - error
+    - tab
+  vue/html-indent:
+    - error
+    - tab
+  key-spacing: ["error", { beforeColon: false, afterColon: true }]
   indent:
     - error
-    - 4
+    - tab
   linebreak-style:
     - error
     - unix
