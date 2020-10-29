@@ -11,13 +11,7 @@
 				class="bloc left"
 				:class="{active:goPortfolio}">
 				<div>
-					<span class="intro">
-						<span>Hello world, I'm <a
-							href="#">Justal Kevin</a>.</span>
-						<span>I'm a full stack web developer.</span>
-						<span>If any questions, contact me at <a
-							href="#">justal.kevin@gmail.com</a></span>
-					</span>
+					<my-introduction />
 				</div>
 				<a
 					class="links-open-door left portfolio"
@@ -30,13 +24,7 @@
 				class="bloc right"
 				:class="{active:goPortfolio}">
 				<div>
-					<span class="intro">
-						<span>Hello world, I'm <a
-							href="#">Justal Kevin</a>.</span>
-						<span>I'm a full stack web developer.</span>
-						<span>If any questions, contact me at <a
-							href="#">justal.kevin@gmail.com</a></span>
-					</span>
+					<my-introduction />
 				</div>
 				<a
 					class="links-open-door right articles"
@@ -48,8 +36,12 @@
 	</div>
 </template>
 <script>
+import Introduction from '../components/Introduction';
 
 export default {
+	components: {
+		'my-introduction': Introduction
+	},
 	data: () => {
 		return {
 			goPortfolio: false,
