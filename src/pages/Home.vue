@@ -12,13 +12,11 @@
 				:class="{active:goPortfolio}">
 				<div>
 					<span class="intro">
-						<span class="intro-first_sentance">Hello world, I'm <a
-							href="#"
-							class="intro-name"><div class="intro-links_effect" /><div class="intro-links_effect_2" />Justal Kevin</a>.</span>
-						<span class="intro-second_sentance">I'm a full stack web developer.</span>
-						<span class="intro-third_sentance"><span class="intro-matrix">If any questions, contact me at </span><a
-							href="#"
-							class="intro-email"><div class="intro-links_effect" /><div class="intro-links_effect_2" />justal.kevin@gmail.com</a></span>
+						<span>Hello world, I'm <a
+							href="#">Justal Kevin</a>.</span>
+						<span>I'm a full stack web developer.</span>
+						<span>If any questions, contact me at <a
+							href="#">justal.kevin@gmail.com</a></span>
 					</span>
 				</div>
 				<a
@@ -33,13 +31,11 @@
 				:class="{active:goPortfolio}">
 				<div>
 					<span class="intro">
-						<span class="intro-first_sentance">Hello world, I'm <a
-							href="#"
-							class="intro-name"><div class="intro-links_effect" /><div class="intro-links_effect_2" />Justal Kevin</a>.</span>
-						<span class="intro-second_sentance">I'm a full stack web developer.</span>
-						<span class="intro-third_sentance">If any questions, contact me at <a
-							href="#"
-							class="intro-email"><div class="intro-links_effect" /><div class="intro-links_effect_2" />justal.kevin@gmail.com</a></span>
+						<span>Hello world, I'm <a
+							href="#">Justal Kevin</a>.</span>
+						<span>I'm a full stack web developer.</span>
+						<span>If any questions, contact me at <a
+							href="#">justal.kevin@gmail.com</a></span>
 					</span>
 				</div>
 				<a
