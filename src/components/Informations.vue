@@ -4,8 +4,7 @@
 			<div class="informations-title_transition informations-title_transition--init" />
 			<h1
 				key="data"
-				class="informations-title"
-			>
+				class="informations-title">
 				{{ title }}
 			</h1>
 		</div>
@@ -22,8 +21,7 @@
 				class="informations-tag"
 				:class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
 				:data-id="tag._id"
-				@click.stop="filter($event)"
-			>
+				@click.stop="filter($event)">
 				{{ tag.name }}
 			</li>
 		</ul>
