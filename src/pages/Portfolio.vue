@@ -19,13 +19,13 @@
 		</a>
 		<span class="back_text">back</span>
 		<my-informations
-			@filter="filter"
 			:active-tags="activeTags"
 			:go-project="goProject"
 			:description="description"
 			:tags="tags"
 			:title="title"
 			:informations-tag="informationsTag"
+			@filter="filter"
 		/>
 		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
 		<my-sliders
@@ -42,12 +42,17 @@
 	</div>
 </template>
 <script>
-import Informations from '../components/Informations'
-import Sliders from '../components/Sliders'
-import Pubs from '../components/Pubs'
-import API from '../services/Api'
+import Informations from '../components/Informations';
+import Sliders from '../components/Sliders';
+import Pubs from '../components/Pubs';
+import API from '../services/Api';
 
 export default {
+	components: {
+		'my-informations': Informations,
+		'my-sliders': Sliders,
+		'my-pubs': Pubs
+	},
 	data: () => {
 		return {
 			title: 'Works',
@@ -58,7 +63,18 @@ export default {
 			tagsSelectedId: [],
 			activeTags: true,
 			description: 'From Web Components and UI/UX animations to React.JS, Redux, Vue.JS, and Node.JS. Check out my latest web software development portfolio projects.'
-		}
+		};
+	},
+	mounted: function () {
+		API.getProjectsPage()
+			.then(rsl => {
+				console.log(rsl);
+				this.projects = rsl;
+			});
+		API.getTags()
+			.then(rsl => {
+				this.informationsTag = rsl;
+			});
 	},
 	methods: {
 		back: function() {
@@ -67,7 +83,7 @@ export default {
 				cover[i].classList.add('content-cover--active');
 			}
 			setTimeout(() => {
-				this.$router.push({ name: 'Home' })
+				this.$router.push({ name: 'Home' });
 			},1000);
 		},
 		filter: function(e) {
@@ -78,25 +94,9 @@ export default {
 			API.getProjectsPage(0,'?'+rsl.join('&'))
 				.then(rsl => {
 					this.projects = rsl;
-				})
+				});
 		}
-	},
-	mounted: function () {
-		API.getProjectsPage()
-			.then(rsl => {
-				console.log(rsl);
-				this.projects = rsl;
-			})
-		API.getTags()
-			.then(rsl => {
-				this.informationsTag = rsl;
-			});
-	},
-	components: {
-		'my-informations': Informations,
-		'my-sliders': Sliders,
-		'my-pubs': Pubs
 	}
-}
+};
 </script>
 <style src="../assets/less/portfolio.less"></style>

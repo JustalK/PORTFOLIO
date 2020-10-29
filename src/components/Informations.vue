@@ -17,12 +17,12 @@
 		</div>
 		<ul class="informations-tags">
 			<li
-				@click.stop="filter($event)"
 				v-for="tag in informationsTag"
 				:key="tag.id"
 				class="informations-tag"
 				:class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
 				:data-id="tag._id"
+				@click.stop="filter($event)"
 			>
 				{{ tag.name }}
 			</li>
@@ -32,11 +32,6 @@
 <script>
 
 export default {
-	data: () => {
-		return {
-			tagsSelected: []
-		}
-	},
 	props: {
 		'title': { default: 'Default' },
 		'description': { default: 'Default' },
@@ -45,29 +40,10 @@ export default {
 		'informationsTag': { default: () => [] },
 		'activeTags': { default: false }
 	},
-	methods: {
-		filter: function(e) {
-			if(this.activeTags) {
-				let index = this.tagsSelected.indexOf(e.target.innerHTML);
-				if(index===-1) {
-					this.tagsSelected.push(e.target.innerHTML);
-				} else {
-					this.tagsSelected.splice(index,1);
-				}
-				var tags = document.querySelectorAll('.informations-tag');
-				for(var i=tags.length,rsl=[]; i--;) {
-					if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
-						tags[i].classList.add('informations-tag--inside');
-						tags[i].classList.remove('informations-tag--not_inside');
-						rsl.push(tags[i].dataset.id);
-					} else {
-						tags[i].classList.add('informations-tag--not_inside');
-						tags[i].classList.remove('informations-tag--inside');
-					}
-				}
-				this.$emit('filter',rsl);
-			}
-		}
+	data: () => {
+		return {
+			tagsSelected: []
+		};
 	},
 	watch: {
 		tags: function() {
@@ -101,6 +77,30 @@ export default {
 			informationsTitleSize = document.querySelector('.informations-title_transition');
 		informationsDescriptionTransition.classList.remove('informations-description_transition--init');
 		informationsTitleSize.classList.remove('informations-title_transition--init');
+	},
+	methods: {
+		filter: function(e) {
+			if(this.activeTags) {
+				let index = this.tagsSelected.indexOf(e.target.innerHTML);
+				if(index===-1) {
+					this.tagsSelected.push(e.target.innerHTML);
+				} else {
+					this.tagsSelected.splice(index,1);
+				}
+				var tags = document.querySelectorAll('.informations-tag');
+				for(var i=tags.length,rsl=[]; i--;) {
+					if(this.tagsSelected.indexOf(tags[i].innerHTML) !== -1) {
+						tags[i].classList.add('informations-tag--inside');
+						tags[i].classList.remove('informations-tag--not_inside');
+						rsl.push(tags[i].dataset.id);
+					} else {
+						tags[i].classList.add('informations-tag--not_inside');
+						tags[i].classList.remove('informations-tag--inside');
+					}
+				}
+				this.$emit('filter',rsl);
+			}
+		}
 	}
-}
+};
 </script>

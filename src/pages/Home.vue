@@ -34,9 +34,9 @@
 				</a>
 			</div>
 			<div
+				ref="bloc-right"
 				class="bloc right"
 				:class="{active:goPortfolio}"
-				ref="bloc-right"
 			>
 				<div>
 					<span class="intro">
@@ -69,18 +69,7 @@ export default {
 			goPortfolio: false,
 			goZoom: false,
 			intro: 'Hello, I\'m Justal Kevin.<br>I\'m a full stack web developer.'
-		}
-	},
-	methods: {
-		open: function(direction) {
-			this.goPortfolio = true
-			setTimeout(() => {
-				this.goZoom = true
-				setTimeout(() => {
-					return direction == 'portfolio' ? this.$router.push('portfolio') : this.$router.push('articles')
-				}, 500);
-			}, 500)
-		}
+		};
 	},
 	mounted: function () {
 		setTimeout(() => {
@@ -95,7 +84,18 @@ export default {
 				}
 			},350);
 		}, 200);
+	},
+	methods: {
+		open: function(direction) {
+			this.goPortfolio = true;
+			setTimeout(() => {
+				this.goZoom = true;
+				setTimeout(() => {
+					return direction == 'portfolio' ? this.$router.push('portfolio') : this.$router.push('articles');
+				}, 500);
+			}, 500);
+		}
 	}
-}
+};
 </script>
 <style src="../assets/less/home.less"></style>

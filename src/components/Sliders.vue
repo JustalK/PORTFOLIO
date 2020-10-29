@@ -48,7 +48,7 @@
 	</div>
 </template>
 <script>
-import API from '../services/Api'
+import API from '../services/Api';
 
 export default {
 	props: {
@@ -61,62 +61,7 @@ export default {
 			skip: 0,
 			lock: false,
 			projectsSelecteds: { default: () => [] }
-		}
-	},
-	methods: {
-		project: function(e) {
-			var projectsInformations = document.querySelectorAll('.projects-informations');
-			for(var i=projectsInformations.length; i--;) {
-				projectsInformations[i].classList.add('projects-informations--remove');
-			}
-			e.target.parentNode.classList.add('projects-project--selected');
-			var tags = e.target.parentNode.dataset.tags;
-			this.$parent.tags=tags;
-			for(i=this.$parent.informationsTag.length; i--;) {
-				if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
-			}
-			this.$parent.goProject=true;
-		},
-		next: function() {
-			if(!this.lock) {
-				this.lock=true;
-				var projectsProject = document.querySelectorAll('.projects-project');
-				for(var i=projectsProject.length; i--;) {
-					projectsProject[i].classList.add('projects-project--change');
-				}
-				this.skip++;
-				let rsl = [];
-				for(i=this.tagsSelectedId.length; i--;) {
-					rsl.push('tags='+this.tagsSelectedId[i])
-				}
-				setTimeout(() => {
-					API.getProjectsPage(this.skip,'?'+rsl.join('&'))
-						.then(rsl => {
-							this.projectsSelecteds = rsl;
-						})
-				},500)
-			}
-		},
-		prev: function() {
-			if(!this.lock) {
-				this.lock=true;
-				var projectsProject = document.querySelectorAll('.projects-project');
-				for(var i=projectsProject.length; i--;) {
-					projectsProject[i].classList.add('projects-project--change');
-				}
-				this.skip--;
-				let rsl = [];
-				for(i=this.tagsSelectedId.length; i--;) {
-					rsl.push('tags='+this.tagsSelectedId[i])
-				}
-				setTimeout(() => {
-					API.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
-						.then(rsl => {
-							this.projectsSelecteds = rsl;
-						})
-				},500)
-			}
-		}
+		};
 	},
 	watch: {
 		goProject: function() {
@@ -127,15 +72,15 @@ export default {
 				if(projectsProject[i].classList.contains('projects-project--selected')) {
 					id=i;
 				} else {
-					projectsProject[i].classList.add('projects-project--remove')
+					projectsProject[i].classList.add('projects-project--remove');
 				}
 			}
 			setTimeout(() => {
-				projects.classList.add('projects--extend')
-				projectsProject[id].classList.add('projects-project--extend')
+				projects.classList.add('projects--extend');
+				projectsProject[id].classList.add('projects-project--extend');
 				var paramName = projectsProject[id].dataset.name;
 				setTimeout(() => {
-					this.$router.push({ name: 'project', params: { name: paramName } })
+					this.$router.push({ name: 'project', params: { name: paramName } });
 				},500);
 			}, 500);
 		},
@@ -173,6 +118,61 @@ export default {
 				projectsWindows[this].classList.add('projects-windowsbg--active');
 			}.bind(i));
 		}
+	},
+	methods: {
+		project: function(e) {
+			var projectsInformations = document.querySelectorAll('.projects-informations');
+			for(var i=projectsInformations.length; i--;) {
+				projectsInformations[i].classList.add('projects-informations--remove');
+			}
+			e.target.parentNode.classList.add('projects-project--selected');
+			var tags = e.target.parentNode.dataset.tags;
+			this.$parent.tags=tags;
+			for(i=this.$parent.informationsTag.length; i--;) {
+				if(tags.split(',').indexOf(this.$parent.informationsTag[i].name) !== -1) this.$parent.informationsTag[i].v_tagUse = true;
+			}
+			this.$parent.goProject=true;
+		},
+		next: function() {
+			if(!this.lock) {
+				this.lock=true;
+				var projectsProject = document.querySelectorAll('.projects-project');
+				for(var i=projectsProject.length; i--;) {
+					projectsProject[i].classList.add('projects-project--change');
+				}
+				this.skip++;
+				let rsl = [];
+				for(i=this.tagsSelectedId.length; i--;) {
+					rsl.push('tags='+this.tagsSelectedId[i]);
+				}
+				setTimeout(() => {
+					API.getProjectsPage(this.skip,'?'+rsl.join('&'))
+						.then(rsl => {
+							this.projectsSelecteds = rsl;
+						});
+				},500);
+			}
+		},
+		prev: function() {
+			if(!this.lock) {
+				this.lock=true;
+				var projectsProject = document.querySelectorAll('.projects-project');
+				for(var i=projectsProject.length; i--;) {
+					projectsProject[i].classList.add('projects-project--change');
+				}
+				this.skip--;
+				let rsl = [];
+				for(i=this.tagsSelectedId.length; i--;) {
+					rsl.push('tags='+this.tagsSelectedId[i]);
+				}
+				setTimeout(() => {
+					API.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
+						.then(rsl => {
+							this.projectsSelecteds = rsl;
+						});
+				},500);
+			}
+		}
 	}
-}
+};
 </script>

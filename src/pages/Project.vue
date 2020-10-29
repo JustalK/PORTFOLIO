@@ -83,10 +83,13 @@
 	</div>
 </template>
 <script>
-import Informations from '../components/Informations'
-import API from '../services/Api'
+import Informations from '../components/Informations';
+import API from '../services/Api';
 
 export default {
+	components: {
+		'my-informations': Informations
+	},
 	data: () => {
 		return {
 			article: '',
@@ -100,20 +103,51 @@ export default {
 			informationsTag: [],
 			positionSlider: 1,
 			activeTags: false
+		};
+	},
+	watch: {
+		article: function() {
+			this.title = this.article.title;
+			this.tags = this.article.v_strTags;
+			this.shortDescription = this.article.shortDescription;
+			this.longDescription = this.article.longDescription;
+
+			var projectsBackground = document.querySelector('.projects-background');
+			var projectsBackgroundDown = document.querySelector('.projects-background--down');
+			var projectsBackgroundTitle = document.querySelector('.projects-background--up h2');
+			var projectsBackgroundDownTitle = document.querySelector('.projects-background--down h2');
+			projectsBackground.style.cssText = 'background-image: url(\''+this.article.images[0].path+'\')';
+			projectsBackgroundTitle.innerText = this.article.images[0].name;
+			projectsBackgroundDownTitle.innerText = this.article.images[this.article.images.length==1 ? 0 : 1].name;
+			projectsBackgroundDown.style.cssText = 'background-image: url(\''+this.article.images[this.article.images.length==1 ? 0 : 1].path+'\')';
 		}
 	},
-	components: {
-		'my-informations': Informations
+	mounted: function () {
+		var name = this.$route.params.name;
+		var informationsTagTmp = [];
+		API.getTags()
+			.then(rsl => {
+				informationsTagTmp = rsl;
+				API.getProject(name)
+					.then(rsl => {
+						var strTags = rsl.v_strTags.split(',');
+						for(var i=informationsTagTmp.length; i--;) {
+							if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
+						}
+						this.informationsTag = informationsTagTmp;
+						this.article = rsl;
+					});
+			});
 	},
 	methods: {
 		projects: function() {
 			this.goProject = true;
 			var projects = document.querySelector('.projects'),
 				projectsProject = document.querySelector('.projects-project');
-			projects.classList.add('projects--active')
-			projectsProject.classList.add('projects-project--active')
+			projects.classList.add('projects--active');
+			projectsProject.classList.add('projects-project--active');
 			setTimeout(() => {
-				this.$router.push({ name: 'portfolio' })
+				this.$router.push({ name: 'portfolio' });
 			},1000);
 		},
 		slideUp: function() {
@@ -144,64 +178,30 @@ export default {
 				.then(rsl => {
 					this.goProject = true;
 					var projectsProject = document.querySelector('.projects-project');
-					projectsProject.classList.add('projects-project--active')
+					projectsProject.classList.add('projects-project--active');
 					setTimeout(() => {
 						this.article = rsl;
-						projectsProject.classList.remove('projects-project--active')
+						projectsProject.classList.remove('projects-project--active');
 						this.$router.push({ name: 'project', params: { name: rsl.slug } });
 						this.goProject = false;
 					},1000);
-				})
+				});
 		},
 		prev: function() {
 			API.getPrevProject(this.article.order)
 				.then(rsl => {
 					this.goProject = true;
 					var projectsProject = document.querySelector('.projects-project');
-					projectsProject.classList.add('projects-project--active')
+					projectsProject.classList.add('projects-project--active');
 					setTimeout(() => {
 						this.article = rsl;
-						projectsProject.classList.remove('projects-project--active')
+						projectsProject.classList.remove('projects-project--active');
 						this.$router.push({ name: 'project', params: { name: rsl.slug } });
 						this.goProject = false;
 					},1000);
-				})
+				});
 		}
-	},
-	watch: {
-		article: function() {
-			this.title = this.article.title
-			this.tags = this.article.v_strTags
-			this.shortDescription = this.article.shortDescription
-			this.longDescription = this.article.longDescription
-
-			var projectsBackground = document.querySelector('.projects-background');
-			var projectsBackgroundDown = document.querySelector('.projects-background--down');
-			var projectsBackgroundTitle = document.querySelector('.projects-background--up h2');
-			var projectsBackgroundDownTitle = document.querySelector('.projects-background--down h2');
-			projectsBackground.style.cssText = 'background-image: url(\''+this.article.images[0].path+'\')';
-			projectsBackgroundTitle.innerText = this.article.images[0].name
-			projectsBackgroundDownTitle.innerText = this.article.images[this.article.images.length==1 ? 0 : 1].name;
-			projectsBackgroundDown.style.cssText = 'background-image: url(\''+this.article.images[this.article.images.length==1 ? 0 : 1].path+'\')';
-		}
-	},
-	mounted: function () {
-		var name = this.$route.params.name;
-		var informationsTagTmp = [];
-		API.getTags()
-			.then(rsl => {
-				informationsTagTmp = rsl;
-				API.getProject(name)
-					.then(rsl => {
-						var strTags = rsl.v_strTags.split(',');
-						for(var i=informationsTagTmp.length; i--;) {
-							if(strTags.indexOf(informationsTagTmp[i].name) != -1) informationsTagTmp[i].v_tagUse = true;
-						}
-						this.informationsTag = informationsTagTmp;
-						this.article = rsl;
-					})
-			})
 	}
-}
+};
 </script>
 <style src="../assets/less/project.less"></style>
