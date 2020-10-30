@@ -2,7 +2,6 @@
 	<div
 		id="HOME">
 		<div
-			class="wrap"
 			:class="{active:goZoom}">
 			<components_introduction_side
 				:props_link="props_links[0]"
@@ -34,18 +33,25 @@ export default {
 	},
 	async mounted() {
 		await this.get_my_identity();
-		setTimeout(() => {
-			const home = document.querySelector('#HOME');
-			home.classList.add('mounted');
-		}, 200);
+		this.add_class_to_element_delay('#HOME', 'mounted', 200);
 	},
 	methods: {
 		async get_my_identity() {
+			console.log('hey');
 			const my_identity = await api.get_my_identity();
 			this.update_introduction(my_identity.fullname, my_identity.email);
 		},
 		update_introduction(name, email) {
 			this.props_introduction = {name, email};
+		},
+		add_class_to_element_delay(selector, newclass, delay) {
+			setTimeout(() => {
+				this.add_class_to_element(selector, newclass);
+			}, delay);
+		},
+		add_class_to_element(selector, newclass) {
+			const element = document.querySelector(selector);
+			element.classList.add(newclass);
 		}
 	}
 };

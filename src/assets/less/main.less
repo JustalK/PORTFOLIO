@@ -39,21 +39,6 @@ body,
 	.full();
 }
 
-#HOME {
-	perspective: 100px;
-	overflow: hidden;
-
-	& .wrap {
-		transition: transform 0.5s cubic-bezier(0.8, 0, 0.25, 1);
-		perspective: 1000px;
-		height: 100%;
-
-		&.active {
-			transform: translateZ(100px);
-		}
-	}
-}
-
 .bloc {
 	width: 50%;
 	height: 100%;
