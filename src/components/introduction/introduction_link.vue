@@ -27,4 +27,4 @@ export default {
 	}
 };
 </script>
-<style src="../assets/less/introduction_link.less"></style>
+<style src="../../assets/less/introduction_link.less"></style>

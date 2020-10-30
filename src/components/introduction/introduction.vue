@@ -19,4 +19,4 @@ export default {
 	}
 };
 </script>
-<style src="../assets/less/introduction.less"></style>
+<style src="../../assets/less/introduction.less"></style>

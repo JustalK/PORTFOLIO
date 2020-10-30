@@ -19,6 +19,7 @@ module.exports = {
 			fix: true,
 			files: [
 				'src/**/*.vue',
+				'src/**/**/*.vue',
 				'src/*.js',
 				'server/*js',
 				'server/**/*.js',

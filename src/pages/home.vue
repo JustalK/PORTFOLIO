@@ -7,30 +7,21 @@
 		<div
 			class="wrap"
 			:class="{active:goZoom}">
-			<div
-				class="bloc left"
-				:class="{active:goPortfolio}">
-				<components_introduction :props_introduction="props_introduction" />
-				<components_introduction_link :props_link="props_links[0]" />
-			</div>
-			<div
-				ref="bloc-right"
-				class="bloc right"
-				:class="{active:goPortfolio}">
-				<components_introduction :props_introduction="props_introduction" />
-				<components_introduction_link :props_link="props_links[1]" />
-			</div>
+			<components_introduction_side
+				:props_link="props_links[0]"
+				:props_introduction="props_introduction" />
+			<components_introduction_side
+				:props_link="props_links[1]"
+				:props_introduction="props_introduction" />
 		</div>
 	</div>
 </template>
 <script>
-import introduction from '../components/introduction';
-import introduction_link from '../components/introduction_link';
+import introduction_side from '../components/introduction/introduction_side';
 
 export default {
 	components: {
-		components_introduction: introduction,
-		components_introduction_link: introduction_link
+		components_introduction_side: introduction_side
 	},
 	data: () => {
 		return {
