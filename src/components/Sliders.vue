@@ -44,7 +44,7 @@
 	</div>
 </template>
 <script>
-import API from '../services/Api';
+import api from '../services/api';
 
 export default {
 	props: {
@@ -142,7 +142,7 @@ export default {
 					rsl.push('tags='+this.tagsSelectedId[i]);
 				}
 				setTimeout(() => {
-					API.getProjectsPage(this.skip,'?'+rsl.join('&'))
+					api.getProjectsPage(this.skip,'?'+rsl.join('&'))
 						.then(rsl => {
 							this.projectsSelecteds = rsl;
 						});
@@ -162,7 +162,7 @@ export default {
 					rsl.push('tags='+this.tagsSelectedId[i]);
 				}
 				setTimeout(() => {
-					API.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
+					api.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
 						.then(rsl => {
 							this.projectsSelecteds = rsl;
 						});

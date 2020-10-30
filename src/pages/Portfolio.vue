@@ -39,7 +39,7 @@
 import Informations from '../components/Informations';
 import Sliders from '../components/Sliders';
 import Pubs from '../components/Pubs';
-import API from '../services/Api';
+import api from '../services/api';
 
 export default {
 	components: {
@@ -60,12 +60,12 @@ export default {
 		};
 	},
 	mounted: function () {
-		API.getProjectsPage()
+		api.getProjectsPage()
 			.then(rsl => {
 				console.log(rsl);
 				this.projects = rsl;
 			});
-		API.getTags()
+		api.getTags()
 			.then(rsl => {
 				this.informationsTag = rsl;
 			});
@@ -77,7 +77,7 @@ export default {
 				cover[i].classList.add('content-cover--active');
 			}
 			setTimeout(() => {
-				this.$router.push({ name: 'Home' });
+				this.$router.push({ name: 'home' });
 			},1000);
 		},
 		filter: function(e) {
@@ -85,7 +85,7 @@ export default {
 				rsl.push('tags='+e[i]);
 			}
 			this.tagsSelectedId = e;
-			API.getProjectsPage(0,'?'+rsl.join('&'))
+			api.getProjectsPage(0,'?'+rsl.join('&'))
 				.then(rsl => {
 					this.projects = rsl;
 				});

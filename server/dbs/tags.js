@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const filename = path.basename(__filename, '.js');
 const model = require('../models/' + filename);

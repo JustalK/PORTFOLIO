@@ -1,0 +1,40 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+.links-open-door {
+	font-family: 'Lato-Bold', sans-serif;
+	position: absolute;
+	z-index: 10;
+	top: 110%;
+	height: 40px;
+	background: @text-color-dark;
+	color: @text-color;
+	box-shadow: 10px 10px @background-shadow;
+	line-height: 40px;
+	user-select: none;
+	width: 200px;
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+	.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+	&:hover {
+		background: @text-color;
+		color: @text-color-white;
+		box-shadow: none;
+	}
+
+	&.left {
+		right: 10%;
+	}
+
+	&.right {
+		left: 10%;
+	}
+}
+
+#HOME {
+	&.mounted .links-open-door {
+		top: 70%;
+	}
+}

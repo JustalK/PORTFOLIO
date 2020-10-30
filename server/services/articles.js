@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = dbs => ({
 	get_all: async (params, skip = 0, limit = null) => {
 		return dbs.get_all(params, skip, limit);

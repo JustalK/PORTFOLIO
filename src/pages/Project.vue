@@ -76,7 +76,7 @@
 </template>
 <script>
 import Informations from '../components/Informations';
-import API from '../services/Api';
+import api from '../services/api';
 
 export default {
 	components: {
@@ -117,10 +117,10 @@ export default {
 	mounted: function () {
 		var name = this.$route.params.name;
 		var informationsTagTmp = [];
-		API.getTags()
+		api.getTags()
 			.then(rsl => {
 				informationsTagTmp = rsl;
-				API.getProject(name)
+				api.getProject(name)
 					.then(rsl => {
 						var strTags = rsl.v_strTags.split(',');
 						for(var i=informationsTagTmp.length; i--;) {
@@ -166,7 +166,7 @@ export default {
 			}, 0);
 		},
 		next: function() {
-			API.getNextProject(this.article.order)
+			api.getNextProject(this.article.order)
 				.then(rsl => {
 					this.goProject = true;
 					var projectsProject = document.querySelector('.projects-project');
@@ -180,7 +180,7 @@ export default {
 				});
 		},
 		prev: function() {
-			API.getPrevProject(this.article.order)
+			api.getPrevProject(this.article.order)
 				.then(rsl => {
 					this.goProject = true;
 					var projectsProject = document.querySelector('.projects-project');
