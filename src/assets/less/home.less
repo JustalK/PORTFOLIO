@@ -1,26 +1,35 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
-.home-cover {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	height: 0;
-	width: 100%;
-	z-index: @LAYER-ANIMATION;
-
-	&--active {
+#HOME {
+	&::before,
+	&::after {
+		content: ' ';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: @LAYER-ANIMATION;
 		height: 100%;
 	}
 
-	&_1 {
-		transition: all 1s cubic-bezier(0.87, 0.32, 0.81, 0.36);
+	&::before {
+		.transition(all 1s cubic-bezier(0.87, 0.32, 0.81, 0.36));
+
 		opacity: 0.7;
 		background: @background-color-transition-d;
 	}
 
-	&_2 {
-		transition: all 0.6s cubic-bezier(0.87, 0.32, 0.81, 0.36);
+	&::after {
+		.transition(all 0.6s cubic-bezier(0.87, 0.32, 0.81, 0.36));
+
 		background: @background-color-transition-l;
+	}
+
+	&.mounted {
+		&::before,
+		&::after {
+			height: 0;
+		}
 	}
 }

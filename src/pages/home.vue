@@ -1,9 +1,6 @@
 <template>
 	<div
-		id="HOME"
-		class="home">
-		<div class="home-cover home-cover_1 home-cover_1 home-cover--active" />
-		<div class="home-cover home-cover_2 home-cover--active" />
+		id="HOME">
 		<div
 			class="wrap"
 			:class="{active:goZoom}">
@@ -38,16 +35,8 @@ export default {
 	async mounted() {
 		await this.get_my_identity();
 		setTimeout(() => {
-			var cover = document.querySelectorAll('.home-cover');
-			var buttonLink = document.querySelectorAll('.links-open-door');
-			for(var i=cover.length; i--;) {
-				cover[i].classList.remove('home-cover--active');
-			}
-			setTimeout(() => {
-				for(var i=buttonLink.length; i--;) {
-					buttonLink[i].classList.add('links-open-door--active');
-				}
-			},350);
+			const home = document.querySelector('#HOME');
+			home.classList.add('mounted');
 		}, 200);
 	},
 	methods: {
