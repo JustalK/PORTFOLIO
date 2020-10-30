@@ -1,4 +1,4 @@
-# PORTFOLIO
+![Alt text](documentation/imgs/project/home.jpg?raw=true "pornhub api")
 
 ![Last version](https://img.shields.io/github/v/tag/justalk/portfolio.svg?style=flat-square)
 [![Travis](https://img.shields.io/travis/com/justalk/portfolio.svg?style=flat-square)](https://travis-ci.com/github/JustalK/portfolio)
@@ -42,18 +42,6 @@ I am using `mongo-seeding` for automatically populating the database with the ri
 npm run seed
 ```
 
-## Setting
-
-For using this project, a server mongo has to be running
-```
-$ mongod
-```
-if an error appear when you run this command that is about the permission of the file :
-```
-exception in initAndListen: IllegalOperation: Attempted to create a lock file on a read-only directory: /data/db, terminating
-```
-In this case, use sudo mongod.
-
 ## Build
 
 For building the dev or build version
@@ -61,6 +49,20 @@ For building the dev or build version
 $ npm run dev
 $ npm run build
 ```
+
+## Watching
+
+For watching the project while developing
+```
+$ npm run watch
+$ npm run watch-server
+```
+
+The project can be access at the port 8080 by default :
+http://localhost:8080/
+
+The documentation of the API (`swagger`) can be access at this url :
+http://localhost:8080/api/documentation/index.html
 
 ## Server
 

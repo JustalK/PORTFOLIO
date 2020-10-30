@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 
 module.exports = [
     {
-        "title": "Title 1",
-        "slug": "title-1",
-        "short_description": "Bla bla bla bla 1",
-        "long_description": "Bla bla bla blaBla bla bla blaBla bla bla blaBla bla bla blaBla bla bla blaBla bla bla blaBla bla bla bla 1",
+        "title": "Supersogo.com",
+        "slug": "supersogo",
+        "short_description": "My first project",
+        "long_description": "Just a test on my first project lalala al la lala la la lal a la",
         "tags": [mongoose.Types.ObjectId("5f95461688489acdd8ee5873")],
         "images": [],
         "order": 0
