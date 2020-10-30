@@ -16,6 +16,8 @@ tags:
     description: API Endpoints for the images for the images
   - name: Tags
     description: API Endpoints for the tags
+  - name: Contacts
+    description: API Endpoints for the contacts informations
 #/** =============================================================================>
 #===========================> API ARTICLES
 #=============================================================================> **/
@@ -82,6 +84,32 @@ paths:
                     type: array
                     items:
                        "$ref": "#/components/schemas/tags"
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Server error
+#/** =============================================================================>
+#===========================> API CONTACTS
+#=============================================================================> **/
+  /api/contacts/my-identity:
+    get:
+      tags:
+      - Contacts
+      summary: Get my contact information
+      description: ''
+      operationId: contacts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                "$ref": "#/components/schemas/contacts"
         '400':
           description: Bad request
         '401':
@@ -183,6 +211,43 @@ components:
         name:
           type: string
           description: The name of the tag
+        created_at:
+          type: date
+          description: The date of creation
+          example: '20/10/2018 10:00:12'
+          readOnly: true
+        updated_at:
+          type: date
+          description: The date of the last update
+          example: '20/10/2018 10:00:12'
+          readOnly: true
+        __v:
+          type: number
+          description: Number of update made since the creation
+          default: 0
+          example: 12
+          readOnly: true
+    contacts:
+      type: object
+      required:
+        - firstname
+        - lastname
+        - email
+      properties:
+        _id:
+          type: uuid
+        firstname:
+          type: string
+          description: The firstname of the contact
+        lastname:
+          type: string
+          description: The lastname of the contact
+        fullname:
+          type: string
+          description: The fullname of the contact (virtual)
+        email:
+          type: string
+          description: The email of the contact
         created_at:
           type: date
           description: The date of creation
