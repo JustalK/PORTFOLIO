@@ -5,18 +5,6 @@ a {
 	text-decoration: none;
 }
 
-.topleft {
-	position: absolute;
-	left: 0;
-	top: 0;
-}
-
-.topright {
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
 .font-face('Lato-Light','../../fonts/Lato-Light', normal, normal);
 .font-face('Lato-Bold','../../fonts/Lato-Bold', normal, normal);
 .font-face('Lato-Black','../../fonts/Lato-Black', normal, normal);
@@ -31,49 +19,6 @@ body,
 	font-family: 'Lato-Light', sans-serif;
 	color: @text-color;
 	.full();
-}
-
-.bloc {
-	width: 50%;
-	height: 100%;
-	background: @background-color;
-	overflow: hidden;
-	transform-style: flat;
-	transition: transform 0.5s cubic-bezier(0.8, 0, 0.25, 1);
-
-	&.left {
-		.topleft();
-
-		transform-origin: left;
-
-		& > div {
-			.topleft();
-
-			width: 200%;
-			height: 100%;
-		}
-
-		&.active {
-			transform: rotateY(45deg);
-		}
-	}
-
-	&.right {
-		.topright();
-
-		transform-origin: right;
-
-		& > div {
-			.topright();
-
-			width: 200%;
-			height: 100%;
-		}
-
-		&.active {
-			transform: rotateY(-45deg);
-		}
-	}
 }
 
 .links-blocks {

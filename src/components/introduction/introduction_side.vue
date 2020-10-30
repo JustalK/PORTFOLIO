@@ -27,3 +27,4 @@ export default {
 	}
 };
 </script>
+<style src="../../assets/less/introduction_side.less"></style>
