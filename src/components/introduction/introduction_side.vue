@@ -1,9 +1,12 @@
 <template>
 	<div
-		:class="props_link.side"
+		:class="[props_link.side,{active:props_go_open_door}]"
 		class="bloc">
 		<components_introduction :props_introduction="props_introduction" />
-		<components_introduction_link :props_link="props_link" />
+		<components_introduction_link
+			:props_link="props_link"
+			@articles="articles"
+			@portfolio="portfolio" />
 	</div>
 </template>
 <script>
@@ -23,6 +26,27 @@ export default {
 		props_link: {
 			type: Object,
 			required: true
+		},
+		props_go_open_door: {
+			type: Boolean,
+			required: true
+		}
+	},
+	methods: {
+		articles() {
+			this.animation_door('articles');
+		},
+		portfolio() {
+			this.animation_door('portfolio');
+		},
+		animation_door(link) {
+			this.$emit('zoom');
+			this.move_to_project(link, 1000);
+		},
+		move_to_project(link, delay) {
+			setTimeout(() => {
+				this.$router.push(link);
+			}, delay);
 		}
 	}
 };

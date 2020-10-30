@@ -5,10 +5,14 @@
 			:class="{active:goZoom}">
 			<components_introduction_side
 				:props_link="props_links[0]"
-				:props_introduction="props_introduction" />
+				:props_introduction="props_introduction"
+				:props_go_open_door="go_open_door"
+				@zoom="zoom" />
 			<components_introduction_side
 				:props_link="props_links[1]"
-				:props_introduction="props_introduction" />
+				:props_introduction="props_introduction"
+				:props_go_open_door="go_open_door"
+				@zoom="zoom" />
 		</div>
 	</div>
 </template>
@@ -22,7 +26,7 @@ export default {
 	},
 	data: () => {
 		return {
-			goPortfolio: false,
+			go_open_door: false,
 			goZoom: false,
 			props_introduction: {},
 			props_links: [
@@ -36,6 +40,10 @@ export default {
 		this.add_class_to_element_delay('#HOME', 'mounted', 200);
 	},
 	methods: {
+		zoom() {
+			this.goZoom = true;
+			this.go_open_door = true;
+		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
 			this.update_introduction(my_identity.fullname, my_identity.email);
