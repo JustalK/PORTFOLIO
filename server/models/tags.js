@@ -12,10 +12,7 @@ const schema = new mongoose.Schema(
 		}
 	},
 	{
-		timestamps: {
-			createdAt: 'created_at',
-			updatedAt: 'updated_at'
-		},
+		timestamps: true,
 		collection: filename,
 		toJSON: { virtuals: true },
 		toObject: { virtuals: true }
