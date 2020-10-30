@@ -10,9 +10,7 @@
 			<div
 				class="bloc left"
 				:class="{active:goPortfolio}">
-				<div>
-					<my-introduction />
-				</div>
+				<components_introduction :props_introduction="props_introduction" />
 				<a
 					class="links-open-door left portfolio"
 					@click.stop="open('portfolio')">
@@ -23,9 +21,7 @@
 				ref="bloc-right"
 				class="bloc right"
 				:class="{active:goPortfolio}">
-				<div>
-					<my-introduction />
-				</div>
+				<components_introduction :props_introduction="props_introduction" />
 				<a
 					class="links-open-door right articles"
 					@click.stop="open('articles')">
@@ -40,13 +36,13 @@ import Introduction from '../components/Introduction';
 
 export default {
 	components: {
-		'my-introduction': Introduction
+		components_introduction: Introduction
 	},
 	data: () => {
 		return {
 			goPortfolio: false,
 			goZoom: false,
-			intro: 'Hello, I\'m Justal Kevin.<br>I\'m a full stack web developer.'
+			props_introduction: {name: 'JUSTAL Kevin', email: 'justal.kevin@gmail.com'}
 		};
 	},
 	mounted: function () {
