@@ -11,38 +11,36 @@
 				class="bloc left"
 				:class="{active:goPortfolio}">
 				<components_introduction :props_introduction="props_introduction" />
-				<a
-					class="links-open-door left portfolio"
-					@click.stop="open('portfolio')">
-					Liens 2
-				</a>
+				<components_introduction_link :props_link="props_links[0]" />
 			</div>
 			<div
 				ref="bloc-right"
 				class="bloc right"
 				:class="{active:goPortfolio}">
 				<components_introduction :props_introduction="props_introduction" />
-				<a
-					class="links-open-door right articles"
-					@click.stop="open('articles')">
-					Liens 2
-				</a>
+				<components_introduction_link :props_link="props_links[1]" />
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import Introduction from '../components/Introduction';
+import Introduction_link from '../components/Introduction_link';
 
 export default {
 	components: {
-		components_introduction: Introduction
+		components_introduction: Introduction,
+		components_introduction_link: Introduction_link
 	},
 	data: () => {
 		return {
 			goPortfolio: false,
 			goZoom: false,
-			props_introduction: {name: 'JUSTAL Kevin', email: 'justal.kevin@gmail.com'}
+			props_introduction: {name: 'JUSTAL Kevin', email: 'justal.kevin@gmail.com'},
+			props_links: [
+				{name: 'Lien 1', link: 'portfolio', side: 'left'},
+				{name: 'Lien 2', link: 'articles', side: 'right'}
+			]
 		};
 	},
 	mounted: function () {
@@ -58,17 +56,6 @@ export default {
 				}
 			},350);
 		}, 200);
-	},
-	methods: {
-		open: function(direction) {
-			this.goPortfolio = true;
-			setTimeout(() => {
-				this.goZoom = true;
-				setTimeout(() => {
-					return direction == 'portfolio' ? this.$router.push('portfolio') : this.$router.push('articles');
-				}, 500);
-			}, 500);
-		}
 	}
 };
 </script>

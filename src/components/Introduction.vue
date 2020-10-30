@@ -11,7 +11,12 @@
 </template>
 <script>
 export default {
-	props: ['props_introduction']
+	props: {
+		props_introduction: {
+			type: Object,
+			required: true
+		}
+	}
 };
 </script>
 <style src="../assets/less/introduction.less"></style>
