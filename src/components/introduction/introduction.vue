@@ -2,6 +2,7 @@
 	<div>
 		<span class="intro">
 			<span>Hello world, I'm <a
+				class="capitalize"
 				href="#">{{ props_introduction.name }}</a>.</span>
 			<span>I'm a full stack web developer.</span>
 			<span>If any questions, contact me at <a

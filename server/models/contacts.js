@@ -9,10 +9,14 @@ const schema = new mongoose.Schema(
 	{
 		firstname: {
 			type: String,
+			lowercase: true,
+			trim: true,
 			require: true
 		},
 		lastname: {
 			type: String,
+			lowercase: true,
+			trim: true,
 			require: true
 		},
 		email: {
@@ -30,5 +34,9 @@ const schema = new mongoose.Schema(
 		toObject: { virtuals: true }
 	}
 );
+
+schema.virtual('fullname').get(function() {
+	return this.lastname + ' ' + this.firstname;
+});
 
 module.exports = mongoose.model(filename, schema);

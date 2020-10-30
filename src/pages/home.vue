@@ -18,7 +18,7 @@
 </template>
 <script>
 import introduction_side from '../components/introduction/introduction_side';
-import API from '../services/Api';
+import api from '../services/api';
 
 export default {
 	components: {
@@ -52,8 +52,8 @@ export default {
 	},
 	methods: {
 		async get_my_identity() {
-			const my_identity = await API.get_my_identity();
-			this.update_introduction(my_identity.firstname, my_identity.email);
+			const my_identity = await api.get_my_identity();
+			this.update_introduction(my_identity.fullname, my_identity.email);
 		},
 		update_introduction(name, email) {
 			this.props_introduction = {name, email};

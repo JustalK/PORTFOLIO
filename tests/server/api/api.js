@@ -102,5 +102,6 @@ test('[STATIC] Testing the api contact my identity', async t => {
 	t.not(datas._id, undefined);
 	t.is(datas.firstname, 'kevin');
 	t.is(datas.lastname, 'justal');
+	t.is(datas.fullname, 'justal kevin');
 	t.is(datas.email, 'justal.kevin@gmail.com');
 });
