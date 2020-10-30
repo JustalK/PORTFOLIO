@@ -18,6 +18,7 @@
 </template>
 <script>
 import introduction_side from '../components/introduction/introduction_side';
+import API from '../services/Api';
 
 export default {
 	components: {
@@ -27,14 +28,15 @@ export default {
 		return {
 			goPortfolio: false,
 			goZoom: false,
-			props_introduction: {name: 'JUSTAL Kevin', email: 'justal.kevin@gmail.com'},
+			props_introduction: {},
 			props_links: [
 				{name: 'Lien 1', link: 'portfolio', side: 'left'},
 				{name: 'Lien 2', link: 'articles', side: 'right'}
 			]
 		};
 	},
-	mounted: function () {
+	async mounted() {
+		await this.get_my_identity();
 		setTimeout(() => {
 			var cover = document.querySelectorAll('.home-cover');
 			var buttonLink = document.querySelectorAll('.links-open-door');
@@ -47,6 +49,15 @@ export default {
 				}
 			},350);
 		}, 200);
+	},
+	methods: {
+		async get_my_identity() {
+			const my_identity = await API.get_my_identity();
+			this.update_introduction(my_identity.firstname, my_identity.email);
+		},
+		update_introduction(name, email) {
+			this.props_introduction = {name, email};
+		}
 	}
 };
 </script>
