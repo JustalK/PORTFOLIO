@@ -24,13 +24,13 @@
 	</div>
 </template>
 <script>
-import Introduction from '../components/Introduction';
-import Introduction_link from '../components/Introduction_link';
+import introduction from '../components/introduction';
+import introduction_link from '../components/introduction_link';
 
 export default {
 	components: {
-		components_introduction: Introduction,
-		components_introduction_link: Introduction_link
+		components_introduction: introduction,
+		components_introduction_link: introduction_link
 	},
 	data: () => {
 		return {

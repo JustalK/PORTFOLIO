@@ -77,7 +77,7 @@ export default {
 				cover[i].classList.add('content-cover--active');
 			}
 			setTimeout(() => {
-				this.$router.push({ name: 'Home' });
+				this.$router.push({ name: 'home' });
 			},1000);
 		},
 		filter: function(e) {
