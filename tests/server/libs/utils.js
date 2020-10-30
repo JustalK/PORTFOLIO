@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('ava');
 const m = require('../../../server/libs/utils');
 

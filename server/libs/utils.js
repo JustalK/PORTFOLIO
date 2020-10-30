@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
 	is_value_exist: (value) => {
 		return value !== undefined;

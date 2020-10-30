@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const path = require('path');
 const filename = path.basename(__filename, '.js');

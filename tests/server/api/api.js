@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config({path: './env/.env.' + process.env.NODE_ENV});
 const test = require('ava');
 const axios = require('axios');
@@ -29,7 +31,7 @@ test('[STATIC] Testing the checker of the api apps', async t => {
 	t.is(datas.status, 'RUNNING');
 });
 
-test('[STATIC] Testing the checker of the api articles without params', async t => {
+test('[STATIC] Testing the api articles without params', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/articles')
 			.end((err, response) => {
@@ -49,7 +51,7 @@ test('[STATIC] Testing the checker of the api articles without params', async t 
 	t.not(datas[1]._id, undefined);
 });
 
-test('[STATIC] Testing the checker of the api articles with params', async t => {
+test('[STATIC] Testing the api articles with params', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/articles?page=-1')
 			.end((err, response) => {
@@ -69,7 +71,7 @@ test('[STATIC] Testing the checker of the api articles with params', async t => 
 	t.not(datas[1]._id, undefined);
 });
 
-test('[STATIC] Testing the checker of the api all tags without params', async t => {
+test('[STATIC] Testing the api all tags without params', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/tags')
 			.end((err, response) => {
@@ -84,4 +86,21 @@ test('[STATIC] Testing the checker of the api all tags without params', async t 
 	t.not(datas[0].name, undefined);
 	t.not(datas[1]._id, undefined);
 	t.not(datas[1].name, undefined);
+});
+
+test('[STATIC] Testing the api contact my identity', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/contacts/my-identity')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas, 'object');
+	t.not(datas._id, undefined);
+	t.is(datas.firstname, 'kevin');
+	t.is(datas.lastname, 'justal');
+	t.is(datas.email, 'justal.kevin@gmail.com');
 });

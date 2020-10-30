@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config({path: './env/.env.production'});
 const path = require('path');
 const { Seeder } = require('mongo-seeding');

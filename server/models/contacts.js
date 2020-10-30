@@ -7,11 +7,17 @@ const filename = path.basename(__filename, '.js');
 // Define the article schema
 const schema = new mongoose.Schema(
 	{
-		name: {
-			type: String
+		firstname: {
+			type: String,
+			require: true
 		},
-		path: {
-			type: String
+		lastname: {
+			type: String,
+			require: true
+		},
+		email: {
+			type: String,
+			require: true
 		}
 	},
 	{
