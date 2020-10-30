@@ -7,11 +7,21 @@ const filename = path.basename(__filename, '.js');
 // Define the article schema
 const schema = new mongoose.Schema(
 	{
-		name: {
-			type: String
+		firstname: {
+			type: String,
+			lowercase: true,
+			trim: true,
+			require: true
 		},
-		path: {
-			type: String
+		lastname: {
+			type: String,
+			lowercase: true,
+			trim: true,
+			require: true
+		},
+		email: {
+			type: String,
+			require: true
 		}
 	},
 	{
@@ -24,5 +34,9 @@ const schema = new mongoose.Schema(
 		toObject: { virtuals: true }
 	}
 );
+
+schema.virtual('fullname').get(function() {
+	return this.lastname + ' ' + this.firstname;
+});
 
 module.exports = mongoose.model(filename, schema);

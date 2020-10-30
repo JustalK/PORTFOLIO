@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './pages/App';
-import Home from './pages/Home';
+import home from './pages/home';
 import Articles from './pages/Articles';
 import Portfolio from './pages/Portfolio';
 import Project from './pages/Project';
@@ -9,7 +9,7 @@ import Project from './pages/Project';
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: '/', name: 'Home', component: Home },
+	{ path: '/', name: 'home', component: home },
 	{ path: '/portfolio', name: 'portfolio', component: Portfolio },
 	{ path: '/portfolio/:name', name: 'project', component: Project },
 	{ path: '/articles', name: 'articles', component: Articles }

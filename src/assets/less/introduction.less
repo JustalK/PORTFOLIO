@@ -1,0 +1,51 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+.intro {
+	position: relative;
+	display: block;
+	line-height: 1.4em;
+	width: 100%;
+	text-align: center;
+	top: 40%;
+	color: @text-color;
+	transform: translateY(-50%);
+	font-size: 2em;
+	font-family: 'Lato-Light', sans-serif;
+
+	& span {
+		display: block;
+	}
+
+	& a {
+		font-family: 'Lato-Bold', sans-serif;
+		color: @text-color-light;
+		position: relative;
+
+		&.capitalize {
+			text-transform: capitalize;
+		}
+
+		&::before,
+		&::after {
+			content: ' ';
+			position: absolute;
+			left: 0;
+			height: 50%;
+			width: 0;
+			background: @background-transparent-title;
+			transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+		}
+
+		&::after {
+			left: initial;
+			right: 0;
+			bottom: 0;
+		}
+
+		&:hover::before,
+		&:hover::after {
+			width: 100%;
+		}
+	}
+}

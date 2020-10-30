@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const logs = require('./libs/logs');
@@ -19,6 +21,7 @@ module.exports = {
 			module.exports.adding_route('apps', '/api/apps', server);
 			module.exports.adding_route('articles', '/api/articles', server);
 			module.exports.adding_route('tags', '/api/tags', server);
+			module.exports.adding_route('contacts', '/api/contacts', server);
 			server.use(history());
 			server.use('/api/documentation', express.static('documentation'));
 			server.use('/', express.static('dev'));

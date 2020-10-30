@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const mongo_uri_builder = require('mongo-uri-builder');
 

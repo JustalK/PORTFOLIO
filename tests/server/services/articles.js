@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('ava');
 const dbs = {
 	get_all: (params, skip, limit) => {
