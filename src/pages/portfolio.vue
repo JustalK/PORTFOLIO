@@ -7,7 +7,8 @@
 			:tags="tags"
 			:title="title"
 			@filter="filter" />
-		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
+		<components_text
+			:text="this.help" />
 		<components_sliders :projects="projects" />
 		<components_pubs />
 	</div>
@@ -18,6 +19,7 @@ import pubs from '../components/pubs';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
+import text from '../components/main/text';
 import utils from '../helper/utils.js';
 
 export default {
@@ -25,14 +27,16 @@ export default {
 		components_informations: informations,
 		components_sliders: sliders,
 		components_pubs: pubs,
-		components_back: back
+		components_back: back,
+		components_text: text
 	},
 	data: () => {
 		return {
 			title: '',
 			tags: [],
 			projects: [],
-			description: ''
+			description: '',
+			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
 	mounted: function () {
