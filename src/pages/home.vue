@@ -30,8 +30,8 @@ export default {
 			goZoom: false,
 			props_introduction: {},
 			props_links: [
-				{name: 'Lien 1', link: 'portfolio', side: 'left'},
-				{name: 'Lien 2', link: 'articles', side: 'right'}
+				{name: 'Portfolio', link: 'portfolio', side: 'left'},
+				{name: 'Resume', link: 'articles', side: 'right'}
 			]
 		};
 	},
