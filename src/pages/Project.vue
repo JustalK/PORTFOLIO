@@ -75,12 +75,12 @@
 	</div>
 </template>
 <script>
-import Informations from '../components/Informations';
+import informations from '../components/informations';
 import api from '../services/api';
 
 export default {
 	components: {
-		'my-informations': Informations
+		'my-informations': informations
 	},
 	data: () => {
 		return {

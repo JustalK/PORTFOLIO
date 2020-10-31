@@ -6,6 +6,11 @@
 	max-width: 1000px;
 	margin: auto;
 
+	& > span {
+		margin-top: 20px;
+		height: 50px;
+	}
+
 	&::before,
 	&::after {
 		content: ' ';
@@ -54,115 +59,11 @@
 	}
 }
 
-.line-transition() {
-	position: absolute;
-	right: 0;
-	height: 100%;
-	width: 0%;
-	background: @text-color;
-}
-
 .filter_sentance {
 	padding-bottom: 22px;
 	padding-top: 32px;
 	display: block;
 	font-family: @font-name-1, sans-serif;
-}
-
-.informations {
-	height: 234px;
-
-	&-title_size {
-		position: relative;
-		padding-top: 50px;
-		height: 50px;
-	}
-
-	&-title {
-		margin: 0;
-		line-height: 50px;
-		color: @text-color-white;
-		text-transform: uppercase;
-		font-size: 2.5em;
-	}
-
-	&-title_transition {
-		transition: all 1s cubic-bezier(0.8, 0, 0.25, 1);
-		.line-transition();
-
-		height: calc(100% - 40px);
-
-		&--init {
-			width: 100%;
-		}
-
-		&--active {
-			width: 100%;
-			right: inherit;
-			left: 0;
-		}
-	}
-
-	&-description_size {
-		position: relative;
-		margin-top: 20px;
-		height: 50px;
-	}
-
-	&-description {
-		text-align: justify;
-		line-height: 25px;
-		font-size: 1.2em;
-	}
-
-	&-description_transition {
-		transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
-		.line-transition();
-
-		&--init {
-			width: 100%;
-		}
-
-		&--active {
-			right: inherit;
-			left: 0;
-			width: 100%;
-		}
-	}
-
-	&-tags {
-		padding: 10px 0 0 0;
-		overflow: hidden;
-	}
-
-	&-tag {
-		font-family: 'Lato-Bold', sans-serif;
-		font-size: 0.8em;
-		transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
-		display: block !important;
-		float: left;
-		padding: 10px;
-		margin-right: 10px;
-		margin-bottom: 10px;
-		user-select: none;
-		cursor: pointer;
-		color: @background-bloc-2;
-
-		&:hover {
-			color: @text-color-white;
-			box-shadow: none;
-		}
-
-		&--inside {
-			background: @text-color;
-			color: @text-color-white;
-		}
-
-		&--not_inside {
-			background: @text-color-dark;
-			box-shadow: 10px 10px @background-shadow;
-		}
-	}
 }
 
 #PROJECT .informations-tag--not_inside {

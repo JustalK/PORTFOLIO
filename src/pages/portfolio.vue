@@ -2,19 +2,12 @@
 	<div
 		id="PORTFOLIO">
 		<components_back @back="back" />
-		<my-informations
-			:active-tags="activeTags"
-			:go-project="goProject"
+		<components_informations
 			:description="description"
 			:tags="tags"
 			:title="title"
-			:informations-tag="informationsTag"
 			@filter="filter" />
 		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
-		<my-sliders
-			:go-project="goProject"
-			:tags-selected-id="tagsSelectedId"
-			:projects="projects" />
 		<transition
 			name="fade"
 			mode="out-in">
@@ -23,8 +16,7 @@
 	</div>
 </template>
 <script>
-import Informations from '../components/Informations';
-import Sliders from '../components/Sliders';
+import informations from '../components/informations';
 import Pubs from '../components/Pubs';
 import back from '../components/main/back';
 import api from '../services/api';
@@ -32,8 +24,7 @@ import utils from '../helper/utils.js';
 
 export default {
 	components: {
-		'my-informations': Informations,
-		'my-sliders': Sliders,
+		'components_informations': informations,
 		'my-pubs': Pubs,
 		components_back: back
 	},
@@ -42,15 +33,12 @@ export default {
 			title: null,
 			tags: [],
 			projects: [],
-			goProject: false,
-			informationsTag: [],
-			tagsSelectedId: [],
-			activeTags: true,
 			description: null
 		};
 	},
 	mounted: function () {
 		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
+		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
 		this.get_page(this.$route.name);
 		this.get_all_tags();
 		this.get_all_projects();
@@ -75,25 +63,18 @@ export default {
 			this.projects = projects;
 		},
 		update_page(page) {
-			console.log(page);
 			this.description = page.description;
 			this.title = page.title;
 		},
-		back: function() {
+		back() {
 			utils.add_class_to_element('#PORTFOLIO', 'unmounted');
 			setTimeout(() => {
 				this.$router.push({ name: 'home' });
 			},1000);
 		},
-		filter: function(e) {
-			for(var i=e.length,rsl=[]; i--;) {
-				rsl.push('tags='+e[i]);
-			}
-			this.tagsSelectedId = e;
-			api.get_projects_by_pagePage(0,'?'+rsl.join('&'))
-				.then(rsl => {
-					this.projects = rsl;
-				});
+		async filter(id_tags_selected) {
+			const projects = await api.get_projects_by_page(0, id_tags_selected);
+			this.update_projects(projects);
 		}
 	}
 };

@@ -8,14 +8,14 @@ const get_projects = function () {
 };
 
 const get_projects_by_page = function (page=0,tags='') {
-    return Axios.get('http://localhost:8080/api/articles', {page: page, tags: tags})
+    return Axios.get('http://localhost:8080/api/articles', {params: {page: page, tags: tags}})
         .then(response => {
             return response.data;
         });
 };
 
 const get_pages = function (name) {
-    return Axios.get('http://localhost:8080/api/pages', {name: name})
+    return Axios.get('http://localhost:8080/api/pages', {params: {name: name}})
         .then(response => {
             return response.data;
         });

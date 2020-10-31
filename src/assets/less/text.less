@@ -1,0 +1,21 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+.text {
+	position: relative;
+	display: block;
+
+	&::before {
+		content: ' ';
+		position: absolute;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		background: @text-color;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	&.active::before {
+		width: 0;
+	}
+}
