@@ -1,0 +1,116 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+.position-to-corner(@index, @pos_x, @pos_y, @delay) {
+	&:nth-child(@{index}) {
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) @delay);
+
+		@{pos_x}: 0;
+		@{pos_y}: 0;
+	}
+}
+
+#PROJECTS {
+	transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+	height: 600px;
+	min-height: 600px;
+	position: relative;
+	opacity: 1;
+
+	& ul {
+		list-style-type: none;
+		margin: 0;
+	}
+
+	& li {
+		float: left;
+		width: 48%;
+		height: 280px;
+		position: absolute;
+		transform: translateY(100%);
+		opacity: 0;
+
+		.position-to-corner(1, top, left, 0s);
+		.position-to-corner(2, top, right, 0.25s);
+		.position-to-corner(3, bottom, left, 0.5s);
+		.position-to-corner(4, bottom, right, 0.75s);
+
+		& a {
+			overflow: hidden;
+			position: relative;
+			display: block;
+			background: @text-color-dark;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			text-decoration: none;
+			background-size: cover;
+			background-position: center center;
+			box-shadow: 10px 10px @background-shadow;
+			transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+
+			& div {
+				transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
+				position: absolute;
+				transform: translateY(-100%);
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: @background-transparent;
+				pointer-events: none;
+
+				& span {
+					text-align: center;
+					line-height: 280px;
+					height: 100%;
+					display: block;
+					color: white;
+					font-size: 1.1em;
+					text-shadow: 0 0 8px #000;
+				}
+			}
+
+			&:hover {
+				box-shadow: 0 0 @background-shadow;
+
+				& .projects-header {
+					color: @text-color-white;
+				}
+
+				& .projects-header::after {
+					left: 0;
+				}
+
+				& div {
+					transform: translateY(0);
+				}
+			}
+		}
+	}
+
+	& h2 {
+		font-family: 'Lato-Bold', sans-serif;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		color: @background-bloc-0;
+		background: @background-transparent-opaque;
+		height: 40px;
+		pointer-events: none;
+		z-index: @LAYER-COUCHE-2;
+		overflow: hidden;
+		line-height: 40px;
+		text-align: center;
+		margin: 0;
+		text-transform: capitalize;
+	}
+}
+
+.mounted {
+	& #PROJECTS {
+		& li {
+			transform: initial;
+			opacity: 1;
+		}
+	}
+}

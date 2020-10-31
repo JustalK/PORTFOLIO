@@ -15,14 +15,8 @@ export default {
 		}
 	},
 	methods: {
-		open: function(direction) {
-			this.goPortfolio = true;
-			setTimeout(() => {
-				this.goZoom = true;
-				setTimeout(() => {
-					return direction == 'portfolio' ? this.$router.push('portfolio') : this.$router.push('articles');
-				}, 500);
-			}, 500);
+		open: function(link) {
+			this.$emit(link);
 		}
 	}
 };

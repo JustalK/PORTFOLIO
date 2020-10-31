@@ -1,0 +1,42 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+.tags {
+	padding: 10px 0 0 0;
+	overflow: hidden;
+
+	&-tag {
+		font-family: 'Lato-Bold', sans-serif;
+		font-size: 0.8em;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+		display: block !important;
+		float: left;
+		padding: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+		user-select: none;
+		cursor: pointer;
+		color: @background-bloc-2;
+		background: @text-color-dark;
+		box-shadow: 10px 10px @background-shadow;
+		opacity: 0;
+
+		&:hover {
+			color: @text-color-white;
+			box-shadow: none;
+		}
+
+		&--active {
+			background: @text-color;
+			color: @text-color-white;
+			box-shadow: none;
+		}
+	}
+}
+
+.mounted {
+	.tags-tag {
+		opacity: 1;
+	}
+}
