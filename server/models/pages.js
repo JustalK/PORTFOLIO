@@ -8,6 +8,17 @@ const schema = new mongoose.Schema(
 	{
 		name: {
 			type: String,
+			lowercase: true,
+			trim: true,
+			require: true
+		},
+		title: {
+			type: String,
+			trim: true,
+			require: true
+		},
+		description: {
+			type: String,
 			trim: true,
 			require: true
 		}
