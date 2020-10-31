@@ -8,16 +8,14 @@
 			:title="title"
 			@filter="filter" />
 		<span class="filter_sentance">Use the filter to list the projects by technology or skill.</span>
-		<transition
-			name="fade"
-			mode="out-in">
-			<components_pubs />
-		</transition>
+		<components_sliders :projects="projects" />
+		<components_pubs />
 	</div>
 </template>
 <script>
 import informations from '../components/informations';
 import pubs from '../components/pubs';
+import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
 import utils from '../helper/utils.js';
@@ -25,6 +23,7 @@ import utils from '../helper/utils.js';
 export default {
 	components: {
 		components_informations: informations,
+		components_sliders: sliders,
 		components_pubs: pubs,
 		components_back: back
 	},
