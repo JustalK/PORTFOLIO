@@ -14,6 +14,13 @@ const get_projects_by_page = function (page=0,tags='') {
         });
 };
 
+const get_pages = function (name) {
+    return Axios.get('http://localhost:8080/api/pages', {name: name})
+        .then(response => {
+            return response.data;
+        });
+};
+
 const get_tags = function () {
     return Axios.get('http://localhost:8080/api/tags')
         .then(response => {
@@ -52,6 +59,7 @@ const getPrevProject = function (order) {
 export default {
     get_projects,
     get_projects_by_page,
+	get_pages,
     getProject: getProject,
     getNextProject: getNextProject,
     getPrevProject: getPrevProject,
