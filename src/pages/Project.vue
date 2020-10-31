@@ -117,7 +117,7 @@ export default {
 	mounted: function () {
 		var name = this.$route.params.name;
 		var informationsTagTmp = [];
-		api.getTags()
+		api.get_tags()
 			.then(rsl => {
 				informationsTagTmp = rsl;
 				api.getProject(name)

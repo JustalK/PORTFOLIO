@@ -1,20 +1,20 @@
 import Axios from 'axios';
 
-const getProjects = function () {
+const get_projects = function () {
     return Axios.get('http://localhost:8080/api/articles')
         .then(response => {
             return response.data;
         });
 };
 
-const getProjectsPage = function (page=0,tags='') {
+const get_projects_by_page = function (page=0,tags='') {
     return Axios.get('http://localhost:8080/api/articles', {page: page, tags: tags})
         .then(response => {
             return response.data;
         });
 };
 
-const getTags = function () {
+const get_tags = function () {
     return Axios.get('http://localhost:8080/api/tags')
         .then(response => {
             return response.data;
@@ -50,11 +50,11 @@ const getPrevProject = function (order) {
 };
 
 export default {
-    getProjects: getProjects,
-    getProjectsPage: getProjectsPage,
+    get_projects,
+    get_projects_by_page,
     getProject: getProject,
     getNextProject: getNextProject,
     getPrevProject: getPrevProject,
-    getTags: getTags,
+    get_tags,
 	get_my_identity
 };

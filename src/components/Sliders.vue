@@ -142,7 +142,7 @@ export default {
 					rsl.push('tags='+this.tagsSelectedId[i]);
 				}
 				setTimeout(() => {
-					api.getProjectsPage(this.skip,'?'+rsl.join('&'))
+					api.get_projects_by_pagePage(this.skip,'?'+rsl.join('&'))
 						.then(rsl => {
 							this.projectsSelecteds = rsl;
 						});
@@ -162,7 +162,7 @@ export default {
 					rsl.push('tags='+this.tagsSelectedId[i]);
 				}
 				setTimeout(() => {
-					api.getProjectsPage(Math.max(this.skip),'?'+rsl.join('&'))
+					api.get_projects_by_pagePage(Math.max(this.skip),'?'+rsl.join('&'))
 						.then(rsl => {
 							this.projectsSelecteds = rsl;
 						});

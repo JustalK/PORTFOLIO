@@ -2,9 +2,6 @@
 	<div
 		id="PORTFOLIO"
 		class="content">
-		<div class="content-cover content-cover_1" />
-		<div class="content-cover content-cover_2" />
-
 		<a
 			href="#"
 			class="back"
@@ -40,6 +37,7 @@ import Informations from '../components/Informations';
 import Sliders from '../components/Sliders';
 import Pubs from '../components/Pubs';
 import api from '../services/api';
+import utils from '../helper/utils.js';
 
 export default {
 	components: {
@@ -51,31 +49,36 @@ export default {
 		return {
 			title: 'Works',
 			tags: [],
+			projects: [],
 			goProject: false,
 			informationsTag: [],
-			projects: [],
 			tagsSelectedId: [],
 			activeTags: true,
 			description: 'From Web Components and UI/UX animations to React.JS, Redux, Vue.JS, and Node.JS. Check out my latest web software development portfolio projects.'
 		};
 	},
 	mounted: function () {
-		api.getProjectsPage()
-			.then(rsl => {
-				console.log(rsl);
-				this.projects = rsl;
-			});
-		api.getTags()
-			.then(rsl => {
-				this.informationsTag = rsl;
-			});
+		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
+		this.get_all_tags();
+		this.get_all_projects();
 	},
 	methods: {
+		async get_all_tags() {
+			const tags = await api.get_tags();
+			this.update_tags(tags);
+		},
+		async get_all_projects() {
+			const projects = await api.get_projects();
+			this.update_projects(projects);
+		},
+		update_tags(tags) {
+			this.tags = tags;
+		},
+		update_projects(projects) {
+			this.projects = projects;
+		},
 		back: function() {
-			var cover = document.querySelectorAll('.content-cover');
-			for(var i=cover.length; i--;) {
-				cover[i].classList.add('content-cover--active');
-			}
+			utils.add_class_to_element('#PORTFOLIO', 'unmounted');
 			setTimeout(() => {
 				this.$router.push({ name: 'home' });
 			},1000);
@@ -85,7 +88,7 @@ export default {
 				rsl.push('tags='+e[i]);
 			}
 			this.tagsSelectedId = e;
-			api.getProjectsPage(0,'?'+rsl.join('&'))
+			api.get_projects_by_pagePage(0,'?'+rsl.join('&'))
 				.then(rsl => {
 					this.projects = rsl;
 				});

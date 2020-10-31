@@ -19,6 +19,7 @@
 <script>
 import introduction_side from '../components/introduction/introduction_side';
 import api from '../services/api';
+import utils from '../helper/utils.js';
 
 export default {
 	components: {
@@ -37,7 +38,7 @@ export default {
 	},
 	async mounted() {
 		await this.get_my_identity();
-		this.add_class_to_element_delay('#HOME', 'mounted', 200);
+		utils.add_class_to_element_delay('#HOME', 'mounted', 200);
 	},
 	methods: {
 		zoom() {
@@ -50,15 +51,6 @@ export default {
 		},
 		update_introduction(name, email) {
 			this.props_introduction = {name, email};
-		},
-		add_class_to_element_delay(selector, newclass, delay) {
-			setTimeout(() => {
-				this.add_class_to_element(selector, newclass);
-			}, delay);
-		},
-		add_class_to_element(selector, newclass) {
-			const element = document.querySelector(selector);
-			element.classList.add(newclass);
 		}
 	}
 };

@@ -3,14 +3,14 @@ import VueRouter from 'vue-router';
 import App from './pages/App';
 import home from './pages/home';
 import Articles from './pages/Articles';
-import Portfolio from './pages/Portfolio';
+import portfolio from './pages/portfolio';
 import Project from './pages/Project';
 
 Vue.use(VueRouter);
 
 const routes = [
 	{ path: '/', name: 'home', component: home },
-	{ path: '/portfolio', name: 'portfolio', component: Portfolio },
+	{ path: '/portfolio', name: 'portfolio', component: portfolio },
 	{ path: '/portfolio/:name', name: 'project', component: Project },
 	{ path: '/articles', name: 'articles', component: Articles }
 ];

@@ -16,7 +16,7 @@
 		</div>
 		<ul class="informations-tags">
 			<li
-				v-for="tag in informationsTag"
+				v-for="tag in tags"
 				:key="tag.id"
 				class="informations-tag"
 				:class="{'informations-tag--inside': (tag.v_tagUse),'informations-tag--not_inside': (!tag.v_tagUse)}"
@@ -34,7 +34,10 @@ export default {
 		'title': { default: 'Default' },
 		'description': { default: 'Default' },
 		'goProject': { default: false },
-		'tags': { default: () => [] },
+		tags: {
+			type: Array,
+			required: true
+		},
 		'informationsTag': { default: () => [] },
 		'activeTags': { default: false }
 	},
