@@ -9,7 +9,7 @@ module.exports = {
 	},
 	add_class_to_element_delay(selector, newclass, delay) {
 		setTimeout(() => {
-			module.exports.add_class_to_element(selector, newclass);
+			module.exports.search_add_class_to_element(selector, newclass);
 		}, delay);
 	},
 	search_add_class_to_element(selector, newclass) {

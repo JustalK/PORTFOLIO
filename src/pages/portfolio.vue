@@ -11,29 +11,29 @@
 		<transition
 			name="fade"
 			mode="out-in">
-			<my-pubs v-show="!goProject" />
+			<components_pubs />
 		</transition>
 	</div>
 </template>
 <script>
 import informations from '../components/informations';
-import Pubs from '../components/Pubs';
+import pubs from '../components/pubs';
 import back from '../components/main/back';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
 export default {
 	components: {
-		'components_informations': informations,
-		'my-pubs': Pubs,
+		components_informations: informations,
+		components_pubs: pubs,
 		components_back: back
 	},
 	data: () => {
 		return {
-			title: null,
+			title: '',
 			tags: [],
 			projects: [],
-			description: null
+			description: ''
 		};
 	},
 	mounted: function () {
@@ -67,7 +67,7 @@ export default {
 			this.title = page.title;
 		},
 		back() {
-			utils.add_class_to_element('#PORTFOLIO', 'unmounted');
+			utils.search_add_class_to_element('#PORTFOLIO', 'unmounted');
 			setTimeout(() => {
 				this.$router.push({ name: 'home' });
 			},1000);

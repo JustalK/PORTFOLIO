@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import App from './pages/App';
+import app from './pages/app';
 import home from './pages/home';
 import Articles from './pages/Articles';
 import portfolio from './pages/portfolio';
@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
 	el: '#app',
-	components: { App },
-	template: '<App/>',
+	components: { app },
+	template: '<app/>',
 	router
 }).$mount('#app');
