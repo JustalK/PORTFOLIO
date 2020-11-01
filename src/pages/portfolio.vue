@@ -53,7 +53,6 @@ export default {
 		},
 		async get_all_projects() {
 			const projects = await api.get_projects();
-			console.log(projects);
 			this.update_projects(projects);
 		},
 		async get_page(name) {
