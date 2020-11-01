@@ -9,7 +9,8 @@ module.exports = {
 		return model
 			.find(find)
 			.skip(skip)
-			.limit(limit);
+			.limit(limit)
+			.populate('images');
 	},
 	get_count: (find) => {
 		return model

@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const filename = path.basename(__filename, '.js');
+require('./images');
 
 const schema = new mongoose.Schema(
 	{
@@ -25,11 +26,11 @@ const schema = new mongoose.Schema(
 		},
 		tags: [ {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Tags'
+			ref: 'tags'
 		} ],
 		images: [ {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Images'
+			ref: 'images'
 		} ],
 		order: {
 			type: Number
