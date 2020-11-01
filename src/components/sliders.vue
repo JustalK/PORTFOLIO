@@ -7,7 +7,7 @@
 				v-for="p in projects"
 				:key="p.id">
 				<a
-					:style="bg(p)"
+					:style="set_background_project(p)"
 					@click.stop="project($event)">
 					<h2>{{ p.title }}</h2>
 					<div>
@@ -19,6 +19,8 @@
 	</div>
 </template>
 <script>
+import utils from '../helper/utils.js';
+
 export default {
 	props: {
 		projects: {
@@ -27,9 +29,9 @@ export default {
 		}
 	},
 	methods: {
-		bg(project) {
+		set_background_project(project) {
 			const images = project.images;
-			if (images === null || images.length === 0) {
+			if (utils.is_array_empty(images)) {
 				return {};
 			}
 
