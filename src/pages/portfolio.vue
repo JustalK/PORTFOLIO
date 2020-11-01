@@ -9,7 +9,9 @@
 			@filter="filter" />
 		<components_text
 			:text="this.help" />
-		<components_sliders :projects="projects" />
+		<components_sliders
+			:projects="projects"
+			:are_projects_loading="are_projects_loading" />
 		<components_pubs />
 	</div>
 </template>
@@ -36,6 +38,7 @@ export default {
 			tags: [],
 			projects: [],
 			description: '',
+			are_projects_loading: false,
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
@@ -53,6 +56,10 @@ export default {
 		},
 		async get_all_projects() {
 			const projects = await api.get_projects();
+			this.update_projects(projects);
+		},
+		async get_all_projects_with_tags(tags) {
+			const projects = await api.get_projects_by_page(0, tags);
 			this.update_projects(projects);
 		},
 		async get_page(name) {
@@ -76,8 +83,19 @@ export default {
 			},1000);
 		},
 		async filter(id_tags_selected) {
-			const projects = await api.get_projects_by_page(0, id_tags_selected);
-			this.update_projects(projects);
+			this.projects_are_loading();
+			setTimeout(async () => {
+				await this.get_all_projects_with_tags(id_tags_selected);
+			}, 1000);
+			setTimeout(async () => {
+				this.projects_are_not_loading();
+			}, 1250);
+		},
+		projects_are_loading() {
+			this.are_projects_loading = true;
+		},
+		projects_are_not_loading() {
+			this.are_projects_loading = false;
 		}
 	}
 };

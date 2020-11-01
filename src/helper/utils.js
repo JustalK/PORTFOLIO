@@ -1,9 +1,23 @@
 module.exports = {
+	add_class_to_elements(selector, newclass) {
+		module.exports.add_class_to_elements_increase(selector, newclass, 0, 0);
+	},
 	add_class_to_elements_increase(selector, newclass, min, increase) {
 		const elements = [...document.querySelectorAll(selector)];
 		elements.map((element, index) => {
 			setTimeout(() => {
 				module.exports.add_class_to_element(element, newclass);
+			}, min + index * increase);
+		})
+	},
+	remove_class_to_elements(selector, newclass) {
+		module.exports.remove_class_to_elements_increase(selector, newclass, 0, 0);
+	},
+	remove_class_to_elements_increase(selector, newclass, min, increase) {
+		const elements = [...document.querySelectorAll(selector)];
+		elements.map((element, index) => {
+			setTimeout(() => {
+				module.exports.remove_class_to_element(element, newclass);
 			}, min + index * increase);
 		})
 	},

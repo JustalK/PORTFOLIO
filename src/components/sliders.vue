@@ -5,7 +5,8 @@
 		<ul>
 			<li
 				v-for="p in projects"
-				:key="p.id">
+				:key="p.id"
+				:class="{filtered: are_projects_loading}">
 				<a
 					:style="set_background_project(p)"
 					@click.stop="project($event)">
@@ -25,6 +26,10 @@ export default {
 	props: {
 		projects: {
 			type: Array,
+			required: true
+		},
+		are_projects_loading: {
+			type: Boolean,
 			required: true
 		}
 	},
