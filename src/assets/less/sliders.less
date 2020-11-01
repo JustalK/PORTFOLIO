@@ -85,6 +85,14 @@
 					transform: translateY(0);
 				}
 			}
+
+			&::before {
+				content: ' ';
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				background: @background-transparent-d;
+			}
 		}
 	}
 
@@ -111,6 +119,10 @@
 		& li {
 			transform: initial;
 			opacity: 1;
+
+			&.filtered {
+				opacity: 0;
+			}
 		}
 	}
 }
