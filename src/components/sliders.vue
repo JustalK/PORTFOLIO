@@ -2,6 +2,11 @@
 	<div
 		id="PROJECTS"
 		class="projects">
+		<div
+			class="previous"
+			@click.stop="change_page('previous')">
+			<span>previous</span>
+		</div>
 		<ul>
 			<li
 				v-for="p in projects"
@@ -17,6 +22,12 @@
 				</a>
 			</li>
 		</ul>
+		<div
+			class="next"
+			@click.stop="change_page('next')">
+			<span>next</span>
+			<div />
+		</div>
 	</div>
 </template>
 <script>
@@ -43,6 +54,9 @@ export default {
 			return {
 				'background-image': 'url(\'' + project.images[0].path + '\')'
 			};
+		},
+		change_page(direction) {
+			this.$emit('change_page', direction);
 		}
 	}
 };

@@ -11,7 +11,8 @@
 			:text="this.help" />
 		<components_sliders
 			:projects="projects"
-			:are_projects_loading="are_projects_loading" />
+			:are_projects_loading="are_projects_loading"
+			@change_page="change_page" />
 		<components_pubs />
 	</div>
 </template>
@@ -36,8 +37,10 @@ export default {
 		return {
 			title: '',
 			tags: [],
+			tags_selected: [],
 			projects: [],
 			description: '',
+			slide: 0,
 			are_projects_loading: false,
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
@@ -59,7 +62,8 @@ export default {
 			this.update_projects(projects);
 		},
 		async get_all_projects_with_tags(tags) {
-			const projects = await api.get_projects_by_page(0, tags);
+			this.update_slide(0);
+			const projects = await api.get_projects_by_page(this.slide, tags);
 			this.update_projects(projects);
 		},
 		async get_page(name) {
@@ -68,6 +72,12 @@ export default {
 		},
 		update_tags(tags) {
 			this.tags = tags;
+		},
+		update_tags_selected(tags_selected) {
+			this.tags_selected = tags_selected;
+		},
+		update_slide(slide) {
+			this.slide = slide;
 		},
 		update_projects(projects) {
 			this.projects = projects;
@@ -82,10 +92,11 @@ export default {
 				this.$router.push({ name: 'home' });
 			},1000);
 		},
-		async filter(id_tags_selected) {
+		async filter(tags_selected) {
 			this.projects_are_loading();
+			this.update_tags_selected(tags_selected);
 			setTimeout(async () => {
-				await this.get_all_projects_with_tags(id_tags_selected);
+				await this.get_all_projects_with_tags(this.tags_selected);
 			}, 1000);
 			setTimeout(async () => {
 				this.projects_are_not_loading();
@@ -96,6 +107,18 @@ export default {
 		},
 		projects_are_not_loading() {
 			this.are_projects_loading = false;
+		},
+		change_page(direction) {
+			const next_slide = direction === 'left' ? this.slide - 1 : this.slide + 1;
+			this.update_slide(next_slide);
+			this.projects_are_loading();
+			setTimeout(async () => {
+				const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+				this.update_projects(projects);
+			}, 1000);
+			setTimeout(async () => {
+				this.projects_are_not_loading();
+			}, 1250);
 		}
 	}
 };
