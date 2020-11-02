@@ -2,7 +2,9 @@
 	<div
 		id="PROJECTS"
 		class="projects">
-		<div class="previous">
+		<div
+			class="previous"
+			@click.stop="change_page('previous')">
 			<span>previous</span>
 		</div>
 		<ul>
@@ -20,7 +22,9 @@
 				</a>
 			</li>
 		</ul>
-		<div class="next">
+		<div
+			class="next"
+			@click.stop="change_page('next')">
 			<span>next</span>
 			<div />
 		</div>
@@ -50,6 +54,9 @@ export default {
 			return {
 				'background-image': 'url(\'' + project.images[0].path + '\')'
 			};
+		},
+		change_page(direction) {
+			this.$emit('change_page', direction);
 		}
 	}
 };
