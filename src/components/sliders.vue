@@ -2,6 +2,9 @@
 	<div
 		id="PROJECTS"
 		class="projects">
+		<div class="previous">
+			<span>previous</span>
+		</div>
 		<ul>
 			<li
 				v-for="p in projects"
@@ -17,6 +20,10 @@
 				</a>
 			</li>
 		</ul>
+		<div class="next">
+			<span>next</span>
+			<div />
+		</div>
 	</div>
 </template>
 <script>

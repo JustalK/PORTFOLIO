@@ -13,6 +13,10 @@
 	width: 100%;
 }
 
+.if(@condition, @equal, @property, @value) when (@condition = @equal) {
+	@{property}: @value;
+}
+
 .transition(@args) {
 	-webkit-transition: @args;
 	-moz-transition: @args;
