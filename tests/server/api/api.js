@@ -105,3 +105,20 @@ test('[STATIC] Testing the api contact my identity', async t => {
 	t.is(datas.fullname, 'justal kevin');
 	t.is(datas.email, 'justal.kevin@gmail.com');
 });
+
+test('[STATIC] Testing the api pages with params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/pages?name=portfolio')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas[0], 'object');
+	t.not(datas[0]._id, undefined);
+	t.is(datas[0].name, 'portfolio');
+	t.is(datas[0].title, 'Work');
+	t.not(datas[0].description, undefined);
+});

@@ -2,6 +2,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: {
@@ -38,7 +39,13 @@ module.exports = {
 				'src/**/*.{css,sss,less,scss,sass}',
 				'src/**/**/*.{css,sss,less,scss,sass}'
 			]
-		})
+		}),
+		new CopyPlugin({
+			patterns: [
+				{ from: 'src/assets/imgs', to: 'assets/imgs' },
+				{ from: 'src/assets/fonts', to: 'assets/fonts' },
+			],
+		}),
 	],
 	module: {
 		rules: [

@@ -40,3 +40,19 @@ test('[STATIC] Testing add_tags_filter with bad value', t => {
 	t.is(typeof filters, 'object');
 	t.is(filters.test_key, undefined);
 });
+
+test('[STATIC] Testing add_name_filter with correct value', t => {
+	const filters = {};
+	m.add_name_filter(filters, 'test_key', 'test_value');
+
+	t.is(typeof filters, 'object');
+	t.not(filters.test_key, undefined);
+});
+
+test('[STATIC] Testing add_name_filter with bad value', t => {
+	const filters = {};
+	m.add_name_filter(filters, 'test_key', undefined);
+
+	t.is(typeof filters, 'object');
+	t.is(filters.test_key, undefined);
+});

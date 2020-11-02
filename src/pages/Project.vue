@@ -75,12 +75,12 @@
 	</div>
 </template>
 <script>
-import Informations from '../components/Informations';
+import informations from '../components/informations';
 import api from '../services/api';
 
 export default {
 	components: {
-		'my-informations': Informations
+		'my-informations': informations
 	},
 	data: () => {
 		return {
@@ -117,7 +117,7 @@ export default {
 	mounted: function () {
 		var name = this.$route.params.name;
 		var informationsTagTmp = [];
-		api.getTags()
+		api.get_tags()
 			.then(rsl => {
 				informationsTagTmp = rsl;
 				api.getProject(name)

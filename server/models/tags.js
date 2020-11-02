@@ -4,11 +4,12 @@ const mongoose = require('mongoose');
 const path = require('path');
 const filename = path.basename(__filename, '.js');
 
-// Define the article schema
 const schema = new mongoose.Schema(
 	{
 		name: {
-			type: String
+			type: String,
+			trim: true,
+			require: true
 		}
 	},
 	{
