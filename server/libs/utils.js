@@ -8,13 +8,14 @@ module.exports = {
 		filters[key] = value;
 	},
 	add_tags_filter: (filters, key, value) => {
-		if (module.exports.is_value_exist(value)) {
-			module.exports.add_filter(filters, key, { $all: value });
-		}
+		module.exports.check_and_add_name_filter(filters, key, value, { $all: value });
 	},
 	add_name_filter: (filters, key, value) => {
+		module.exports.check_and_add_name_filter(filters, key, value, { $eq: value });
+	},
+	check_and_add_name_filter: (filters, key, value, operators) => {
 		if (module.exports.is_value_exist(value)) {
-			module.exports.add_filter(filters, key, { $eq: value });
+			module.exports.add_filter(filters, key, operators);
 		}
 	}
 };
