@@ -1,18 +1,20 @@
 <template>
 	<div
 		id="PORTFOLIO">
-		<components_back @back="back" />
-		<components_informations
-			:description="description"
-			:tags="tags"
-			:title="title"
-			:help="help"
-			@filter="filter" />
-		<components_sliders
-			:projects="projects"
-			:are_projects_loading="are_projects_loading"
-			@change_page="change_page" />
-		<components_pubs />
+		<div>
+			<components_back @back="back" />
+			<components_informations
+				:description="description"
+				:tags="tags"
+				:title="title"
+				:help="help"
+				@filter="filter" />
+			<components_sliders
+				:projects="projects"
+				:are_projects_loading="are_projects_loading"
+				@change_page="change_page" />
+			<components_pubs />
+		</div>
 	</div>
 </template>
 <script>
