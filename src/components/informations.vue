@@ -9,6 +9,8 @@
 		<components_tags
 			:tags="this.tags"
 			@new_tags_selected="new_tags_selected" />
+		<components_text
+			:text="this.help" />
 	</div>
 </template>
 <script>
@@ -31,6 +33,10 @@ export default {
 		},
 		tags: {
 			type: Array,
+			required: true
+		},
+		help: {
+			type: String,
 			required: true
 		}
 	},

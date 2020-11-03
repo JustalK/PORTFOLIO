@@ -2,8 +2,6 @@
 @import (reference) "libs/mixins.less";
 
 .informations {
-	height: 234px;
-
 	& > h1 {
 		padding-top: 50px;
 		height: 50px;
@@ -14,11 +12,17 @@
 		font-size: 2.5em;
 	}
 
-	& > span {
+	& span:nth-child(2) {
 		margin-top: 20px;
 		height: 50px;
 		text-align: justify;
 		line-height: 25px;
 		font-size: 1.2em;
+	}
+
+	& span:nth-child(4) {
+		margin-top: 20px;
+		height: 25px;
+		margin-bottom: 25px;
 	}
 }
