@@ -215,5 +215,77 @@ module.exports = [
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00009")],
         order: 15
+    },
+    {
+        title: "Zipworld",
+		slug: "zipworld",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00023")],
+        order: 16
+    },
+    {
+        title: "Onarto",
+		slug: "onarto",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00024")],
+        order: 17
+    },
+    {
+        title: "Odyssea",
+		slug: "odyssea",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00021")],
+        order: 18
+    },
+    {
+        title: "Le monde de Zip",
+		slug: "le-monde-de-zip",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00020")],
+        order: 19
+    },
+    {
+        title: "El Mercado",
+		slug: "el-mercado",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00019")],
+        order: 20
+    },
+    {
+        title: "Ogocare",
+		slug: "ogocare",
+        short_description: "A web-app for making a reservation to a restaurant in Britany",
+        long_description: "ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly ly",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+		],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00022")],
+        order: 21
     }
 ]
