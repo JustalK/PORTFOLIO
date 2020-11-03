@@ -109,7 +109,7 @@ export default {
 			this.are_projects_loading = false;
 		},
 		change_page(direction) {
-			const next_slide = direction === 'left' ? this.slide - 1 : this.slide + 1;
+			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
 			this.update_slide(next_slide);
 			this.projects_are_loading();
 			setTimeout(async () => {
