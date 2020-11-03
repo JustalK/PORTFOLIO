@@ -1,6 +1,7 @@
 module.exports = {
 	class_to_elements_increase(selector, newclass, min, increase, fc) {
 		const elements = [...document.querySelectorAll(selector)];
+		console.log(elements);
 		elements.map((element, index) => {
 			setTimeout(() => {
 				fc(element, newclass);

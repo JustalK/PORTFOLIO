@@ -44,21 +44,17 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
-	mounted: function () {
+	async mounted() {
 		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
 		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
 		this.get_page(this.$route.name);
-		this.get_all_tags();
-		this.get_all_projects();
+		const tags = await this.get_all_tags();
+		this.update_tags(tags);
+		this.get_all_projects_with_tags(tags[0]._id);
 	},
 	methods: {
 		async get_all_tags() {
-			const tags = await api.get_tags();
-			this.update_tags(tags);
-		},
-		async get_all_projects() {
-			const projects = await api.get_projects();
-			this.update_projects(projects);
+			return api.get_tags();
 		},
 		async get_all_projects_with_tags(tags) {
 			this.update_slide(0);

@@ -4,6 +4,7 @@
 			v-for="tag in tags"
 			:key="tag.id"
 			class="tags-tag"
+			:class="{'tags-tag--active': tag.id == '5f95461688489acdd8ee5871'}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
 			{{ tag.name }}
