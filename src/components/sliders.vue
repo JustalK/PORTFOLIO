@@ -44,6 +44,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['change_page'],
 	methods: {
 		set_background_project(project) {
 			const images = project.images;

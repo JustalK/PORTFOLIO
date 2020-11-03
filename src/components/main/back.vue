@@ -13,6 +13,7 @@
 </template>
 <script>
 export default {
+	emits: ['back'],
 	methods: {
 		back() {
 			this.$emit('back');

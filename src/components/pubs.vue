@@ -1,7 +1,7 @@
 <template>
 	<div id="PUBS">
 		<span>Wanna talk about something ? Feel free to contact me !</span>
-		<span>{{ this.email }}</span>
+		<span>{{ email }}</span>
 	</div>
 </template>
 <script>

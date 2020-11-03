@@ -20,6 +20,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['new_tags_selected'],
 	methods: {
 		filter: function(event) {
 			utils.toggle_class_to_element(event.target,'tags-tag--active');

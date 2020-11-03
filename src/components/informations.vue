@@ -2,15 +2,15 @@
 	<div class="informations">
 		<h1>
 			<components_text
-				:text="this.title" />
+				:text="title" />
 		</h1>
 		<components_text
-			:text="this.description" />
+			:text="description" />
 		<components_tags
-			:tags="this.tags"
+			:tags="tags"
 			@new_tags_selected="new_tags_selected" />
 		<components_text
-			:text="this.help" />
+			:text="help" />
 	</div>
 </template>
 <script>
@@ -40,6 +40,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['filter'],
 	methods: {
 		new_tags_selected: function(id_tags_selected) {
 			this.$emit('filter', id_tags_selected);
