@@ -6,9 +6,8 @@
 			:description="description"
 			:tags="tags"
 			:title="title"
+			:help="help"
 			@filter="filter" />
-		<components_text
-			:text="this.help" />
 		<components_sliders
 			:projects="projects"
 			:are_projects_loading="are_projects_loading"
@@ -22,7 +21,6 @@ import pubs from '../components/pubs';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
-import text from '../components/main/text';
 import utils from '../helper/utils.js';
 
 export default {
@@ -30,8 +28,7 @@ export default {
 		components_informations: informations,
 		components_sliders: sliders,
 		components_pubs: pubs,
-		components_back: back,
-		components_text: text
+		components_back: back
 	},
 	data: () => {
 		return {

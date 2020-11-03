@@ -1,4 +1,4 @@
-![Alt text](documentation/imgs/project/home.jpg?raw=true "pornhub api")
+![Alt text](documentation/imgs/project/portfolio.jpg?raw=true "PORTFOLIO-PORTFOLIO")
 
 ![Last version](https://img.shields.io/github/v/tag/justalk/portfolio.svg?style=flat-square)
 [![Travis](https://img.shields.io/travis/com/justalk/portfolio.svg?style=flat-square)](https://travis-ci.com/github/JustalK/portfolio)
@@ -16,9 +16,6 @@ For the project to work properly on your computer, you need to have on your mach
 
 1. A machine with node installed :
 https://nodejs.org/en/download/
-```
-MongoDB
-```
 
 2. A working Mongo database : https://docs.mongodb.com/manual/installation/
 ```
@@ -61,8 +58,12 @@ $ npm run watch-server
 The project can be access at the port 8080 by default :
 http://localhost:8080/
 
+![Alt text](documentation/imgs/project/home.jpg?raw=true "PORTFOLIO-HOME")
+
 The documentation of the API (`swagger`) can be access at this url :
 http://localhost:8080/api/documentation/index.html
+
+![Alt text](documentation/imgs/project/api.jpg?raw=true "PORTFOLIO-PORTFOLIO")
 
 ## Server
 
