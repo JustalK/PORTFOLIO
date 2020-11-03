@@ -18,7 +18,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5883"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5884"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5891"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5892")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
 		],
 		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00002")],
 		order: -1
@@ -35,7 +36,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5879"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5885"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5882"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5892")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
 		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00003")],
         order: 0
@@ -52,11 +54,23 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5879"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5885"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5882"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5892")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00001")],
         order: 1
     },
+	{
+		title: "COVID19PH API",
+		slug: "covid19ph-api",
+		short_description: "An api for getting the latest cases in the Philippines",
+		long_description: "lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
+		],
+		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00027")],
+		order: 2
+	},
     {
         title: "Citiglobal Nudge",
 		slug: "citiglobal-nudge",
@@ -66,7 +80,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5877"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5879"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5885")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5885"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00004")],
         order: 2
@@ -82,7 +97,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5877"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5879"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5885"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5892")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00005")],
         order: 3
@@ -98,7 +114,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5874"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5887"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5892")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00006")],
         order: 4
@@ -114,7 +131,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5887"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5890")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5890"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00013")],
         order: 5
@@ -128,7 +146,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00014")],
         order: 6
@@ -142,7 +161,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00016")],
         order: 7
@@ -156,7 +176,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00018")],
         order: 8
@@ -170,7 +191,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5875"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5886")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00015")],
         order: 9
@@ -184,7 +206,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00012")],
         order: 10
@@ -198,7 +221,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00011")],
         order: 11
@@ -212,7 +236,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00010")],
         order: 12
@@ -226,7 +251,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00017")],
         order: 13
@@ -240,7 +266,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5888")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5888"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00008")],
         order: 14
@@ -253,7 +280,8 @@ module.exports = [
 		tags: [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5875"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5876")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00009")],
         order: 15
@@ -268,7 +296,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5887")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5887"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00023")],
         order: 16
@@ -283,7 +312,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5884")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5884"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00024")],
         order: 17
@@ -298,7 +328,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5884")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5884"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00021")],
         order: 18
@@ -313,7 +344,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5887")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5887"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00020")],
         order: 19
@@ -328,7 +360,8 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5884")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5884"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00019")],
         order: 20
@@ -343,9 +376,32 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5880"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5886"),
-			mongoose.Types.ObjectId("5f95461688489acdd8ee5887")
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5887"),
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00022")],
         order: 21
-    }
+    },
+	{
+		title: "Pornhub API",
+		slug: "pornhub-api",
+		short_description: "An api for scrapping the infamous website",
+		long_description: "lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
+		],
+		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00025")],
+		order: 22
+	},
+	{
+		title: "Anime API",
+		slug: "anime-api",
+		short_description: "An api for finding streaming or downloading links for animes",
+		long_description: "lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr",
+		tags: [
+			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
+		],
+		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00026")],
+		order: 23
+	}
 ]

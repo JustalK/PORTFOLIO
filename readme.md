@@ -16,9 +16,6 @@ For the project to work properly on your computer, you need to have on your mach
 
 1. A machine with node installed :
 https://nodejs.org/en/download/
-```
-MongoDB
-```
 
 2. A working Mongo database : https://docs.mongodb.com/manual/installation/
 ```

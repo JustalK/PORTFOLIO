@@ -3,6 +3,14 @@
 const mongoose = require('mongoose');
 
 module.exports = [
+{
+  id: mongoose.Types.ObjectId("5f95461688489acdd8ee5871"),
+  name: "Professional projects"
+},
+{
+  id: mongoose.Types.ObjectId("5f95461688489acdd8ee5872"),
+  name: "Personal projects"
+},
   {
     id: mongoose.Types.ObjectId("5f95461688489acdd8ee5873"),
     name: "Vue.js"
