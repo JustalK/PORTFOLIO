@@ -12,13 +12,42 @@ a {
 
 html,
 body,
-#app {
+#APP {
 	margin: 0;
 	background-color: @background-color;
 	-webkit-font-smoothing: antialiased;
 	font-family: 'Lato-Light', sans-serif;
 	color: @text-color;
-	.full();
+	width: 100%;
+	height: 100%;
+}
+
+.github {
+	position: absolute;
+	top: -149px;
+	right: -149px;
+	background: url('../imgs/fork_github.png');
+	width: 149px;
+	height: 149px;
+	z-index: @LAYER-COUCHE-1;
+}
+
+.mounted {
+	.github {
+		.transition(all 0.25s cubic-bezier(0.1, 0.59, 0.02, 0.6) 1s);
+
+		top: 0;
+		right: 0;
+	}
+}
+
+.unmounted {
+	.github {
+		.transition(all 2s cubic-bezier(0.1, 0.59, 0.02, 0.6));
+
+		top: -149px;
+		right: -149px;
+	}
 }
 
 .links-blocks {

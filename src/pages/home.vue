@@ -1,6 +1,10 @@
 <template>
 	<div
 		id="HOME">
+		<a
+			class="github"
+			href="https://github.com/JustalK/PORTFOLIO"
+			target="_blank" />
 		<div
 			:class="{active:goZoom}">
 			<components_introduction_side
@@ -44,6 +48,7 @@ export default {
 		zoom() {
 			this.goZoom = true;
 			this.go_open_door = true;
+			utils.add_class_to_element_delay('#HOME', 'unmounted', 0);
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();

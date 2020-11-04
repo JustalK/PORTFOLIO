@@ -1,10 +1,10 @@
 <template>
 	<ul class="tags">
 		<li
-			v-for="tag in tags"
+			v-for="(tag, index) in tags"
 			:key="tag.id"
 			class="tags-tag"
-			:class="{'tags-tag--active': tag.id == '5f95461688489acdd8ee5871'}"
+			:class="{'tags-tag--active': index == 0}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
 			{{ tag.name }}
