@@ -117,6 +117,7 @@ export default {
 			}, 1250);
 		},
 		project(id) {
+			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
 			console.log(id);
 		}
 	}
