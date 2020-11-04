@@ -1,10 +1,10 @@
 <template>
 	<ul class="tags">
 		<li
-			v-for="(tag, index) in tags"
+			v-for="tag in tags"
 			:key="tag.id"
 			class="tags-tag"
-			:class="{'tags-tag--active': index == 0}"
+			:class="{'tags-tag--active': tags_selected.includes(tag.id)}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
 			{{ tag.name }}
@@ -17,6 +17,10 @@ import utils from '../helper/utils.js';
 export default {
 	props: {
 		tags: {
+			type: Array,
+			required: true
+		},
+		tags_selected: {
 			type: Array,
 			required: true
 		}

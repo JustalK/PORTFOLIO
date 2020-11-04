@@ -8,6 +8,7 @@
 			:text="description" />
 		<components_tags
 			:tags="tags"
+			:tags_selected="tags_selected"
 			@new_tags_selected="new_tags_selected" />
 		<components_text
 			:text="help" />
@@ -29,6 +30,10 @@ export default {
 		},
 		'description': {
 			type: String,
+			required: true
+		},
+		tags_selected: {
+			type: Array,
 			required: true
 		},
 		tags: {

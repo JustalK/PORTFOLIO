@@ -12,6 +12,11 @@ module.exports = {
 			.limit(limit)
 			.populate('images');
 	},
+	get_one: (find) => {
+		return model
+			.findOne(find)
+			.populate('images');
+	},
 	get_count: (find) => {
 		return model
 			.countDocuments(find);

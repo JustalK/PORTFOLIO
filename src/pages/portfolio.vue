@@ -6,6 +6,7 @@
 			<components_informations
 				:description="description"
 				:tags="tags"
+				:tags_selected="tags_selected"
 				:title="title"
 				:help="help"
 				@filter="filter" />
@@ -50,8 +51,11 @@ export default {
 		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
 		this.get_page(this.$route.name);
 		const tags = await this.get_all_tags();
-		this.update_tags(tags);
-		this.get_all_projects_with_tags(tags[0]._id);
+		if (tags !== null && tags.length > 0) {
+			this.update_tags(tags);
+			this.update_tags_selected([tags[0]._id]);
+			this.get_all_projects_with_tags(tags[0]._id);
+		}
 	},
 	methods: {
 		async get_all_tags() {
@@ -61,6 +65,9 @@ export default {
 			this.update_slide(0);
 			const projects = await api.get_projects_by_page(this.slide, tags);
 			this.update_projects(projects);
+		},
+		async get_projects_by_id(id) {
+			return api.get_project_by_id(id);
 		},
 		async get_page(name) {
 			const page = await api.get_pages(name);
@@ -116,8 +123,11 @@ export default {
 				this.projects_are_not_loading();
 			}, 1250);
 		},
-		project(id) {
+		async project(id) {
 			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
+			const project = await this.get_projects_by_id(id);
+			this.update_tags_selected(project.tags);
+			console.log(project);
 			console.log(id);
 		}
 	}

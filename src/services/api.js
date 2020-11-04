@@ -1,7 +1,18 @@
 import Axios from 'axios';
 
-const get_projects = function () {
-    return Axios.get('http://localhost:8080/api/articles')
+const get_projects = function (id = null) {
+	const params = {};
+	if (id !== null) {
+		params.id = id;
+	}
+    return Axios.get('http://localhost:8080/api/articles', {params: params})
+        .then(response => {
+            return response.data;
+        });
+};
+
+const get_project_by_id = function (id) {
+    return Axios.get('http://localhost:8080/api/articles/one', {params: {id: id}})
         .then(response => {
             return response.data;
         });
@@ -60,6 +71,7 @@ export default {
     get_projects,
     get_projects_by_page,
 	get_pages,
+	get_project_by_id,
     getProject: getProject,
     getNextProject: getNextProject,
     getPrevProject: getPrevProject,
