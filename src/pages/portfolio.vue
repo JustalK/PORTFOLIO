@@ -12,7 +12,8 @@
 			<components_sliders
 				:projects="projects"
 				:are_projects_loading="are_projects_loading"
-				@change_page="change_page" />
+				@change_page="change_page"
+				@project="project" />
 			<components_pubs />
 		</div>
 	</div>
@@ -114,6 +115,9 @@ export default {
 			setTimeout(async () => {
 				this.projects_are_not_loading();
 			}, 1250);
+		},
+		project(id) {
+			console.log(id);
 		}
 	}
 };
