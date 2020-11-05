@@ -11,12 +11,15 @@
 				:invisible="invisible"
 				:help="help"
 				@filter="filter" />
+			<components_slide
+				:title="title" />
 			<components_pubs />
 		</div>
 	</div>
 </template>
 <script>
 import informations from '../components/informations';
+import slide from '../components/slide';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
 import api from '../services/api';
@@ -26,7 +29,8 @@ export default {
 	components: {
 		components_informations: informations,
 		components_pubs: pubs,
-		components_back: back
+		components_back: back,
+		components_slide: slide
 	},
 	data: () => {
 		return {
@@ -38,7 +42,7 @@ export default {
 			description: '',
 			slide: 0,
 			are_projects_loading: false,
-			help: 'Use the filter to list the projects by technology or skill.'
+			help: 'Click on the image under for changing slide.'
 		};
 	},
 	async mounted() {

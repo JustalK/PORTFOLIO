@@ -10,6 +10,10 @@ A project for presenting my professional work to the world in a single page appl
 
 The entire project follow the official convention for JS. It's checked everyime I compile the project by `EsLint`. Also, the project is checked by `travis` and the test of `Ava` for checking the continuity. Finally, the robustness of the project is assured by `Coveralls` who checked the coverage of the test.
 
+## Database ERD
+
+![Alt text](documentation/management/src/database.jpg?raw=true "PORTFOLIO-ERD")
+
 ## Prerequisite
 
 For the project to work properly on your computer, you need to have on your machine :

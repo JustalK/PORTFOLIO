@@ -1,0 +1,27 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#SLIDE {
+	height: 600px;
+	min-height: 600px;
+	background: @background-bloc-3;
+	position: relative;
+
+	& h2 {
+		font-family: 'Lato-Bold', sans-serif;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		font-size: 14px;
+		color: @text-color-white;
+		background: @text-color-h2;
+		height: 40px;
+		pointer-events: none;
+		z-index: @LAYER-COUCHE-2;
+		overflow: hidden;
+		line-height: 40px;
+		text-align: center;
+		margin: 0;
+		text-transform: uppercase;
+	}
+}
