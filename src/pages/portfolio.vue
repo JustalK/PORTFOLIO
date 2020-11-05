@@ -8,6 +8,7 @@
 				:tags="tags"
 				:tags_selected="tags_selected"
 				:title="title"
+				:invisible="invisible"
 				:help="help"
 				@filter="filter" />
 			<components_sliders
@@ -37,6 +38,7 @@ export default {
 	data: () => {
 		return {
 			title: '',
+			invisible: true,
 			tags: [],
 			tags_selected: [],
 			projects: [],
@@ -48,7 +50,8 @@ export default {
 	},
 	async mounted() {
 		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
-		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
+		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
+		utils.add_class_to_elements_increase('.tags', 'mounted', 200, 100);
 		this.get_page(this.$route.name);
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
@@ -130,7 +133,7 @@ export default {
 			setTimeout(() => {
 				console.log(project.slug);
 				this.$router.push({ name: 'project', params: {slug: project.slug}});
-			},1000);
+			},2000);
 		}
 	}
 };

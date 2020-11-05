@@ -1,5 +1,7 @@
 <template>
-	<span class="text">
+	<span
+		:class="{invisible: invisible}"
+		class="text">
 		{{ text }}
 	</span>
 </template>
@@ -8,6 +10,10 @@ export default {
 	props: {
 		text: {
 			type: String,
+			required: true
+		},
+		invisible: {
+			type: Boolean,
 			required: true
 		}
 	}

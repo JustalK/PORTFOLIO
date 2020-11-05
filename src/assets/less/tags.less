@@ -21,7 +21,10 @@
 		color: @background-bloc-2;
 		background: @text-color-dark;
 		box-shadow: 10px 10px @background-shadow;
-		opacity: 0;
+
+		&.invisible {
+			opacity: 0;
+		}
 
 		&:hover {
 			color: @text-color-white;
@@ -34,10 +37,10 @@
 			box-shadow: none;
 		}
 	}
-}
 
-.mounted {
-	.tags-tag {
-		opacity: 1;
+	&.mounted {
+		& .tags-tag {
+			opacity: 1;
+		}
 	}
 }

@@ -83,9 +83,9 @@ export default {
 			this.title = page.title;
 		},
 		back() {
-			utils.search_add_class_to_element('#PORTFOLIO', 'unmounted');
+			utils.search_add_class_to_element('#PROJECT', 'unmounted');
 			setTimeout(() => {
-				this.$router.push({ name: 'home' });
+				this.$router.push({ name: 'portfolio' });
 			},1000);
 		},
 		async filter(tags_selected) {

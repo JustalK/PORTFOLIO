@@ -2,16 +2,20 @@
 	<div class="informations">
 		<h1>
 			<components_text
-				:text="title" />
+				:text="title"
+				:invisible="invisible" />
 		</h1>
 		<components_text
-			:text="description" />
+			:text="description"
+			:invisible="invisible" />
 		<components_tags
 			:tags="tags"
+			:invisible="invisible"
 			:tags_selected="tags_selected"
 			@new_tags_selected="new_tags_selected" />
 		<components_text
-			:text="help" />
+			:text="help"
+			:invisible="invisible" />
 	</div>
 </template>
 <script>
@@ -42,6 +46,10 @@ export default {
 		},
 		help: {
 			type: String,
+			required: true
+		},
+		invisible: {
+			type: Boolean,
 			required: true
 		}
 	},
