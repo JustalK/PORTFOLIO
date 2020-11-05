@@ -52,6 +52,7 @@ export default {
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
+			console.log(my_identity);
 			this.update_introduction(my_identity.fullname, my_identity.email);
 		},
 		update_introduction(name, email) {

@@ -8,6 +8,7 @@
 				:tags="tags"
 				:tags_selected="tags_selected"
 				:title="title"
+				:invisible="invisible"
 				:help="help"
 				@filter="filter" />
 			<components_pubs />
@@ -33,6 +34,7 @@ export default {
 			tags: [],
 			tags_selected: [],
 			projects: [],
+			invisible: false,
 			description: '',
 			slide: 0,
 			are_projects_loading: false,
@@ -41,13 +43,14 @@ export default {
 	},
 	async mounted() {
 		utils.add_class_to_element_delay('#PROJECT', 'mounted', 200);
-		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
-		this.get_page('portfolio');
+		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
+		const slug = this.$route.params.slug;
+		const project = await this.get_project_by_slug(slug);
+		this.update_page(project);
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
 			this.update_tags(tags);
-			this.update_tags_selected([tags[0]._id]);
-			this.get_all_projects_with_tags(tags[0]._id);
+			this.update_tags_selected(project.tags);
 		}
 	},
 	methods: {
@@ -59,8 +62,8 @@ export default {
 			const projects = await api.get_projects_by_page(this.slide, tags);
 			this.update_projects(projects);
 		},
-		async get_projects_by_id(id) {
-			return api.get_project_by_id(id);
+		async get_project_by_slug(slug) {
+			return api.get_project_by_slug(slug);
 		},
 		async get_page(name) {
 			const page = await api.get_pages(name);
@@ -79,7 +82,7 @@ export default {
 			this.projects = projects;
 		},
 		update_page(page) {
-			this.description = page.description;
+			this.description = page.long_description;
 			this.title = page.title;
 		},
 		back() {

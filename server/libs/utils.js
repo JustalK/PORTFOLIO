@@ -13,6 +13,9 @@ module.exports = {
 	add_name_filter: (filters, key, value) => {
 		module.exports.check_and_add_name_filter(filters, key, value, { $eq: value });
 	},
+	add_slug_filter: (filters, key, value) => {
+		module.exports.check_and_add_name_filter(filters, key, value, value);
+	},
 	add_id_filter: (filters, key, value) => {
 		module.exports.check_and_add_name_filter(filters, key, value, value);
 	},
