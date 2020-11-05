@@ -1,6 +1,6 @@
 <template>
 	<div
-		id="PORTFOLIO">
+		id="PROJECT">
 		<div>
 			<components_back @back="back" />
 			<components_informations
@@ -10,11 +10,6 @@
 				:title="title"
 				:help="help"
 				@filter="filter" />
-			<components_sliders
-				:projects="projects"
-				:are_projects_loading="are_projects_loading"
-				@change_page="change_page"
-				@project="project" />
 			<components_pubs />
 		</div>
 	</div>
@@ -22,7 +17,6 @@
 <script>
 import informations from '../components/informations';
 import pubs from '../components/pubs';
-import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
 import utils from '../helper/utils.js';
@@ -30,7 +24,6 @@ import utils from '../helper/utils.js';
 export default {
 	components: {
 		components_informations: informations,
-		components_sliders: sliders,
 		components_pubs: pubs,
 		components_back: back
 	},
@@ -47,9 +40,9 @@ export default {
 		};
 	},
 	async mounted() {
-		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
+		utils.add_class_to_element_delay('#PROJECT', 'mounted', 200);
 		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
-		this.get_page(this.$route.name);
+		this.get_page('portfolio');
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
 			this.update_tags(tags);
@@ -127,12 +120,8 @@ export default {
 			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
-			setTimeout(() => {
-				console.log(project.slug);
-				this.$router.push({ name: 'project', params: {slug: project.slug}});
-			},1000);
 		}
 	}
 };
 </script>
-<style src="../assets/less/portfolio.less"></style>
+<style src="../assets/less/project.less"></style>
