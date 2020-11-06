@@ -11,4 +11,13 @@
 		height: 100%;
 		position: relative;
 	}
+
+	& .text {
+		opacity: 1;
+
+		&::before,
+		&::after {
+			.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+		}
+	}
 }

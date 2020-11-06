@@ -2,13 +2,16 @@
 	<div
 		id="PORTFOLIO">
 		<div>
-			<components_back @back="back" />
+			<components_back
+				:invisible="invisible"
+				@back="back" />
 			<components_informations
 				:description="description"
 				:tags="tags"
 				:tags_selected="tags_selected"
 				:title="title"
 				:invisible="invisible"
+				:invisible_text="invisible"
 				:help="help"
 				@filter="filter" />
 			<components_sliders
@@ -50,8 +53,6 @@ export default {
 	},
 	async mounted() {
 		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
-		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
-		utils.add_class_to_elements_increase('.tags', 'mounted', 200, 100);
 		this.get_page(this.$route.name);
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
@@ -59,6 +60,9 @@ export default {
 			this.update_tags_selected([tags[0]._id]);
 			this.get_all_projects_with_tags(tags[0]._id);
 		}
+		setTimeout(() => {
+			this.invisible = false;
+		}, 200);
 	},
 	methods: {
 		async get_all_tags() {

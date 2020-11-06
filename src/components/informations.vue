@@ -3,11 +3,11 @@
 		<h1>
 			<components_text
 				:text="title"
-				:invisible="invisible" />
+				:invisible="invisible_text" />
 		</h1>
 		<components_text
 			:text="description"
-			:invisible="invisible" />
+			:invisible="invisible_text" />
 		<components_tags
 			:tags="tags"
 			:invisible="invisible"
@@ -15,7 +15,7 @@
 			@new_tags_selected="new_tags_selected" />
 		<components_text
 			:text="help"
-			:invisible="invisible" />
+			:invisible="invisible_text" />
 	</div>
 </template>
 <script>
@@ -49,6 +49,10 @@ export default {
 			required: true
 		},
 		invisible: {
+			type: Boolean,
+			required: true
+		},
+		invisible_text: {
 			type: Boolean,
 			required: true
 		}

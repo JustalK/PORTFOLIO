@@ -2,13 +2,16 @@
 	<div
 		id="PROJECT">
 		<div>
-			<components_back @back="back" />
+			<components_back
+				:invisible="invisible"
+				@back="back" />
 			<components_informations
 				:description="description"
 				:tags="tags"
 				:tags_selected="tags_selected"
 				:title="title"
 				:invisible="invisible"
+				:invisible_text="invisible_text"
 				:help="help"
 				@filter="filter" />
 			<components_slide
@@ -39,6 +42,7 @@ export default {
 			tags_selected: [],
 			projects: [],
 			invisible: false,
+			invisible_text: true,
 			description: '',
 			slide: 0,
 			are_projects_loading: false,
@@ -56,6 +60,9 @@ export default {
 			this.update_tags(tags);
 			this.update_tags_selected(project.tags);
 		}
+		setTimeout(() => {
+			this.invisible_text = false;
+		}, 200);
 	},
 	methods: {
 		async get_all_tags() {

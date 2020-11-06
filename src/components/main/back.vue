@@ -1,6 +1,7 @@
 <template>
 	<div
-		class="back">
+		class="back"
+		:class="{invisible: invisible}">
 		<a
 			href="#"
 			@click.stop="back">
@@ -13,6 +14,12 @@
 </template>
 <script>
 export default {
+	props: {
+		invisible: {
+			type: Boolean,
+			required: true
+		}
+	},
 	emits: ['back'],
 	methods: {
 		back() {
