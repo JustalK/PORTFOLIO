@@ -5,49 +5,10 @@
 	height: 100%;
 	max-width: 1000px;
 	margin: auto;
-	position: relative;
 
-	& > span {
-		margin-top: 20px;
-		height: 25px;
-		margin-bottom: 25px;
-	}
-
-	&::before,
-	&::after {
-		content: ' ';
-		position: absolute;
-		left: 0;
-		top: 0;
+	& > div {
+		width: 100%;
 		height: 100%;
-		width: 0;
-		z-index: @LAYER-ANIMATION;
+		position: relative;
 	}
-
-	&::before {
-		.transition(all 0.6s cubic-bezier(0.87, 0.32, 0.81, 0.36));
-
-		background: @background-color-transition-d;
-		opacity: 0.7;
-	}
-
-	&::after {
-		.transition(all 1s cubic-bezier(0.87, 0.32, 0.81, 0.36));
-
-		background: @background-color-transition-l;
-	}
-
-	&.unmounted {
-		&::before,
-		&::after {
-			width: 100%;
-		}
-	}
-}
-
-.filter_sentance {
-	padding-bottom: 22px;
-	padding-top: 32px;
-	display: block;
-	font-family: @font-name-1, sans-serif;
 }

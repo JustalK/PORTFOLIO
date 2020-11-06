@@ -8,10 +8,12 @@
 	width: 100%;
 	text-align: center;
 	top: 40%;
+	opacity: 0;
 	color: @text-color;
 	transform: translateY(-50%);
 	font-size: 2em;
 	font-family: 'Lato-Light', sans-serif;
+	.transition(all 0.5s cubic-bezier(0.1, 0.59, 0.02, 0.6) 1s);
 
 	& span {
 		display: block;
@@ -47,5 +49,11 @@
 		&:hover::after {
 			width: 100%;
 		}
+	}
+}
+
+.mounted {
+	.intro {
+		opacity: 1;
 	}
 }

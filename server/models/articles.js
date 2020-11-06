@@ -13,7 +13,8 @@ const schema = new mongoose.Schema(
 			require: true
 		},
 		slug: {
-			type: String
+			type: String,
+			require: true
 		},
 		short_description: {
 			type: String,

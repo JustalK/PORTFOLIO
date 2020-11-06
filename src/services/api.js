@@ -1,68 +1,33 @@
-import Axios from 'axios';
+import axios from 'axios';
 
-const get_projects = function () {
-    return Axios.get('http://localhost:8080/api/articles')
-        .then(response => {
-            return response.data;
-        });
-};
-
-const get_projects_by_page = function (page=0,tags='') {
-    return Axios.get('http://localhost:8080/api/articles', {params: {page: page, tags: tags}})
-        .then(response => {
-            return response.data;
-        });
-};
-
-const get_pages = function (name) {
-    return Axios.get('http://localhost:8080/api/pages', {params: {name: name}})
-        .then(response => {
-            return response.data;
-        });
-};
-
-const get_tags = function () {
-    return Axios.get('http://localhost:8080/api/tags')
-        .then(response => {
-            return response.data;
-        });
-};
-
-const get_my_identity = async () => {
-    return Axios.get('http://localhost:8080/api/contacts/my-identity')
-        .then(response => {
-            return response.data;
-        });
-};
-
-const getProject = function (name) {
-    return Axios.get('http://localhost:8080/api/article/' + name)
-        .then(response => {
-            return response.data;
-        });
-};
-
-const getNextProject = function (order) {
-    return Axios.get('http://localhost:8080/api/article/next/' + order)
-        .then(response => {
-            return response.data;
-        });
-};
-
-const getPrevProject = function (order) {
-    return Axios.get('http://localhost:8080/api/article/prev/' + order)
-        .then(response => {
-            return response.data;
-        });
-};
+const axios_call = async (url, params = {}) => {
+	const result = await axios.get(url, params);
+	if (result !== null && result.status === 200) {
+		return result.data;
+	}
+	return null;
+}
 
 export default {
-    get_projects,
-    get_projects_by_page,
-	get_pages,
-    getProject: getProject,
-    getNextProject: getNextProject,
-    getPrevProject: getPrevProject,
-    get_tags,
-	get_my_identity
+    get_projects: async () => {
+		return axios_call('http://localhost:8080/api/articles');
+	},
+    get_projects_by_page: async (page=0,tags='') => {
+		return axios_call('http://localhost:8080/api/articles', {params: {page: page, tags: tags}})
+	},
+	get_pages: async (name) => {
+		return axios_call('http://localhost:8080/api/pages', {params: {name: name}});
+	},
+	get_project_by_id: async (id) => {
+		return axios_call('http://localhost:8080/api/articles/one', {params: {id: id}});
+	},
+	get_project_by_slug: async (slug) => {
+		return axios_call('http://localhost:8080/api/articles/one', {params: {slug: slug}});
+	},
+    get_tags: async () => {
+		return axios_call('http://localhost:8080/api/tags');
+	},
+	get_my_identity: async () => {
+		return axios_call('http://localhost:8080/api/contacts/my-identity');
+	}
 };

@@ -1,4 +1,4 @@
-![Alt text](documentation/imgs/project/home.jpg?raw=true "pornhub api")
+![Alt text](documentation/imgs/project/portfolio.jpg?raw=true "PORTFOLIO-PORTFOLIO")
 
 ![Last version](https://img.shields.io/github/v/tag/justalk/portfolio.svg?style=flat-square)
 [![Travis](https://img.shields.io/travis/com/justalk/portfolio.svg?style=flat-square)](https://travis-ci.com/github/JustalK/portfolio)
@@ -10,22 +10,33 @@ A project for presenting my professional work to the world in a single page appl
 
 The entire project follow the official convention for JS. It's checked everyime I compile the project by `EsLint`. Also, the project is checked by `travis` and the test of `Ava` for checking the continuity. Finally, the robustness of the project is assured by `Coveralls` who checked the coverage of the test.
 
+## Flowchart
+
+![Alt text](documentation/management/flowchart.jpg?raw=true "PORTFOLIO-Flowchart")
+
+## Database ERD
+
+The database is centered around the articles/projects. It's the main purpose of this project :
+
+![Alt text](documentation/management/database.jpg?raw=true "PORTFOLIO-ERD")
+
+## Development cycle
+
+I am developing following an easy to understand cycle. This way I am sure to not destroy everything that has been done with a new functionnality :
+
+![Alt text](documentation/management/cycle.jpg?raw=true "PORTFOLIO-CYCLE")
+
 ## Prerequisite
 
 For the project to work properly on your computer, you need to have on your machine :
 
 1. A machine with node installed :
 https://nodejs.org/en/download/
-```
-MongoDB
-```
 
 2. A working Mongo database : https://docs.mongodb.com/manual/installation/
 ```
 MongoDB
 ```
-
-In the futur, I will use Docker for having this step cut.
 
 ## Installation
 
@@ -61,8 +72,12 @@ $ npm run watch-server
 The project can be access at the port 8080 by default :
 http://localhost:8080/
 
+![Alt text](documentation/imgs/project/home.jpg?raw=true "PORTFOLIO-HOME")
+
 The documentation of the API (`swagger`) can be access at this url :
 http://localhost:8080/api/documentation/index.html
+
+![Alt text](documentation/imgs/project/api.jpg?raw=true "PORTFOLIO-PORTFOLIO")
 
 ## Server
 

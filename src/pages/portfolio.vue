@@ -1,19 +1,27 @@
 <template>
 	<div
 		id="PORTFOLIO">
-		<components_back @back="back" />
-		<components_informations
-			:description="description"
-			:tags="tags"
-			:title="title"
-			@filter="filter" />
-		<components_text
-			:text="this.help" />
-		<components_sliders
-			:projects="projects"
-			:are_projects_loading="are_projects_loading"
-			@change_page="change_page" />
-		<components_pubs />
+		<div>
+			<components_back
+				:invisible="invisible"
+				@back="back" />
+			<components_informations
+				:description="description"
+				:tags="tags"
+				:tags_selected="tags_selected"
+				:title="title"
+				:invisible="invisible"
+				:invisible_text="invisible"
+				:help="help"
+				@filter="filter" />
+			<components_sliders
+				:projects="projects"
+				:invisible="invisible"
+				:are_projects_loading="are_projects_loading"
+				@change_page="change_page"
+				@project="project" />
+			<components_pubs :invisible="invisible" />
+		</div>
 	</div>
 </template>
 <script>
@@ -22,7 +30,6 @@ import pubs from '../components/pubs';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
-import text from '../components/main/text';
 import utils from '../helper/utils.js';
 
 export default {
@@ -30,12 +37,12 @@ export default {
 		components_informations: informations,
 		components_sliders: sliders,
 		components_pubs: pubs,
-		components_back: back,
-		components_text: text
+		components_back: back
 	},
 	data: () => {
 		return {
 			title: '',
+			invisible: true,
 			tags: [],
 			tags_selected: [],
 			projects: [],
@@ -45,26 +52,30 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
-	mounted: function () {
+	async mounted() {
 		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
-		utils.add_class_to_elements_increase('.text', 'active', 200, 200);
 		this.get_page(this.$route.name);
-		this.get_all_tags();
-		this.get_all_projects();
+		const tags = await this.get_all_tags();
+		if (tags !== null && tags.length > 0) {
+			this.update_tags(tags);
+			this.update_tags_selected([tags[0]._id]);
+			this.get_all_projects_with_tags(tags[0]._id);
+		}
+		setTimeout(() => {
+			this.invisible = false;
+		}, 200);
 	},
 	methods: {
 		async get_all_tags() {
-			const tags = await api.get_tags();
-			this.update_tags(tags);
-		},
-		async get_all_projects() {
-			const projects = await api.get_projects();
-			this.update_projects(projects);
+			return api.get_tags();
 		},
 		async get_all_projects_with_tags(tags) {
 			this.update_slide(0);
 			const projects = await api.get_projects_by_page(this.slide, tags);
 			this.update_projects(projects);
+		},
+		async get_projects_by_id(id) {
+			return api.get_project_by_id(id);
 		},
 		async get_page(name) {
 			const page = await api.get_pages(name);
@@ -109,7 +120,7 @@ export default {
 			this.are_projects_loading = false;
 		},
 		change_page(direction) {
-			const next_slide = direction === 'left' ? this.slide - 1 : this.slide + 1;
+			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
 			this.update_slide(next_slide);
 			this.projects_are_loading();
 			setTimeout(async () => {
@@ -119,6 +130,15 @@ export default {
 			setTimeout(async () => {
 				this.projects_are_not_loading();
 			}, 1250);
+		},
+		async project(id) {
+			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
+			const project = await this.get_projects_by_id(id);
+			this.update_tags_selected(project.tags);
+			setTimeout(() => {
+				console.log(project.slug);
+				this.$router.push({ name: 'project', params: {slug: project.slug}});
+			},2000);
 		}
 	}
 };

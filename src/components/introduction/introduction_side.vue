@@ -32,6 +32,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['zoom'],
 	methods: {
 		articles() {
 			this.animation_door('articles');

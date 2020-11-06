@@ -4,9 +4,10 @@
 			v-for="tag in tags"
 			:key="tag.id"
 			class="tags-tag"
+			:class="{invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
-			{{ tag.name }}
+			<span> {{ tag.name }} </span>
 		</li>
 	</ul>
 </template>
@@ -18,8 +19,17 @@ export default {
 		tags: {
 			type: Array,
 			required: true
+		},
+		tags_selected: {
+			type: Array,
+			required: true
+		},
+		invisible: {
+			type: Boolean,
+			required: true
 		}
 	},
+	emits: ['new_tags_selected'],
 	methods: {
 		filter: function(event) {
 			utils.toggle_class_to_element(event.target,'tags-tag--active');

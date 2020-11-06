@@ -1,25 +1,24 @@
 module.exports = {
+	class_to_elements_increase(selector, newclass, min, increase, fc) {
+		const elements = [...document.querySelectorAll(selector)];
+		console.log(elements);
+		elements.map((element, index) => {
+			setTimeout(() => {
+				fc(element, newclass);
+			}, min + index * increase);
+		})
+	},
 	add_class_to_elements(selector, newclass) {
 		module.exports.add_class_to_elements_increase(selector, newclass, 0, 0);
 	},
 	add_class_to_elements_increase(selector, newclass, min, increase) {
-		const elements = [...document.querySelectorAll(selector)];
-		elements.map((element, index) => {
-			setTimeout(() => {
-				module.exports.add_class_to_element(element, newclass);
-			}, min + index * increase);
-		})
+		module.exports.class_to_elements_increase(selector, newclass, min, increase, module.exports.add_class_to_element);
 	},
 	remove_class_to_elements(selector, newclass) {
 		module.exports.remove_class_to_elements_increase(selector, newclass, 0, 0);
 	},
 	remove_class_to_elements_increase(selector, newclass, min, increase) {
-		const elements = [...document.querySelectorAll(selector)];
-		elements.map((element, index) => {
-			setTimeout(() => {
-				module.exports.remove_class_to_element(element, newclass);
-			}, min + index * increase);
-		})
+		module.exports.class_to_elements_increase(selector, newclass, min, increase, module.exports.remove_class_to_element);
 	},
 	add_class_to_element_delay(selector, newclass, delay) {
 		setTimeout(() => {

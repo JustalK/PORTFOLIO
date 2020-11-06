@@ -87,5 +87,50 @@ module.exports = [
       id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00018"),
       name: "Saona Villas",
   		path: "./assets/imgs/saona-villas/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00019"),
+      name: "El Mercado",
+  		path: "./assets/imgs/el-mercado/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00020"),
+      name: "Le monde de zip",
+  		path: "./assets/imgs/le-monde-de-zip/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00021"),
+      name: "Odyssea",
+  		path: "./assets/imgs/odyssea/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00022"),
+      name: "Ogocare",
+  		path: "./assets/imgs/ogocare/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00023"),
+      name: "Zipworld",
+  		path: "./assets/imgs/zipworld/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00024"),
+      name: "Onarto",
+  		path: "./assets/imgs/onarto/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00025"),
+      name: "Pornhub API",
+  		path: "./assets/imgs/pornhub/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00026"),
+      name: "Anime API",
+  		path: "./assets/imgs/anime-api/intro.jpg"
+    },
+	{
+      id: mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00027"),
+      name: "COVID19PH API",
+  		path: "./assets/imgs/covid19ph-api/intro.jpg"
     }
 ]

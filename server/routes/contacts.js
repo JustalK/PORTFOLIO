@@ -9,8 +9,7 @@ const services = require('../services/' + filename)(dbs);
 
 // Return the list of all the articles
 routes.route('/my-identity').get(async (request, response) => {
-	const datas = await services.get_my_identity();
-	response.json(datas);
+	response.json(await services.get_my_identity());
 });
 
 module.exports = routes;

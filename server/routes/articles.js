@@ -13,6 +13,7 @@ const utils = require('../libs/utils');
 routes.route('/').get(async (request, response) => {
 	const params = {};
 	utils.add_tags_filter(params, 'tags', request.query.tags);
+	utils.add_id_filter(params, '_id', request.query.id);
 	const limit = constants.NUMBER_ARTICLES_BY_PAGE;
 	const page = request.query.page === undefined ? 0 : Number(request.query.page);
 
@@ -20,6 +21,14 @@ routes.route('/').get(async (request, response) => {
 	const max_page = Math.floor( (total_number_articles - 1) / limit ) + 1;
 	const skip = page < 0 ? ( (max_page - (-page % max_page) ) % (max_page) ) * limit : (page % (max_page) ) * limit;
 	const datas = await services.get_all(params, skip, limit);
+	response.json(datas);
+});
+
+routes.route('/one').get(async (request, response) => {
+	const params = {};
+	utils.add_id_filter(params, '_id', request.query.id);
+	utils.add_slug_filter(params, 'slug', request.query.slug);
+	const datas = await services.get_one(params);
 	response.json(datas);
 });
 
