@@ -98,9 +98,10 @@ export default {
 		},
 		back() {
 			utils.search_add_class_to_element('#PROJECT', 'unmounted');
+			utils.search_add_class_to_element('#PROJECT', 'invisible');
 			setTimeout(() => {
 				this.$router.push({ name: 'portfolio' });
-			},1000);
+			},2000);
 		},
 		async filter(tags_selected) {
 			this.projects_are_loading();
