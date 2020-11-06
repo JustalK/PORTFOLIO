@@ -1,3 +1,5 @@
+@import (reference) "constants.less";
+
 .font-face(@font-family, @filepath, @font-weight, @font-style) {
 	@font-face {
 		font-family: @font-family;
@@ -23,4 +25,15 @@
 	-ms-transition: @args;
 	-o-transition: @args;
 	transition: @args;
+}
+
+.button-window(@left, @top, @background) {
+	position: absolute;
+	background: @background;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	top: @top;
+	left: @left;
+	z-index: @LAYER-COUCHE-2;
 }

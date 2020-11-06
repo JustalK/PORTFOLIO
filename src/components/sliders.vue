@@ -16,6 +16,7 @@
 				<a
 					:style="set_background_project(p)"
 					@click.stop="project(p.id)">
+					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
 					<div>
 						<span>{{ p.short_description }}</span>

@@ -7,7 +7,7 @@
 			:class="{invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
-			{{ tag.name }}
+			<span> {{ tag.name }} </span>
 		</li>
 	</ul>
 </template>
