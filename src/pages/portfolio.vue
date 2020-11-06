@@ -16,10 +16,11 @@
 				@filter="filter" />
 			<components_sliders
 				:projects="projects"
+				:invisible="invisible"
 				:are_projects_loading="are_projects_loading"
 				@change_page="change_page"
 				@project="project" />
-			<components_pubs />
+			<components_pubs :invisible="invisible" />
 		</div>
 	</div>
 </template>

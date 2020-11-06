@@ -4,6 +4,7 @@
 		class="projects">
 		<div
 			class="previous"
+			:class="{invisible: invisible}"
 			@click.stop="change_page('previous')">
 			<span>previous</span>
 			<em />
@@ -27,6 +28,7 @@
 		</ul>
 		<div
 			class="next"
+			:class="{invisible: invisible}"
 			@click.stop="change_page('next')">
 			<span>next</span>
 			<em />
@@ -43,6 +45,10 @@ export default {
 			required: true
 		},
 		are_projects_loading: {
+			type: Boolean,
+			required: true
+		},
+		invisible: {
 			type: Boolean,
 			required: true
 		}

@@ -1,5 +1,7 @@
 <template>
-	<div id="PUBS">
+	<div
+		id="PUBS"
+		:class="{invisible: invisible}">
 		<span>Wanna talk about something ? Feel free to contact me !</span>
 		<span>{{ email }}</span>
 	</div>
@@ -8,6 +10,12 @@
 import api from '../services/api';
 
 export default {
+	props: {
+		invisible: {
+			type: Boolean,
+			required: true
+		}
+	},
 	data: () => {
 		return {
 			email: ''
