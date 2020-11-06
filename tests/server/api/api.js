@@ -71,6 +71,26 @@ test('[STATIC] Testing the api articles with params', async t => {
 	t.not(datas[1]._id, undefined);
 });
 
+test('[STATIC] Testing the api one articles with params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/one?slug=portfolio')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas, 'object');
+	t.not(datas._id, undefined);
+	t.not(datas.title, undefined);
+	t.not(datas.slug, undefined);
+	t.not(datas.short_description, undefined);
+	t.not(datas.long_description, undefined);
+	t.not(datas.order, undefined);
+	t.not(datas._id, undefined);
+});
+
 test('[STATIC] Testing the api all tags without params', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/tags')
