@@ -6,6 +6,7 @@
 			class="previous"
 			@click.stop="change_page('previous')">
 			<span>previous</span>
+			<em />
 		</div>
 		<ul>
 			<li
@@ -28,7 +29,7 @@
 			class="next"
 			@click.stop="change_page('next')">
 			<span>next</span>
-			<div />
+			<em />
 		</div>
 	</div>
 </template>
