@@ -4,27 +4,39 @@
 .text {
 	position: relative;
 	display: block;
-	opacity: 0;
 	user-select: none;
-	.transition(all 0.75s cubic-bezier(0.8, 0, 0.25, 1) 0.5s);
+	opacity: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	.transition(all 0.75s cubic-bezier(0.8, 0, 0.25, 1));
 
-	&::before {
+	&::before,
+	&::after {
 		content: ' ';
 		position: absolute;
 		right: 0;
+		top: 0;
 		height: 100%;
-		width: 100%;
+		width: 0;
 		background: @background-text-animation;
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) 1s);
 	}
 
-	&.active::before {
-		width: 0;
+	&::after {
+		left: 0;
 	}
-}
 
-.mounted {
-	.text {
-		opacity: 1;
+	&.invisible {
+		opacity: 0;
+
+		&::before {
+			width: 100%;
+		}
+	}
+
+	&.unmounted::after {
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+		width: 100%;
 	}
 }

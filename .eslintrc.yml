@@ -16,6 +16,9 @@ parserOptions:
   ecmaVersion: 11
 rules:
   no-unused-expressions: 2
+  vue/custom-event-name-casing: 0
+  vue/camelcase: 0
+  vue/prop-name-casing: 0
   vue/html-closing-bracket-newline: ["error", {singleline: "never", multiline: "never"}]
   vue/script-indent:
     - error

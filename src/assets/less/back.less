@@ -31,12 +31,16 @@
 		cursor: pointer;
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
 
-		transform: rotateZ(45deg) scale(0);
+		transform: rotateZ(45deg);
 
 		.blocks-square(1, left, top, @background-bloc-0);
 		.blocks-square(2, right, top, @background-bloc-1);
 		.blocks-square(3, right, bottom, @background-bloc-2);
 		.blocks-square(4, left, bottom, @background-bloc-3);
+
+		&:hover {
+			transform: rotateZ(-45deg) scale(0.8);
+		}
 	}
 
 	& span {
@@ -46,24 +50,18 @@
 		transform: rotateZ(-45deg);
 		font-size: 14px;
 		color: @background-bloc-2;
-		opacity: 0;
+		opacity: 1;
 		user-select: none;
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) 0.25s);
 	}
-}
 
-.mounted {
-	& .back {
+	&.invisible {
 		& a {
-			transform: rotateZ(45deg);
-
-			&:hover {
-				transform: rotateZ(-45deg) scale(0.8);
-			}
+			transform: rotateZ(45deg) scale(0);
 		}
 
 		& span {
-			opacity: 1;
+			opacity: 0;
 		}
 	}
 }
