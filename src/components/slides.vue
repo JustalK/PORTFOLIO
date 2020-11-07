@@ -1,6 +1,6 @@
 <template>
 	<div id="SLIDE">
-		<a>
+		<a :style="set_background_project(background_image)">
 			<i class="fake_button" />
 			<h2>{{ title }}</h2>
 			<components_slide
@@ -26,6 +26,10 @@ export default {
 			type: Object,
 			required: true
 		},
+		background_image: {
+			type: Object,
+			required: true
+		},
 		invisible_slide: {
 			type: Boolean,
 			required: true
@@ -35,6 +39,11 @@ export default {
 	methods: {
 		change_slide() {
 			this.$emit('change_slide');
+		},
+		set_background_project(background_image) {
+			return {
+				'background-image': 'url(\'.' + background_image.path + '\')'
+			};
 		}
 	}
 };

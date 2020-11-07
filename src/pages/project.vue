@@ -18,6 +18,7 @@
 			<components_slides
 				:invisible_slide="invisible_slide"
 				:title="title"
+				:background_image="background_image"
 				:slide="slide"
 				@change_slide="change_slide" />
 			<components_pubs
@@ -52,6 +53,7 @@ export default {
 			invisible_text: true,
 			invisible_slide: true,
 			description: '',
+			background_image: {},
 			slide: {},
 			all_slides: [],
 			actual_slide: 0,
@@ -65,6 +67,7 @@ export default {
 		const slug = this.$route.params.slug;
 		const project = await this.get_project_by_slug(slug);
 		this.update_page(project);
+		this.background_image = project.background_image;
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
 			this.update_tags(tags);
