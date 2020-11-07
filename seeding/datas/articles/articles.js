@@ -385,7 +385,7 @@ module.exports = [
 	{
 		title: "Pornhub API",
 		slug: "pornhub-api",
-		short_description: "A REST API for scrapping the famous porn website"
+		short_description: "A REST API for scrapping the famous porn website",
 		long_description: "lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr lr",
 		tags: [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
