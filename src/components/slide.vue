@@ -3,10 +3,10 @@
 		class="slide"
 		:class="{invisible: invisible_slide}"
 		@click.stop="change_slide()">
-		<span>sada sdas dasdasd</span>
-		<p>I dsad asd asd asd asd as dsa d sad asd sadas d sad asd sad as dasd</p>
-		<p>jioijdofsodo msdomfiosdmfoisd miofm iofsmdoifm sdoifms mfosmf osdmfo sdimfomd fois</p>
-		<img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg">
+		<span>{{ slide.title }}</span>
+		<p>{{ slide.first_text }}</p>
+		<p>{{ slide.second_text }}</p>
+		<img :src="'../' + slide.image.path">
 	</div>
 </template>
 <script>
@@ -15,6 +15,10 @@ export default {
 	props: {
 		invisible_slide: {
 			type: Boolean,
+			required: true
+		},
+		slide: {
+			type: Object,
 			required: true
 		}
 	},

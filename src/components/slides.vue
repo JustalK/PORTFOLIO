@@ -5,6 +5,7 @@
 			<h2>{{ title }}</h2>
 			<components_slide
 				:invisible_slide="invisible_slide"
+				:slide="slide"
 				@change_slide="change_slide" />
 		</a>
 	</div>
@@ -19,6 +20,10 @@ export default {
 	props: {
 		title: {
 			type: String,
+			required: true
+		},
+		slide: {
+			type: Object,
 			required: true
 		},
 		invisible_slide: {

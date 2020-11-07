@@ -18,6 +18,7 @@
 			<components_slides
 				:invisible_slide="invisible_slide"
 				:title="title"
+				:slide="slide"
 				@change_slide="change_slide" />
 			<components_pubs
 				:invisible="invisible" />
@@ -51,7 +52,9 @@ export default {
 			invisible_text: true,
 			invisible_slide: true,
 			description: '',
-			slide: 0,
+			slide: {},
+			all_slides: [],
+			actual_slide: 0,
 			are_projects_loading: false,
 			help: 'Click on the image under for changing slide.'
 		};
@@ -61,7 +64,6 @@ export default {
 		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
 		const slug = this.$route.params.slug;
 		const project = await this.get_project_by_slug(slug);
-		console.log(project);
 		this.update_page(project);
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
@@ -86,12 +88,15 @@ export default {
 		update_tags_selected(tags_selected) {
 			this.tags_selected = tags_selected;
 		},
-		update_slide(slide) {
-			this.slide = slide;
-		},
 		update_page(page) {
 			this.description = page.long_description;
 			this.title = page.title;
+			this.all_slides = page.slides;
+			this.slide = page.slides !== undefined ? page.slides[0] : {};
+		},
+		next_slide() {
+			this.actual_slide++;
+			this.slide = this.all_slides[this.actual_slide%this.all_slides.length];
 		},
 		back() {
 			utils.search_add_class_to_element('#PROJECT', 'unmounted');
@@ -107,6 +112,9 @@ export default {
 		},
 		change_slide() {
 			this.invisible_slide = true;
+			setTimeout(async () => {
+				this.next_slide();
+			}, 500);
 			setTimeout(async () => {
 				this.invisible_slide = false;
 			}, 1000);

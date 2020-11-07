@@ -20,7 +20,7 @@ module.exports = {
 	get_one_populated: (find) => {
 		return model
 			.findOne(find)
-			.populate('slides')
+			.populate({path: 'slides', populate: {path: 'image'}})
 			.populate('images');
 	},
 	get_count: (find) => {
