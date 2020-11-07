@@ -22,7 +22,7 @@ export default {
 		return axios_call('http://localhost:8080/api/articles/one', {params: {id: id}});
 	},
 	get_project_by_slug: async (slug) => {
-		return axios_call('http://localhost:8080/api/articles/one', {params: {slug: slug}});
+		return axios_call('http://localhost:8080/api/articles/one', {params: {slug: slug, populate: true}});
 	},
     get_tags: async () => {
 		return axios_call('http://localhost:8080/api/tags');

@@ -61,6 +61,7 @@ export default {
 		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
 		const slug = this.$route.params.slug;
 		const project = await this.get_project_by_slug(slug);
+		console.log(project);
 		this.update_page(project);
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {

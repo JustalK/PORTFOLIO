@@ -17,6 +17,12 @@ module.exports = {
 			.findOne(find)
 			.populate('images');
 	},
+	get_one_populated: (find) => {
+		return model
+			.findOne(find)
+			.populate('slides')
+			.populate('images');
+	},
 	get_count: (find) => {
 		return model
 			.countDocuments(find);

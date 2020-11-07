@@ -3,47 +3,28 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const filename = path.basename(__filename, '.js');
-require('./images');
-require('./slides');
 
 const schema = new mongoose.Schema(
 	{
 		title: {
 			type: String,
+			lowercase: true,
 			trim: true,
 			require: true
 		},
-		slug: {
-			type: String,
-			require: true
-		},
-		short_description: {
+		first_text: {
 			type: String,
 			trim: true,
 			require: true
 		},
-		long_description: {
+		second_text: {
 			type: String,
-			trim: true
+			trim: true,
+			require: true
 		},
-		tags: [ {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'tags'
-		} ],
-		images: [ {
+		image: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'images'
-		} ],
-		background_image: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'images'
-		},
-		slides: [{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'slides'
-		}],
-		order: {
-			type: Number
 		}
 	},
 	{

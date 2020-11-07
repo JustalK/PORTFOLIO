@@ -28,7 +28,8 @@ routes.route('/one').get(async (request, response) => {
 	const params = {};
 	utils.add_id_filter(params, '_id', request.query.id);
 	utils.add_slug_filter(params, 'slug', request.query.slug);
-	const datas = await services.get_one(params);
+	const populate = request.query.populate === 1 ? true : false;
+	const datas = await services.get_one(params, populate);
 	response.json(datas);
 });
 
