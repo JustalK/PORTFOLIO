@@ -13,6 +13,7 @@
 <script>
 import slide from '../components/slide';
 import api from '../services/api';
+import utils from '../helper/utils.js';
 
 export default {
 	components: {
@@ -59,8 +60,12 @@ export default {
 			this.$emit('change_slide');
 		},
 		set_background_project(background_image) {
+			if (background_image.path === undefined) {
+				return null;
+			}
+
 			return {
-				'background-image': 'url(\'.' + background_image.path + '\')'
+				'background-image': 'url(\'' + utils.absolute_path_from_relative(background_image.path) + '\')'
 			};
 		},
 		async get_slide_by_id(id) {

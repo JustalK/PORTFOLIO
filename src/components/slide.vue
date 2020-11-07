@@ -6,10 +6,11 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<img :src="slide_image">
+		<img :src="slide_image()">
 	</div>
 </template>
 <script>
+import utils from '../helper/utils.js';
 
 export default {
 	props: {
@@ -32,7 +33,7 @@ export default {
 				return '';
 			}
 
-			return '../' + this.slide.image.path;
+			return utils.absolute_path_from_relative(this.slide.image.path);
 		}
 	}
 };

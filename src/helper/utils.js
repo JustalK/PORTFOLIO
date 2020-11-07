@@ -43,5 +43,8 @@ module.exports = {
 	},
 	is_array_empty(array) {
 		return array === null || array.length === 0;
+	},
+	absolute_path_from_relative(path) {
+		return process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT + '/' + path;
 	}
 }
