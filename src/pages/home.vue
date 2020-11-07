@@ -1,10 +1,8 @@
 <template>
 	<div
 		id="HOME">
-		<a
-			class="github"
-			href="https://github.com/JustalK/PORTFOLIO"
-			target="_blank" />
+		<components_github
+			:invisible="invisible" />
 		<div
 			:class="{active:goZoom}">
 			<components_introduction_side
@@ -22,18 +20,21 @@
 </template>
 <script>
 import introduction_side from '../components/introduction/introduction_side';
+import github from '../components/main/github';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
 export default {
 	components: {
-		components_introduction_side: introduction_side
+		components_introduction_side: introduction_side,
+		components_github: github
 	},
 	data: () => {
 		return {
 			go_open_door: false,
 			goZoom: false,
 			props_introduction: {},
+			invisible: true,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'articles', side: 'right'}
@@ -43,11 +44,15 @@ export default {
 	async mounted() {
 		await this.get_my_identity();
 		utils.add_class_to_element_delay('#HOME', 'mounted', 200);
+		setTimeout(() => {
+			this.invisible = false;
+		}, 1000);
 	},
 	methods: {
 		zoom() {
 			this.goZoom = true;
 			this.go_open_door = true;
+			this.invisible = true;
 			utils.add_class_to_element_delay('#HOME', 'unmounted', 0);
 		},
 		async get_my_identity() {

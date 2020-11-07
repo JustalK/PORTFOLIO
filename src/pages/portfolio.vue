@@ -1,6 +1,8 @@
 <template>
 	<div
 		id="PORTFOLIO">
+		<components_github
+			:invisible="invisible" />
 		<div>
 			<components_back
 				:invisible="invisible"
@@ -27,6 +29,7 @@
 <script>
 import informations from '../components/informations';
 import pubs from '../components/pubs';
+import github from '../components/main/github';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
@@ -37,7 +40,8 @@ export default {
 		components_informations: informations,
 		components_sliders: sliders,
 		components_pubs: pubs,
-		components_back: back
+		components_back: back,
+		components_github: github
 	},
 	data: () => {
 		return {

@@ -1,6 +1,8 @@
 <template>
 	<div
 		id="PROJECT">
+		<components_github
+			:invisible="invisible" />
 		<div>
 			<components_back
 				:invisible="invisible"
@@ -22,6 +24,7 @@
 </template>
 <script>
 import informations from '../components/informations';
+import github from '../components/main/github';
 import slide from '../components/slide';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
@@ -33,7 +36,8 @@ export default {
 		components_informations: informations,
 		components_pubs: pubs,
 		components_back: back,
-		components_slide: slide
+		components_slide: slide,
+		components_github: github
 	},
 	data: () => {
 		return {
