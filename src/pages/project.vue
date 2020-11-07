@@ -14,18 +14,20 @@
 				:title="title"
 				:invisible="invisible"
 				:invisible_text="invisible_text"
-				:help="help"
-				@filter="filter" />
-			<components_slide
-				:title="title" />
-			<components_pubs />
+				:help="help" />
+			<components_slides
+				:invisible_slide="invisible_slide"
+				:title="title"
+				@change_slide="change_slide" />
+			<components_pubs
+				:invisible="invisible" />
 		</div>
 	</div>
 </template>
 <script>
 import informations from '../components/informations';
 import github from '../components/main/github';
-import slide from '../components/slide';
+import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
 import api from '../services/api';
@@ -36,7 +38,7 @@ export default {
 		components_informations: informations,
 		components_pubs: pubs,
 		components_back: back,
-		components_slide: slide,
+		components_slides: slides,
 		components_github: github
 	},
 	data: () => {
@@ -47,6 +49,7 @@ export default {
 			projects: [],
 			invisible: false,
 			invisible_text: true,
+			invisible_slide: true,
 			description: '',
 			slide: 0,
 			are_projects_loading: false,
@@ -66,23 +69,15 @@ export default {
 		}
 		setTimeout(() => {
 			this.invisible_text = false;
+			this.invisible_slide = false;
 		}, 200);
 	},
 	methods: {
 		async get_all_tags() {
 			return api.get_tags();
 		},
-		async get_all_projects_with_tags(tags) {
-			this.update_slide(0);
-			const projects = await api.get_projects_by_page(this.slide, tags);
-			this.update_projects(projects);
-		},
 		async get_project_by_slug(slug) {
 			return api.get_project_by_slug(slug);
-		},
-		async get_page(name) {
-			const page = await api.get_pages(name);
-			this.update_page(page[0]);
 		},
 		update_tags(tags) {
 			this.tags = tags;
@@ -92,9 +87,6 @@ export default {
 		},
 		update_slide(slide) {
 			this.slide = slide;
-		},
-		update_projects(projects) {
-			this.projects = projects;
 		},
 		update_page(page) {
 			this.description = page.long_description;
@@ -107,38 +99,16 @@ export default {
 				this.$router.push({ name: 'portfolio' });
 			},2000);
 		},
-		async filter(tags_selected) {
-			this.projects_are_loading();
-			this.update_tags_selected(tags_selected);
-			setTimeout(async () => {
-				await this.get_all_projects_with_tags(this.tags_selected);
-			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
-		},
-		projects_are_loading() {
-			this.are_projects_loading = true;
-		},
-		projects_are_not_loading() {
-			this.are_projects_loading = false;
-		},
-		change_page(direction) {
-			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
-			this.update_slide(next_slide);
-			this.projects_are_loading();
-			setTimeout(async () => {
-				const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
-				this.update_projects(projects);
-			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
-		},
 		async project(id) {
 			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
+		},
+		change_slide() {
+			this.invisible_slide = true;
+			setTimeout(async () => {
+				this.invisible_slide = false;
+			}, 1000);
 		}
 	}
 };

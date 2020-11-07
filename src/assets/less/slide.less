@@ -1,28 +1,74 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
-#SLIDE {
-	height: 600px;
-	min-height: 600px;
-	background: @background-bloc-3;
-	position: relative;
-	box-shadow: 10px 10px #000;
+.slide {
+	height: 100%;
 
-	& h2 {
-		font-family: 'Lato-Bold', sans-serif;
+	& span {
 		position: absolute;
-		width: 100%;
-		top: 0;
-		font-size: 14px;
-		color: @text-color-white;
-		background: @text-color-h2;
-		height: 40px;
-		pointer-events: none;
-		z-index: @LAYER-COUCHE-2;
-		overflow: hidden;
-		line-height: 40px;
+		left: 15%;
+		top: 15%;
+		width: 25%;
+		background: red;
+		line-height: 50px;
+		border: 1px solid black;
+		box-shadow: 3px 3px #000;
 		text-align: center;
-		margin: 0;
-		text-transform: uppercase;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	& p:nth-child(2) {
+		position: absolute;
+		left: 10%;
+		top: 35%;
+		width: 20%;
+		background: red;
+		padding: 20px 30px 0;
+		min-height: 40%;
+		border: 1px solid black;
+		box-shadow: 3px 3px #000;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	& p:nth-child(3) {
+		position: absolute;
+		right: 20%;
+		bottom: 5%;
+		width: 30%;
+		background: red;
+		padding: 20px 30px 0;
+		min-height: 20%;
+		border: 1px solid black;
+		box-shadow: 3px 3px #000;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	& img {
+		position: absolute;
+		right: 10%;
+		width: 400px;
+		height: 250px;
+		top: 20%;
+		border: 1px solid black;
+		box-shadow: 3px 3px #000;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	&.invisible {
+		& span {
+			transform: translateY(-300%);
+		}
+
+		& p:nth-child(2) {
+			transform: translateX(-200%);
+		}
+
+		& img {
+			transform: translateX(200%);
+		}
+
+		& p:nth-child(3) {
+			transform: translateY(200%);
+		}
 	}
 }
