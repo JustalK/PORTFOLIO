@@ -6,9 +6,9 @@ module.exports = dbs => ({
 	},
 	get_one: async (params, populate) => {
 		if (populate) {
-			return dbs.get_one(params);
-		} else {
 			return dbs.get_one_populated(params);
+		} else {
+			return dbs.get_one(params);
 		}
 	},
 	get_count: async (params) => {

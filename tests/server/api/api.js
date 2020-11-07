@@ -71,7 +71,7 @@ test('[STATIC] Testing the api articles with params', async t => {
 	t.not(datas[1]._id, undefined);
 });
 
-test('[STATIC] Testing the api one articles with params', async t => {
+test('[STATIC] Testing the api one articles with params slug', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/articles/one?slug=portfolio')
 			.end((err, response) => {
@@ -89,6 +89,38 @@ test('[STATIC] Testing the api one articles with params', async t => {
 	t.not(datas.long_description, undefined);
 	t.not(datas.order, undefined);
 	t.not(datas._id, undefined);
+});
+
+test('[STATIC] Testing the api one articles with params slug and populate', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/one?slug=portfolio&populate=1')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	console.log('TO DO HERE WHEN DATABASE FILLED UP - CHECK POPULATE');
+	t.is(typeof datas, 'object');
+	t.not(datas._id, undefined);
+	t.not(datas.title, undefined);
+	t.not(datas.slug, undefined);
+	t.not(datas.short_description, undefined);
+	t.not(datas.long_description, undefined);
+	t.not(datas.order, undefined);
+	t.not(datas._id, undefined);
+});
+
+test('[STATIC] Testing the api one articles without params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/one')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 400);
 });
 
 test('[STATIC] Testing the api all tags without params', async t => {
@@ -141,4 +173,33 @@ test('[STATIC] Testing the api pages with params', async t => {
 	t.is(datas[0].name, 'portfolio');
 	t.is(datas[0].title, 'Work');
 	t.not(datas[0].description, undefined);
+});
+
+test('[STATIC] Testing the api slides with params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/slides/one?id=5f76018c9b16e910efed5000')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const data = response.body;
+	t.is(typeof data, 'object');
+	t.not(data._id, undefined);
+	t.not(data.title, undefined);
+	t.not(data.first_text, undefined);
+	t.not(data.second_text, undefined);
+	t.not(data.image, undefined);
+});
+
+test('[STATIC] Testing the api slides with no params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/slides/one')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 400);
 });
