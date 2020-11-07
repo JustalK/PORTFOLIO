@@ -12,6 +12,7 @@
 </template>
 <script>
 import slide from '../components/slide';
+import api from '../services/api';
 
 export default {
 	components: {
@@ -22,8 +23,8 @@ export default {
 			type: String,
 			required: true
 		},
-		slide: {
-			type: Object,
+		all_slides: {
+			type: Array,
 			required: true
 		},
 		background_image: {
@@ -36,15 +37,43 @@ export default {
 		}
 	},
 	emits: ['change_slide'],
+	data: () => {
+		return {
+			actual_index_slide: 0,
+			slide: {}
+		};
+	},
+	watch: {
+		async all_slides(slides) {
+			const slide_obj = await this.get_slide_by_id(slides[0]);
+			this.update_slide(slide_obj);
+		}
+	},
 	methods: {
 		change_slide() {
+			setTimeout(async () => {
+				const index_slide = this.next_index_slide();
+				const slide_obj = await this.get_slide_by_id(index_slide);
+				this.update_slide(slide_obj, this.actual_index_slide);
+			}, 500);
 			this.$emit('change_slide');
 		},
 		set_background_project(background_image) {
 			return {
 				'background-image': 'url(\'.' + background_image.path + '\')'
 			};
-		}
+		},
+		async get_slide_by_id(id) {
+			return api.get_slide_by_id(id);
+		},
+		next_index_slide() {
+			this.actual_index_slide++;
+			return this.all_slides[this.actual_index_slide%this.all_slides.length];
+		},
+		update_slide(slide, index = 0) {
+			this.slide = slide;
+			this.actual_index_slide = index;
+		},
 	}
 };
 </script>

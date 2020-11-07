@@ -6,7 +6,7 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<img :src="'../' + slide.image.path">
+		<img :src="slide_image">
 	</div>
 </template>
 <script>
@@ -26,6 +26,13 @@ export default {
 	methods: {
 		change_slide() {
 			this.$emit('change_slide');
+		},
+		slide_image() {
+			if (this.slide.image === undefined) {
+				return '';
+			}
+
+			return '../' + this.slide.image.path;
 		}
 	}
 };

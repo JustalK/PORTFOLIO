@@ -27,7 +27,7 @@ routes.route('/one').get(async (request, response) => {
 	const params = {};
 	utils.add_id_filter(params, '_id', request.query.id);
 	utils.add_slug_filter(params, 'slug', request.query.slug);
-	const populate = request.query.populate == "1" ? true : false;
+	const populate = request.query.populate == '1' ? true : false;
 	if(Object.keys(params).length === 0) {
 		response.status(constants.BAD_REQUEST_CODE).json({message: constants.BAD_REQUEST_MESSAGE});
 	} else {

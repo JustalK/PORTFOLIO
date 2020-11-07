@@ -19,7 +19,7 @@
 				:invisible_slide="invisible_slide"
 				:title="title"
 				:background_image="background_image"
-				:slide="slide"
+				:all_slides="all_slides"
 				@change_slide="change_slide" />
 			<components_pubs
 				:invisible="invisible" />
@@ -48,15 +48,12 @@ export default {
 			title: '',
 			tags: [],
 			tags_selected: [],
-			projects: [],
 			invisible: false,
 			invisible_text: true,
 			invisible_slide: true,
 			description: '',
 			background_image: {},
-			slide: {},
 			all_slides: [],
-			actual_slide: 0,
 			are_projects_loading: false,
 			help: 'Click on the image under for changing slide.'
 		};
@@ -97,10 +94,6 @@ export default {
 			this.all_slides = page.slides;
 			this.slide = page.slides !== undefined ? page.slides[0] : {};
 		},
-		next_slide() {
-			this.actual_slide++;
-			this.slide = this.all_slides[this.actual_slide%this.all_slides.length];
-		},
 		back() {
 			utils.search_add_class_to_element('#PROJECT', 'unmounted');
 			utils.search_add_class_to_element('#PROJECT', 'invisible');
@@ -115,9 +108,6 @@ export default {
 		},
 		change_slide() {
 			this.invisible_slide = true;
-			setTimeout(async () => {
-				this.next_slide();
-			}, 500);
 			setTimeout(async () => {
 				this.invisible_slide = false;
 			}, 1000);
