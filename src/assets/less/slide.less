@@ -100,3 +100,38 @@
 		}
 	}
 }
+
+@media screen and (max-width: @PHONE_MQ) {
+	.slide {
+		& img {
+			right: 5%;
+			width: 80%;
+			top: 21%;
+			height: 200px;
+			object-fit: cover;
+		}
+
+		& span {
+			left: 5%;
+			top: 10%;
+			width: 80%;
+			.font-size(1.4);
+		}
+
+		& p:nth-child(2) {
+			left: 5%;
+			top: 49%;
+			width: 35%;
+			padding: 15px;
+			.font-size(1.4);
+		}
+
+		& p:nth-child(3) {
+			right: 5%;
+			bottom: 15%;
+			padding: 15px;
+			width: 40%;
+			.font-size(1.4);
+		}
+	}
+}

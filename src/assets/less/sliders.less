@@ -1,12 +1,12 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
-.position-to-corner(@index, @pos_x, @pos_y, @delay) {
+.position-to-corner(@index, @pos_x, @pos_y, @delay, @x, @y) {
 	&:nth-child(@{index}) {
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) @delay);
 
-		@{pos_x}: 0;
-		@{pos_y}: 0;
+		@{pos_x}: @x;
+		@{pos_y}: @y;
 	}
 }
 
@@ -127,10 +127,10 @@
 		transform: translateY(100%);
 		opacity: 0;
 
-		.position-to-corner(1, top, left, 0s);
-		.position-to-corner(2, top, right, 0.25s);
-		.position-to-corner(3, bottom, left, 0.5s);
-		.position-to-corner(4, bottom, right, 0.75s);
+		.position-to-corner(1, top, left, 0s, 0, 0);
+		.position-to-corner(2, top, right, 0.25s, 0, 0);
+		.position-to-corner(3, bottom, left, 0.5s, 0, 0);
+		.position-to-corner(4, bottom, right, 0.75s, 0, 0);
 
 		& a {
 			overflow: hidden;
@@ -274,6 +274,49 @@
 				width: 100%;
 				height: 100%;
 			}
+		}
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	#PROJECTS {
+		height: 860px;
+		margin-bottom: 120px;
+
+		& ul {
+			padding: 0;
+		}
+
+		& li {
+			height: 200px;
+			position: absolute;
+			float: initial;
+			width: 100%;
+
+			.position-to-corner(1, top, left, 0s, 0, 0);
+			.position-to-corner(2, top, right, 0.25s, 220px, 0);
+			.position-to-corner(3, bottom, left, 0.5s, 220px, 0);
+			.position-to-corner(4, bottom, right, 0.75s, 0, 0);
+
+			& i {
+				display: none;
+			}
+
+			& h2 {
+				.font-size(1.2);
+			}
+		}
+
+		& .previous {
+			left: 40px;
+			bottom: -120px;
+			height: 100px;
+		}
+
+		& .next {
+			right: 40px;
+			bottom: -120px;
+			height: 100px;
 		}
 	}
 }

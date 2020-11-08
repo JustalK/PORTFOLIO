@@ -28,3 +28,23 @@
 		font-style: italic;
 	}
 }
+
+@media screen and (max-width: @PHONE_MQ) {
+	.informations {
+		& > h1 {
+			padding-top: 135px;
+			text-align: center;
+			height: initial;
+			.font-size(6);
+		}
+
+		& span:nth-child(2) {
+			height: initial;
+			.font-size(2);
+		}
+
+		& span:nth-child(4) {
+			.font-size(1.4);
+		}
+	}
+}

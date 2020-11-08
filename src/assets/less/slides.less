@@ -57,3 +57,17 @@
 		text-transform: uppercase;
 	}
 }
+
+@media screen and (max-width: @PHONE_MQ) {
+	#SLIDE {
+		height: 860px;
+
+		& i {
+			display: none;
+		}
+
+		& h2 {
+			.font-size(1.2);
+		}
+	}
+}
