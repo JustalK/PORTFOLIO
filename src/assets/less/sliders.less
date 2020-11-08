@@ -48,10 +48,10 @@
 		opacity: 0;
 		top: 50%;
 		@{pos_y}: 0;
-		font-size: 14px;
 		line-height: 18px;
 		color: @background-bloc-0;
 		user-select: none;
+		.font-size(1.2);
 	}
 
 	em::before,
@@ -186,12 +186,12 @@
 					transform: translateY(-50%);
 					display: block;
 					color: white;
-					font-size: 1.1em;
 					width: 80%;
 					margin: 0 10%;
 					position: absolute;
 					top: calc(50% + 20px);
 					text-shadow: 0 0 8px #000;
+					.font-size(1.6);
 				}
 			}
 
@@ -227,7 +227,6 @@
 		position: absolute;
 		width: 100%;
 		top: 0;
-		font-size: 14px;
 		color: @text-color-white;
 		background: @text-color-h2;
 		height: 40px;
@@ -240,6 +239,7 @@
 		text-align: center;
 		margin: 0;
 		text-transform: uppercase;
+		.font-size(1.2);
 	}
 }
 
