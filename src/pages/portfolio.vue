@@ -1,6 +1,7 @@
 <template>
 	<div
-		id="PORTFOLIO">
+		id="PORTFOLIO"
+		ref="portfolio">
 		<components_github
 			:invisible="invisible" />
 		<div>
@@ -56,16 +57,18 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
-	async mounted() {
-		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
-		this.get_page(this.$route.name);
+	async created() {
 		const tags = await this.get_all_tags();
 		if (tags !== null && tags.length > 0) {
 			this.update_tags(tags);
 			this.update_tags_selected([tags[0]._id]);
-			this.get_all_projects_with_tags(tags[0]._id);
+			await this.get_all_projects_with_tags(tags[0]._id);
 		}
+	},
+	async mounted() {
+		await this.get_page(this.$route.name);
 		setTimeout(() => {
+			utils.add_class_to_element(this.$refs.portfolio, 'mounted');
 			this.invisible = false;
 		}, 200);
 	},
@@ -112,10 +115,9 @@ export default {
 			this.update_tags_selected(tags_selected);
 			setTimeout(async () => {
 				await this.get_all_projects_with_tags(this.tags_selected);
+				await this.$nextTick();
+				setTimeout(this.projects_are_not_loading, 1);
 			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
 		},
 		projects_are_loading() {
 			this.are_projects_loading = true;

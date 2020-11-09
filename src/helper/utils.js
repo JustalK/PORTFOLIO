@@ -19,9 +19,9 @@ module.exports = {
 	remove_class_to_elements_increase(selector, newclass, min, increase) {
 		module.exports.class_to_elements_increase(selector, newclass, min, increase, module.exports.remove_class_to_element);
 	},
-	add_class_to_element_delay(selector, newclass, delay) {
+	add_class_to_element_delay(element, newclass, delay) {
 		setTimeout(() => {
-			module.exports.search_add_class_to_element(selector, newclass);
+			module.exports.add_class_to_element(element, newclass);
 		}, delay);
 	},
 	search_add_class_to_element(selector, newclass) {

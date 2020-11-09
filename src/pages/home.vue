@@ -1,10 +1,11 @@
 <template>
 	<div
-		id="HOME">
+		id="HOME"
+		ref="home">
 		<components_github
 			:invisible="invisible" />
 		<div
-			:class="{active:goZoom}">
+			:class="{active: go_zoom}">
 			<components_introduction_side
 				:props_link="props_links[0]"
 				:props_introduction="props_introduction"
@@ -32,7 +33,7 @@ export default {
 	data: () => {
 		return {
 			go_open_door: false,
-			goZoom: false,
+			go_zoom: false,
 			props_introduction: {},
 			invisible: true,
 			props_links: [
@@ -43,21 +44,20 @@ export default {
 	},
 	async mounted() {
 		await this.get_my_identity();
-		utils.add_class_to_element_delay('#HOME', 'mounted', 200);
+		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
 		setTimeout(() => {
 			this.invisible = false;
 		}, 1000);
 	},
 	methods: {
 		zoom() {
-			this.goZoom = true;
+			this.go_zoom = true;
 			this.go_open_door = true;
 			this.invisible = true;
-			utils.add_class_to_element_delay('#HOME', 'unmounted', 0);
+			utils.add_class_to_element(this.$refs.home, 'unmounted');
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
-			console.log(my_identity);
 			this.update_introduction(my_identity.fullname, my_identity.email);
 		},
 		update_introduction(name, email) {
