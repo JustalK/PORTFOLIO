@@ -28,7 +28,7 @@ module.exports = [
         title: "Altantic Grains App",
         slug: "atlantic-grains",
         short_description: "An applications for managing clients, sales, processes, trucks, stocks and deliveries.",
-        long_description: "lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq lq",
+        long_description: "A complexe React application for android and Iphone coupled with a Node.js for the backend connected to MongoDB and MS SQL Server.",
 		tags: [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5874"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),

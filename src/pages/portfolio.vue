@@ -130,10 +130,10 @@ export default {
 			setTimeout(async () => {
 				const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
 				this.update_projects(projects);
+				this.$nextTick(() => {
+					this.projects_are_not_loading();
+				});
 			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
 		},
 		async project(id) {
 			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
