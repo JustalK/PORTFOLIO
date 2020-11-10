@@ -59,34 +59,37 @@ export default {
 	},
 	async created() {
 		const tags = await this.get_all_tags();
+		const page = await this.get_page(this.$route.name);
+
 		if (tags !== null && tags.length > 0) {
+			const projects = await this.get_all_projects_with_tags(tags[0]._id);
 			this.update_tags(tags);
 			this.update_tags_selected([tags[0]._id]);
-			await this.get_all_projects_with_tags(tags[0]._id);
+			this.update_projects(projects);
 		}
-	},
-	async mounted() {
-		await this.get_page(this.$route.name);
+
+		if (page !== null) {
+			this.update_page(page[0]);
+		}
 		setTimeout(() => {
-			utils.add_class_to_element(this.$refs.portfolio, 'mounted');
 			this.invisible = false;
-		}, 200);
+		}, 1);
+	},
+	mounted() {
+		utils.add_class_to_element(this.$refs.portfolio, 'mounted');
 	},
 	methods: {
 		async get_all_tags() {
 			return api.get_tags();
 		},
+		async get_page(name) {
+			return api.get_pages(name);
+		},
 		async get_all_projects_with_tags(tags) {
-			this.update_slide(0);
-			const projects = await api.get_projects_by_page(this.slide, tags);
-			this.update_projects(projects);
+			return api.get_projects_by_page(this.slide, tags);
 		},
 		async get_projects_by_id(id) {
 			return api.get_project_by_id(id);
-		},
-		async get_page(name) {
-			const page = await api.get_pages(name);
-			this.update_page(page[0]);
 		},
 		update_tags(tags) {
 			this.tags = tags;
@@ -114,7 +117,9 @@ export default {
 			this.projects_are_loading();
 			this.update_tags_selected(tags_selected);
 			setTimeout(async () => {
-				await this.get_all_projects_with_tags(this.tags_selected);
+				this.update_slide(0);
+				const projects = await this.get_all_projects_with_tags(this.tags_selected);
+				this.update_projects(projects);
 				await this.$nextTick();
 				setTimeout(this.projects_are_not_loading, 1);
 			}, 1000);

@@ -1,10 +1,10 @@
 <template>
-	<ul class="tags">
+	<ul
+		class="tags">
 		<li
 			v-for="tag in tags"
 			:key="tag.id"
-			class="tags-tag"
-			:class="{invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
+			:class="{'tags-tag': true, invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
 			<span> {{ tag.name }} </span>

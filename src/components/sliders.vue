@@ -14,7 +14,7 @@
 				v-for="p in projects"
 				:key="p.id"
 				:data-id="p.id"
-				:class="{filtered: are_projects_loading}">
+				:class="{filtered: are_projects_loading, invisible: invisible}">
 				<a
 					:style="set_background_project(p)"
 					@click.stop="project(p.id)">

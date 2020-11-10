@@ -124,13 +124,18 @@
 		width: 48%;
 		height: 280px;
 		position: absolute;
-		transform: translateY(100%);
-		opacity: 0;
+		transform: initial;
+		opacity: 1;
 
 		.position-to-corner(1, top, left, 0s, 0, 0);
 		.position-to-corner(2, top, right, 0.25s, 0, 0);
 		.position-to-corner(3, bottom, left, 0.5s, 0, 0);
 		.position-to-corner(4, bottom, right, 0.75s, 0, 0);
+
+		&.invisible {
+			transform: translateY(100%);
+			opacity: 0;
+		}
 
 		& a {
 			overflow: hidden;
@@ -246,9 +251,6 @@
 .mounted {
 	& #PROJECTS {
 		& li {
-			transform: initial;
-			opacity: 1;
-
 			&.filtered {
 				opacity: 0;
 			}
