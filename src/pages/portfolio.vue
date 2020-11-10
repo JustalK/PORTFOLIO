@@ -116,34 +116,30 @@ export default {
 			},1000);
 		},
 		async filter(tags_selected) {
-			this.projects_are_loading();
-			this.update_tags_selected(tags_selected);
-			setTimeout(async () => {
-				this.update_slide(0);
-				const projects = await this.get_all_projects_with_tags(this.tags_selected);
-				this.update_projects(projects);
-				await this.$nextTick();
-				setTimeout(this.projects_are_not_loading, 1);
-			}, 1000);
-		},
-		projects_are_loading() {
 			this.are_projects_loading = true;
+			this.update_tags_selected(tags_selected);
+			await this.$nextTick();
+			const projects = await this.get_all_projects_with_tags(this.tags_selected);
+			setTimeout(() => {
+				this.update_slide(0);
+				this.update_projects(projects);
+			}, 1000);
+			setTimeout(() => {
+				this.are_projects_loading = false;
+			}, 1050);
 		},
-		projects_are_not_loading() {
-			this.are_projects_loading = false;
-		},
-		change_page(direction) {
+		async change_page(direction) {
+			this.are_projects_loading = true;
 			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
 			this.update_slide(next_slide);
-			this.projects_are_loading();
-			setTimeout(async () => {
-				const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+			await this.$nextTick();
+			const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+			setTimeout(() => {
 				this.update_projects(projects);
-				await this.$nextTick();
-				setTimeout(async () => {
-					this.projects_are_not_loading();
-				}, 250);
 			}, 1000);
+			setTimeout(() => {
+				this.are_projects_loading = false;
+			}, 1050);
 		},
 		async project(id) {
 			this.unmounted = true;

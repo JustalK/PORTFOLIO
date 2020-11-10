@@ -3,7 +3,7 @@
 		id="PROJECTS"
 		class="projects">
 		<div
-			:class="{previous: true, invisible: invisible}"
+			:class="{previous: true}"
 			@click.stop="change_page('previous')">
 			<span>previous</span>
 			<em />
