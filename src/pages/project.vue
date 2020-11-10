@@ -1,6 +1,7 @@
 <template>
 	<div
-		id="PROJECT">
+		id="PROJECT"
+		ref="project">
 		<components_github
 			:invisible="invisible" />
 		<div>
@@ -12,6 +13,7 @@
 				:tags="tags"
 				:tags_selected="tags_selected"
 				:title="title"
+				:unmounted="unmounted"
 				:invisible="invisible"
 				:invisible_text="invisible_text"
 				:help="help" />
@@ -45,35 +47,40 @@ export default {
 	},
 	data: () => {
 		return {
-			title: '',
+			title: 'Loading...',
 			tags: [],
 			tags_selected: [],
 			invisible: false,
 			invisible_text: true,
 			invisible_slide: true,
-			description: '',
+			unmounted: false,
+			description: 'Loading...',
 			background_image: {},
 			all_slides: [],
 			are_projects_loading: false,
 			help: 'Click on the image under for changing slide.'
 		};
 	},
-	async mounted() {
-		utils.add_class_to_element_delay('#PROJECT', 'mounted', 200);
-		utils.add_class_to_elements_increase('.text', 'mounted', 200, 200);
+	async created() {
+		const tags = await this.get_all_tags();
 		const slug = this.$route.params.slug;
 		const project = await this.get_project_by_slug(slug);
+
 		this.update_page(project);
 		this.background_image = project.background_image;
-		const tags = await this.get_all_tags();
+
 		if (tags !== null && tags.length > 0) {
 			this.update_tags(tags);
 			this.update_tags_selected(project.tags);
 		}
+		await this.$nextTick();
 		setTimeout(() => {
 			this.invisible_text = false;
 			this.invisible_slide = false;
-		}, 200);
+		}, 1);
+	},
+	async mounted() {
+		utils.add_class_to_element_delay(this.$refs.project, 'mounted', 200);
 	},
 	methods: {
 		async get_all_tags() {
@@ -95,14 +102,14 @@ export default {
 			this.slide = page.slides !== undefined ? page.slides[0] : {};
 		},
 		back() {
-			utils.search_add_class_to_element('#PROJECT', 'unmounted');
-			utils.search_add_class_to_element('#PROJECT', 'invisible');
+			utils.add_class_to_element(this.$refs.project, 'unmounted');
+			utils.add_class_to_element(this.$refs.project, 'invisible');
 			setTimeout(() => {
-				this.$router.push({ name: 'portfolio' });
+				this.$router.push({name: 'portfolio'});
 			},2000);
 		},
 		async project(id) {
-			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
+			this.unmounted = true;
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 		},

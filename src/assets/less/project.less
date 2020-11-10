@@ -9,7 +9,7 @@
 
 	& > div {
 		margin: auto;
-		max-width: 1000px;
+		max-width: 1200px;
 		width: 100%;
 		height: 100%;
 		position: relative;
@@ -26,6 +26,36 @@
 
 	&.invisible {
 		opacity: 0;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1800) {
+	#PROJECT > div {
+		max-width: 1200px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1500) {
+	#PROJECT > div {
+		max-width: 1000px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1400) {
+	#PROJECT > div {
+		max-width: 900px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1200) {
+	#PROJECT > div {
+		max-width: 800px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1100) {
+	#PROJECT > div {
+		max-width: 600px;
 	}
 }
 

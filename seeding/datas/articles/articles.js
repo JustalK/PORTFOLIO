@@ -63,6 +63,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00001")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e910daaa2001"),
+			mongoose.Types.ObjectId("5f76018c9b16e910daaa2002")
+		],
         order: 1
     },
 	{
@@ -89,6 +93,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00004")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e910daaa3001"),
+			mongoose.Types.ObjectId("5f76018c9b16e910daaa3002")
+		],
         order: 2
     },
     {
