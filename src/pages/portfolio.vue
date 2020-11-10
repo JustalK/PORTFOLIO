@@ -15,6 +15,7 @@
 				:title="title"
 				:invisible="invisible"
 				:invisible_text="invisible"
+				:unmounted="unmounted"
 				:help="help"
 				@filter="filter" />
 			<components_sliders
@@ -48,6 +49,7 @@ export default {
 		return {
 			title: '',
 			invisible: true,
+			unmounted: false,
 			tags: [],
 			tags_selected: [],
 			projects: [],
@@ -144,13 +146,12 @@ export default {
 			}, 1000);
 		},
 		async project(id) {
-			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
+			this.unmounted = true;
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
-				console.log(project.slug);
 				this.$router.push({ name: 'project', params: {slug: project.slug}});
-			},2000);
+			}, 2000);
 		}
 	}
 };

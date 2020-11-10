@@ -1,6 +1,6 @@
 module.exports = {
-	class_to_elements_increase(selector, newclass, min, increase, fc) {
-		const elements = [...document.querySelectorAll(selector)];
+	class_to_elements_increase(ref_elements, newclass, min, increase, fc) {
+		const elements = [...ref_elements];
 		elements.map((element, index) => {
 			setTimeout(() => {
 				fc(element, newclass);
@@ -10,8 +10,8 @@ module.exports = {
 	add_class_to_elements(selector, newclass) {
 		module.exports.add_class_to_elements_increase(selector, newclass, 0, 0);
 	},
-	add_class_to_elements_increase(selector, newclass, min, increase) {
-		module.exports.class_to_elements_increase(selector, newclass, min, increase, module.exports.add_class_to_element);
+	add_class_to_elements_increase(ref_elements, newclass, min, increase) {
+		module.exports.class_to_elements_increase(ref_elements, newclass, min, increase, module.exports.add_class_to_element);
 	},
 	remove_class_to_elements(selector, newclass) {
 		module.exports.remove_class_to_elements_increase(selector, newclass, 0, 0);
