@@ -9,6 +9,7 @@ cache:
   npm: true
   directories:
     - ~/.cache
+    - ~/.cache/Cypress
 script:
   - npm run server &
   - npm run cypress
