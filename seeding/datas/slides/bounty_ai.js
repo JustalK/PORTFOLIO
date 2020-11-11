@@ -14,7 +14,7 @@ module.exports = [
 		id: mongoose.Types.ObjectId("5f76018c9b16e910daaa4002"),
 		title: "Work",
 		first_text: "I was the leading developer for this project. I have both hand on the frontend and backend with 2 other developer on my team. On the backend, I use my favorite tool Node.js, Express and MongoDB. And for the frontend, React was the choice. For the server side, t3 instance from aws, nginx and PM2.",
-		second_text: "The biggest problem encountered for this project was the big data that crash the project many time. The algorithms and the millioms of data to parse was a real struggle.",
+		second_text: "The biggest problem encountered for this project was the big data that crashed the project many times. The algorithms and the millioms of data to parse was a real struggle. The code needed to be really optimized and the calculations needed to be split into clusters.",
 		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa00003")
 	}
 ]
