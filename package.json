@@ -9,7 +9,8 @@
     "build": "webpack --mode production --config config/prod.config.js",
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
     "watch-server": "nodemon --exec 'npm run server'",
-    "start": "node -e 'require(\"./server/index\").start()'",
+    "server": "node -e 'require(\"./server/index\").start()'",
+    "start": "npm run seed && npm run dev && npm run server",
     "test": "nyc --reporter=html --reporter=text ava tests/**/*.js ava tests/**/**/*.js --verbose --timeout=1m",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
