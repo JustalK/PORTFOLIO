@@ -13,5 +13,7 @@ cache:
 install:
   - npm install cypress
 script:
-  - npm run e2e
+  - npm install wait-on
+  - npm server & npx wait-on http://127.0.0.1:8080
+  - npm run cypress
 after_success: npm run coverage
