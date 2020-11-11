@@ -15,6 +15,14 @@ module.exports = {
 	get_one: (find) => {
 		return model
 			.findOne(find)
+			.populate('background_image')
+			.populate('images');
+	},
+	get_one_populated: (find) => {
+		return model
+			.findOne(find)
+			.populate({path: 'slides', populate: {path: 'image'}})
+			.populate('background_image')
 			.populate('images');
 	},
 	get_count: (find) => {

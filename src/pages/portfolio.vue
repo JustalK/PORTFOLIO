@@ -1,6 +1,9 @@
 <template>
 	<div
-		id="PORTFOLIO">
+		id="PORTFOLIO"
+		ref="portfolio">
+		<components_github
+			:invisible="invisible" />
 		<div>
 			<components_back
 				:invisible="invisible"
@@ -12,6 +15,7 @@
 				:title="title"
 				:invisible="invisible"
 				:invisible_text="invisible"
+				:unmounted="unmounted"
 				:help="help"
 				@filter="filter" />
 			<components_sliders
@@ -27,6 +31,7 @@
 <script>
 import informations from '../components/informations';
 import pubs from '../components/pubs';
+import github from '../components/main/github';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import api from '../services/api';
@@ -37,12 +42,14 @@ export default {
 		components_informations: informations,
 		components_sliders: sliders,
 		components_pubs: pubs,
-		components_back: back
+		components_back: back,
+		components_github: github
 	},
 	data: () => {
 		return {
 			title: '',
 			invisible: true,
+			unmounted: false,
 			tags: [],
 			tags_selected: [],
 			projects: [],
@@ -52,34 +59,39 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
-	async mounted() {
-		utils.add_class_to_element_delay('#PORTFOLIO', 'mounted', 200);
-		this.get_page(this.$route.name);
+	async created() {
 		const tags = await this.get_all_tags();
+		const page = await this.get_page(this.$route.name);
+
 		if (tags !== null && tags.length > 0) {
+			const projects = await this.get_all_projects_with_tags(tags[0]._id);
 			this.update_tags(tags);
 			this.update_tags_selected([tags[0]._id]);
-			this.get_all_projects_with_tags(tags[0]._id);
+			this.update_projects(projects);
+		}
+
+		if (page !== null) {
+			this.update_page(page[0]);
 		}
 		setTimeout(() => {
 			this.invisible = false;
-		}, 200);
+		}, 1);
+	},
+	mounted() {
+		utils.add_class_to_element(this.$refs.portfolio, 'mounted');
 	},
 	methods: {
 		async get_all_tags() {
 			return api.get_tags();
 		},
+		async get_page(name) {
+			return api.get_pages(name);
+		},
 		async get_all_projects_with_tags(tags) {
-			this.update_slide(0);
-			const projects = await api.get_projects_by_page(this.slide, tags);
-			this.update_projects(projects);
+			return api.get_projects_by_page(this.slide, tags);
 		},
 		async get_projects_by_id(id) {
 			return api.get_project_by_id(id);
-		},
-		async get_page(name) {
-			const page = await api.get_pages(name);
-			this.update_page(page[0]);
 		},
 		update_tags(tags) {
 			this.tags = tags;
@@ -98,47 +110,44 @@ export default {
 			this.title = page.title;
 		},
 		back() {
-			utils.search_add_class_to_element('#PORTFOLIO', 'unmounted');
+			utils.add_class_to_element(this.$refs.portfolio, 'unmounted');
 			setTimeout(() => {
-				this.$router.push({ name: 'home' });
+				this.$router.push({name: 'home'});
 			},1000);
 		},
 		async filter(tags_selected) {
-			this.projects_are_loading();
-			this.update_tags_selected(tags_selected);
-			setTimeout(async () => {
-				await this.get_all_projects_with_tags(this.tags_selected);
-			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
-		},
-		projects_are_loading() {
 			this.are_projects_loading = true;
-		},
-		projects_are_not_loading() {
-			this.are_projects_loading = false;
-		},
-		change_page(direction) {
-			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
-			this.update_slide(next_slide);
-			this.projects_are_loading();
-			setTimeout(async () => {
-				const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+			this.update_tags_selected(tags_selected);
+			await this.$nextTick();
+			const projects = await this.get_all_projects_with_tags(this.tags_selected);
+			setTimeout(() => {
+				this.update_slide(0);
 				this.update_projects(projects);
 			}, 1000);
-			setTimeout(async () => {
-				this.projects_are_not_loading();
-			}, 1250);
+			setTimeout(() => {
+				this.are_projects_loading = false;
+			}, 1050);
+		},
+		async change_page(direction) {
+			this.are_projects_loading = true;
+			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
+			this.update_slide(next_slide);
+			await this.$nextTick();
+			const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+			setTimeout(() => {
+				this.update_projects(projects);
+			}, 1000);
+			setTimeout(() => {
+				this.are_projects_loading = false;
+			}, 1050);
 		},
 		async project(id) {
-			utils.add_class_to_elements_increase('.text', 'unmounted', 0, 200);
+			this.unmounted = true;
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
-				console.log(project.slug);
 				this.$router.push({ name: 'project', params: {slug: project.slug}});
-			},2000);
+			}, 2000);
 		}
 	}
 };

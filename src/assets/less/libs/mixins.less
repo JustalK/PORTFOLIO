@@ -10,6 +10,14 @@
 	}
 }
 
+.font-size(@size) {
+	@rem: @size;
+	@px: (@size * 10);
+
+	font-size: ~"@{px}px";
+	font-size: ~"@{rem}rem";
+}
+
 .full {
 	height: 100%;
 	width: 100%;

@@ -1,12 +1,12 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
-.position-to-corner(@index, @pos_x, @pos_y, @delay) {
+.position-to-corner(@index, @pos_x, @pos_y, @delay, @x, @y) {
 	&:nth-child(@{index}) {
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) @delay);
 
-		@{pos_x}: 0;
-		@{pos_y}: 0;
+		@{pos_x}: @x;
+		@{pos_y}: @y;
 	}
 }
 
@@ -48,10 +48,10 @@
 		opacity: 0;
 		top: 50%;
 		@{pos_y}: 0;
-		font-size: 14px;
 		line-height: 18px;
 		color: @background-bloc-0;
 		user-select: none;
+		.font-size(1.2);
 	}
 
 	em::before,
@@ -124,13 +124,18 @@
 		width: 48%;
 		height: 280px;
 		position: absolute;
-		transform: translateY(100%);
-		opacity: 0;
+		transform: initial;
+		opacity: 1;
 
-		.position-to-corner(1, top, left, 0s);
-		.position-to-corner(2, top, right, 0.25s);
-		.position-to-corner(3, bottom, left, 0.5s);
-		.position-to-corner(4, bottom, right, 0.75s);
+		.position-to-corner(1, top, left, 0s, 0, 0);
+		.position-to-corner(2, top, right, 0.25s, 0, 0);
+		.position-to-corner(3, bottom, left, 0.5s, 0, 0);
+		.position-to-corner(4, bottom, right, 0.75s, 0, 0);
+
+		&.invisible {
+			transform: translateY(100%);
+			opacity: 0;
+		}
 
 		& a {
 			overflow: hidden;
@@ -183,12 +188,15 @@
 
 				& span {
 					text-align: center;
-					line-height: 280px;
-					height: 100%;
+					transform: translateY(-50%);
 					display: block;
 					color: white;
-					font-size: 1.1em;
+					width: 80%;
+					margin: 0 10%;
+					position: absolute;
+					top: calc(50% + 20px);
 					text-shadow: 0 0 8px #000;
+					.font-size(1.6);
 				}
 			}
 
@@ -224,7 +232,6 @@
 		position: absolute;
 		width: 100%;
 		top: 0;
-		font-size: 14px;
 		color: @text-color-white;
 		background: @text-color-h2;
 		height: 40px;
@@ -237,15 +244,13 @@
 		text-align: center;
 		margin: 0;
 		text-transform: uppercase;
+		.font-size(1.2);
 	}
 }
 
 .mounted {
 	& #PROJECTS {
 		& li {
-			transform: initial;
-			opacity: 1;
-
 			&.filtered {
 				opacity: 0;
 			}
@@ -271,6 +276,49 @@
 				width: 100%;
 				height: 100%;
 			}
+		}
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	#PROJECTS {
+		height: 860px;
+		margin-bottom: 120px;
+
+		& ul {
+			padding: 0;
+		}
+
+		& li {
+			height: 200px;
+			position: absolute;
+			float: initial;
+			width: 100%;
+
+			.position-to-corner(1, top, left, 0s, 0, 0);
+			.position-to-corner(2, top, right, 0.25s, 220px, 0);
+			.position-to-corner(3, bottom, left, 0.5s, 220px, 0);
+			.position-to-corner(4, bottom, right, 0.75s, 0, 0);
+
+			& i {
+				display: none;
+			}
+
+			& h2 {
+				.font-size(1.2);
+			}
+		}
+
+		& .previous {
+			left: 40px;
+			bottom: -120px;
+			height: 100px;
+		}
+
+		& .next {
+			right: 40px;
+			bottom: -120px;
+			height: 100px;
 		}
 	}
 }

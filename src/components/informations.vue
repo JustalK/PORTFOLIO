@@ -3,10 +3,12 @@
 		<h1>
 			<components_text
 				:text="title"
+				:unmounted="unmounted"
 				:invisible="invisible_text" />
 		</h1>
 		<components_text
 			:text="description"
+			:unmounted="unmounted"
 			:invisible="invisible_text" />
 		<components_tags
 			:tags="tags"
@@ -15,6 +17,7 @@
 			@new_tags_selected="new_tags_selected" />
 		<components_text
 			:text="help"
+			:unmounted="unmounted"
 			:invisible="invisible_text" />
 	</div>
 </template>
@@ -53,6 +56,10 @@ export default {
 			required: true
 		},
 		invisible_text: {
+			type: Boolean,
+			required: true
+		},
+		unmounted: {
 			type: Boolean,
 			required: true
 		}

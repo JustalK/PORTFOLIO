@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+require('dotenv').config({ path: './env/.env.development' });
 
 module.exports = {
 	entry: {
@@ -46,6 +48,14 @@ module.exports = {
 				{ from: 'src/assets/fonts', to: 'assets/fonts' },
 			],
 		}),
+		new webpack.DefinePlugin({
+			PRODUCTION: JSON.stringify(true),
+			VERSION: JSON.stringify('5fa3b9'),
+			BROWSER_SUPPORTS_HTML5: true,
+			TWO: '1+1',
+			'typeof window': JSON.stringify('object'),
+			'process.env': JSON.stringify(process.env),
+		})
 	],
 	module: {
 		rules: [

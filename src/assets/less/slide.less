@@ -1,28 +1,143 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
-#SLIDE {
-	height: 600px;
-	min-height: 600px;
-	background: @background-bloc-3;
-	position: relative;
-	box-shadow: 10px 10px #000;
+.slide {
+	height: 100%;
 
-	& h2 {
-		font-family: 'Lato-Bold', sans-serif;
+	& p::before,
+	& span::before {
+		content: ' ';
 		position: absolute;
+		top: -20px;
 		width: 100%;
-		top: 0;
-		font-size: 14px;
-		color: @text-color-white;
-		background: @text-color-h2;
-		height: 40px;
-		pointer-events: none;
-		z-index: @LAYER-COUCHE-2;
-		overflow: hidden;
-		line-height: 40px;
+		height: 20px;
+		left: -1px;
+		border-top-right-radius: 10px;
+		border-top-left-radius: 10px;
+		background: #1d1d23;
+		border: 1px solid black;
+	}
+
+	& p::after,
+	& span::after {
+		content: ' ';
+		position: absolute;
+		bottom: -20px;
+		width: 100%;
+		height: 20px;
+		left: -1px;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		background: #1d1d23;
+		border: 1px solid black;
+	}
+
+	& span {
+		position: absolute;
+		left: 15%;
+		top: 15%;
+		width: 25%;
+		background: @text-color-h2-lighter;
+		min-height: 50px;
+		line-height: 50px;
+		border: 1px solid black;
 		text-align: center;
-		margin: 0;
+		color: @text-color-white;
 		text-transform: uppercase;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+		.font-size(1.2);
+	}
+
+	& p:nth-child(2) {
+		position: absolute;
+		left: 10%;
+		top: 35%;
+		width: 20%;
+		line-height: 18px;
+		word-spacing: 2px;
+		background: @text-color-h2-lighter;
+		padding: 10px 30px;
+		border: 1px solid black;
+		color: @text-color-white;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+		.font-size(1.2);
+	}
+
+	& p:nth-child(3) {
+		position: absolute;
+		right: 20%;
+		bottom: 5%;
+		width: 30%;
+		line-height: 18px;
+		word-spacing: 2px;
+		background: @text-color-h2-lighter;
+		color: @text-color-white;
+		padding: 10px 30px;
+		border: 1px solid black;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+		.font-size(1.2);
+	}
+
+	& img {
+		position: absolute;
+		right: 10%;
+		width: 400px;
+		height: 250px;
+		top: 20%;
+		border: 1px solid black;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	&.invisible {
+		& span {
+			transform: translateY(-300%);
+		}
+
+		& p:nth-child(2) {
+			transform: translateX(-200%);
+		}
+
+		& img {
+			transform: translateX(200%);
+		}
+
+		& p:nth-child(3) {
+			transform: translateY(200%);
+		}
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	.slide {
+		& img {
+			right: 5%;
+			width: 300px;
+			top: 21%;
+			height: 170px;
+			object-fit: cover;
+		}
+
+		& span {
+			left: 5%;
+			top: 10%;
+			width: 80%;
+			.font-size(1.4);
+		}
+
+		& p:nth-child(2) {
+			left: 4%;
+			top: 44%;
+			width: 44%;
+			padding: 15px;
+			.font-size(1.4);
+		}
+
+		& p:nth-child(3) {
+			right: 2%;
+			bottom: 3%;
+			padding: 15px;
+			width: 35%;
+			.font-size(1.4);
+		}
 	}
 }
