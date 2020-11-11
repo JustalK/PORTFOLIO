@@ -13,6 +13,5 @@ cache:
 install:
   - npm install cypress
 script:
-  - npm run server &
-  - npm run cypress
+  - npm run e2e
 after_success: npm run coverage
