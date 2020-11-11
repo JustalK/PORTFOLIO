@@ -5,4 +5,14 @@ node_js:
   - 12
 services:
   - mongodb
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
+cache:
+  npm: true
+  directories:
+    - ~/.cache
+install:
+  - npm ci
 after_success: npm run coverage
