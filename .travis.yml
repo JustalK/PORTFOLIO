@@ -5,4 +5,7 @@ node_js:
   - 12
 services:
   - mongodb
+script:
+  - npm run server &
+  - npm run cypress
 after_success: npm run coverage
