@@ -1,0 +1,49 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#GITHUB {
+	position: absolute;
+	width: 350px;
+	height: 350px;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+	z-index: 1;
+	box-shadow: 10px 10px @background-shadow;
+	transform: translate(55%, -55%) rotateZ(45deg);
+	.transition(all 0.25s cubic-bezier(0.8, 0, 0.25, 1));
+
+	& span {
+		position: absolute;
+		bottom: 0;
+		text-align: center;
+		width: 100%;
+		background: @text-color-dark;
+		color: @text-color;
+		height: 40px;
+		font-family: 'Lato-Bold', sans-serif;
+		line-height: 40px;
+		text-transform: uppercase;
+		.font-size(1.3);
+		.transition(all 0.35s cubic-bezier(0.8, 0, 0.25, 1));
+	}
+
+	&:hover {
+		box-shadow: none;
+
+		& span {
+			background: @text-color;
+			color: @text-color-white;
+		}
+	}
+
+	&.invisible {
+		transform: translate(100%, -100%) rotateZ(45deg);
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	#GITHUB {
+		transform: translate(65%, -65%) rotateZ(45deg);
+	}
+}

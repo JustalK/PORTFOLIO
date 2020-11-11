@@ -23,6 +23,7 @@ module.exports = {
 			module.exports.adding_route('tags', '/api/tags', server);
 			module.exports.adding_route('contacts', '/api/contacts', server);
 			module.exports.adding_route('pages', '/api/pages', server);
+			module.exports.adding_route('slides', '/api/slides', server);
 			server.use(history());
 			server.use('/api/documentation', express.static('documentation'));
 			server.use('/', express.static('dev'));

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const filename = path.basename(__filename, '.js');
 require('./images');
+require('./slides');
 
 const schema = new mongoose.Schema(
 	{
@@ -33,6 +34,14 @@ const schema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'images'
 		} ],
+		background_image: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'images'
+		},
+		slides: [{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'slides'
+		}],
 		order: {
 			type: Number
 		}

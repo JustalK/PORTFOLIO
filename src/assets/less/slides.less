@@ -1,0 +1,74 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#SLIDE {
+	height: 600px;
+	min-height: 600px;
+	background: @background-bloc-3;
+	position: relative;
+	box-shadow: 10px 10px #000;
+
+	& a {
+		overflow: hidden;
+		position: relative;
+		display: block;
+		background: @text-color-dark;
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+		text-decoration: none;
+		border: 1px solid #000;
+		background-size: cover;
+		background-position: center center;
+		box-shadow: 10px 10px @background-shadow;
+
+		& i {
+			.button-window(10px, 12px, #61c3ff);
+
+			&::before {
+				content: ' ';
+				.button-window(20px, 0, #005c94);
+			}
+
+			&::after {
+				content: ' ';
+				.button-window(40px, 0, #dc4242);
+			}
+		}
+	}
+
+	& h2 {
+		font-family: 'Lato-Bold', sans-serif;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		.font-size(1.2);
+
+		color: @text-color-white;
+		background: @text-color-h2;
+		height: 40px;
+		pointer-events: none;
+		z-index: @LAYER-COUCHE-1;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+		border-bottom: 1px solid black;
+		overflow: hidden;
+		line-height: 40px;
+		text-align: center;
+		margin: 0;
+		text-transform: uppercase;
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	#SLIDE {
+		height: 860px;
+
+		& i {
+			display: none;
+		}
+
+		& h2 {
+			.font-size(1.2);
+		}
+	}
+}

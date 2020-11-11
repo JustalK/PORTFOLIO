@@ -8,7 +8,7 @@ module.exports = {
 		filters[key] = value;
 	},
 	add_tags_filter: (filters, key, value) => {
-		module.exports.check_and_add_name_filter(filters, key, value, { $all: value });
+		module.exports.check_and_add_name_filter(filters, key, value, { $in: value });
 	},
 	add_name_filter: (filters, key, value) => {
 		module.exports.check_and_add_name_filter(filters, key, value, { $eq: value });

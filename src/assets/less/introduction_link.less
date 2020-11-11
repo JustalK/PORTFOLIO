@@ -17,11 +17,34 @@
 	text-transform: uppercase;
 	cursor: pointer;
 	transition: color 0.5s cubic-bezier(0.8, 0, 0.25, 1), background 0.5s cubic-bezier(0.8, 0, 0.25, 1), box-shadow 0.5s cubic-bezier(0.8, 0, 0.25, 1), top 0.25s cubic-bezier(0.8, 0, 0.25, 1) 1s;
+	.font-size(1.3);
 
+	&::after,
+	&::before {
+		content: ' ';
+		width: 100%;
+		height: 100%;
+		border: none;
+		position: absolute;
+		left: 0;
+		.transition(transform 0.3s cubic-bezier(0.8, 0, 0.25, 1) 0.1s);
+	}
+
+	&.active,
 	&:hover {
 		background: @text-color;
 		color: @text-color-white;
 		box-shadow: none;
+
+		&::before {
+			transform: scale(1.2, 1.4);
+			border: 1px solid @text-color-white;
+		}
+
+		&::after {
+			transform: scale(1.1, 1.8);
+			border: 1px solid @text-color-white;
+		}
 	}
 
 	&.left {
@@ -36,5 +59,11 @@
 #HOME {
 	&.mounted .links-open-door {
 		top: 70%;
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	.links-open-door {
+		width: 80%;
 	}
 }

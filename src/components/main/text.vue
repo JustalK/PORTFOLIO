@@ -1,6 +1,6 @@
 <template>
 	<span
-		:class="{invisible: invisible}"
+		:class="{invisible: invisible, unmounted: unmounted}"
 		class="text">
 		{{ text }}
 	</span>
@@ -13,6 +13,10 @@ export default {
 			required: true
 		},
 		invisible: {
+			type: Boolean,
+			required: true
+		},
+		unmounted: {
 			type: Boolean,
 			required: true
 		}
