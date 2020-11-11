@@ -30,5 +30,8 @@ module.exports = {
 	},
 	absolute_path_from_relative(path) {
 		return process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT + '/' + path;
+	},
+	get_server_address() {
+		return process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT;
 	}
 }
