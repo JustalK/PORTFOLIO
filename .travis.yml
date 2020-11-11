@@ -10,6 +10,8 @@ cache:
   directories:
     - ~/.cache
     - ~/.cache/Cypress
+install:
+  - npm install cypress
 script:
   - npm run server &
   - npm run cypress
