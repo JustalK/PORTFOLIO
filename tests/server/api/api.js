@@ -177,7 +177,7 @@ test('[STATIC] Testing the api pages with params', async t => {
 
 test('[STATIC] Testing the api slides with params', async t => {
 	const response = await new Promise((resolve, reject) => {
-		chai.request(server).get('/api/slides/one?id=5f76018c9b16e910efed5000')
+		chai.request(server).get('/api/slides/one?id=5f76018c9b16e910daaa9001')
 			.end((err, response) => {
 				resolve(response);
 			});
