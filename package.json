@@ -13,9 +13,9 @@
     "start": "npm run seed && npm run dev && npm run server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
 	"cypress-tools": "npx cypress open",
-	"test": "start-server-and-test server :8080 cypress && nyc --reporter=html --reporter=text ava tests/server/*.js ava tests/server/**/*.js --verbose --timeout=1m",
+	"test": "start-server-and-test server http-get://localhost:8080 cypress && nyc --reporter=html --reporter=text ava tests/server/*.js ava tests/server/**/*.js --verbose --timeout=1m",
 	"cypress": "cypress run",
-    "e2e": "start-server-and-test server :8080 cypress"
+    "e2e": "start-server-and-test server http-get://localhost:8080 cypress"
   },
   "engines": {
     "node": ">=12.0"
