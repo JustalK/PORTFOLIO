@@ -5,16 +5,4 @@ node_js:
   - 12
 services:
   - mongodb
-cache:
-  npm: true
-  directories:
-    - ~/.cache
-    - ~/.cache/Cypress
-install:
-  - npm install cypress
-script:
-  - npm run seed
-  - npm run server &
-  - sleep 10s
-  - npm run cypress
 after_success: npm run coverage
