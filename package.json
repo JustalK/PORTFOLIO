@@ -11,8 +11,11 @@
     "watch-server": "nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
     "start": "npm run seed && npm run dev && npm run server",
-    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js ava tests/**/**/*.js --verbose --timeout=1m",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+	"cypress-tools": "npx cypress open",
+	"test": "start-server-and-test server http://localhost:8080 cypress && nyc --reporter=html --reporter=text ava tests/server/*.js ava tests/server/**/*.js --verbose --timeout=1m",
+	"cypress": "cypress run",
+    "e2e": "start-server-and-test server http://localhost:8080 cypress"
   },
   "engines": {
     "node": ">=12.0"
@@ -42,6 +45,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "@testing-library/cypress": "^7.0.1",
+    "@testing-library/dom": "^7.26.6",
     "ava": "^3.13.0",
     "babel-core": "*",
     "babel-eslint": "^10.1.0",
@@ -53,6 +58,7 @@
     "copy-webpack-plugin": "^6.2.1",
     "coveralls": "^3.1.0",
     "css-loader": "^5.0.0",
+    "cypress": "^5.6.0",
     "eslint": "^7.12.0",
     "eslint-config-es2015": "*",
     "eslint-plugin-vue": "^7.1.0",
@@ -68,11 +74,13 @@
     "less-loader": "^7.0.2",
     "lqip-loader": "^2.2.1",
     "mongo-seeding": "^3.4.1",
+    "npx": "^10.2.2",
     "nyc": "^15.1.0",
     "postcss": "^8.1.4",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.1.2",
+    "start-server-and-test": "^1.11.5",
     "style-loader": "^2.0.0",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
