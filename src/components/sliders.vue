@@ -16,11 +16,15 @@
 				:data-id="p.id"
 				:class="{filtered: are_projects_loading, invisible: invisible}">
 				<a
-					:style="set_background_project(p)"
-					@click.stop="project($event, p.id)">
+					ref="link"
+					@click.stop="project(p.id)">
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
-					<div>
+					<div
+						ref="low"
+						class="low"
+						:style="set_lqip_background_project(p)" />
+					<div class="panel">
 						<span>{{ p.short_description }}</span>
 					</div>
 				</a>
@@ -53,16 +57,36 @@ export default {
 		}
 	},
 	emits: ['change_page', 'project'],
+	watch: {
+		async projects(projects_array) {
+			await this.$nextTick();
+
+			// This Timeout is for loading the low quality before the hq
+			setTimeout(() => {
+				projects_array.map((project, index) => {
+					this.set_hq_background_project(project, index);
+				});
+			}, 1);
+		}
+	},
 	methods: {
-		set_background_project(project) {
+		set_lqip_background_project(project) {
 			const images = project.images;
 			if (utils.is_array_empty(images)) {
 				return {};
 			}
 
 			return {
-				'background-image': 'url(\'' + project.images[0].path + '\')'
+				'background-image': 'url(\'' + project.images[0].path_low + '\')'
 			};
+		},
+		set_hq_background_project(project, index) {
+			const tmp = new Image();
+			tmp.src = project.images[0].path;
+			this.$refs.link[index].style.backgroundImage='url(\'' + project.images[0].path + '\')';
+			tmp.addEventListener('load',() => {
+				this.$refs.low[index].classList.add('loaded');
+			});
 		},
 		change_page(direction) {
 			this.$emit('change_page', direction);

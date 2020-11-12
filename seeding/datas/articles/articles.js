@@ -337,7 +337,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
-        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8caaf00001")],
+        images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00009")],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e81aaf00001"),
         order: 15
     },
