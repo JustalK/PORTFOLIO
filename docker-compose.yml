@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  app:
+    container_name: justalk
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    link:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    hostname: mongodb
+    volumes:
+        - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
+        - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+        - ./.docker/mongodb/data/db/:/data/db/
+        - ./.docker/mongodb/data/log/:/var/log/mongodb/
+    ports:
+      - "27017:27017"
+    command: ["-f", "/etc/mongod.conf"]
