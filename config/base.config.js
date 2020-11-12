@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');
 const webpack = require('webpack');
 const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
 require('dotenv').config({ path: './env/.env.' + mode });
@@ -20,6 +21,8 @@ module.exports = {
 		}
 	},
 	output: {
+		filename: 'index.js',
+		path: path.resolve(__dirname+'/../' + process.env.FOLDER + '/'),
 		publicPath: base_url + '/'
 	},
 	plugins: [
@@ -38,7 +41,7 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			title: 'Custom template',
-			filename: '../index.html',
+			filename: '../' + process.env.FOLDER + '/index.html',
 			template: 'src/pages/index.html'
 		}),
 		new StyleLintPlugin({
