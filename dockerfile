@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 8080
 RUN npm run seed
-RUN npm run server
+RUN npm run server-docker

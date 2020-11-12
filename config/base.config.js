@@ -4,7 +4,10 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
-require('dotenv').config({ path: './env/.env.development' });
+const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
+require('dotenv').config({ path: './env/.env.' + mode });
+const base_url = process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT;
+
 
 module.exports = {
 	entry: {
@@ -15,6 +18,9 @@ module.exports = {
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js'
 		}
+	},
+	output: {
+		publicPath: base_url + '/'
 	},
 	plugins: [
 		new VueLoaderPlugin(),

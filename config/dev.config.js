@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = merge(baseConfig, {
 	output: {
 		filename: 'index.js',
-		path: path.resolve(__dirname+'/../', 'dev')
+		path: path.resolve(__dirname+'/../dev/', 'dev')
 	},
 	module: {
 		rules: [ {
