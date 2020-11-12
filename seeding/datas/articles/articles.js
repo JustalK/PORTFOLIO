@@ -227,6 +227,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00018")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e91aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e91aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8c2a900001"),
         order: 8
     },
@@ -243,6 +247,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00015")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e92aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e92aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa70001"),
         order: 9
     },
@@ -259,6 +267,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00012")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e93aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e93aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa30001"),
         order: 10
     },
@@ -275,6 +287,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00011")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e94aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e94aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa10001"),
         order: 11
     },
