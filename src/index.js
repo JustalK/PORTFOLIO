@@ -20,11 +20,6 @@ const router = new VueRouter({
 	mode: 'history'
 });
 
-router.beforeEach((to, from, next) => {
-	document.title = 'GitHub Check System Kevin Justal 2';
-	next();
-});
-
 new Vue({
 	el: '#app',
 	components: { app },

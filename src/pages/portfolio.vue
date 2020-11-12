@@ -59,6 +59,14 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - Portfolio';
+			}
+		},
+	},
 	async created() {
 		const tags = await this.get_all_tags();
 		const page = await this.get_page(this.$route.name);

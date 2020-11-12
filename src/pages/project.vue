@@ -61,6 +61,14 @@ export default {
 			help: 'Click on the image under for changing slide.'
 		};
 	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - ' + this.$route.params.slug;
+			}
+		},
+	},
 	async created() {
 		const tags = await this.get_all_tags();
 		const slug = this.$route.params.slug;
