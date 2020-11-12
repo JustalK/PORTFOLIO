@@ -5,7 +5,7 @@
 			v-for="tag in tags"
 			:key="tag.id"
 			ref="tags"
-			:class="{'tags-tag': true, invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
+			:class="{'tags-tag': true, desactivate: desactivate, invisible: invisible,'tags-tag--active': tags_selected.includes(tag.id)}"
 			:data-id="tag._id"
 			@click.stop="filter($event)">
 			<span> {{ tag.name }} </span>
@@ -28,6 +28,10 @@ export default {
 		invisible: {
 			type: Boolean,
 			required: true
+		},
+		desactivate: {
+			type: Boolean,
+			default: false
 		}
 	},
 	emits: ['new_tags_selected'],
