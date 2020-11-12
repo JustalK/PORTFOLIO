@@ -17,7 +17,7 @@
 				:class="{filtered: are_projects_loading, invisible: invisible}">
 				<a
 					ref="link"
-					@click.stop="project(p.id)">
+					@click.stop="project($event, p.id)">
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
 					<div

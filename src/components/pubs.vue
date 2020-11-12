@@ -3,7 +3,9 @@
 		id="PUBS"
 		:class="{invisible: invisible}">
 		<span>Wanna talk about something ? Feel free to contact me !</span>
-		<span>{{ email }}</span>
+		<address>
+			<a :href="&quot;mailto:&quot; + email">{{ email }}</a>
+		</address>
 	</div>
 </template>
 <script>
