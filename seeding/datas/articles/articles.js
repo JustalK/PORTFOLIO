@@ -355,6 +355,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00023")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e00aaa00001"),
         order: 16
     },
     {
@@ -371,6 +372,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00024")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e02aaa00001"),
         order: 17
     },
     {
@@ -387,6 +389,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00021")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e04aaa00001"),
         order: 18
     },
     {
@@ -403,6 +406,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00020")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e05aaa00001"),
         order: 19
     },
     {
@@ -419,6 +423,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00019")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e06aaa00001"),
         order: 20
     },
     {
@@ -435,6 +440,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00022")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e03aaa00001"),
         order: 21
     },
 	{
@@ -446,6 +452,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
 		],
 		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00025")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e01aaa00001"),
 		order: 22
 	},
 	{
@@ -457,6 +464,7 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
 		],
 		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00026")],
+		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e07aaa00001"),
 		order: 23
 	}
 ]
