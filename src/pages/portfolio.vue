@@ -119,9 +119,9 @@ export default {
 			this.are_projects_loading = true;
 			this.update_tags_selected(tags_selected);
 			await this.$nextTick();
+			this.update_slide(0);
 			const projects = await this.get_all_projects_with_tags(this.tags_selected);
 			setTimeout(() => {
-				this.update_slide(0);
 				this.update_projects(projects);
 			}, 1000);
 			setTimeout(() => {
