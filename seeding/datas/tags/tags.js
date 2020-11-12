@@ -90,5 +90,9 @@ module.exports = [
   {
     id: mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
     name: "ESLint"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5893"),
+    name: "Angular"
   }
 ]
