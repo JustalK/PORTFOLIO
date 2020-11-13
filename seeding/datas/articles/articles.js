@@ -295,7 +295,7 @@ module.exports = [
         order: 11
     },
     {
-        title: "Finister Assurance",
+        title: "Finistere Assurance",
 		slug: "finistere assurance",
         short_description: "The official website of the Finister Assurance insurrance based in Britany.",
         long_description: "A website in PHP made from scratch using PhpMyAdmin database for an insurrance company in Britany.",
@@ -307,6 +307,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00010")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e95aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e95aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caafa0001"),
         order: 12
     },
@@ -323,6 +327,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00017")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e96aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e96aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8c1a900001"),
         order: 13
     },
@@ -339,6 +347,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00008")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e97aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e97aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caae00001"),
         order: 14
     },
@@ -354,6 +366,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00009")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e98aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e98aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e81aaf00001"),
         order: 15
     },
@@ -371,6 +387,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5871")
 		],
         images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00023")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b16e99aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b16e99aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e00aaa00001"),
         order: 16
     },
