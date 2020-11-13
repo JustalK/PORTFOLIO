@@ -84,6 +84,10 @@ module.exports = [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5872")
 		],
 		images: [ mongoose.Types.ObjectId("5f9d88d3faed1e8c4dc00027")],
+		slides: [
+			mongoose.Types.ObjectId("5f76018c9b00006aaaaa0001"),
+			mongoose.Types.ObjectId("5f76018c9b00006aaaaa0002")
+		],
 		background_image: mongoose.Types.ObjectId("5f9d88d3faed1e8caad00001"),
 		order: 2
 	},

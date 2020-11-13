@@ -8,7 +8,7 @@ module.exports = [
 		title: "Presentation",
 		first_text: "This project is a personnal project for presenting my work made over the years. Of course, I cannot present everything since I signed some confidentially papers on some projects. But it presents a big amount of my work.",
 		second_text: "On this project, my goal was to have a cool way to present eveything, how I work and to make something cool that I could present to anyone.",
-		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa00002")
+		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa80002")
 	},
 	{
 		id: mongoose.Types.ObjectId("5f76018c9b16e910daaa9002"),
