@@ -55,6 +55,7 @@ module.exports = {
 			patterns: [
 				{ from: 'src/assets/imgs', to: 'assets/imgs' },
 				{ from: 'src/assets/fonts', to: 'assets/fonts' },
+				{ from: 'src/assets/favicon', to: 'assets/favicon' }
 			],
 		}),
 		new webpack.DefinePlugin({
