@@ -11,7 +11,7 @@ module.exports = [
 		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa00002")
 	},
 	{
-		id: mongoose.Types.ObjectId("5f76018c9b16e98aaaaa0002"),
+		id: mongoose.Types.ObjectId("5f76018c9b16e99aaaaa0002"),
 		title: "Work",
 		first_text: "I work alone on this project. It was my first time working with Code Igniter. It was a request from the client. I use PhpMyAdmin for the database and jQuery for the interactivity.",
 		second_text: "The biggest problem I faced was when Code Igniter have a big update on the core of their CMS. The change from version 2 to version 3 was really hard. I struggled with some of the changes.",
