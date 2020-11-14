@@ -10,5 +10,6 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-RUN npm run seed
-RUN npm run server-docker
+
+COPY scripts/wait-for-it.sh /usr/wait-for-it.sh
+RUN chmod +x /usr/wait-for-it.sh

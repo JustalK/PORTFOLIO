@@ -1,22 +1,31 @@
 version: "3.8"
 services:
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongodb_data_container:/data/db
+    ports:
+      - "27018:27018"
+    command: mongod --port 27018
+    networks:
+      - app-network
   app:
     container_name: justalk
     restart: always
     build: .
     ports:
       - "8080:8080"
+    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run dev && npm run seed-docker && npm run server-docker"
+    depends_on:
+      - mongodb
     links:
-      - mongo
-  mongo:
-    container_name: mongo
-    image: mongo
-    hostname: mongodb
-    volumes:
-        - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
-        - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
-        - ./.docker/mongodb/data/db/:/data/db/
-        - ./.docker/mongodb/data/log/:/var/log/mongodb/
-    ports:
-      - "27017:27017"
-    command: ["-f", "/etc/mongod.conf"]
+      - mongodb
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data_container:

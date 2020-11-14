@@ -34,13 +34,14 @@
 
 	& span {
 		position: absolute;
-		left: 15%;
-		top: 15%;
-		width: 25%;
+		left: 5%;
+		top: 20%;
+		width: 20%;
 		background: @text-color-h2-lighter;
 		min-height: 50px;
 		line-height: 50px;
 		border: 1px solid black;
+		padding: 10px 30px;
 		text-align: center;
 		color: @text-color-white;
 		text-transform: uppercase;
@@ -50,8 +51,8 @@
 
 	& p:nth-child(2) {
 		position: absolute;
-		left: 10%;
-		top: 35%;
+		left: 5%;
+		top: 40%;
 		width: 20%;
 		line-height: 18px;
 		word-spacing: 2px;
@@ -65,9 +66,9 @@
 
 	& p:nth-child(3) {
 		position: absolute;
-		right: 20%;
-		bottom: 5%;
-		width: 30%;
+		right: 5%;
+		bottom: 10%;
+		width: 420px;
 		line-height: 18px;
 		word-spacing: 2px;
 		background: @text-color-h2-lighter;
@@ -83,7 +84,7 @@
 		right: 5%;
 		width: 480px;
 		height: 280px;
-		top: 13%;
+		top: calc(20% - 20px);
 		border: 1px solid black;
 		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
 	}
@@ -102,7 +103,7 @@
 		}
 
 		& p:nth-child(3) {
-			transform: translateY(200%);
+			transform: translateY(400%);
 		}
 	}
 }
