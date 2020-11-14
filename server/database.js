@@ -33,8 +33,8 @@ module.exports = {
 		const db_uri_data = module.exports.create_mongo_uri(db_data);
 
 		mongoose.connect(db_uri_data, { useNewUrlParser: true, useUnifiedTopology: true })
-		.catch(err => {
-			logs.info(err)
-		});
+			.catch(err => {
+				logs.info(err);
+			});
 	}
 };

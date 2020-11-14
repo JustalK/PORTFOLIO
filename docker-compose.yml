@@ -15,7 +15,7 @@ services:
     build: .
     ports:
       - "8080:8080"
-    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run seed-docker && npm run dev && npm run server-docker && curl http://localhost:8080/api"
+    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run seed-docker && npm run build && npm run server-docker"
     depends_on:
       - mongodb
     links:
