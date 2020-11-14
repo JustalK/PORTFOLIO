@@ -10,12 +10,12 @@ services:
     networks:
       - app-network
   app:
-    container_name: justalk
+    container_name: portfolio
     restart: always
     build: .
     ports:
       - "8080:8080"
-    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run dev && npm run seed-docker && npm run server-docker"
+    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run seed-docker && npm run dev && npm run server-docker && curl http://localhost:8080/api"
     depends_on:
       - mongodb
     links:

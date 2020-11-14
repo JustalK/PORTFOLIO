@@ -18,7 +18,7 @@
     "e2e": "start-server-and-test server http://localhost:8080 cypress",
 	"server-docker": "export NODE_ENV=docker && node -e 'require(\"./server/index\").start()'",
     "seed-docker": "export NODE_ENV=docker && node -e 'require(\"./seeding/seeder.js\").seed()'",
-    "docker": "sudo docker-compose up"
+    "docker": "sudo docker-compose up --build --force-recreate"
   },
   "engines": {
     "node": ">=12.0"
