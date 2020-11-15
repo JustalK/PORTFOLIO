@@ -6,7 +6,7 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId("5f76018c9b00006aaaaa0001"),
 		title: "Presentation",
-		first_text: "This project is an application made for CitiGlobal Realty and Development. A real estate company with many beautiful properties in the Philippines. They wanted an application for sending emails to their employees, managers, executives under certain conditions that we called nudges.",
+		first_text: "This project is an application made for COVID19.",
 		second_text: "The goal was to create something similar with a newsletter but with calculations, differents templates depending of who to send to, dynamic creations of list depending of who fill a report. Everything has to be connected to their existing systems like Typeform, Mailgun, Mailchimp and Rumarocket Software.",
 		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caad00002")
 	},
