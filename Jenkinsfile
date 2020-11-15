@@ -9,11 +9,17 @@ pipeline {
 
     stage('Install') {
       steps {
+        sh 'npm run install'
+      }
+    }
+
+    stage('Build') {
+      steps {
         sh 'npm run start'
       }
     }
 
-    stage('End') {
+    stage('Finished') {
       steps {
         echo 'Finished'
       }
