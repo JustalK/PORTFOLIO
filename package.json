@@ -10,7 +10,7 @@
     "watch": "nodemon --watch \"src/\" -x \"npm run dev\"",
     "watch-server": "export NODE_ENV=development && nodemon --exec 'npm run server'",
     "server": "node -e 'require(\"./server/index\").start()'",
-    "start": "export NODE_ENV=production && npm run seed && npm run build && npm run server",
+    "start": "export NODE_ENV=production && npm run server",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
 	"cypress-tools": "npx cypress open",
 	"test": "export NODE_ENV=test && nyc --reporter=html --reporter=text ava tests/server/*.js ava tests/server/**/*.js --verbose --timeout=1m",
