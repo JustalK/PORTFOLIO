@@ -10,6 +10,7 @@ pipeline {
     stage('Install') {
       steps {
         sh 'npm install'
+        sh 'mkdir PORTFOLIO-2'
       }
     }
 
