@@ -13,16 +13,9 @@ pipeline {
       }
     }
 
-    stage('Seed and Build') {
+    stage('Daemonize') {
       steps {
-        sh '''npm run seed
-npm run build'''
-      }
-    }
-
-    stage('Reload PM2') {
-      steps {
-        sh 'pm2 reload all'
+        sh 'pm2 start npm -- start'
       }
     }
 
