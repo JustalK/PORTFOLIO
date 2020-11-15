@@ -13,9 +13,16 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('Seed and Build') {
       steps {
-        sh 'npm run start'
+        sh '''npm run seed
+npm run build'''
+      }
+    }
+
+    stage('Reload PM2') {
+      steps {
+        sh 'pm2 reload all'
       }
     }
 
