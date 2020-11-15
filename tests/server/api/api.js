@@ -1,6 +1,7 @@
 'use strict';
 
-require('dotenv').config({path: './env/.env.' + process.env.NODE_ENV});
+const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
+require('dotenv').config({ path: './env/.env.' + mode });
 const test = require('ava');
 const axios = require('axios');
 const m = require('../../../server/routes/apps');

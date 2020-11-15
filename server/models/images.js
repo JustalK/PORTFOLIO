@@ -15,6 +15,10 @@ const schema = new mongoose.Schema(
 			type: String,
 			trim: true,
 			require: true
+		},
+		path_low: {
+			type: String,
+			trim: true
 		}
 	},
 	{

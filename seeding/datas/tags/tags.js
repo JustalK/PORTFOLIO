@@ -90,5 +90,17 @@ module.exports = [
   {
     id: mongoose.Types.ObjectId("5f95461688489acdd8ee5892"),
     name: "ESLint"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5893"),
+    name: "Angular"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5894"),
+    name: "SEO"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5895"),
+    name: "UI/UX Design"
   }
 ]

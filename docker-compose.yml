@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongodb_data_container:/data/db
+    ports:
+      - "27018:27018"
+    command: mongod --port 27018
+    networks:
+      - app-network
+  app:
+    container_name: portfolio
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    command: bash -c "/usr/wait-for-it.sh --timeout=15 mongodb:27018 && npm run seed-docker && npm run build && npm run server-docker"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data_container:

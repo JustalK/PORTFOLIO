@@ -26,21 +26,15 @@ I am developing following an easy to understand cycle. This way I am sure to not
 
 ![Alt text](documentation/management/cycle.jpg?raw=true "PORTFOLIO-CYCLE")
 
-## Prerequisite
-
-For the project to work properly on your computer, you need to have on your machine :
-
-1. A machine with node installed :
-https://nodejs.org/en/download/
-
-2. A working Mongo database : https://docs.mongodb.com/manual/installation/
-```
-MongoDB
-```
-
 ## Installation
 
-After cloning the project, you can install all the dependencies of the project by running this command at the root of the project :
+The easiest and fatest way to install this project is through `docker-compose` with this command :
+
+```
+npm run docker
+```
+
+If you do not have docker on your machine, you will need to have node and a mongodb on your machine, you can install all the dependencies of the project by running this command at the root of the project :
 ```
 $ npm install
 ```

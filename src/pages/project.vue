@@ -14,6 +14,7 @@
 				:tags_selected="tags_selected"
 				:title="title"
 				:unmounted="unmounted"
+				:desactivate="desactivate"
 				:invisible="invisible"
 				:invisible_text="invisible_text"
 				:help="help" />
@@ -52,6 +53,7 @@ export default {
 			tags_selected: [],
 			invisible: false,
 			invisible_text: true,
+			desactivate: true,
 			invisible_slide: true,
 			unmounted: false,
 			description: 'Loading...',
@@ -60,6 +62,14 @@ export default {
 			are_projects_loading: false,
 			help: 'Click on the image under for changing slide.'
 		};
+	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - ' + this.$route.params.slug;
+			}
+		},
 	},
 	async created() {
 		const tags = await this.get_all_tags();

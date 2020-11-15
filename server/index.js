@@ -1,6 +1,7 @@
 'use strict';
 
-require('dotenv').config({ path: './env/.env.production' });
+const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
+require('dotenv').config({ path: './env/.env.' + mode });
 const server = require('./server');
 const database = require('./database');
 

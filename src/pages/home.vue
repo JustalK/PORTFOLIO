@@ -42,6 +42,14 @@ export default {
 			]
 		};
 	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - Home';
+			}
+		},
+	},
 	async mounted() {
 		await this.get_my_identity();
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);

@@ -3,6 +3,8 @@
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const logs = require('./libs/logs');
+const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
+require('dotenv').config({ path: './env/.env.' + mode });
 
 module.exports = {
 	create_server: (name, port) => {
@@ -25,8 +27,10 @@ module.exports = {
 			module.exports.adding_route('pages', '/api/pages', server);
 			module.exports.adding_route('slides', '/api/slides', server);
 			server.use(history());
+
 			server.use('/api/documentation', express.static('documentation'));
-			server.use('/', express.static('dev'));
+			console.log(process.env.FOLDER);
+			server.use('/', express.static(process.env.FOLDER));
 
 			server.listen(port, host, () => {
 				logs.info(name + ' listening at ' + port);
