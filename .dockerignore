@@ -1,0 +1,7 @@
+coverage
+cypress
+design
+logs
+node_modules
+Dockerfile
+.dockerignore
