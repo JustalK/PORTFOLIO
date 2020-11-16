@@ -154,6 +154,9 @@ export default {
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
+				this.$refs.portfolio.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+			}, 1500);
+			setTimeout(() => {
 				this.$router.push({ name: 'project', params: {slug: project.slug}});
 			}, 2000);
 		}

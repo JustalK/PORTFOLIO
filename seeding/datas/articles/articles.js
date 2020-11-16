@@ -7,7 +7,7 @@ module.exports = [
 		title: "Portfolio",
 		slug: "portfolio",
 		short_description: "A website for showing some of my work to the world.",
-		long_description: "laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa laa",
+		long_description: "A simple but effective website written with Vue.js, Node.js and Express for presenting my professional work and my personnal project.",
 		tags: [
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5873"),
 			mongoose.Types.ObjectId("5f95461688489acdd8ee5876"),

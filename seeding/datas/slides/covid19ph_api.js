@@ -6,15 +6,15 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId("5f76018c9b00006aaaaa0001"),
 		title: "Presentation",
-		first_text: "This project is an application made for COVID19.",
-		second_text: "The goal was to create something similar with a newsletter but with calculations, differents templates depending of who to send to, dynamic creations of list depending of who fill a report. Everything has to be connected to their existing systems like Typeform, Mailgun, Mailchimp and Rumarocket Software.",
+		first_text: "This project is a REST API made when I was in the Philippines. Everybody try to help at his level, so I decide to also take action and create a robust REST API anyone can use for creating their software or app.",
+		second_text: "The goal was to create an REST API easy to use, flexible, well documented, tested and most of all capable of auto updating itself with the latest data from DOH.",
 		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caad00002")
 	},
 	{
 		id: mongoose.Types.ObjectId("5f76018c9b00006aaaaa0002"),
 		title: "Work",
-		first_text: "I was alone on this project for creating the entire backend and setting up the server. I made everything with Nodejs and restify. I also needed to connect to many API like Typeform API for getting the forms, Googlesheet API for getting some of their datas, Mailchimp API for getting the templates.",
-		second_text: "I faced two major problems on this project. First, the API of Mailchimp, I discovered a bug and report it to them. But I still smash my face to the wall trying to understand. Secondly, the calculations was quite enormous, so I often run out of memory on my server. I needed to optimize heavily my application.",
+		first_text: "I did this project for helping, the best that I could. I use Restify and Node.js. For the test, I use Ava and chai. On the server side, it's a t2-micro from AWS who control the app with a cluster under PM2.",
+		second_text: "The hard part of this project was the way DOH have their data update. They have a shorten link who redirect to a google driver with a link inside with an other shorten link that redirect to another google drive full of csv files. It's quite a lot of process for such a small task.",
 		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caad00003")
 	}
 ]
