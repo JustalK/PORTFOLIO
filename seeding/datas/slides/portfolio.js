@@ -15,6 +15,6 @@ module.exports = [
 		title: "Work",
 		first_text: "I made everything by myself with mainly Node.js for the backend, Vue.js for the frontend, Ubuntu 20 Server for the server. I put everything on a github, so my code, tests and processes can be ananlyzed and read. I made the documentation as explicit as possible.",
 		second_text: "It's basically show off what I can do with times and what tools I know and how I use them.",
-		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa00003")
+		image: mongoose.Types.ObjectId("5f9d88d3faed1e8caaa80003")
 	}
 ]

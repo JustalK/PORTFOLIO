@@ -154,7 +154,7 @@ export default {
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: project.slug}});
+				this.$router.push({ name: 'project', params: {slug: project.slug, project: project, tags: this.tags}});
 			}, 2000);
 		}
 	}

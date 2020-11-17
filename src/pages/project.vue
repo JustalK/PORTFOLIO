@@ -19,11 +19,9 @@
 				:invisible_text="invisible_text"
 				:help="help" />
 			<components_slides
-				:invisible_slide="invisible_slide"
 				:title="title"
 				:background_image="background_image"
-				:all_slides="all_slides"
-				@change_slide="change_slide" />
+				:all_slides="all_slides" />
 			<components_pubs
 				:invisible="invisible" />
 		</div>
@@ -54,7 +52,6 @@ export default {
 			invisible: false,
 			invisible_text: true,
 			desactivate: true,
-			invisible_slide: true,
 			unmounted: false,
 			description: 'Loading...',
 			background_image: {},
@@ -72,9 +69,9 @@ export default {
 		},
 	},
 	async created() {
-		const tags = await this.get_all_tags();
+		const tags = this.$route.params.tags ? this.$route.params.tags : await this.get_all_tags();
 		const slug = this.$route.params.slug;
-		const project = await this.get_project_by_slug(slug);
+		const project = this.$route.params.project ? this.$route.params.project : await this.get_project_by_slug(slug);
 
 		this.update_page(project);
 		this.background_image = project.background_image;
@@ -83,10 +80,10 @@ export default {
 			this.update_tags(tags);
 			this.update_tags_selected(project.tags);
 		}
+
 		await this.$nextTick();
 		setTimeout(() => {
 			this.invisible_text = false;
-			this.invisible_slide = false;
 		}, 1);
 	},
 	async mounted() {
@@ -122,12 +119,6 @@ export default {
 			this.unmounted = true;
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
-		},
-		change_slide() {
-			this.invisible_slide = true;
-			setTimeout(async () => {
-				this.invisible_slide = false;
-			}, 1000);
 		}
 	}
 };

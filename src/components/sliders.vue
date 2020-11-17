@@ -62,7 +62,6 @@ export default {
 
 			// This Timeout is for loading the low quality before the hq
 			setTimeout(() => {
-				console.log(projects_array);
 				projects_array.map((project, index) => {
 					this.set_hq_background_project(project, index);
 				});
@@ -82,11 +81,13 @@ export default {
 		},
 		set_hq_background_project(project, index) {
 			const tmp = new Image();
-			tmp.src = project.images[0].path;
-			this.$refs.projects_list.childNodes[index].childNodes[0].style.backgroundImage='url(\'' + project.images[0].path + '\')';
-			tmp.addEventListener('load',() => {
-				this.$refs.low[index].classList.add('loaded');
-			});
+			if (project.images !== undefined && project.images.length > 0) {
+				tmp.src = project.images[0].path;
+				this.$refs.projects_list.childNodes[index].childNodes[0].style.backgroundImage='url(\'' + project.images[0].path + '\')';
+				tmp.addEventListener('load',() => {
+					this.$refs.low[index].classList.add('loaded');
+				});
+			}
 		},
 		change_page(direction) {
 			this.$emit('change_page', direction);
