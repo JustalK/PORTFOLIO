@@ -1,7 +1,10 @@
 <template>
 	<div id="SLIDE">
-		<a :style="set_background_project(background_image)">
+		<a>
 			<i class="fake_button" />
+			<div
+				ref="background"
+				class="background" />
 			<h2>{{ title }}</h2>
 			<components_slide
 				:invisible_slide="invisible_slide"
@@ -31,15 +34,11 @@ export default {
 		background_image: {
 			type: Object,
 			required: true
-		},
-		invisible_slide: {
-			type: Boolean,
-			required: true
 		}
 	},
-	emits: ['change_slide'],
 	data: () => {
 		return {
+			invisible_slide: true,
 			actual_index_slide: 0,
 			slide: {}
 		};
@@ -48,31 +47,44 @@ export default {
 		async all_slides(slides) {
 			const slide_obj = await this.get_slide_by_id(slides[0]);
 			this.update_slide(slide_obj);
+			await this.$nextTick();
+			this.invisible_slide = false;
+		},
+		background_image() {
+			this.set_background_project();
 		}
 	},
 	async mounted() {
 		if (this.all_slides.length > 0) {
 			const slide_obj = await this.get_slide_by_id(this.all_slides[0]);
 			this.update_slide(slide_obj);
+			this.set_background_project();
+			await this.$nextTick();
+			this.invisible_slide = false;
 		}
 	},
 	methods: {
 		change_slide() {
+			this.invisible_slide = true;
 			setTimeout(async () => {
 				const index_slide = this.next_index_slide();
 				const slide_obj = await this.get_slide_by_id(index_slide);
 				this.update_slide(slide_obj, this.actual_index_slide);
+				await this.$nextTick();
+				this.invisible_slide = false;
 			}, 500);
-			this.$emit('change_slide');
 		},
-		set_background_project(background_image) {
-			if (background_image.path === undefined) {
+		set_background_project() {
+			const tmp = new Image();
+			if (this.background_image.path === undefined) {
 				return null;
 			}
 
-			return {
-				'background-image': 'url(\'' + utils.absolute_path_from_relative(background_image.path) + '\')'
-			};
+			tmp.src = utils.absolute_path_from_relative(this.background_image.path);
+			this.$refs.background.style.backgroundImage='url(\'' + utils.absolute_path_from_relative(this.background_image.path) + '\')';
+			tmp.addEventListener('load',() => {
+				this.$refs.background.classList.add('loaded');
+			});
 		},
 		async get_slide_by_id(id) {
 			return api.get_slide_by_id(id);
