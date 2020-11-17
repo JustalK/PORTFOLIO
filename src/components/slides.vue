@@ -50,6 +50,12 @@ export default {
 			this.update_slide(slide_obj);
 		}
 	},
+	async mounted() {
+		if (this.all_slides.length > 0) {
+			const slide_obj = await this.get_slide_by_id(this.all_slides[0]);
+			this.update_slide(slide_obj);
+		}
+	},
 	methods: {
 		change_slide() {
 			setTimeout(async () => {

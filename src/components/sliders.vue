@@ -62,7 +62,6 @@ export default {
 
 			// This Timeout is for loading the low quality before the hq
 			setTimeout(() => {
-				console.log(projects_array);
 				projects_array.map((project, index) => {
 					this.set_hq_background_project(project, index);
 				});

@@ -72,9 +72,9 @@ export default {
 		},
 	},
 	async created() {
-		const tags = await this.get_all_tags();
+		const tags = this.$route.params.tags ? this.$route.params.tags : await this.get_all_tags();
 		const slug = this.$route.params.slug;
-		const project = await this.get_project_by_slug(slug);
+		const project = this.$route.params.project ? this.$route.params.project : await this.get_project_by_slug(slug);
 
 		this.update_page(project);
 		this.background_image = project.background_image;

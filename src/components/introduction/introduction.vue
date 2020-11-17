@@ -4,7 +4,7 @@
 			<span>Hello world, I'm <a
 				class="capitalize"
 				:href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.name }}</a>.</span>
-			<span>I'm a <em>{{ job }}</em>.</span>
+			<span>I'm a <em>{{ job }}</em></span>
 			<span>If any questions, contact me at <a :href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.email }}</a></span>
 		</span>
 	</div>
@@ -36,6 +36,7 @@ export default {
 				this.job += this.jobs[this.job_index].charAt(i);
 				setTimeout(this.writing, 50);
 			} else {
+				this.job += '.';
 				setTimeout(this.switch_job, 2000);
 			}
 		},

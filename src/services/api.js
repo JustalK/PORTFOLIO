@@ -20,7 +20,7 @@ export default {
 		return axios_call(utils.get_server_address() + '/api/pages', {params: {name: name}});
 	},
 	get_project_by_id: async id => {
-		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {id: id}});
+		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {id: id, populate: true}});
 	},
 	get_project_by_slug: async slug => {
 		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {slug: slug, populate: true}});

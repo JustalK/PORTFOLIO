@@ -24,6 +24,8 @@
 	& em {
 		text-shadow: 0 0 6px @background-bloc-0;
 		font-style: initial;
+		border-right: 0.5rem solid @text-color;
+		animation: blink-caret 0.75s step-end infinite;
 	}
 
 	& a {
@@ -67,4 +69,10 @@
 	.intro {
 		opacity: 1;
 	}
+}
+
+@keyframes blink-caret {
+	from,
+	to { border-color: transparent; }
+	50% { border-color: @text-color; }
 }

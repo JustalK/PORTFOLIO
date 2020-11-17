@@ -157,7 +157,7 @@ export default {
 				this.$refs.portfolio.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 			}, 1500);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: project.slug}});
+				this.$router.push({ name: 'project', params: {slug: project.slug, project: project, tags: this.tags}});
 			}, 2000);
 		}
 	}
