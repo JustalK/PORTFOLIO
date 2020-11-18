@@ -22,6 +22,21 @@
 		background-position: center center;
 		box-shadow: 10px 10px @background-shadow;
 
+		& .background {
+			height: 100%;
+			width: 100%;
+			background-size: cover;
+			background-position: center center;
+			position: absolute;
+			pointer-events: none;
+			opacity: 0;
+			.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+			&.loaded {
+				opacity: 1;
+			}
+		}
+
 		& i {
 			.button-window(10px, 12px, #61c3ff);
 
@@ -61,7 +76,7 @@
 
 @media screen and (max-width: @PHONE_MQ) {
 	#SLIDE {
-		height: 860px;
+		height: 1000px;
 
 		& i {
 			display: none;

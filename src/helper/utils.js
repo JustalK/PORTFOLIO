@@ -29,9 +29,9 @@ module.exports = {
 		return array === null || array.length === 0;
 	},
 	absolute_path_from_relative(path) {
-		return process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT + '/' + path;
+		return module.exports.get_server_address() + '/' + path;
 	},
 	get_server_address() {
-		return process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT;
+		return window.location.protocol + '//' + window.location.hostname + ':' + process.env.PORT;
 	}
 }

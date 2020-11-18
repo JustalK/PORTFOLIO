@@ -1,0 +1,110 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#RESUME {
+	position: relative;
+	overflow: hidden;
+
+	& h1 {
+		padding-top: 50px;
+		margin: 0;
+		color: @text-color-white;
+		text-transform: uppercase;
+		.font-size(5);
+	}
+
+	& > div {
+		margin: auto;
+		max-width: 1200px;
+		width: 100%;
+		position: relative;
+	}
+
+	& span:nth-child(3) {
+		margin: 20px 0 50px;
+		text-align: justify;
+		.font-size(2);
+	}
+
+	& iframe {
+		height: 1460px;
+		width: 100%;
+		opacity: 1;
+		.transition(all 0.4s cubic-bezier(0.87, 0.32, 0.81, 0.36));
+
+		&.invisible {
+			opacity: 0;
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1800) {
+	#RESUME > div {
+		max-width: 1200px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1500) {
+	#RESUME > div {
+		max-width: 1000px;
+	}
+}
+
+@media screen and (max-width: @SCREEN_1400) {
+	#RESUME {
+		& > div {
+			max-width: 900px;
+		}
+
+		& iframe {
+			height: 1270px;
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1200) {
+	#RESUME {
+		& > div {
+			max-width: 800px;
+		}
+
+		& iframe {
+			height: 1140px;
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1100) {
+	#RESUME {
+		& > div {
+			max-width: 600px;
+		}
+
+		& iframe {
+			height: 850px;
+		}
+	}
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	#RESUME {
+		& > div {
+			width: 90%;
+			margin: auto;
+		}
+
+		& h1 {
+			padding-top: 135px;
+			text-align: center;
+			.font-size(6);
+		}
+
+		& iframe {
+			height: 500px;
+		}
+
+		& span:nth-child(3) {
+			.font-size(2);
+		}
+	}
+}

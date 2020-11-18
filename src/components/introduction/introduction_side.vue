@@ -5,7 +5,7 @@
 		<components_introduction :props_introduction="props_introduction" />
 		<components_introduction_link
 			:props_link="props_link"
-			@articles="articles"
+			@resume="resume"
 			@portfolio="portfolio" />
 	</div>
 </template>
@@ -34,8 +34,8 @@ export default {
 	},
 	emits: ['zoom'],
 	methods: {
-		articles() {
-			this.animation_door('articles');
+		resume() {
+			this.animation_door('resume');
 		},
 		portfolio() {
 			this.animation_door('portfolio');

@@ -38,9 +38,17 @@ export default {
 			invisible: true,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
-				{name: 'Resume', link: 'articles', side: 'right'}
+				{name: 'Resume', link: 'resume', side: 'right'}
 			]
 		};
+	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - Home';
+			}
+		},
 	},
 	async mounted() {
 		await this.get_my_identity();

@@ -6,7 +6,8 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<img :src="slide_image()">
+		<img
+			ref="slide_image">
 	</div>
 </template>
 <script>
@@ -24,16 +25,27 @@ export default {
 		}
 	},
 	emits: ['change_slide'],
+	watch: {
+		slide() {
+			this.slide_image();
+		}
+	},
 	methods: {
 		change_slide() {
+			this.$refs.slide_image.classList.remove('loaded');
 			this.$emit('change_slide');
 		},
 		slide_image() {
-			if (this.slide.image === undefined) {
-				return '';
+			const tmp = new Image();
+			if (this.slide.image.path === undefined) {
+				return null;
 			}
 
-			return utils.absolute_path_from_relative(this.slide.image.path);
+			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
+			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
+			tmp.addEventListener('load',() => {
+				this.$refs.slide_image.classList.add('loaded');
+			});
 		}
 	}
 };

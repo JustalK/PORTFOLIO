@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const mongo_uri_builder = require('mongo-uri-builder');
+const logs = require('./libs/logs');
 
 module.exports = {
 	parse_db_uri: (db_name, db_uri, db_username, db_password) => {
@@ -28,8 +29,12 @@ module.exports = {
 	},
 	mongoose_connect: (db_name, db_uri, db_username, db_password) => {
 		const db_data = module.exports.parse_db_uri(db_name, db_uri, db_username, db_password);
+		logs.info('Database : ' + db_data.db + '|' + db_data.host + '|' + db_data.port);
 		const db_uri_data = module.exports.create_mongo_uri(db_data);
 
-		mongoose.connect(db_uri_data, { useNewUrlParser: true, useUnifiedTopology: true });
+		mongoose.connect(db_uri_data, { useNewUrlParser: true, useUnifiedTopology: true })
+			.catch(err => {
+				logs.info(err);
+			});
 	}
 };

@@ -13,6 +13,7 @@
 		<components_tags
 			:tags="tags"
 			:invisible="invisible"
+			:desactivate="desactivate"
 			:tags_selected="tags_selected"
 			@new_tags_selected="new_tags_selected" />
 		<components_text
@@ -54,6 +55,10 @@ export default {
 		invisible: {
 			type: Boolean,
 			required: true
+		},
+		desactivate: {
+			type: Boolean,
+			default: false
 		},
 		invisible_text: {
 			type: Boolean,

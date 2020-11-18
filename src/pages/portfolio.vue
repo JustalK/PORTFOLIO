@@ -59,6 +59,14 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
+	watch: {
+		$route: {
+			immediate: true,
+			handler() {
+				document.title = 'Justal Kevin - Portfolio';
+			}
+		},
+	},
 	async created() {
 		const tags = await this.get_all_tags();
 		const page = await this.get_page(this.$route.name);
@@ -119,9 +127,9 @@ export default {
 			this.are_projects_loading = true;
 			this.update_tags_selected(tags_selected);
 			await this.$nextTick();
+			this.update_slide(0);
 			const projects = await this.get_all_projects_with_tags(this.tags_selected);
 			setTimeout(() => {
-				this.update_slide(0);
 				this.update_projects(projects);
 			}, 1000);
 			setTimeout(() => {
@@ -146,7 +154,7 @@ export default {
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: project.slug}});
+				this.$router.push({ name: 'project', params: {slug: project.slug, project: project, tags: this.tags}});
 			}, 2000);
 		}
 	}

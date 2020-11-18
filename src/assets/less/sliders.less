@@ -166,7 +166,7 @@
 				}
 			}
 
-			& div {
+			& .panel {
 				transition: all 0.35s cubic-bezier(0.8, 0, 0.25, 1);
 				position: absolute;
 				transform: translateY(-100%);
@@ -224,6 +224,23 @@
 				position: absolute;
 				box-shadow: 0 0 70px rgba(0, 0, 0, 0.75) inset;
 			}
+
+			& .low {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+				background-size: cover;
+				background-position: center center;
+				box-shadow: 0 0 70px rgba(0, 0, 0, 0.75) inset;
+				.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+				&.loaded {
+					opacity: 0;
+				}
+			}
 		}
 	}
 
@@ -261,7 +278,7 @@
 			}
 
 			&.project-selected {
-				& div {
+				& .panel {
 					transform: translateY(0);
 
 					&::before {

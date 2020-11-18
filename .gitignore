@@ -4,9 +4,10 @@ logs
 server/logs/*.log
 dev/assets/*
 dev/index.js
-v8-compile-cache-0
+dev/index.html
 package-lock.json
 coverage
 .nyc_output
 index.html
 docs
+cypress

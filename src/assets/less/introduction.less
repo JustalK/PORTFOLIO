@@ -8,16 +8,24 @@
 	width: 100%;
 	text-align: center;
 	top: 40%;
+	user-select: none;
 	opacity: 0;
 	color: @text-color;
 	transform: translateY(-50%);
+	font-family: 'Lato-Light', sans-serif;
 	.font-size(3);
 
-	font-family: 'Lato-Light', sans-serif;
 	.transition(all 0.5s cubic-bezier(0.1, 0.59, 0.02, 0.6) 1s);
 
 	& span {
 		display: block;
+	}
+
+	& em {
+		text-shadow: 0 0 6px @background-bloc-0;
+		font-style: initial;
+		border-right: 0.5rem solid @text-color;
+		animation: blink-caret 0.75s step-end infinite;
 	}
 
 	& a {
@@ -40,6 +48,10 @@
 			transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
 		}
 
+		&::before {
+			top: 0;
+		}
+
 		&::after {
 			left: initial;
 			right: 0;
@@ -56,5 +68,17 @@
 .mounted {
 	.intro {
 		opacity: 1;
+	}
+}
+
+@keyframes blink-caret {
+	from,
+	to { border-color: transparent; }
+	50% { border-color: @text-color; }
+}
+
+@media screen and (max-width: @PHONE_MQ) {
+	.intro {
+		.font-size(2.5);
 	}
 }
