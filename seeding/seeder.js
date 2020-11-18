@@ -1,6 +1,7 @@
 'use strict';
 
-const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
+const utils = require('../server/libs/utils');
+const mode = utils.mode(process.env.NODE_ENV);
 require('dotenv').config({path: './env/.env.' + mode});
 const path = require('path');
 const { Seeder } = require('mongo-seeding');

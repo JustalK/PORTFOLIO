@@ -47,15 +47,16 @@ module.exports = {
 		new StyleLintPlugin({
 			fix: true,
 			files: [
-				'src/**/*.{css,sss,less,scss,sass}',
-				'src/**/**/*.{css,sss,less,scss,sass}'
+				'src/assets/*.{css,sss,less,scss,sass}',
+				'src/assets/**/*.{css,sss,less,scss,sass}'
 			]
 		}),
 		new CopyPlugin({
 			patterns: [
 				{ from: 'src/assets/imgs', to: 'assets/imgs' },
 				{ from: 'src/assets/fonts', to: 'assets/fonts' },
-				{ from: 'src/assets/favicon', to: 'assets/favicon' }
+				{ from: 'src/assets/favicon', to: 'assets/favicon' },
+				{ from: 'src/libs', to: 'libs' }
 			],
 		}),
 		new webpack.DefinePlugin({
@@ -88,7 +89,7 @@ module.exports = {
 			},
 			{
 				test: /\.less$/,
-				exclude: /node_modules/,
+				exclude: [ '/node_modules/', '/src/libs/'],
 				use: [ 'style-loader', 'css-loader', {
 					loader: 'postcss-loader',
 					options: {

@@ -38,7 +38,7 @@ export default {
 			invisible: true,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
-				{name: 'Resume', link: 'articles', side: 'right'}
+				{name: 'Resume', link: 'resume', side: 'right'}
 			]
 		};
 	},
