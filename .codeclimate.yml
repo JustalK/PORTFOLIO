@@ -1,3 +1,4 @@
 exclude_patterns:
     - "seeding/datas/**/*"
     - "tests/"
+    - "src/libs/"
