@@ -1,10 +1,11 @@
 'use strict';
 
+const utils = require('./libs/utils');
+const mode = utils.mode(process.env.NODE_ENV);
+require('dotenv').config({ path: './env/.env.' + mode });
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const logs = require('./libs/logs');
-const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
-require('dotenv').config({ path: './env/.env.' + mode });
 
 module.exports = {
 	create_server: (name, port) => {

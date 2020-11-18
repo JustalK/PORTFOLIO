@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = {
+	mode: node_env => {
+		return node_env !== undefined ? node_env : 'production';
+	},
 	is_value_exist: (value) => {
 		return value !== undefined;
 	},
