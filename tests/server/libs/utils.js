@@ -64,3 +64,18 @@ test('[STATIC] Testing add_slug_filter with correct value', t => {
 	t.is(typeof filters, 'object');
 	t.not(filters.test_key, undefined);
 });
+
+test('[STATIC] Testing mode with correct value', t => {
+	const mode = m.mode(process.env.NODE_ENV);
+
+	process.env.NODE_ENV = undefined;
+	t.is(typeof mode, 'string');
+	t.is(mode, 'test');
+});
+
+test('[STATIC] Testing mode with wrong value', t => {
+	const mode = m.mode(undefined);
+
+	t.is(typeof mode, 'string');
+	t.is(mode, 'production');
+});

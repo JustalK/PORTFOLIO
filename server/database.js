@@ -32,9 +32,6 @@ module.exports = {
 		logs.info('Database : ' + db_data.db + '|' + db_data.host + '|' + db_data.port);
 		const db_uri_data = module.exports.create_mongo_uri(db_data);
 
-		mongoose.connect(db_uri_data, { useNewUrlParser: true, useUnifiedTopology: true })
-			.catch(err => {
-				logs.info(err);
-			});
+		mongoose.connect(db_uri_data, { useNewUrlParser: true, useUnifiedTopology: true });
 	}
 };
