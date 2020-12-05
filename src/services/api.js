@@ -31,6 +31,9 @@ export default {
     get_tags: async () => {
 		return axios_call(utils.get_server_address() + '/api/tags');
 	},
+	get_my_jobs: async () => {
+		return axios_call(utils.get_server_address() + '/api/jobs');
+	},
 	get_my_identity: async () => {
 		return axios_call(utils.get_server_address() + '/api/contacts/my-identity');
 	}

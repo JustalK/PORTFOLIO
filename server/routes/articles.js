@@ -14,7 +14,7 @@ const filter = queries => {
 	utils.add_tags_filter(params, 'tags', queries.tags);
 
 	return params;
-}
+};
 
 // Return the list of all the articles
 routes.route('/').get(async (request, response) => {
