@@ -72,6 +72,53 @@ test('[STATIC] Testing the api articles with params', async t => {
 	t.not(datas[1]._id, undefined);
 });
 
+test('[STATIC] Testing the api articles count without params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/count')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas, 'object');
+	t.not(datas.total, undefined);
+});
+
+test('[STATIC] Testing the api articles count with params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/count?tags=5f95461688489acdd8ee5872')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas, 'object');
+	t.not(datas.total, undefined);
+});
+
+test('[STATIC] Testing the api articles menu without params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/articles/menu')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas[0], 'object');
+	t.not(datas[0].title, undefined);
+	t.not(datas[0].slug, undefined);
+	t.is(datas[0].images, undefined);
+	t.not(datas[1].title, undefined);
+	t.not(datas[1].slug, undefined);
+	t.is(datas[1].images, undefined);
+});
+
 test('[STATIC] Testing the api one articles with params slug', async t => {
 	const response = await new Promise((resolve, reject) => {
 		chai.request(server).get('/api/articles/one?slug=portfolio')
@@ -139,6 +186,23 @@ test('[STATIC] Testing the api all tags without params', async t => {
 	t.not(datas[0].name, undefined);
 	t.not(datas[1]._id, undefined);
 	t.not(datas[1].name, undefined);
+});
+
+test('[STATIC] Testing the api all jobs without params', async t => {
+	const response = await new Promise((resolve, reject) => {
+		chai.request(server).get('/api/jobs')
+			.end((err, response) => {
+				resolve(response);
+			});
+	});
+
+	t.is(response.status, 200);
+	const datas = response.body;
+	t.is(typeof datas[0], 'object');
+	t.not(datas[0]._id, undefined);
+	t.not(datas[0].title, undefined);
+	t.not(datas[1]._id, undefined);
+	t.not(datas[1].title, undefined);
 });
 
 test('[STATIC] Testing the api contact my identity', async t => {

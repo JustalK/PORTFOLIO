@@ -4,7 +4,7 @@ module.exports = dbs => ({
 	get_all: async (params, fields = null, skip = 0, limit = null, populate = null) => {
 		return dbs.get_all(params, fields, skip, limit, populate);
 	},
-	get_all_informations: async (params, skip = 0, limit = null) => {
+	get_all_informations: async (params, skip, limit) => {
 		return module.exports(dbs).get_all(params, null, skip, limit, 'images');
 	},
 	get_all_menu: async (params) => {
