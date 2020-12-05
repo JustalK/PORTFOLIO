@@ -27,10 +27,10 @@ module.exports = {
 			module.exports.adding_route('contacts', '/api/contacts', server);
 			module.exports.adding_route('pages', '/api/pages', server);
 			module.exports.adding_route('slides', '/api/slides', server);
+			module.exports.adding_route('jobs', '/api/jobs', server);
 			server.use(history());
 
 			server.use('/api/documentation', express.static('documentation'));
-			console.log(process.env.FOLDER);
 			server.use('/', express.static(process.env.FOLDER));
 
 			server.listen(port, host, () => {

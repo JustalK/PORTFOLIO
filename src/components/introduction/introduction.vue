@@ -10,6 +10,8 @@
 	</div>
 </template>
 <script>
+import api from '../../services/api';
+
 export default {
 	props: {
 		props_introduction: {
@@ -19,7 +21,7 @@ export default {
 	},
 	data: () => {
 		return {
-			jobs: ['Full stack developer', 'Web Developer', 'Frontend Developer', 'Backend Developer', 'System Administrator'],
+			jobs: [],
 			job_index: 0,
 			job: ''
 		};
@@ -29,7 +31,18 @@ export default {
 			this.writing();
 		},
 	},
+	async mounted() {
+		const jobs = await this.get_my_jobs();
+		const jobs_title = jobs.map(job => job.title);
+		this.update_jobs(jobs_title);
+	},
 	methods: {
+		async get_my_jobs() {
+			return api.get_my_jobs();
+		},
+		update_jobs(jobs) {
+			this.jobs = jobs;
+		},
 		writing() {
 			const i = this.job.length;
 			if (i < this.jobs[this.job_index].length) {
