@@ -7,7 +7,7 @@ info:
     name: API Support for PORFOLIO
     email: justal.kevin@gmail.com
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8082
     description: Local server
 tags:
   - name: Articles
@@ -37,7 +37,7 @@ paths:
           schema:
             type: array
             items:
-              "$ref": "#/components/schemas/tags"
+              $ref: "#/components/schemas/tags"
           description: The tags for filtering the document
         - in: query
           name: page
@@ -52,7 +52,78 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/articles"
+                  $ref: "#/components/schemas/articles"
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Server error
+  /api/articles/menu:
+    get:
+      tags:
+      - Articles
+      summary: Get the only the necessary informations for the menu
+      description: ''
+      operationId: articlesMenu
+      parameters:
+        - in: query
+          name: tags
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/tags"
+          description: The tags for filtering the document
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  slug:
+                    type: string
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Server error
+  /api/articles/count:
+    get:
+      tags:
+      - Articles
+      summary: Get the total number of article
+      description: ''
+      operationId: articlesCount
+      parameters:
+        - in: query
+          name: tags
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/tags"
+          description: The tags for filtering the document
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
         '400':
           description: Bad request
         '401':
@@ -87,7 +158,7 @@ paths:
             application/json:
               schema:
                 type: object
-                "$ref": "#/components/schemas/articles"
+                $ref: "#/components/schemas/articles"
         '400':
           description: Bad request
         '401':
@@ -114,7 +185,7 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/tags"
+                  $ref: "#/components/schemas/tags"
         '400':
           description: Bad request
         '401':
@@ -140,7 +211,7 @@ paths:
             application/json:
               schema:
                 type: object
-                "$ref": "#/components/schemas/contacts"
+                $ref: "#/components/schemas/contacts"
         '400':
           description: Bad request
         '401':
@@ -172,7 +243,39 @@ paths:
             application/json:
               schema:
                 type: array
-                "$ref": "#/components/schemas/pages"
+                $ref: "#/components/schemas/pages"
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Server error
+#/** =============================================================================>
+#===========================> API PAGES
+#=============================================================================> **/
+  /api/jobs:
+    get:
+      tags:
+      - Jobs
+      summary: Get my jobs information
+      description: ''
+      operationId: jobs
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: The title of my job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: "#/components/schemas/jobs"
         '400':
           description: Bad request
         '401':
@@ -281,6 +384,33 @@ components:
         name:
           type: string
           description: The name of the tag
+        created_at:
+          type: date
+          description: The date of creation
+          example: '20/10/2018 10:00:12'
+          readOnly: true
+        updated_at:
+          type: date
+          description: The date of the last update
+          example: '20/10/2018 10:00:12'
+          readOnly: true
+        __v:
+          type: number
+          description: Number of update made since the creation
+          default: 0
+          example: 12
+          readOnly: true
+    jobs:
+      type: object
+      required:
+        - title
+      properties:
+        _id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          description: The title of the job
         created_at:
           type: date
           description: The date of creation
