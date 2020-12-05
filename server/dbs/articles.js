@@ -5,12 +5,12 @@ const filename = path.basename(__filename, '.js');
 const model = require('../models/' + filename);
 
 module.exports = {
-	get_all: (find, skip, limit) => {
+	get_all: (find, fields, skip, limit, populated) => {
 		return model
-			.find(find)
+			.find(find, fields)
 			.skip(skip)
 			.limit(limit)
-			.populate('images');
+			.populate(populated);
 	},
 	get_one: (find) => {
 		return model
