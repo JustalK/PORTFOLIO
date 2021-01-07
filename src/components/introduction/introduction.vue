@@ -44,13 +44,17 @@ export default {
 			this.jobs = jobs;
 		},
 		writing() {
-			const i = this.job.length;
-			if (i < this.jobs[this.job_index].length) {
-				this.job += this.jobs[this.job_index].charAt(i);
-				setTimeout(this.writing, 50);
+			if (this.job !== undefined) {
+				const i = this.job.length;
+				if (i < this.jobs[this.job_index].length) {
+					this.job += this.jobs[this.job_index].charAt(i);
+					setTimeout(this.writing, 50);
+				} else {
+					this.job += '.';
+					setTimeout(this.switch_job, 2000);
+				}
 			} else {
-				this.job += '.';
-				setTimeout(this.switch_job, 2000);
+				setTimeout('', 50);
 			}
 		},
 		switch_job() {
