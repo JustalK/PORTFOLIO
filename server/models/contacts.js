@@ -21,6 +21,10 @@ const schema = new mongoose.Schema(
 		email: {
 			type: String,
 			require: true
+		},
+		image: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'images'
 		}
 	},
 	{

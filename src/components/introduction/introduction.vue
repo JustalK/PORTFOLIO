@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<span class="intro">
+			<img :src="props_introduction.image">
 			<span>Hello world, I'm <a
 				class="capitalize"
 				:href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.name }}</a>.</span>

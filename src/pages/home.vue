@@ -66,10 +66,11 @@ export default {
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
-			this.update_introduction(my_identity.fullname, my_identity.email);
+			const image_path = my_identity.image !== null ? my_identity.image.path : null;
+			this.update_introduction(my_identity.fullname, my_identity.email, image_path);
 		},
-		update_introduction(name, email) {
-			this.props_introduction = {name, email};
+		update_introduction(name, email, image) {
+			this.props_introduction = {name, email, image};
 		}
 	}
 };
