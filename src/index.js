@@ -7,10 +7,10 @@ import portfolio from './pages/portfolio';
 import project from './pages/project';
 import page_not_found from './pages/page_not_found';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faUserSecret);
+library.add(faGooglePlay);
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 

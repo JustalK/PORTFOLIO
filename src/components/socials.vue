@@ -2,7 +2,7 @@
 	<div
 		id="SOCIALS"
 		:class="{invisible: invisible}">
-		<a :href="url"><font-awesome-icon icon="user-secret" /></a>
+		<a :href="url"><font-awesome-icon :icon="['fab', 'google-play']" /></a>
 	</div>
 </template>
 <script>

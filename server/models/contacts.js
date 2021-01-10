@@ -22,6 +22,9 @@ const schema = new mongoose.Schema(
 			type: String,
 			require: true
 		},
+		android_url: {
+			type: String
+		},
 		image: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'images'
