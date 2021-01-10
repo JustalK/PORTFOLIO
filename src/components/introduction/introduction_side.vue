@@ -2,6 +2,7 @@
 	<div
 		:class="[props_link.side,{active:props_go_open_door}]"
 		class="bloc">
+		<slot />
 		<components_introduction :props_introduction="props_introduction" />
 		<components_introduction_link
 			:props_link="props_link"

@@ -6,6 +6,13 @@ import resume from './pages/resume';
 import portfolio from './pages/portfolio';
 import project from './pages/project';
 import page_not_found from './pages/page_not_found';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(faUserSecret);
+Vue.component('FontAwesomeIcon', FontAwesomeIcon);
+Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 

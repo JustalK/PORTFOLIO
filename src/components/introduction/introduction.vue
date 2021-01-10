@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="introduction">
 		<span class="intro">
 			<img :src="props_introduction.image">
 			<span>Hello world, I'm <a

@@ -10,7 +10,11 @@
 				:props_link="props_links[0]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
-				@zoom="zoom" />
+				@zoom="zoom">
+				<components_socials
+					:invisible="invisible"
+					url="http://localhost:8082/" />
+			</components_introduction_side>
 			<components_introduction_side
 				:props_link="props_links[1]"
 				:props_introduction="props_introduction"
@@ -22,13 +26,15 @@
 <script>
 import introduction_side from '../components/introduction/introduction_side';
 import github from '../components/main/github';
+import socials from '../components/socials';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
 export default {
 	components: {
 		components_introduction_side: introduction_side,
-		components_github: github
+		components_github: github,
+		components_socials: socials
 	},
 	data: () => {
 		return {
