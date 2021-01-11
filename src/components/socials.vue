@@ -1,8 +1,9 @@
 <template>
 	<div
-		id="SOCIALS"
-		:class="{invisible: invisible}">
-		<a :href="url"><font-awesome-icon :icon="['fab', 'google-play']" /></a>
+		id="SOCIALS">
+		<a
+			:class="{invisible: invisible}"
+			:href="url"><font-awesome-icon :icon="['fab', 'google-play']" /></a>
 	</div>
 </template>
 <script>
