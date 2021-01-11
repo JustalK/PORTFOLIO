@@ -3,7 +3,7 @@
 		id="SOCIALS">
 		<a
 			:class="{invisible: invisible}"
-			:href="url"><font-awesome-icon :icon="['fab', 'google-play']" /></a>
+			:href="props_introduction.android_url"><font-awesome-icon :icon="['fab', 'google-play']" /></a>
 	</div>
 </template>
 <script>
@@ -14,8 +14,8 @@ export default {
 			type: Boolean,
 			required: true
 		},
-		url: {
-			type: String,
+		props_introduction: {
+			type: Object,
 			required: true
 		}
 	}

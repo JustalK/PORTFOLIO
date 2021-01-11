@@ -13,6 +13,7 @@
 				@zoom="zoom">
 				<components_socials
 					:invisible="invisible"
+					:props_introduction="props_introduction"
 					url="http://localhost:8082/" />
 			</components_introduction_side>
 			<components_introduction_side
@@ -73,10 +74,10 @@ export default {
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
 			const image_path = my_identity.image !== null ? my_identity.image.path : null;
-			this.update_introduction(my_identity.fullname, my_identity.email, image_path);
+			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url);
 		},
-		update_introduction(name, email, image) {
-			this.props_introduction = {name, email, image};
+		update_introduction(name, email, image, android_url) {
+			this.props_introduction = {name, email, image, android_url};
 		}
 	}
 };
