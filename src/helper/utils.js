@@ -25,6 +25,9 @@ module.exports = {
 	add_class_to_element(element, newclass) {
 		element.classList.add(newclass);
 	},
+	remove_class_to_element(element, newclass) {
+		element.classList.remove(newclass);
+	},
 	is_array_empty(array) {
 		return array === null || array.length === 0;
 	},

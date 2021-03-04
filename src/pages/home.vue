@@ -66,8 +66,11 @@ export default {
 			utils.add_class_to_element(this.$refs.home, 'unmounted');
 		},
 		hovering(event) {
-			console.log(event);
-			utils.add_class_to_element(this.$refs.home, 'hovering');
+			if(event) {
+				utils.add_class_to_element(this.$refs.home, 'hovering');
+			} else {
+				utils.remove_class_to_element(this.$refs.home, 'hovering');
+			}
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
