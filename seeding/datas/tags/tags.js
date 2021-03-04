@@ -102,5 +102,53 @@ module.exports = [
   {
     id: mongoose.Types.ObjectId("5f95461688489acdd8ee5895"),
     name: "UI/UX Design"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5896"),
+    name: "Next.js"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5897"),
+    name: "Cypress"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5898"),
+    name: "Prisma"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5899"),
+    name: "GraphQl"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5900"),
+    name: "Dart/Flutter"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5901"),
+    name: "Travis"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5902"),
+    name: "CircleCi"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5903"),
+    name: "GraphCms"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5904"),
+    name: "Docker"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5905"),
+    name: "Node.js"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5906"),
+    name: "PM2"
+  },
+  {
+    id: mongoose.Types.ObjectId("5f95461688489acdd8ee5907"),
+    name: "Typescript"
   }
 ]
