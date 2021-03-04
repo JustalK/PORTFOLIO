@@ -13,8 +13,7 @@
 				@zoom="zoom">
 				<components_socials
 					:invisible="invisible"
-					:props_introduction="props_introduction"
-					url="http://localhost:8082/" />
+					:props_introduction="props_introduction" />
 			</components_introduction_side>
 			<components_introduction_side
 				:props_link="props_links[1]"
