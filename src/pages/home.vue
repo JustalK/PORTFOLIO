@@ -10,12 +10,13 @@
 				:props_link="props_links[0]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
-				@zoom="zoom" />
+				@zoom="zoom"
+				@hovering="hovering" />
 			<components_introduction_side
 				:props_link="props_links[1]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
-				@zoom="zoom" />
+				@hovering="hovering" />
 		</div>
 	</div>
 </template>
@@ -63,6 +64,10 @@ export default {
 			this.go_open_door = true;
 			this.invisible = true;
 			utils.add_class_to_element(this.$refs.home, 'unmounted');
+		},
+		hovering(event) {
+			console.log(event);
+			utils.add_class_to_element(this.$refs.home, 'hovering');
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();

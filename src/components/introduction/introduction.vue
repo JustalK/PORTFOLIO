@@ -2,9 +2,12 @@
 	<div class="introduction">
 		<span class="intro">
 			<a
-				:class="{android: true, invisible: invisible}"
+				:class="{android: true}"
 				:href="props_introduction.android_url">
-				<img :src="props_introduction.image">
+				<img
+					:src="props_introduction.image"
+					@mouseover="enter_hovering"
+					@mouseleave="leave_hovering">
 			</a>
 			<span>Hello world, I'm <a
 				class="capitalize"
@@ -24,6 +27,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['hovering'],
 	data: () => {
 		return {
 			jobs: [],
@@ -66,6 +70,12 @@ export default {
 			this.job_index = (this.job_index + 1) % this.jobs.length;
 			this.job = '';
 			this.writing();
+		},
+		enter_hovering() {
+			this.$emit('hovering', true);
+		},
+		leave_hovering() {
+			this.$emit('hovering', false);
 		}
 	}
 };
