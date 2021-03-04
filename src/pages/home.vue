@@ -16,6 +16,7 @@
 				:props_link="props_links[1]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
+				@zoom="zoom"
 				@hovering="hovering" />
 		</div>
 	</div>
