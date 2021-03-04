@@ -28,6 +28,10 @@ const schema = new mongoose.Schema(
 		image: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'images'
+		},
+		image_alternative: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'images'
 		}
 	},
 	{

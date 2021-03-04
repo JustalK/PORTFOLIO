@@ -8,6 +8,7 @@ module.exports = {
 	get_one: (find) => {
 		return model
 			.findOne(find)
-			.populate('image');
+			.populate('image')
+			.populate('image_alternative');
 	}
 };

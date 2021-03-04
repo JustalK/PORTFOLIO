@@ -1,7 +1,11 @@
 <template>
 	<div class="introduction">
 		<span class="intro">
-			<img :src="props_introduction.image">
+			<a
+				:class="{android: true, invisible: invisible}"
+				:href="props_introduction.android_url">
+				<img :src="props_introduction.image">
+			</a>
 			<span>Hello world, I'm <a
 				class="capitalize"
 				:href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.name }}</a>.</span>

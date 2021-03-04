@@ -10,11 +10,7 @@
 				:props_link="props_links[0]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
-				@zoom="zoom">
-				<components_socials
-					:invisible="invisible"
-					:props_introduction="props_introduction" />
-			</components_introduction_side>
+				@zoom="zoom" />
 			<components_introduction_side
 				:props_link="props_links[1]"
 				:props_introduction="props_introduction"
@@ -26,15 +22,13 @@
 <script>
 import introduction_side from '../components/introduction/introduction_side';
 import github from '../components/main/github';
-import socials from '../components/socials';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
 export default {
 	components: {
 		components_introduction_side: introduction_side,
-		components_github: github,
-		components_socials: socials
+		components_github: github
 	},
 	data: () => {
 		return {
@@ -72,7 +66,8 @@ export default {
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
-			const image_path = my_identity.image !== null ? my_identity.image.path : null;
+			console.log(my_identity);
+			const image_path = my_identity.image !== null ? my_identity.image_alternative.path : null;
 			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url);
 		},
 		update_introduction(name, email, image, android_url) {
