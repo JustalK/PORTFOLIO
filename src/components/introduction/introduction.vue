@@ -3,11 +3,12 @@
 		<span class="intro">
 			<a
 				:class="{android: true}"
-				:href="props_introduction.android_url">
+				:href="props_introduction.android_url"
+				@mouseover="enter_hovering"
+				@mouseleave="leave_hovering">
 				<img
-					:src="props_introduction.image"
-					@mouseover="enter_hovering"
-					@mouseleave="leave_hovering">
+					:src="props_introduction.image">
+				<span class="press">Press me</span>
 			</a>
 			<span>Hello world, I'm <a
 				class="capitalize"
