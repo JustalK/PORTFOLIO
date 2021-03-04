@@ -66,7 +66,6 @@ export default {
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
-			console.log(my_identity);
 			const image_path = my_identity.image !== null ? my_identity.image_alternative.path : null;
 			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url);
 		},
