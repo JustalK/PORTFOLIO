@@ -162,5 +162,9 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5910'),
 		name: 'HubSpot'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5911'),
+		name: 'Apollo Server'
 	}
 ];

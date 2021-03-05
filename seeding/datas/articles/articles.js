@@ -35,6 +35,36 @@ module.exports = [
 		order: -1
 	},
 	{
+		title: 'Manypixels Customer App',
+		slug: 'manypixels-customer-app',
+		short_description: 'The customer app of Manypixels.co',
+		long_description: 'A customer app is written with React.js, Prisma, Express, GraphQl, Apollo Server. This website/app is what manypixels is selling as a product for their client.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCms
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // Less
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5899'), // GraphQl
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3fddd1e00baa00001'),
+		order: -1
+	},
+	{
 		title: 'Manypixels Website',
 		slug: 'manypixels-website',
 		short_description: 'The static website of Manypixels.co',

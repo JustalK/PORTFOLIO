@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999'),
+		name: 'Manypixels App Website',
+		path: './assets/imgs/manypixels-app/intro.jpg',
+		path_low: './assets/imgs/manypixels-app/intro_low.jpg'
+	},
+	{
 		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000'),
 		name: 'Manypixels Website',
 		path: './assets/imgs/manypixels/intro.jpg',
