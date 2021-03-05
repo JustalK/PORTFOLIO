@@ -35,6 +35,34 @@ module.exports = [
 		order: -1
 	},
 	{
+		title: 'Manypixels Website',
+		slug: 'manypixels-website',
+		short_description: 'The static website of Manypixels.co',
+		long_description: 'A static website written with Next.js, Bulma, Sass. The content of the website arrive from GraphCms. The website is also linked to Hubspot.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5873'), // Next.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCms
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // Less
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5894'), // SEO
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5909'), // Bulma
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5910') // Hubspot
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3fddd1e00aaa00001'),
+		order: -1
+	},
+	{
 		title: 'Altantic Grains App',
 		slug: 'atlantic-grains',
 		short_description: 'An applications for managing clients, sales, processes, trucks, stocks and deliveries.',

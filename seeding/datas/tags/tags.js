@@ -57,7 +57,7 @@ module.exports = [
 	},
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5884'),
-		name: 'LESS'
+		name: 'LESS/SASS'
 	},
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5885'),
@@ -154,5 +154,13 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5908'),
 		name: 'Jenkins'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5909'),
+		name: 'Bulma'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5910'),
+		name: 'HubSpot'
 	}
 ];
