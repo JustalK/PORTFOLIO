@@ -40,8 +40,11 @@ const	CAMERA_START_ROTATION_Z = 0;
 const BACKGROUND_COLOR = 0x000000;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
 const TRIANGLE_COLOR = 0x000000;
+const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
+const FOG_POWER = 0.0002;
 const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: true });
 const fTriangle = new THREE.Face3( 0, 1, 2 );
+const framerate = 1000/60;
 
 export default {
 	components: {
@@ -53,7 +56,10 @@ export default {
 			camera: null,
 			scene: null,
 			renderer: null,
+			clock: null,
+			raycaster: null,
 			triangleHover: [],
+			mouse: { x: 0, y: 0 },
 			go_open_door: false,
 			go_zoom: false,
 			props_introduction: {},
@@ -85,11 +91,16 @@ export default {
 			this.initCamera();
 			this.initScene(BACKGROUND_COLOR);
 			this.initLight(LIGHT_AMBIANT_COLOR);
+			this.initClock();
+			this.initFog(false);
+			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
-			console.log(this.scene);
 			this.$refs.home.appendChild( this.renderer.domElement );
 			this.renderer.render( this.scene, this.camera );
+			this.animate();
+
+			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
 		},
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
@@ -113,6 +124,18 @@ export default {
 			const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
 			light.position.set(0,0,8000);
 			this.scene.add( light );
+		},
+		initClock() {
+			this.clock = new THREE.Clock();
+			// Set the time to 0
+			this.clock.start();
+		},
+		initFog(fog) {
+			if(fog) this.scene.fog = new THREE.FogExp2( 0x000000, FOG_POWER );
+		},
+		initRaycaster() {
+			this.raycaster = new THREE.Raycaster();
+			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
 			this.addObject3(500,-200,7000, 1000,-1000,7000, 3000,1500,7000);
@@ -151,6 +174,30 @@ export default {
 			mTriangleBlack.side = THREE.DoubleSide;
 			this.triangleHover.push(new THREE.Mesh( geometries[1], mTriangleBlack ));
 			this.scene.add(this.triangleHover[this.triangleHover.length-1]);
+		},
+		animate() {
+			setTimeout(this.animate, framerate );
+			this.renderer.render( this.scene, this.camera );
+			this.searchingMatchMouseAndMesh();
+		},
+		searchingMatchMouseAndMesh() {
+			this.raycaster.setFromCamera( this.mouse, this.camera );
+			var triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
+			console.log(triangleIntersects);
+
+			if(triangleIntersects.length>0) {
+				for(var i=this.triangleHover.length;i--;) {
+					if(triangleIntersects[0].object==this.triangleHover[i]) {
+						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR_HOVER);
+					} else {
+						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR);
+					}
+				}
+			}
+		},
+		onDocumentMouseMove(event) {
+			this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+			this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 		},
 		zoom() {
 			this.go_zoom = true;
