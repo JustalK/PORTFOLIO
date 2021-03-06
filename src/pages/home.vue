@@ -26,6 +26,22 @@ import introduction_side from '../components/introduction/introduction_side';
 import github from '../components/main/github';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import * as THREE from '../libs/three.js';
+
+const FOV = 50;
+const WINDOWS_WIDTH = window.innerWidth;
+const WINDOWS_HEIGHT = window.innerHeight;
+const	CAMERA_START_POSITION_X = 0;
+const	CAMERA_START_POSITION_Y = 0;
+const	CAMERA_START_POSITION_Z = 8000;
+const	CAMERA_START_ROTATION_X = 0;
+const	CAMERA_START_ROTATION_Y = 0;
+const	CAMERA_START_ROTATION_Z = 0;
+const BACKGROUND_COLOR = 0x000000;
+const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
+const TRIANGLE_COLOR = 0x000000;
+const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: true });
+const fTriangle = new THREE.Face3( 0, 1, 2 );
 
 export default {
 	components: {
@@ -34,6 +50,10 @@ export default {
 	},
 	data: () => {
 		return {
+			camera: null,
+			scene: null,
+			renderer: null,
+			triangleHover: [],
 			go_open_door: false,
 			go_zoom: false,
 			props_introduction: {},
@@ -53,6 +73,7 @@ export default {
 		},
 	},
 	async mounted() {
+		this.init();
 		await this.get_my_identity();
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
 		setTimeout(() => {
@@ -60,6 +81,77 @@ export default {
 		}, 1000);
 	},
 	methods: {
+		init() {
+			this.initCamera();
+			this.initScene(BACKGROUND_COLOR);
+			this.initLight(LIGHT_AMBIANT_COLOR);
+			this.createWorld();
+			this.renderWebGL();
+			console.log(this.scene);
+			this.$refs.home.appendChild( this.renderer.domElement );
+			this.renderer.render( this.scene, this.camera );
+		},
+		initCamera() {
+			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
+			this.camera.position.set(CAMERA_START_POSITION_X,CAMERA_START_POSITION_Y,CAMERA_START_POSITION_Z);
+			this.camera.rotation.set(CAMERA_START_ROTATION_X,CAMERA_START_ROTATION_Y,CAMERA_START_ROTATION_Z);
+		},
+		initScene(color) {
+			this.scene = new THREE.Scene();
+			this.scene.background = new THREE.Color( color );
+		},
+		renderWebGL() {
+			this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+			this.renderer.setPixelRatio( window.devicePixelRatio );
+			this.renderer.setSize( window.innerWidth, window.innerHeight );
+			this.renderer.gammaInput = true;
+			this.renderer.gammaOutput = true;
+			this.renderer.powerPreference = 'high-performance';
+		},
+		initLight(color) {
+			this.scene.add(new THREE.AmbientLight(color,0.8));
+			const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+			light.position.set(0,0,8000);
+			this.scene.add( light );
+		},
+		createWorld() {
+			this.addObject3(500,-200,7000, 1000,-1000,7000, 3000,1500,7000);
+			this.addObject3(500,-200,7000, 1000,1000,7000, 3000,1500,7000);
+			this.addObject3(500,-200,7000, 1000,1000,7000, 0,0,7000);
+			this.addObject3(0,300,7000, 1000,1000,7000, 0,0,7000);
+			this.addObject3(0,300,7000, -300,200,7000, 0,0,7000);
+			this.addObject3(0,300,7000, -300,200,7000, -500,500,7000);
+			this.addObject3(0,300,7000, -300,2000,7000, -500,500,7000);
+			this.addObject3(0,300,7000, -300,2000,7000, 1000,1000,7000);
+			this.addObject3(-700,0,7000, -300,200,7000, -500,500,7000);
+			this.addObject3(-700,0,7000, -2000,2000,7000, -500,500,7000);
+			this.addObject3(-700,0,7000, -2000,2000,7000, -800,-200,7000);
+			this.addObject3(-700,-2000,7000, -2000,2000,7000, -800,-200,7000);
+			this.addObject3(-700,-2000,7000, -400,-200,7000, -800,-200,7000);
+			this.addObject3(-700,0,7000, -400,-200,7000, -800,-200,7000);
+			this.addObject3(0,0,7000, -400,-200,7000, -100,-400,7000);
+			this.addObject3(0,0,7000, 500,-200,7000, -100,-400,7000);
+			this.addObject3(-700,-2000,7000, 500,-200,7000, -100,-400,7000);
+			this.addObject3(-700,-2000,7000, 500,-200,7000, 1000,-1000,7000);
+			this.addObject3(-700,-2000,7000, -400,-200,7000, -100,-400,7000);
+		},
+		addObject3(x1,y1,z1,x2,y2,z2,x3,y3,z3) {
+			var geometries = [new THREE.Geometry(),new THREE.Geometry()];
+			for(var i=geometries.length;i--;) {
+				geometries[i].vertices.push( new THREE.Vector3(x1,y1,z1-i));
+				geometries[i].vertices.push( new THREE.Vector3(x2,y2,z2-i));
+				geometries[i].vertices.push( new THREE.Vector3(x3,y3,z3-i));
+				geometries[i].faces.push( fTriangle );
+				geometries[i].computeFaceNormals();
+				geometries[i].computeVertexNormals();
+			}
+			this.scene.add( new THREE.Mesh( geometries[0], mTriangle ) );
+			// It's not the fastest way to do it but it's the one using the less memory
+			var mTriangleBlack = new THREE.MeshStandardMaterial( { color: TRIANGLE_COLOR } );
+			mTriangleBlack.side = THREE.DoubleSide;
+			this.triangleHover.push(new THREE.Mesh( geometries[1], mTriangleBlack ));
+			this.scene.add(this.triangleHover[this.triangleHover.length-1]);
+		},
 		zoom() {
 			this.go_zoom = true;
 			this.go_open_door = true;
