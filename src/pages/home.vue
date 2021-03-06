@@ -43,6 +43,14 @@ const BACKGROUND_COLOR = 0x000000;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
 const TRIANGLE_COLOR = 0x000000;
 const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
+const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
+const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
+const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
+const DEFAULT_ROTATION_PERPETUAL_Y_START = 0;
+const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
+const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
+const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
+const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
 const FOG_POWER = 0.0002;
 const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: true });
 const fTriangle = new THREE.Face3( 0, 1, 2 );
@@ -59,6 +67,7 @@ export default {
 			camera: null,
 			scene: null,
 			renderer: null,
+			delta: null,
 			clock: null,
 			raycaster: null,
 			triangleHover: [],
@@ -188,6 +197,12 @@ export default {
 			setTimeout(this.animate, framerate );
 			this.renderer.render( this.scene, this.camera );
 			this.searchingMatchMouseAndMesh();
+
+			this.delta = this.clock.getDelta();
+
+			for(var i=this.groupScene.length;i--;) {
+				this.perpetual(this.groupScene[i]);
+			}
 		},
 		searchingMatchMouseAndMesh() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
@@ -201,6 +216,10 @@ export default {
 					}
 				}
 			}
+		},
+		perpetual(board) {
+			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
+			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
 		},
 		onDocumentMouseMove(event) {
 			this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
