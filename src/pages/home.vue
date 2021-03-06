@@ -31,6 +31,8 @@ import * as THREE from '../libs/three.js';
 const FOV = 50;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
+const WIREFRAME_COLOR = 0x555555;
+const BOARD_COLOR = 0x333333;
 const	CAMERA_START_POSITION_X = 0;
 const	CAMERA_START_POSITION_Y = 0;
 const	CAMERA_START_POSITION_Z = 8000;
@@ -45,6 +47,7 @@ const FOG_POWER = 0.0002;
 const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: true });
 const fTriangle = new THREE.Face3( 0, 1, 2 );
 const framerate = 1000/60;
+const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 
 export default {
 	components: {
@@ -59,6 +62,8 @@ export default {
 			clock: null,
 			raycaster: null,
 			triangleHover: [],
+			objectInteraction: [],
+			groupScene: [],
 			mouse: { x: 0, y: 0 },
 			go_open_door: false,
 			go_zoom: false,
@@ -97,7 +102,10 @@ export default {
 			this.createWorld();
 			this.renderWebGL();
 			this.$refs.home.appendChild( this.renderer.domElement );
-			this.renderer.render( this.scene, this.camera );
+
+			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-400,-20,6600,0,0,this.radians(20),-400,-30,7100,0,0,this.radians(20)));
+			this.scene.add(this.groupScene[0]);
+
 			this.animate();
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
@@ -203,6 +211,110 @@ export default {
 			this.camera.updateProjectionMatrix();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
+		createBoard(url,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
+			const boardTmp = new THREE.Group();
+
+			// Construct the mesh piece by piece
+			const piece = [];
+			piece.push(this.createSideBoard(-100,0,0,0,0,0));
+			piece.push(this.createSideBoard(80,0,10,0,Math.PI,0));
+			piece.push(this.createSideWireframe(-100,0,0,0,0,0));
+			piece.push(this.createSideWireframe(80,0,10,0,Math.PI,0));
+			piece.push(this.createCenterWireframe(-10,50,4,0,0,0));
+			piece.push(this.createCenterBoard(-10,50,8));
+			piece.push(this.createPanel(140, 40, 1,-10,110,8));
+			// The back button has to be the 7th mesh because of the return implementation
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-10,8));
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-10,8));
+
+
+			// Add the differents parts to the group of meshes
+			for(var i=piece.length;i--;) {
+				boardTmp.add(piece[i]);
+			}
+
+			// Add each mesh to the objectInteract for letting the user play with them
+			for(i=piece.length;i--;) {
+				this.objectInteraction.push(piece[i]);
+			}
+
+			// Value for the perpetual movement
+			boardTmp['translationx'] = translationX;
+			boardTmp['translationy'] = translationY;
+			boardTmp['translationz'] = translationZ;
+			boardTmp['rotationx'] = rotationX;
+			boardTmp['rotationy'] = rotationY;
+			boardTmp['rotationz'] = rotationZ;
+			boardTmp['lock'] = false;
+			boardTmp['url'] = url;
+
+			// Position of the board in the scene
+			boardTmp.position.set(x,y,z);
+			boardTmp.rotation.set(rx,ry,rz);
+
+			return boardTmp;
+		},
+		createSideBoard(x,y,z,rx,ry,rz) {
+			const materialBoard = new THREE.MeshPhongMaterial( {  color: BOARD_COLOR } );
+			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
+			const sideMesh = new THREE.Mesh( geometryBoard, materialBoard );
+
+			sideMesh.position.set( x, y, z );
+			sideMesh.rotation.set( rx, ry, rz );
+			return sideMesh;
+		},
+		createShape() {
+			const leftShape = new THREE.Shape();
+			leftShape.moveTo( -5, -10 );
+			leftShape.lineTo( 0, 20 );
+			leftShape.lineTo( 10, 30 );
+			leftShape.lineTo( 10, 70 );
+			leftShape.lineTo( 0, 80 );
+			leftShape.lineTo( -5, 110 );
+			leftShape.lineTo( 40, 100 );
+			leftShape.lineTo( 45, 90 );
+			leftShape.lineTo( 25, 90 );
+			leftShape.lineTo( 20, 85 );
+			leftShape.lineTo( 20, 15 );
+			leftShape.lineTo( 25, 10 );
+			leftShape.lineTo( 45, 10 );
+			leftShape.lineTo( 40, 5 );
+			return leftShape;
+		},
+		createCenterBoard(x,y,z) {
+			const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 150, 75, 1 ),  [0,0,0,0,material,0] );
+			centerMesh.position.set(x,y,z);
+			return centerMesh;
+		},
+		createPanel(sx,sy,sz,x,y,z) {
+			return this.createPanelWithTexture(null,sx,sy,sz,x,y,z);
+		},
+		createPanelWithTexture(texture,sx,sy,sz,x,y,z) {
+			const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true, opacity: 0 } );
+			const informationsMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( sx, sy, sz ), [0,0,0,0,material,0] );
+			informationsMesh.position.set(x,y,z);
+			informationsMesh['panel'] = true;
+			return informationsMesh;
+		},
+		createSideWireframe(x,y,z,rx,ry,rz) {
+			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
+			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 1 } );
+			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
+			sideWireframe['wireframe'] = true;
+			sideWireframe.position.set( x, y, z );
+			sideWireframe.rotation.set( rx, ry, rz );
+			return sideWireframe;
+		},
+		createCenterWireframe(x,y,z,rx,ry,rz) {
+			const geometryBoard = new THREE.BoxBufferGeometry( 150, 75, 1 );
+			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 1 } );
+			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
+			sideWireframe['wireframe'] = true;
+			sideWireframe.position.set( x, y, z );
+			sideWireframe.rotation.set( rx, ry, rz );
+			return sideWireframe;
+		},
 		zoom() {
 			this.go_zoom = true;
 			this.go_open_door = true;
@@ -223,6 +335,9 @@ export default {
 		},
 		update_introduction(name, email, image, android_url) {
 			this.props_introduction = {name, email, image, android_url};
+		},
+		radians(degrees) {
+			return degrees * Math.PI / 180;
 		}
 	}
 };
