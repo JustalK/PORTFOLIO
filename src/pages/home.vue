@@ -28,10 +28,12 @@ import api from '../services/api';
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
 
+const ABSCISSA = ['x','y','z'];
 const FOV = 50;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x555555;
+const WIREFRAME_COLOR_HOVER = 0x000000;
 const BOARD_COLOR = 0x333333;
 const	CAMERA_START_POSITION_X = 0;
 const	CAMERA_START_POSITION_Y = 0;
@@ -70,9 +72,22 @@ export default {
 			delta: null,
 			clock: null,
 			raycaster: null,
+			parent: null,
+			childrens: null,
+			positionReached: [false,false,false],
+			rotationReached: [false,false,false],
 			triangleHover: [],
 			objectInteraction: [],
 			groupScene: [],
+			zoomIn: false,
+			zoomOn: null,
+			movementCamera: false,
+			movements: [0,0,0],
+			rotation: [0,0,0],
+			positionFinal: [0,0,0],
+			rotationFinal: [0,0,0],
+			speedTranslation: [0,0,0],
+			speedRotation: [0,0,0],
 			mouse: { x: 0, y: 0 },
 			go_open_door: false,
 			go_zoom: false,
@@ -196,17 +211,32 @@ export default {
 		animate() {
 			setTimeout(this.animate, framerate );
 			this.renderer.render( this.scene, this.camera );
-			this.searchingMatchMouseAndMesh();
 
 			this.delta = this.clock.getDelta();
 
 			for(var i=this.groupScene.length;i--;) {
 				this.perpetual(this.groupScene[i]);
 			}
+
+			if(this.movementCamera && this.parent!=null) {
+				document.body.style.cursor = 'inherit';
+				// If I have not reached the final position on each abcisse
+				if(this.isPositionNotReached()) {
+					this.moveCameraToBoard();
+				} else {
+					this.movementCamera=false;
+					this.resetPositionReached();
+				}
+			} else {
+				this.searchingMatchMouseAndMesh();
+			}
 		},
 		searchingMatchMouseAndMesh() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
+			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 			const triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
+
+
 			if(triangleIntersects.length>0) {
 				for(var i=this.triangleHover.length;i--;) {
 					if(triangleIntersects[0].object==this.triangleHover[i]) {
@@ -215,7 +245,83 @@ export default {
 						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR);
 					}
 				}
+			} else {
+				if(intersects.length>0) {
+					// If the user trying to interact with a new mesh
+					if(this.parent==null || this.parent!=intersects[0].object.parent) {
+						document.body.style.cursor = 'pointer';
+						this.parent = intersects[0].object.parent;
+						if(this.childrens!=null) {
+							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
+								for(var x=this.childrens.length;x--;) {
+									if(this.childrens[x]['panel']) {
+										this.childrens[x].material[4].opacity = 0;
+									}
+								}
+							} else {
+								for(var z=this.childrens.length;z--;) {
+									if((z==1 || z==0) && intersects[0].object==this.childrens[z]) {
+										this.childrens[z].material[4].color = new THREE.Color('#327DFF');
+									}
+								}
+							}
+						}
+						this.childrens = this.parent.children;
+						for(var j=this.childrens.length;j--;) {
+							if(this.childrens[j]['wireframe']) {
+								this.childrens[j].material.color = new THREE.Color(WIREFRAME_COLOR_HOVER);
+							}
+							if(this.childrens[j]['panel']) {
+								this.childrens[j].material[4].opacity = 1;
+							}
+						}
+					}
+				} else {
+					document.body.style.cursor = 'inherit';
+					if(this.childrens!=null) {
+						if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
+							for(var s=this.childrens.length;s--;) {
+								if(this.childrens[s]['wireframe']) {
+									this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
+								}
+							}
+						}
+						for(var d=this.childrens.length;d--;) {
+							if(d==1 || d==0) this.childrens[d].material[4].color = new THREE.Color('#FFFFFF');
+						}
+					}
+					this.parent=null;
+				}
 			}
+		},
+		moveCameraToBoard() {
+			for(var i=this.movements.length;i--;) {
+				if(this.isMoveCameraTo(this.movements[i], this.camera.position.getComponent(i), this.positionFinal[i])) {
+					const add = this.delta * this.movements[i] * this.speedTranslation[i];
+					this.camera.position.setComponent(i, this.camera.position.getComponent(i) + add);
+				} else {
+					this.positionReached[i] = true;
+				}
+				if(this.isMoveCameraTo(this.rotation[i], this.camera.rotation.toVector3().getComponent(i), this.rotationFinal[i])) {
+					const add = this.delta * this.rotation[i] * this.speedRotation[i];
+					this.camera.rotation[ABSCISSA[i]] = this.camera.rotation.toVector3().getComponent(i) + add;
+				} else {
+					this.rotationReached[i] = true;
+				}
+			}
+		},
+		isMoveCameraTo(movement, cameraPosition, finalDestination) {
+			return (movement > 0 && cameraPosition < finalDestination) || (movement < 0 && cameraPosition > finalDestination);
+		},
+		isPositionNotReached() {
+			for(var i=ABSCISSA.length;i--;) {
+				if(!this.positionReached[i] || !this.rotationReached[i]) return true;
+			}
+			return false;
+		},
+		resetPositionReached() {
+			this.positionReached = [false,false,false];
+			this.rotationReached = [false,false,false];
 		},
 		perpetual(board) {
 			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
