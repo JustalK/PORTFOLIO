@@ -35,6 +35,8 @@ const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x555555;
 const WIREFRAME_COLOR_HOVER = 0x000000;
 const BOARD_COLOR = 0x333333;
+const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
+const DEFAULT_ROTATION_CAMERA_SPEED = 1;
 const	CAMERA_START_POSITION_X = 0;
 const	CAMERA_START_POSITION_Y = 0;
 const	CAMERA_START_POSITION_Z = 8000;
@@ -134,6 +136,7 @@ export default {
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
 			window.addEventListener( 'resize', this.onWindowResize, false );
+			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
 		},
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
@@ -439,6 +442,67 @@ export default {
 			sideWireframe.position.set( x, y, z );
 			sideWireframe.rotation.set( rx, ry, rz );
 			return sideWireframe;
+		},
+		onDocumentMouseDown() {
+			this.raycaster.setFromCamera( this.mouse, this.camera );
+			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
+
+			if(!this.movementCamera && intersects.length>0) {
+				if(intersects[0].object==this.childrens[1]) {
+					this.backToStart();
+					return true;
+				}
+
+				// If the user is interacting with the visit button
+				if(intersects[0].object==this.childrens[0]) {
+					window.open(parent['url']);
+					return true;
+				}
+
+				// If I'm on a board, I move to the new position
+				if(this.parent!=null && !this.parent['lock']) {
+					for(var i=ABSCISSA.length;i--;) {
+						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
+						this.rotationFinal[i] = this.parent['rotation'+ABSCISSA[i]];
+						this.positionReached[i] = false;
+					}
+					this.zoomOn = parent;
+					this.zoomIn = true;
+					this.getSpeedMovement();
+					this.getMovementWay();
+					this.movementCamera = true;
+					this.parent['lock'] = true;
+					return true;
+				}
+			}
+		},
+		getSpeedMovement() {
+			for(var i=ABSCISSA.length;i--;) {
+				this.speedTranslation[i] = Math.abs(this.camera.position.getComponent(i) - this.positionFinal[i])*DEFAULT_MOVEMENT_CAMERA_SPEED;
+				this.speedRotation[i] = Math.abs(this.camera.rotation.toVector3().getComponent(i) - this.rotationFinal[i])*DEFAULT_ROTATION_CAMERA_SPEED;
+			}
+		},
+		getMovementWay() {
+			for(var i=ABSCISSA.length;i--;) {
+				this.movements[i] = this.camera.position.getComponent(i) > this.positionFinal[i] ? -1 : 1;
+				this.rotation[i] = this.camera.rotation.toVector3().getComponent(i) > this.rotationFinal[i] ? -1 : 1;
+			}
+		},
+		backToStart() {
+			this.positionFinal[0] = this.CAMERA_START_POSITION_X;
+			this.positionFinal[1] = this.CAMERA_START_POSITION_Y;
+			this.positionFinal[2] = this.CAMERA_START_POSITION_Z;
+			this.rotationFinal[0] = this.CAMERA_START_ROTATION_X;
+			this.rotationFinal[1] = this.CAMERA_START_ROTATION_Y;
+			this.rotationFinal[2] = this.CAMERA_START_ROTATION_Z;
+			for(var i=this.groupScene.length;i--;) {
+				this.groupScene[i]['lock'] = false;
+			}
+			this.zoomOn = null;
+			this.zoomIn = false;
+			this.getSpeedMovement();
+			this.getMovementWay();
+			this.movementCamera = true;
 		},
 		zoom() {
 			this.go_zoom = true;
