@@ -101,6 +101,7 @@ export default {
 			this.animate();
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
+			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
@@ -182,9 +183,7 @@ export default {
 		},
 		searchingMatchMouseAndMesh() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
-			var triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
-			console.log(triangleIntersects);
-
+			const triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
 			if(triangleIntersects.length>0) {
 				for(var i=this.triangleHover.length;i--;) {
 					if(triangleIntersects[0].object==this.triangleHover[i]) {
@@ -198,6 +197,11 @@ export default {
 		onDocumentMouseMove(event) {
 			this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 			this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+		},
+		onWindowResize() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
 		zoom() {
 			this.go_zoom = true;
