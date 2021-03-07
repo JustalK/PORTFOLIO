@@ -60,6 +60,10 @@ const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: t
 const fTriangle = new THREE.Face3( 0, 1, 2 );
 const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
+const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
+const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
+const PROJECT_TEXTURE = ['../assets/imgs/zipWorld.jpg','../assets/imgs/gouterMagique.jpg','../assets/imgs/hapee.jpg','../assets/imgs/promarine.jpg','../assets/imgs/onarto.jpg','../assets/imgs/odyssea.jpg'];
+const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png'];
 
 export default {
 	components: {
@@ -78,6 +82,7 @@ export default {
 			childrens: null,
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
+			firstAllLoadingTexture: false,
 			triangleHover: [],
 			objectInteraction: [],
 			groupScene: [],
@@ -92,6 +97,7 @@ export default {
 			speedRotation: [0,0,0],
 			mouse: { x: 0, y: 0 },
 			go_open_door: false,
+			go_3D: false,
 			go_zoom: false,
 			props_introduction: {},
 			invisible: true,
@@ -131,6 +137,7 @@ export default {
 
 			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-400,-20,6600,0,0,this.radians(20),-400,-30,7100,0,0,this.radians(20)));
 			this.scene.add(this.groupScene[0]);
+			this.loadTexturesOnMove();
 
 			this.animate();
 
@@ -461,6 +468,10 @@ export default {
 
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
+					if(!this.firstAllLoadingTexture) {
+						this.loadProjectsTextures();
+					}
+					utils.add_class_to_element(this.$refs.home, 'move_to_three');
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
 						this.rotationFinal[i] = this.parent['rotation'+ABSCISSA[i]];
@@ -476,6 +487,28 @@ export default {
 				}
 			}
 		},
+		loadProjectsTextures() {
+			this.firstAllLoadingTexture = true;
+
+			// Add the groupscene after the client has load everything
+			this.groupScene.push(this.createBoard('http://www.gouters-magiques.com/pro/',-500,1300,2600,0,0,this.radians(50),-500,1300,3000,0,0,this.radians(50)));
+			this.groupScene.push(this.createBoard('https://www.hapee.fr/',500,100,4000,0,this.radians(-90),this.radians(-40),500,150,4500,0,0,this.radians(-40)));
+			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/',-1600,500,4600,0,0,this.radians(-60),-1550,500,4900,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('https://onarto.com/',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('http://www.odyssea.info/',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
+
+			for(var i=this.groupScene.length;i--;) {
+				this.scene.add(this.groupScene[i]);
+			}
+
+			for(var j=1,countI=this.groupScene.length;j<countI;j++) {
+				const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[j] );
+				const material = new THREE.MeshBasicMaterial( { map: texture } );
+				this.groupScene[j].children[3].material[4] = material;
+			}
+
+			this.loadTexturesOnMove();
+		},
 		getSpeedMovement() {
 			for(var i=ABSCISSA.length;i--;) {
 				this.speedTranslation[i] = Math.abs(this.camera.position.getComponent(i) - this.positionFinal[i])*DEFAULT_MOVEMENT_CAMERA_SPEED;
@@ -489,12 +522,13 @@ export default {
 			}
 		},
 		backToStart() {
-			this.positionFinal[0] = this.CAMERA_START_POSITION_X;
-			this.positionFinal[1] = this.CAMERA_START_POSITION_Y;
-			this.positionFinal[2] = this.CAMERA_START_POSITION_Z;
-			this.rotationFinal[0] = this.CAMERA_START_ROTATION_X;
-			this.rotationFinal[1] = this.CAMERA_START_ROTATION_Y;
-			this.rotationFinal[2] = this.CAMERA_START_ROTATION_Z;
+			utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+			this.positionFinal[0] = CAMERA_START_POSITION_X;
+			this.positionFinal[1] = CAMERA_START_POSITION_Y;
+			this.positionFinal[2] = CAMERA_START_POSITION_Z;
+			this.rotationFinal[0] = CAMERA_START_ROTATION_X;
+			this.rotationFinal[1] = CAMERA_START_ROTATION_Y;
+			this.rotationFinal[2] = CAMERA_START_ROTATION_Z;
 			for(var i=this.groupScene.length;i--;) {
 				this.groupScene[i]['lock'] = false;
 			}
@@ -503,6 +537,28 @@ export default {
 			this.getSpeedMovement();
 			this.getMovementWay();
 			this.movementCamera = true;
+		},
+		loadTexturesOnMove() {
+			const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 1 } );
+			const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 1 } );
+			for(var i=0,countI=this.groupScene.length;i<countI;i++) {
+				const material3 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(PROJECT_TITLE_TEXTURE[i]), transparent: true, opacity: 1 } );
+				this.groupScene[i].children[0].material = [0,0,0,0,material2,0];
+				this.groupScene[i].children[1].material = [0,0,0,0,material,0];
+				this.groupScene[i].children[2].material = [0,0,0,0,material3,0];
+			}
+
+			this.childrens = this.groupScene[0].children;
+			if(this.childrens!=null) {
+				for(var j=this.childrens.length;j--;) {
+					if(this.childrens[j]['panel']) {
+						this.childrens[j].material[4].opacity = 1;
+						const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[0] );
+						const material = new THREE.MeshBasicMaterial( { map: texture } );
+						this.childrens[3].material[4] = material;
+					}
+				}
+			}
 		},
 		zoom() {
 			this.go_zoom = true;
