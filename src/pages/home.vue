@@ -34,7 +34,7 @@ const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x555555;
 const WIREFRAME_COLOR_HOVER = 0x000000;
-const BOARD_COLOR = 0x333333;
+const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
 const	CAMERA_START_POSITION_X = 0;
@@ -43,9 +43,9 @@ const	CAMERA_START_POSITION_Z = 8000;
 const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
 const	CAMERA_START_ROTATION_Z = 0;
-const BACKGROUND_COLOR = 0x000000;
+const BACKGROUND_COLOR = 0x111116;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
-const TRIANGLE_COLOR = 0x000000;
+const TRIANGLE_COLOR = 0x111116;
 const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
@@ -62,7 +62,7 @@ const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
-const PROJECT_TEXTURE = ['../assets/imgs/zipWorld.jpg','../assets/imgs/gouterMagique.jpg','../assets/imgs/hapee.jpg','../assets/imgs/promarine.jpg','../assets/imgs/onarto.jpg','../assets/imgs/odyssea.jpg'];
+const PROJECT_TEXTURE = ['../assets/imgs/portfolio/slide_01.jpg','../assets/imgs/manypixels/home.jpg','../assets/imgs/atlantic-grains/slide_01.jpg','../assets/imgs/labonapp/slide_01.jpg','../assets/imgs/happee/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg'];
 const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png'];
 
 export default {
@@ -82,7 +82,6 @@ export default {
 			childrens: null,
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
-			firstAllLoadingTexture: false,
 			triangleHover: [],
 			objectInteraction: [],
 			groupScene: [],
@@ -131,13 +130,10 @@ export default {
 			this.initClock();
 			this.initFog(false);
 			this.initRaycaster();
-			this.createWorld();
+			//this.createWorld();
 			this.renderWebGL();
 			this.$refs.home.appendChild( this.renderer.domElement );
-
-			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-400,-20,6600,0,0,this.radians(20),-400,-30,7100,0,0,this.radians(20)));
-			this.scene.add(this.groupScene[0]);
-			this.loadTexturesOnMove();
+			this.loadProjectsTextures();
 
 			this.animate();
 
@@ -351,16 +347,16 @@ export default {
 
 			// Construct the mesh piece by piece
 			const piece = [];
-			piece.push(this.createSideBoard(-100,0,0,0,0,0));
-			piece.push(this.createSideBoard(80,0,10,0,Math.PI,0));
-			piece.push(this.createSideWireframe(-100,0,0,0,0,0));
-			piece.push(this.createSideWireframe(80,0,10,0,Math.PI,0));
+			piece.push(this.createSideBoard(-160,0,0,0,0,0));
+			piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
+			piece.push(this.createSideWireframe(-160,0,0,0,0,0));
+			piece.push(this.createSideWireframe(140,0,10,0,Math.PI,0));
 			piece.push(this.createCenterWireframe(-10,50,4,0,0,0));
 			piece.push(this.createCenterBoard(-10,50,8));
-			piece.push(this.createPanel(140, 40, 1,-10,110,8));
+			piece.push(this.createPanel(140, 40, 1,-10,140,8));
 			// The back button has to be the 7th mesh because of the return implementation
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-10,8));
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-10,8));
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-40,8));
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-40,8));
 
 
 			// Add the differents parts to the group of meshes
@@ -400,25 +396,25 @@ export default {
 		},
 		createShape() {
 			const leftShape = new THREE.Shape();
-			leftShape.moveTo( -5, -10 );
-			leftShape.lineTo( 0, 20 );
-			leftShape.lineTo( 10, 30 );
+			leftShape.moveTo( -5, -40 );
+			leftShape.lineTo( 0, 15 );
+			leftShape.lineTo( 10, 25 );
 			leftShape.lineTo( 10, 70 );
 			leftShape.lineTo( 0, 80 );
-			leftShape.lineTo( -5, 110 );
-			leftShape.lineTo( 40, 100 );
-			leftShape.lineTo( 45, 90 );
-			leftShape.lineTo( 25, 90 );
-			leftShape.lineTo( 20, 85 );
-			leftShape.lineTo( 20, 15 );
-			leftShape.lineTo( 25, 10 );
-			leftShape.lineTo( 45, 10 );
-			leftShape.lineTo( 40, 5 );
+			leftShape.lineTo( -5, 130 );
+			leftShape.lineTo( 40, 120 );
+			leftShape.lineTo( 45, 115 );
+			leftShape.lineTo( 25, 115 );
+			leftShape.lineTo( 20, 110 );
+			leftShape.lineTo( 20, -10 );
+			leftShape.lineTo( 25, -15 );
+			leftShape.lineTo( 45, -15 );
+			leftShape.lineTo( 40, -20 );
 			return leftShape;
 		},
 		createCenterBoard(x,y,z) {
 			const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 150, 75, 1 ),  [0,0,0,0,material,0] );
+			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 256, 128, 1 ),  [0,0,0,0,material,0] );
 			centerMesh.position.set(x,y,z);
 			return centerMesh;
 		},
@@ -442,7 +438,7 @@ export default {
 			return sideWireframe;
 		},
 		createCenterWireframe(x,y,z,rx,ry,rz) {
-			const geometryBoard = new THREE.BoxBufferGeometry( 150, 75, 1 );
+			const geometryBoard = new THREE.BoxBufferGeometry( 120, 70, 1 );
 			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 1 } );
 			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
 			sideWireframe['wireframe'] = true;
@@ -468,9 +464,6 @@ export default {
 
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
-					if(!this.firstAllLoadingTexture) {
-						this.loadProjectsTextures();
-					}
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
@@ -488,9 +481,7 @@ export default {
 			}
 		},
 		loadProjectsTextures() {
-			this.firstAllLoadingTexture = true;
-
-			// Add the groupscene after the client has load everything
+			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-400, 50,6600,0,0,this.radians(20),-400, 70,7100,0,0,this.radians(20)));
 			this.groupScene.push(this.createBoard('http://www.gouters-magiques.com/pro/',-500,1300,2600,0,0,this.radians(50),-500,1300,3000,0,0,this.radians(50)));
 			this.groupScene.push(this.createBoard('https://www.hapee.fr/',500,100,4000,0,this.radians(-90),this.radians(-40),500,150,4500,0,0,this.radians(-40)));
 			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/',-1600,500,4600,0,0,this.radians(-60),-1550,500,4900,0,0,this.radians(-60)));
@@ -501,7 +492,7 @@ export default {
 				this.scene.add(this.groupScene[i]);
 			}
 
-			for(var j=1,countI=this.groupScene.length;j<countI;j++) {
+			for(var j=0,countI=this.groupScene.length;j<countI;j++) {
 				const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[j] );
 				const material = new THREE.MeshBasicMaterial( { map: texture } );
 				this.groupScene[j].children[3].material[4] = material;
