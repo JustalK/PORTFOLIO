@@ -55,6 +55,8 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
+const TOTAL_PARTICLES = 4000;
+const ROTATION_SPEED_PARTICLES = 0.0004;
 const FOG_POWER = 0.0002;
 const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
@@ -79,6 +81,7 @@ export default {
 			parent: null,
 			childrens: null,
 			particleSystem: null,
+			particles: null,
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
 			triangleHover: [],
@@ -177,8 +180,7 @@ export default {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
-			const particleCount = 1800;
-			const particles = new THREE.Geometry();
+			this.particles = new THREE.Geometry();
 			const pMaterial = new THREE.ParticleBasicMaterial({
 				color: 0x7BCDFF,
 				size: 100,
@@ -189,15 +191,16 @@ export default {
 				transparent: true
 			});
 
-			for (let p = 0; p < particleCount; p++) {
-				particles.vertices.push(new THREE.Vector3(
-					Math.random() * 24000 - 12000,
-					Math.random() * 24000 - 12000,
-					Math.random() * 24000 - 12000)
+			const distance = WINDOWS_WIDTH * 15;
+			for (let p = 0; p < TOTAL_PARTICLES; p++) {
+				this.particles.vertices.push(new THREE.Vector3(
+					Math.random() * distance - distance / 2,
+					Math.random() * distance - distance / 2,
+					Math.random() * distance - distance / 2)
 				);
 			}
 
-			this.particleSystem = new THREE.Points(particles, pMaterial);
+			this.particleSystem = new THREE.Points(this.particles, pMaterial);
 
 			this.scene.add(this.particleSystem);
 		},
@@ -206,7 +209,7 @@ export default {
 			this.renderer.render( this.scene, this.camera );
 
 			this.delta = this.clock.getDelta();
-			this.particleSystem.rotation.y += 0.0004;
+			this.particleSystem.rotation.y += ROTATION_SPEED_PARTICLES;
 
 			for(var i=this.groupScene.length;i--;) {
 				this.perpetual(this.groupScene[i]);
