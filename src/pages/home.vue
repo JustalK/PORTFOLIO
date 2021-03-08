@@ -180,8 +180,13 @@ export default {
 			const particleCount = 1800;
 			const particles = new THREE.Geometry();
 			const pMaterial = new THREE.ParticleBasicMaterial({
-				color: 0xFFFFFF,
-				size: 20
+				color: 0x7BCDFF,
+				size: 100,
+				map: THREE.ImageUtils.loadTexture(
+					'../assets/imgs/particle.png'
+				),
+				blending: THREE.AdditiveBlending,
+				transparent: true
 			});
 
 			for (let p = 0; p < particleCount; p++) {
