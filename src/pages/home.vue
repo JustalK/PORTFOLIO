@@ -78,6 +78,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			childrens: null,
+			particleSystem: null,
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
 			triangleHover: [],
@@ -185,21 +186,22 @@ export default {
 
 			for (let p = 0; p < particleCount; p++) {
 				particles.vertices.push(new THREE.Vector3(
-					Math.random() * 15000 - 7500,
-					Math.random() * 10000 - 5000,
-					Math.random() * 12000 - 2000)
+					Math.random() * 24000 - 12000,
+					Math.random() * 24000 - 12000,
+					Math.random() * 24000 - 12000)
 				);
 			}
 
-			const particleSystem = new THREE.Points(particles, pMaterial);
+			this.particleSystem = new THREE.Points(particles, pMaterial);
 
-			this.scene.add(particleSystem);
+			this.scene.add(this.particleSystem);
 		},
 		animate() {
 			setTimeout(this.animate, framerate );
 			this.renderer.render( this.scene, this.camera );
 
 			this.delta = this.clock.getDelta();
+			this.particleSystem.rotation.y += 0.0004;
 
 			for(var i=this.groupScene.length;i--;) {
 				this.perpetual(this.groupScene[i]);
@@ -308,6 +310,9 @@ export default {
 		resetPositionReached() {
 			this.positionReached = [false,false,false];
 			this.rotationReached = [false,false,false];
+			if(!this.zoomIn) {
+				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+			}
 		},
 		perpetual(board) {
 			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
@@ -493,7 +498,6 @@ export default {
 			}
 		},
 		backToStart() {
-			utils.remove_class_to_element(this.$refs.home, 'move_to_three');
 			this.positionFinal[0] = CAMERA_START_POSITION_X;
 			this.positionFinal[1] = CAMERA_START_POSITION_Y;
 			this.positionFinal[2] = CAMERA_START_POSITION_Z;

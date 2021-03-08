@@ -7,8 +7,7 @@
 	.full();
 
 	& > div {
-		.transition(transform 0.8s cubic-bezier(0.8, 0, 0.25, 1) 0.08s);
-
+		transition: transform 0.8s cubic-bezier(0.8, 0, 0.25, 1) 0.08s, opacity 0.2s cubic-bezier(0.8, 0, 0.25, 1);
 		position: absolute;
 		top: 0;
 		width: 100%;
@@ -21,8 +20,6 @@
 	}
 
 	&.move_to_three > div {
-		.transition(opacity 0.2s cubic-bezier(0.8, 0, 0.25, 1));
-
 		opacity: 0;
 		pointer-events: none;
 	}
