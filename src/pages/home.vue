@@ -56,8 +56,6 @@ const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
 const FOG_POWER = 0.0002;
-const mTriangle = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, wireframe: true });
-const fTriangle = new THREE.Face3( 0, 1, 2 );
 const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
@@ -130,8 +128,9 @@ export default {
 			this.initClock();
 			this.initFog(false);
 			this.initRaycaster();
-			//this.createWorld();
+			this.createWorld();
 			this.renderWebGL();
+
 			this.$refs.home.appendChild( this.renderer.domElement );
 			this.loadProjectsTextures();
 
@@ -177,42 +176,24 @@ export default {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
-			this.addObject3(500,-200,7000, 1000,-1000,7000, 3000,1500,7000);
-			this.addObject3(500,-200,7000, 1000,1000,7000, 3000,1500,7000);
-			this.addObject3(500,-200,7000, 1000,1000,7000, 0,0,7000);
-			this.addObject3(0,300,7000, 1000,1000,7000, 0,0,7000);
-			this.addObject3(0,300,7000, -300,200,7000, 0,0,7000);
-			this.addObject3(0,300,7000, -300,200,7000, -500,500,7000);
-			this.addObject3(0,300,7000, -300,2000,7000, -500,500,7000);
-			this.addObject3(0,300,7000, -300,2000,7000, 1000,1000,7000);
-			this.addObject3(-700,0,7000, -300,200,7000, -500,500,7000);
-			this.addObject3(-700,0,7000, -2000,2000,7000, -500,500,7000);
-			this.addObject3(-700,0,7000, -2000,2000,7000, -800,-200,7000);
-			this.addObject3(-700,-2000,7000, -2000,2000,7000, -800,-200,7000);
-			this.addObject3(-700,-2000,7000, -400,-200,7000, -800,-200,7000);
-			this.addObject3(-700,0,7000, -400,-200,7000, -800,-200,7000);
-			this.addObject3(0,0,7000, -400,-200,7000, -100,-400,7000);
-			this.addObject3(0,0,7000, 500,-200,7000, -100,-400,7000);
-			this.addObject3(-700,-2000,7000, 500,-200,7000, -100,-400,7000);
-			this.addObject3(-700,-2000,7000, 500,-200,7000, 1000,-1000,7000);
-			this.addObject3(-700,-2000,7000, -400,-200,7000, -100,-400,7000);
-		},
-		addObject3(x1,y1,z1,x2,y2,z2,x3,y3,z3) {
-			var geometries = [new THREE.Geometry(),new THREE.Geometry()];
-			for(var i=geometries.length;i--;) {
-				geometries[i].vertices.push( new THREE.Vector3(x1,y1,z1-i));
-				geometries[i].vertices.push( new THREE.Vector3(x2,y2,z2-i));
-				geometries[i].vertices.push( new THREE.Vector3(x3,y3,z3-i));
-				geometries[i].faces.push( fTriangle );
-				geometries[i].computeFaceNormals();
-				geometries[i].computeVertexNormals();
+			const particleCount = 1800;
+			const particles = new THREE.Geometry();
+			const pMaterial = new THREE.ParticleBasicMaterial({
+				color: 0xFFFFFF,
+				size: 20
+			});
+
+			for (let p = 0; p < particleCount; p++) {
+				particles.vertices.push(new THREE.Vector3(
+					Math.random() * 15000 - 7500,
+					Math.random() * 10000 - 5000,
+					Math.random() * 12000 - 2000)
+				);
 			}
-			this.scene.add( new THREE.Mesh( geometries[0], mTriangle ) );
-			// It's not the fastest way to do it but it's the one using the less memory
-			var mTriangleBlack = new THREE.MeshStandardMaterial( { color: TRIANGLE_COLOR } );
-			mTriangleBlack.side = THREE.DoubleSide;
-			this.triangleHover.push(new THREE.Mesh( geometries[1], mTriangleBlack ));
-			this.scene.add(this.triangleHover[this.triangleHover.length-1]);
+
+			const particleSystem = new THREE.Points(particles, pMaterial);
+
+			this.scene.add(particleSystem);
 		},
 		animate() {
 			setTimeout(this.animate, framerate );
@@ -241,7 +222,6 @@ export default {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 			const triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
-
 
 			if(triangleIntersects.length>0) {
 				for(var i=this.triangleHover.length;i--;) {
