@@ -1,9 +1,8 @@
 <template>
 	<span
 		:class="{invisible: invisible, unmounted: unmounted}"
-		class="text">
-		{{ text }}
-	</span>
+		class="text"
+		v-html="text" />
 </template>
 <script>
 export default {

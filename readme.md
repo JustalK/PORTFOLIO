@@ -78,3 +78,7 @@ For running the server with the last build :
 ```
 $ npm run server
 ```
+
+## License
+
+MIT - Copyright &copy; [JUSTAL Kevin](http://justalk.online/)

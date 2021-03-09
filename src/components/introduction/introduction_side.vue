@@ -2,7 +2,10 @@
 	<div
 		:class="[props_link.side,{active:props_go_open_door}]"
 		class="bloc">
-		<components_introduction :props_introduction="props_introduction" />
+		<slot />
+		<components_introduction
+			:props_introduction="props_introduction"
+			@hovering="hovering" />
 		<components_introduction_link
 			:props_link="props_link"
 			@resume="resume"
@@ -32,13 +35,16 @@ export default {
 			required: true
 		}
 	},
-	emits: ['zoom'],
+	emits: ['zoom', 'hovering'],
 	methods: {
 		resume() {
 			this.animation_door('resume');
 		},
 		portfolio() {
 			this.animation_door('portfolio');
+		},
+		hovering(event) {
+			this.$emit('hovering', event);
 		},
 		animation_door(link) {
 			this.$emit('zoom');

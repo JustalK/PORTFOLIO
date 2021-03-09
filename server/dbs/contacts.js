@@ -7,6 +7,8 @@ const model = require('../models/' + filename);
 module.exports = {
 	get_one: (find) => {
 		return model
-			.findOne(find);
+			.findOne(find)
+			.populate('image')
+			.populate('image_alternative');
 	}
 };
