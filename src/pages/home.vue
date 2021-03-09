@@ -55,9 +55,10 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
-const TOTAL_PARTICLES = 4000;
-const ROTATION_SPEED_PARTICLES = 0.0004;
-const FOG_POWER = 0.0002;
+const TOTAL_PARTICLES = 500;
+const CLUSTER_PARTICLES = 8;
+const ROTATION_SPEED_PARTICLES = 0.0002;
+const FOG_POWER = 0.0003;
 const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
@@ -80,8 +81,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			childrens: null,
-			particleSystem: null,
-			particles: null,
+			particleSystem: [],
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
 			triangleHover: [],
@@ -130,7 +130,7 @@ export default {
 			this.initScene(BACKGROUND_COLOR);
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
-			this.initFog(false);
+			this.initFog(true);
 			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
@@ -173,17 +173,16 @@ export default {
 			this.clock.start();
 		},
 		initFog(fog) {
-			if(fog) this.scene.fog = new THREE.FogExp2( 0x000000, FOG_POWER );
+			if(fog) this.scene.fog = new THREE.FogExp2( 0x111116, FOG_POWER );
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
-			this.particles = new THREE.Geometry();
 			const pMaterial = new THREE.ParticleBasicMaterial({
 				color: 0x7BCDFF,
-				size: 100,
+				size: 50,
 				map: THREE.ImageUtils.loadTexture(
 					'../assets/imgs/particle.png'
 				),
@@ -192,24 +191,30 @@ export default {
 			});
 
 			const distance = WINDOWS_WIDTH * 15;
-			for (let p = 0; p < TOTAL_PARTICLES; p++) {
-				this.particles.vertices.push(new THREE.Vector3(
-					Math.random() * distance - distance / 2,
-					Math.random() * distance - distance / 2,
-					Math.random() * distance - distance / 2)
-				);
+
+			for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
+				const particles = new THREE.Geometry();
+				for (let p = 0; p < TOTAL_PARTICLES; p++) {
+					particles.vertices.push(new THREE.Vector3(
+						Math.random() * distance - distance / 2,
+						Math.random() * distance - distance / 2,
+						Math.random() * distance - distance / 2)
+					);
+				}
+
+				this.particleSystem.push(new THREE.Points(particles, pMaterial));
+				this.scene.add(this.particleSystem[ps]);
 			}
-
-			this.particleSystem = new THREE.Points(this.particles, pMaterial);
-
-			this.scene.add(this.particleSystem);
 		},
 		animate() {
 			setTimeout(this.animate, framerate );
 			this.renderer.render( this.scene, this.camera );
 
 			this.delta = this.clock.getDelta();
-			this.particleSystem.rotation.y += ROTATION_SPEED_PARTICLES;
+			for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
+				this.particleSystem[ps].rotation.x += ROTATION_SPEED_PARTICLES * (1 + ps) / 2;
+				this.particleSystem[ps].rotation.y += ROTATION_SPEED_PARTICLES * ps;
+			}
 
 			for(var i=this.groupScene.length;i--;) {
 				this.perpetual(this.groupScene[i]);
