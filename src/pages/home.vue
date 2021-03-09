@@ -43,7 +43,6 @@ const	CAMERA_START_POSITION_Z = 8000;
 const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
 const	CAMERA_START_ROTATION_Z = 0;
-const BACKGROUND_COLOR = 0x111116;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
 const TRIANGLE_COLOR = 0x111116;
 const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
@@ -127,7 +126,7 @@ export default {
 	methods: {
 		init() {
 			this.initCamera();
-			this.initScene(BACKGROUND_COLOR);
+			this.initScene();
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
 			this.initFog(true);
@@ -149,9 +148,8 @@ export default {
 			this.camera.position.set(CAMERA_START_POSITION_X,CAMERA_START_POSITION_Y,CAMERA_START_POSITION_Z);
 			this.camera.rotation.set(CAMERA_START_ROTATION_X,CAMERA_START_ROTATION_Y,CAMERA_START_ROTATION_Z);
 		},
-		initScene(color) {
+		initScene() {
 			this.scene = new THREE.Scene();
-			this.scene.background = new THREE.Color( color );
 		},
 		renderWebGL() {
 			this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
@@ -173,7 +171,7 @@ export default {
 			this.clock.start();
 		},
 		initFog(fog) {
-			if(fog) this.scene.fog = new THREE.FogExp2( 0x111116, FOG_POWER );
+			if(fog) this.scene.fog = new THREE.FogExp2( 0x1a82f7, FOG_POWER );
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -181,8 +179,8 @@ export default {
 		},
 		createWorld() {
 			const pMaterial = new THREE.ParticleBasicMaterial({
-				color: 0x7BCDFF,
-				size: 50,
+				color: 0x1a82f7,
+				size: 30,
 				map: THREE.ImageUtils.loadTexture(
 					'../assets/imgs/particle.png'
 				),
