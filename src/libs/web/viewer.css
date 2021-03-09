@@ -426,7 +426,7 @@ html {
 body {
 	height: 100%;
 	width: 100%;
-	background-color: rgba(64, 64, 64, 1);
+	background-color: rgb(97 195 255);
 	background-image: url(images/texture.png);
 }
 
@@ -742,10 +742,7 @@ html[dir='rtl'] #sidebarResizer {
 .secondaryToolbar {
 	position: relative;
 	height: 32px;
-	background-color: rgba(71, 71, 71, 1); /* fallback */
-	background-image:
-		url(images/texture.png),
-		linear-gradient(rgba(82, 82, 82, 0.99), rgba(69, 69, 69, 0.95));
+	background-color: #1d1d23;
 }
 
 html[dir='ltr'] #toolbarContainer,

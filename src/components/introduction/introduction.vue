@@ -1,6 +1,15 @@
 <template>
-	<div>
+	<div class="introduction">
 		<span class="intro">
+			<a
+				:class="{android: true}"
+				:href="props_introduction.android_url"
+				@mouseover="enter_hovering"
+				@mouseleave="leave_hovering">
+				<img
+					:src="props_introduction.image">
+				<span class="press">Press me</span>
+			</a>
 			<span>Hello world, I'm <a
 				class="capitalize"
 				:href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.name }}</a>.</span>
@@ -19,6 +28,7 @@ export default {
 			required: true
 		}
 	},
+	emits: ['hovering'],
 	data: () => {
 		return {
 			jobs: [],
@@ -44,19 +54,29 @@ export default {
 			this.jobs = jobs;
 		},
 		writing() {
-			const i = this.job.length;
-			if (i < this.jobs[this.job_index].length) {
-				this.job += this.jobs[this.job_index].charAt(i);
-				setTimeout(this.writing, 50);
+			if (this.job !== undefined) {
+				const i = this.job.length;
+				if (i < this.jobs[this.job_index].length) {
+					this.job += this.jobs[this.job_index].charAt(i);
+					setTimeout(this.writing, 50);
+				} else {
+					this.job += '.';
+					setTimeout(this.switch_job, 2000);
+				}
 			} else {
-				this.job += '.';
-				setTimeout(this.switch_job, 2000);
+				setTimeout('', 50);
 			}
 		},
 		switch_job() {
 			this.job_index = (this.job_index + 1) % this.jobs.length;
 			this.job = '';
 			this.writing();
+		},
+		enter_hovering() {
+			this.$emit('hovering', true);
+		},
+		leave_hovering() {
+			this.$emit('hovering', false);
 		}
 	}
 };

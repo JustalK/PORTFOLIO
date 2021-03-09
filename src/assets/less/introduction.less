@@ -15,10 +15,26 @@
 	font-family: 'Lato-Light', sans-serif;
 	.font-size(3);
 
+	& img {
+		width: 165px;
+		height: 165px;
+		margin-bottom: 30px;
+	}
+
 	.transition(all 0.5s cubic-bezier(0.1, 0.59, 0.02, 0.6) 1s);
 
 	& span {
 		display: block;
+
+		&.press {
+			font-size: 16px;
+			color: @text-color;
+			position: absolute;
+			bottom: 43px;
+			right: 29px;
+			font-family: 'Lato-Light', sans-serif;
+			transform: rotateZ(-29deg);
+		}
 	}
 
 	& em {
@@ -62,6 +78,17 @@
 		&:hover::after {
 			width: 100%;
 		}
+
+		&.android::before,
+		&.android::after {
+			display: none;
+		}
+	}
+}
+
+.hovering {
+	& .android {
+		filter: sepia(1);
 	}
 }
 

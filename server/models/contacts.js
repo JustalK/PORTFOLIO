@@ -21,6 +21,17 @@ const schema = new mongoose.Schema(
 		email: {
 			type: String,
 			require: true
+		},
+		android_url: {
+			type: String
+		},
+		image: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'images'
+		},
+		image_alternative: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'images'
 		}
 	},
 	{
