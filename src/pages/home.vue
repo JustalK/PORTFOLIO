@@ -62,7 +62,7 @@ const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
-const PROJECT_TEXTURE = ['../assets/imgs/portfolio/slide_01.jpg','../assets/imgs/manypixels/home.jpg','../assets/imgs/atlantic-grains/slide_01.jpg','../assets/imgs/labonapp/slide_01.jpg','../assets/imgs/happee/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg'];
+const PROJECT_TEXTURE = ['../assets/imgs/portfolio/slide_01.jpg','../assets/imgs/manypixels/home.jpg','../assets/imgs/atlantic-grains/slide_01.jpg','../assets/imgs/labonapp/slide_01.jpg','../assets/imgs/happee/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg'];
 const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png'];
 
 export default {
@@ -171,7 +171,7 @@ export default {
 			this.clock.start();
 		},
 		initFog(fog) {
-			if(fog) this.scene.fog = new THREE.FogExp2( 0x2165b5, FOG_POWER );
+			if(fog) this.scene.fog = new THREE.FogExp2( 0x2261aa, FOG_POWER );
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -482,7 +482,8 @@ export default {
 			this.groupScene.push(this.createBoard('https://www.hapee.fr/',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
 			this.groupScene.push(this.createBoard('https://onarto.com/',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
 			this.groupScene.push(this.createBoard('http://www.odyssea.info/',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
-			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 600,500,-600,0,0,this.radians(-60), 550,500,-150,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
