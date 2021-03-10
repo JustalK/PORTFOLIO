@@ -79,6 +79,7 @@ export default {
 			clock: null,
 			raycaster: null,
 			parent: null,
+			last_parent_hover: null,
 			childrens: null,
 			particleSystem: [],
 			positionReached: [false,false,false],
@@ -88,6 +89,7 @@ export default {
 			groupScene: [],
 			zoomIn: false,
 			zoomOn: null,
+			listener: null,
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
@@ -130,6 +132,7 @@ export default {
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
 			this.initFog(true);
+			this.initListener();
 			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
@@ -173,6 +176,10 @@ export default {
 		},
 		initFog(fog) {
 			if(fog) this.scene.fog = new THREE.FogExp2( 0x2261aa, FOG_POWER );
+		},
+		initListener() {
+			this.listener = new THREE.AudioListener();
+			this.camera.add(this.listener);
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -252,6 +259,12 @@ export default {
 					if(this.parent==null || this.parent!=intersects[0].object.parent) {
 						document.body.style.cursor = 'pointer';
 						this.parent = intersects[0].object.parent;
+						// If I am hovering a new element
+						if(this.last_parent_hover !== this.parent) {
+							this.last_parent_hover = this.parent;
+							this.play_hover_sound();
+						}
+
 						if(this.childrens!=null) {
 							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
 								for(var x=this.childrens.length;x--;) {
@@ -295,6 +308,17 @@ export default {
 				}
 			}
 		},
+		play_hover_sound() {
+			if(!this.listener.isPlaying) {
+				const sound = new THREE.Audio(this.listener);
+				const audioLoader = new THREE.AudioLoader();
+				audioLoader.load( '../assets/sounds/hover.mp3', buffer => {
+					sound.setBuffer(buffer);
+					sound.setVolume(0.05);
+					sound.play();
+				});
+			}
+		},
 		moveCameraToBoard() {
 			for(var i=this.movements.length;i--;) {
 				if(this.isMoveCameraTo(this.movements[i], this.camera.position.getComponent(i), this.positionFinal[i])) {
@@ -325,6 +349,8 @@ export default {
 			this.rotationReached = [false,false,false];
 			if(!this.zoomIn) {
 				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+				this.last_parent_hover = null;
+				this.parent = null;
 			}
 		},
 		perpetual(board) {
