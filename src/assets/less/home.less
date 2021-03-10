@@ -4,11 +4,12 @@
 #HOME {
 	perspective: 100px;
 	overflow: hidden;
+	opacity: 1;
 	background: -webkit-radial-gradient(circle, #1a82f7 10%, #2f2727 100%);
 	background-size: 180% 180%;
 	.full();
 
-	& > div {
+	& > .panel {
 		transition: transform 0.8s cubic-bezier(0.8, 0, 0.25, 1) 0.08s, opacity 0.2s cubic-bezier(0.8, 0, 0.25, 1);
 		position: absolute;
 		top: 0;
@@ -21,7 +22,7 @@
 		}
 	}
 
-	&.move_to_three > div {
+	&.move_to_three > .panel {
 		opacity: 0;
 		pointer-events: none;
 	}

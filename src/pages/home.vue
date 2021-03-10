@@ -5,7 +5,7 @@
 		<components_github
 			:invisible="invisible" />
 		<div
-			:class="{active: go_zoom}">
+			:class="{panel: true, active: go_zoom}">
 			<components_introduction_side
 				:props_link="props_links[0]"
 				:props_introduction="props_introduction"
@@ -158,6 +158,7 @@ export default {
 			this.renderer.gammaInput = true;
 			this.renderer.gammaOutput = true;
 			this.renderer.powerPreference = 'high-performance';
+			this.renderer.setClearColor( 0x000000, 0 );
 		},
 		initLight(color) {
 			this.scene.add(new THREE.AmbientLight(color,0.8));
@@ -220,6 +221,7 @@ export default {
 
 			if(this.movementCamera && this.parent!=null) {
 				document.body.style.cursor = 'inherit';
+				this.move_to_darkness(this.camera.position.z);
 				// If I have not reached the final position on each abcisse
 				if(this.isPositionNotReached()) {
 					this.moveCameraToBoard();
@@ -475,6 +477,13 @@ export default {
 					return true;
 				}
 			}
+		},
+		/**
+		* Add a mask for making the background darker when we go deep into the ocean
+		* @param {Number} position_z The z position of the user
+		**/
+		move_to_darkness(position_z) {
+			this.renderer.setClearColor( 0x000000, Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
