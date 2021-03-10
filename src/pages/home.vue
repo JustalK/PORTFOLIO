@@ -90,7 +90,7 @@ export default {
 			groupScene: [],
 			zoomIn: false,
 			zoomOn: null,
-			listener: null,
+			eventSoundListener: null,
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
@@ -133,7 +133,7 @@ export default {
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
 			this.initFog(true);
-			this.initListener();
+			this.initEventSoundListener();
 			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
@@ -178,9 +178,12 @@ export default {
 		initFog(fog) {
 			if(fog) this.scene.fog = new THREE.FogExp2( 0x2261aa, FOG_POWER );
 		},
-		initListener() {
-			this.listener = new THREE.AudioListener();
-			this.camera.add(this.listener);
+		/**
+		* Create and add the event sound listener to the camera
+		**/
+		initEventSoundListener() {
+			this.eventSoundListener = new THREE.AudioListener();
+			this.camera.add(this.eventSoundListener);
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -319,12 +322,20 @@ export default {
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			if(!this.listener.isPlaying) {
-				const sound = new THREE.Audio(this.listener);
+			this.play_sound('../assets/sounds/hover.mp3', 0.4);
+		},
+		/**
+		* Play a sound on the event sound listener with a certain volume
+		* @param {String} path_sound The path of the sound
+		* @param {Number} volume The volume of the sound to be played
+		**/
+		play_sound(path_sound, volume) {
+			if(!this.eventSoundListener.isPlaying) {
+				const sound = new THREE.Audio(this.eventSoundListener);
 				const audioLoader = new THREE.AudioLoader();
-				audioLoader.load( '../assets/sounds/hover.mp3', buffer => {
+				audioLoader.load(path_sound, buffer => {
 					sound.setBuffer(buffer);
-					sound.setVolume(0.4);
+					sound.setVolume(volume);
 					sound.play();
 				});
 			}
