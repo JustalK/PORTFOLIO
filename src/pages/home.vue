@@ -30,6 +30,7 @@ import * as THREE from '../libs/three.js';
 
 const ABSCISSA = ['x','y','z'];
 const FOV = 50;
+const MAX_DISTANCE_HOVER = 6000;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x555555;
@@ -256,13 +257,23 @@ export default {
 			} else {
 				if(intersects.length>0) {
 					// If the user trying to interact with a new mesh
-					if(this.parent==null || this.parent!=intersects[0].object.parent) {
+					console.log(intersects[0].object.parent.position.z);
+					if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
 						document.body.style.cursor = 'pointer';
 						this.parent = intersects[0].object.parent;
 						// If I am hovering a new element
 						if(this.last_parent_hover !== this.parent) {
 							this.last_parent_hover = this.parent;
 							this.play_hover_sound();
+							if(this.childrens!=null) {
+								if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
+									for(var s=this.childrens.length;s--;) {
+										if(this.childrens[s]['wireframe']) {
+											this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
+										}
+									}
+								}
+							}
 						}
 
 						if(this.childrens!=null) {
@@ -292,29 +303,28 @@ export default {
 					}
 				} else {
 					document.body.style.cursor = 'inherit';
-					if(this.childrens!=null) {
-						if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-							for(var s=this.childrens.length;s--;) {
-								if(this.childrens[s]['wireframe']) {
-									this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
-								}
-							}
-						}
-						for(var d=this.childrens.length;d--;) {
-							if(d==1 || d==0) this.childrens[d].material[4].color = new THREE.Color('#FFFFFF');
-						}
-					}
 					this.parent=null;
 				}
 			}
 		},
+		/**
+		* Check if the board is too far from being hover
+		* @param {Object} board the board to check
+		* @return True if the board is in a good distance or else false
+		**/
+		is_object_close_enough_for_hover(board) {
+			return board.position.z > this.camera.position.z - MAX_DISTANCE_HOVER;
+		},
+		/**
+		* Play a sound when you hover on an object
+		**/
 		play_hover_sound() {
 			if(!this.listener.isPlaying) {
 				const sound = new THREE.Audio(this.listener);
 				const audioLoader = new THREE.AudioLoader();
 				audioLoader.load( '../assets/sounds/hover.mp3', buffer => {
 					sound.setBuffer(buffer);
-					sound.setVolume(0.05);
+					sound.setVolume(0.4);
 					sound.play();
 				});
 			}
