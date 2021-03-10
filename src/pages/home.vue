@@ -2,18 +2,10 @@
 	<div
 		id="HOME"
 		ref="home">
-		<components_github
-			:invisible="invisible" />
 		<div
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction_side
 				:props_link="props_links[0]"
-				:props_introduction="props_introduction"
-				:props_go_open_door="go_open_door"
-				@zoom="zoom"
-				@hovering="hovering" />
-			<components_introduction_side
-				:props_link="props_links[1]"
 				:props_introduction="props_introduction"
 				:props_go_open_door="go_open_door"
 				@zoom="zoom"
@@ -23,7 +15,6 @@
 </template>
 <script>
 import introduction_side from '../components/introduction/introduction_side';
-import github from '../components/main/github';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
@@ -68,8 +59,7 @@ const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.pn
 
 export default {
 	components: {
-		components_introduction_side: introduction_side,
-		components_github: github
+		components_introduction_side: introduction_side
 	},
 	data: () => {
 		return {

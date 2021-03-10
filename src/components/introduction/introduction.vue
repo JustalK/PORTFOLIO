@@ -1,20 +1,8 @@
 <template>
 	<div class="introduction">
 		<span class="intro">
-			<a
-				:class="{android: true}"
-				:href="props_introduction.android_url"
-				@mouseover="enter_hovering"
-				@mouseleave="leave_hovering">
-				<img
-					:src="props_introduction.image">
-				<span class="press">Press me</span>
-			</a>
-			<span>Hello world, I'm <a
-				class="capitalize"
-				:href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.name }}</a>.</span>
-			<span>I'm a <em>{{ job }}</em></span>
-			<span>If any questions, contact me at <a :href="&quot;mailto:&quot; + props_introduction.email">{{ props_introduction.email }}</a></span>
+			<span class="name">{{ props_introduction.name }}</span>
+			<span class="jobs">{{ jobs.join(' | ') }}</span>
 		</span>
 	</div>
 </template>

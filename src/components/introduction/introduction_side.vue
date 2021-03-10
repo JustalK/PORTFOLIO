@@ -6,20 +6,14 @@
 		<components_introduction
 			:props_introduction="props_introduction"
 			@hovering="hovering" />
-		<components_introduction_link
-			:props_link="props_link"
-			@resume="resume"
-			@portfolio="portfolio" />
 	</div>
 </template>
 <script>
 import introduction from './introduction';
-import introduction_link from './introduction_link';
 
 export default {
 	components: {
-		components_introduction: introduction,
-		components_introduction_link: introduction_link
+		components_introduction: introduction
 	},
 	props: {
 		props_introduction: {

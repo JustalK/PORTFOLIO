@@ -2,18 +2,15 @@
 @import (reference) "libs/mixins.less";
 
 .intro {
-	position: relative;
+	position: absolute;
 	display: block;
-	line-height: 1.4em;
 	width: 100%;
 	text-align: center;
-	top: 40%;
+	bottom: 30%;
 	user-select: none;
 	opacity: 0;
 	color: @text-color;
-	transform: translateY(-50%);
 	font-family: 'Lato-Light', sans-serif;
-	.font-size(3);
 
 	& img {
 		width: 165px;
@@ -44,14 +41,25 @@
 		animation: blink-caret 0.75s step-end infinite;
 	}
 
+	& .name {
+		text-transform: uppercase;
+		letter-spacing: 2rem;
+		word-spacing: 2rem;
+		margin-left: 2rem;
+		text-shadow: 0 0 8px #bddcff;
+		.font-size(9.5);
+	}
+
+	& .jobs {
+		text-transform: uppercase;
+		word-spacing: 0.6rem;
+		.font-size(1.4);
+	}
+
 	& a {
 		font-family: 'Lato-Bold', sans-serif;
 		color: @text-color-light;
 		position: relative;
-
-		&.capitalize {
-			text-transform: capitalize;
-		}
 
 		&::before,
 		&::after {
