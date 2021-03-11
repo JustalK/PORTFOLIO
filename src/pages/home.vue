@@ -82,6 +82,7 @@ export default {
 			zoomIn: false,
 			zoomOn: null,
 			eventSoundListener: null,
+			ambientSoundListener: null,
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
@@ -115,6 +116,7 @@ export default {
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
 		setTimeout(() => {
 			this.invisible = false;
+			this.play_ambient_sound();
 		}, 1000);
 	},
 	methods: {
@@ -124,7 +126,7 @@ export default {
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
 			this.initFog(true);
-			this.initEventSoundListener();
+			this.initSoundListener();
 			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
@@ -172,9 +174,15 @@ export default {
 		/**
 		* Create and add the event sound listener to the camera
 		**/
-		initEventSoundListener() {
+		initSoundListener() {
 			this.eventSoundListener = new THREE.AudioListener();
+			this.ambientSoundListener = new THREE.AudioListener();
 			this.camera.add(this.eventSoundListener);
+			this.camera.add(this.ambientSoundListener);
+		},
+		initAmbientSoundListener() {
+			this.ambientSoundListener = new THREE.AudioListener();
+			this.camera.add(this.ambientSoundListener);
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -308,20 +316,29 @@ export default {
 		is_object_close_enough_for_hover(board) {
 			return board.position.z > this.camera.position.z - MAX_DISTANCE_HOVER;
 		},
+		play_ambient_sound() {
+			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 0.5);
+		},
 		/**
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound('../assets/sounds/hover.wav', 0.4);
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.15);
+		},
+		/**
+		* Play a sound when you click on an object
+		**/
+		play_click_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.15);
 		},
 		/**
 		* Play a sound on the event sound listener with a certain volume
 		* @param {String} path_sound The path of the sound
 		* @param {Number} volume The volume of the sound to be played
 		**/
-		play_sound(path_sound, volume) {
-			if(!this.eventSoundListener.isPlaying) {
-				const sound = new THREE.Audio(this.eventSoundListener);
+		play_sound(listener, path_sound, volume) {
+			if(!listener.isPlaying) {
+				const sound = new THREE.Audio(listener);
 				const audioLoader = new THREE.AudioLoader();
 				audioLoader.load(path_sound, buffer => {
 					sound.setBuffer(buffer);
@@ -500,6 +517,7 @@ export default {
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
 						this.rotationFinal[i] = this.parent['rotation'+ABSCISSA[i]];
