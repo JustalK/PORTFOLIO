@@ -5,17 +5,14 @@
 		<div class="border" />
 		<div
 			:class="{panel: true, active: go_zoom}">
-			<components_introduction_side
-				:props_link="props_links[0]"
+			<components_introduction
 				:props_introduction="props_introduction"
-				:props_go_open_door="go_open_door"
-				@zoom="zoom"
-				@hovering="hovering" />
+				@click="move_to_page" />
 		</div>
 	</div>
 </template>
 <script>
-import introduction_side from '../components/introduction/introduction_side';
+import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
@@ -37,8 +34,6 @@ const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
 const	CAMERA_START_ROTATION_Z = 0;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
-const TRIANGLE_COLOR = 0x111116;
-const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
 const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
@@ -60,7 +55,7 @@ const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.pn
 
 export default {
 	components: {
-		components_introduction_side: introduction_side
+		components_introduction: introduction
 	},
 	data: () => {
 		return {
@@ -72,6 +67,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			last_parent_hover: null,
+			is_true_darkness_allowed: false,
 			childrens: null,
 			particleSystem: [],
 			positionReached: [false,false,false],
@@ -246,66 +242,55 @@ export default {
 		searchingMatchMouseAndMesh() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
-			const triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
 
-			if(triangleIntersects.length>0) {
-				for(var i=this.triangleHover.length;i--;) {
-					if(triangleIntersects[0].object==this.triangleHover[i]) {
-						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR_HOVER);
-					} else {
-						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR);
+			if(intersects.length>0) {
+				// If the user trying to interact with a new mesh
+				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
+					document.body.style.cursor = 'pointer';
+					this.parent = intersects[0].object.parent;
+					// If I am hovering a new element
+					if(this.last_parent_hover !== this.parent) {
+						this.last_parent_hover = this.parent;
+						this.play_hover_sound();
+						if(this.childrens!=null) {
+							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
+								for(var s=this.childrens.length;s--;) {
+									if(this.childrens[s]['wireframe']) {
+										this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
+									}
+								}
+							}
+						}
+					}
+
+					if(this.childrens!=null) {
+						if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
+							for(var x=this.childrens.length;x--;) {
+								if(this.childrens[x]['panel']) {
+									this.childrens[x].material[4].opacity = 0;
+								}
+							}
+						} else {
+							for(var z=this.childrens.length;z--;) {
+								if((z==1 || z==0) && intersects[0].object==this.childrens[z]) {
+									this.childrens[z].material[4].color = new THREE.Color('#327DFF');
+								}
+							}
+						}
+					}
+					this.childrens = this.parent.children;
+					for(var j=this.childrens.length;j--;) {
+						if(this.childrens[j]['wireframe']) {
+							this.childrens[j].material.color = new THREE.Color(WIREFRAME_COLOR_HOVER);
+						}
+						if(this.childrens[j]['panel']) {
+							this.childrens[j].material[4].opacity = 1;
+						}
 					}
 				}
 			} else {
-				if(intersects.length>0) {
-					// If the user trying to interact with a new mesh
-					if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
-						document.body.style.cursor = 'pointer';
-						this.parent = intersects[0].object.parent;
-						// If I am hovering a new element
-						if(this.last_parent_hover !== this.parent) {
-							this.last_parent_hover = this.parent;
-							this.play_hover_sound();
-							if(this.childrens!=null) {
-								if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-									for(var s=this.childrens.length;s--;) {
-										if(this.childrens[s]['wireframe']) {
-											this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
-										}
-									}
-								}
-							}
-						}
-
-						if(this.childrens!=null) {
-							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-								for(var x=this.childrens.length;x--;) {
-									if(this.childrens[x]['panel']) {
-										this.childrens[x].material[4].opacity = 0;
-									}
-								}
-							} else {
-								for(var z=this.childrens.length;z--;) {
-									if((z==1 || z==0) && intersects[0].object==this.childrens[z]) {
-										this.childrens[z].material[4].color = new THREE.Color('#327DFF');
-									}
-								}
-							}
-						}
-						this.childrens = this.parent.children;
-						for(var j=this.childrens.length;j--;) {
-							if(this.childrens[j]['wireframe']) {
-								this.childrens[j].material.color = new THREE.Color(WIREFRAME_COLOR_HOVER);
-							}
-							if(this.childrens[j]['panel']) {
-								this.childrens[j].material[4].opacity = 1;
-							}
-						}
-					}
-				} else {
-					document.body.style.cursor = 'inherit';
-					this.parent=null;
-				}
+				document.body.style.cursor = 'inherit';
+				this.parent=null;
 			}
 		},
 		/**
@@ -317,19 +302,19 @@ export default {
 			return board.position.z > this.camera.position.z - MAX_DISTANCE_HOVER;
 		},
 		play_ambient_sound() {
-			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 0.5);
+			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1);
 		},
 		/**
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.15);
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.38);
 		},
 		/**
 		* Play a sound when you click on an object
 		**/
 		play_click_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.15);
+			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
 		},
 		/**
 		* Play a sound on the event sound listener with a certain volume
@@ -538,7 +523,7 @@ export default {
 		* @param {Number} position_z The z position of the user
 		**/
 		move_to_darkness(position_z) {
-			this.renderer.setClearColor( 0x000000, Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
+			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(1 - position_z / CAMERA_START_POSITION_Z, 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
@@ -566,6 +551,7 @@ export default {
 				this.speedTranslation[i] = Math.abs(this.camera.position.getComponent(i) - this.positionFinal[i])*DEFAULT_MOVEMENT_CAMERA_SPEED;
 				this.speedRotation[i] = Math.abs(this.camera.rotation.toVector3().getComponent(i) - this.rotationFinal[i])*DEFAULT_ROTATION_CAMERA_SPEED;
 			}
+			console.log(this.speedTranslation['z']);
 		},
 		getMovementWay() {
 			for(var i=ABSCISSA.length;i--;) {
@@ -585,6 +571,28 @@ export default {
 			}
 			this.zoomOn = null;
 			this.zoomIn = false;
+			this.getSpeedMovement();
+			this.getMovementWay();
+			this.movementCamera = true;
+		},
+		/**
+    * Move the camera for switching to a new page
+    **/
+		move_camera_new_page() {
+			this.positionFinal[0] = 0;
+			this.positionFinal[1] = 0;
+			this.positionFinal[2] = -10000;
+			this.rotationFinal[0] = CAMERA_START_ROTATION_X;
+			this.rotationFinal[1] = CAMERA_START_ROTATION_Y;
+			this.rotationFinal[2] = CAMERA_START_ROTATION_Z;
+			this.positionReached = [false,false,false];
+			this.rotationReached = [false,false,false];
+			for(var i=this.groupScene.length;i--;) {
+				this.groupScene[i]['lock'] = false;
+			}
+			this.zoomOn = null;
+			this.zoomIn = false;
+			this.parent = true;
 			this.getSpeedMovement();
 			this.getMovementWay();
 			this.movementCamera = true;
@@ -611,18 +619,14 @@ export default {
 				}
 			}
 		},
-		zoom() {
-			this.go_zoom = true;
-			this.go_open_door = true;
-			this.invisible = true;
-			utils.add_class_to_element(this.$refs.home, 'unmounted');
-		},
-		hovering(event) {
-			if(event) {
-				utils.add_class_to_element(this.$refs.home, 'hovering');
-			} else {
-				utils.remove_class_to_element(this.$refs.home, 'hovering');
-			}
+		move_to_page(page, ref) {
+			utils.add_class_to_element(ref, 'invisible');
+			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.is_true_darkness_allowed = true;
+			this.move_camera_new_page();
+			setTimeout(() => {
+				this.$router.push({name: page});
+			}, 3000);
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
