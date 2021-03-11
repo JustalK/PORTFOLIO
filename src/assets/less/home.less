@@ -9,6 +9,22 @@
 	background-size: 180% 180%;
 	.full();
 
+	& .border {
+		&::after,
+		&::before {
+			content: ' ';
+			width: 100%;
+			position: absolute;
+			height: 50%;
+			background: @background-shadow;
+			.transition(height 1s ease 1.2s);
+		}
+
+		&::after {
+			bottom: 0;
+		}
+	}
+
 	& > .panel {
 		transition: transform 0.8s cubic-bezier(0.8, 0, 0.25, 1) 0.08s, opacity 0.2s cubic-bezier(0.8, 0, 0.25, 1);
 		position: absolute;
@@ -61,6 +77,13 @@
 		&::before,
 		&::after {
 			height: 0;
+		}
+
+		& .border {
+			&::after,
+			&::before {
+				height: 8%;
+			}
 		}
 	}
 }

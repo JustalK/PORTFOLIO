@@ -2,6 +2,7 @@
 	<div
 		id="HOME"
 		ref="home">
+		<div class="border" />
 		<div
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction_side
@@ -30,8 +31,8 @@ const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
 const	CAMERA_START_POSITION_X = 0;
-const	CAMERA_START_POSITION_Y = -200;
-const	CAMERA_START_POSITION_Z = 8000;
+const	CAMERA_START_POSITION_Y = -380;
+const	CAMERA_START_POSITION_Z = 8500;
 const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
 const	CAMERA_START_ROTATION_Z = 0;
@@ -311,7 +312,7 @@ export default {
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound('../assets/sounds/hover.mp3', 0.4);
+			this.play_sound('../assets/sounds/hover.wav', 0.4);
 		},
 		/**
 		* Play a sound on the event sound listener with a certain volume
