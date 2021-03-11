@@ -1,9 +1,26 @@
 <template>
 	<div class="introduction">
-		<span class="intro">
+		<div class="intro">
 			<span class="name">{{ props_introduction.name }}</span>
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
-		</span>
+			<a class="big portfolio">
+				<i />
+				Portfolio
+			</a>
+			<a class="big resume">
+				<i />
+				Resume/CV</a>
+			<div class="links">
+				<div />
+				<a href="#">
+					<span>Github</span>
+				</a>
+				<div />
+				<a href="#">
+					<span>Apps</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </template>
 <script>

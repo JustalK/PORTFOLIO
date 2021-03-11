@@ -30,7 +30,7 @@ const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
 const	CAMERA_START_POSITION_X = 0;
-const	CAMERA_START_POSITION_Y = 0;
+const	CAMERA_START_POSITION_Y = -200;
 const	CAMERA_START_POSITION_Z = 8000;
 const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
@@ -250,7 +250,6 @@ export default {
 			} else {
 				if(intersects.length>0) {
 					// If the user trying to interact with a new mesh
-					console.log(intersects[0].object.parent.position.z);
 					if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
 						document.body.style.cursor = 'pointer';
 						this.parent = intersects[0].object.parent;
