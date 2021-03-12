@@ -332,6 +332,29 @@ export default {
 				});
 			}
 		},
+		/**
+		* Pausing the ambiant sound when visiting other pages
+		**/
+		pausing_ambient_sound() {
+			console.log(this.ambientSoundListener);
+			this.reducing_ambient_sound(100, 2000);
+		},
+		/**
+		* Reduce the volume of the ambiant sound slowly by reducing the volume
+		* @param {Number} tick the number of part for reducing
+		* @param {Number} time The time in second for reaching the volume 0
+		**/
+		reducing_ambient_sound(tick, time) {
+			const tick_value = time / tick;
+			const reducer = setInterval(() => {
+				const volume = this.ambientSoundListener.getMasterVolume ();
+				const reduced_volume = Math.max(volume - tick_value / time, 0);
+				this.ambientSoundListener.setMasterVolume(reduced_volume);
+				if (reduced_volume <= 0) {
+					clearInterval(reducer);
+				}
+			}, tick_value);
+		},
 		moveCameraToBoard() {
 			for(var i=this.movements.length;i--;) {
 				if(this.isMoveCameraTo(this.movements[i], this.camera.position.getComponent(i), this.positionFinal[i])) {
@@ -625,6 +648,7 @@ export default {
 			this.is_true_darkness_allowed = true;
 			this.move_camera_new_page();
 			setTimeout(() => {
+				this.pausing_ambient_sound();
 				this.$router.push({name: page});
 			}, 3000);
 		},
