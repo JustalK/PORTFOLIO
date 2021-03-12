@@ -302,6 +302,9 @@ export default {
 			return board.position.z > this.camera.position.z - MAX_DISTANCE_HOVER;
 		},
 		play_ambient_sound() {
+			if (this.ambientSoundListener.context.state === 'suspended') {
+				this.ambientSoundListener.context.resume();
+			}
 			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1);
 		},
 		/**
@@ -336,8 +339,11 @@ export default {
 		* Pausing the ambiant sound when visiting other pages
 		**/
 		pausing_ambient_sound() {
-			console.log(this.ambientSoundListener);
-			this.reducing_ambient_sound(100, 2000);
+			const time_for_pausing_in_seconds = 1500;
+			this.reducing_ambient_sound(100, time_for_pausing_in_seconds);
+			setTimeout(() => {
+				this.ambientSoundListener.context.suspend();
+			}, time_for_pausing_in_seconds);
 		},
 		/**
 		* Reduce the volume of the ambiant sound slowly by reducing the volume
@@ -347,7 +353,7 @@ export default {
 		reducing_ambient_sound(tick, time) {
 			const tick_value = time / tick;
 			const reducer = setInterval(() => {
-				const volume = this.ambientSoundListener.getMasterVolume ();
+				const volume = this.ambientSoundListener.getMasterVolume();
 				const reduced_volume = Math.max(volume - tick_value / time, 0);
 				this.ambientSoundListener.setMasterVolume(reduced_volume);
 				if (reduced_volume <= 0) {
@@ -574,7 +580,6 @@ export default {
 				this.speedTranslation[i] = Math.abs(this.camera.position.getComponent(i) - this.positionFinal[i])*DEFAULT_MOVEMENT_CAMERA_SPEED;
 				this.speedRotation[i] = Math.abs(this.camera.rotation.toVector3().getComponent(i) - this.rotationFinal[i])*DEFAULT_ROTATION_CAMERA_SPEED;
 			}
-			console.log(this.speedTranslation['z']);
 		},
 		getMovementWay() {
 			for(var i=ABSCISSA.length;i--;) {
@@ -649,8 +654,10 @@ export default {
 			this.move_camera_new_page();
 			setTimeout(() => {
 				this.pausing_ambient_sound();
+			}, 500);
+			setTimeout(() => {
 				this.$router.push({name: page});
-			}, 3000);
+			}, 2200);
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
