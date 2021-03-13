@@ -639,6 +639,7 @@ export default {
 			this.zoomIn = false;
 			this.parent = true;
 			this.getSpeedMovement();
+			this.speedTranslation[2] = 7000;
 			this.getMovementWay();
 			this.movementCamera = true;
 		},
