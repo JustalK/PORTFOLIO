@@ -268,6 +268,26 @@ export default {
 
 						this.last_parent_hover = this.parent;
 					}
+
+					// If I am hovering my zoom, I might want to click on the button inside
+					if (this.parent === this.zoomOn) {
+						// If I am hovering the visit button
+						if (intersects[0].object === this.zoomOn.children[0]) {
+							this.zoomOn.children[0].material[4].color = new THREE.Color('#327DFF');
+						} else {
+							this.zoomOn.children[0].material[4].color = new THREE.Color('#FFFFFF');
+						}
+
+						// If I am hovering the back button
+						if (intersects[0].object === this.zoomOn.children[1]) {
+							this.zoomOn.children[1].material[4].color = new THREE.Color('#327DFF');
+						} else {
+							this.zoomOn.children[1].material[4].color = new THREE.Color('#FFFFFF');
+						}
+					} else {
+						this.zoomOn.children[0].material[4].color = new THREE.Color('#FFFFFF');
+						this.zoomOn.children[1].material[4].color = new THREE.Color('#FFFFFF');
+					}
 				}
 			} else {
 				document.body.style.cursor = 'inherit';
