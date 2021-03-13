@@ -7,7 +7,9 @@
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction
 				:props_introduction="props_introduction"
-				@click="move_to_page" />
+				@click="move_to_page"
+				@hover_big="play_hover_menu_sound"
+				@hover_small="play_hover_small_menu_sound" />
 		</div>
 	</div>
 </template>
@@ -78,6 +80,7 @@ export default {
 			zoomIn: false,
 			zoomOn: null,
 			eventSoundListener: null,
+			eventSoundActive: false,
 			ambientSoundListener: null,
 			movementCamera: false,
 			movements: [0,0,0],
@@ -112,6 +115,7 @@ export default {
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
 		setTimeout(() => {
 			this.invisible = false;
+			this.eventSoundActive = true;
 			this.play_ambient_sound();
 		}, 1000);
 	},
@@ -305,13 +309,25 @@ export default {
 			if (this.ambientSoundListener.context.state === 'suspended') {
 				this.ambientSoundListener.context.resume();
 			}
-			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1);
+			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1, true);
 		},
 		/**
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.38);
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
+		},
+		/**
+		* Play a sound when you hover on a big menu
+		**/
+		play_hover_menu_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
+		},
+		/**
+		* Play a sound when you hover on a small menu
+		**/
+		play_hover_small_menu_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
 		},
 		/**
 		* Play a sound when you click on an object
@@ -324,13 +340,14 @@ export default {
 		* @param {String} path_sound The path of the sound
 		* @param {Number} volume The volume of the sound to be played
 		**/
-		play_sound(listener, path_sound, volume) {
-			if(!listener.isPlaying) {
+		play_sound(listener, path_sound, volume, loop = false) {
+			if(!listener.isPlaying && this.eventSoundActive) {
 				const sound = new THREE.Audio(listener);
 				const audioLoader = new THREE.AudioLoader();
 				audioLoader.load(path_sound, buffer => {
 					sound.setBuffer(buffer);
 					sound.setVolume(volume);
+					sound.setLoop(loop);
 					sound.play();
 				});
 			}

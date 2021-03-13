@@ -7,22 +7,28 @@
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
-				@click.stop="open($event, 'portfolio')">
+				@click.stop="open($event, 'portfolio')"
+				@mouseenter="hover_big">
 				<i />
 				Portfolio
 			</a>
 			<a
 				class="big resume"
-				@click.stop="open($event, 'resume')">
+				@click.stop="open($event, 'resume')"
+				@mouseenter="hover_big">
 				<i />
 				Resume/CV</a>
 			<div class="links">
 				<div />
-				<a href="#">
+				<a
+					href="#"
+					@mouseenter="hover_small">
 					<span>Github</span>
 				</a>
 				<div />
-				<a :href="props_introduction.android_url">
+				<a
+					:href="props_introduction.android_url"
+					@mouseenter="hover_small">
 					<span>Apps</span>
 				</a>
 			</div>
@@ -40,7 +46,7 @@ export default {
 			required: true
 		}
 	},
-	emits: ['click'],
+	emits: ['click', 'hover_big', 'hover_small'],
 	data: () => {
 		return {
 			jobs: []
@@ -62,6 +68,12 @@ export default {
 			const element = event.target;
 			utils.add_class_to_element(element, 'active');
 			this.$emit('click', page, this.$refs.introduction);
+		},
+		hover_small() {
+			this.$emit('hover_small');
+		},
+		hover_big() {
+			this.$emit('hover_big');
 		}
 	}
 };
