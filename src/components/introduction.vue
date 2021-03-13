@@ -21,13 +21,15 @@
 			<div class="links">
 				<div />
 				<a
-					href="#"
+					:href="props_introduction.github_url"
+					target="_blank"
 					@mouseenter="hover_small">
 					<span>Github</span>
 				</a>
 				<div />
 				<a
 					:href="props_introduction.android_url"
+					target="_blank"
 					@mouseenter="hover_small">
 					<span>Apps</span>
 				</a>
