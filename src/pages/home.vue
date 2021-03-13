@@ -24,8 +24,8 @@ const FOV = 50;
 const MAX_DISTANCE_HOVER = 6000;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
-const WIREFRAME_COLOR = 0x555555;
-const WIREFRAME_COLOR_HOVER = 0x000000;
+const WIREFRAME_COLOR = 0x61C3FF;
+const WIREFRAME_COLOR_HOVER = 0x001d2e;
 const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
@@ -70,7 +70,6 @@ export default {
 			parent: null,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
-			childrens: null,
 			particleSystem: [],
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
@@ -239,7 +238,7 @@ export default {
 					this.movementCamera=false;
 					this.resetPositionReached();
 				}
-			} else {
+			} else if(!this.movementCamera) {
 				this.searchingMatchMouseAndMesh();
 			}
 		},
@@ -252,50 +251,58 @@ export default {
 				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
 					document.body.style.cursor = 'pointer';
 					this.parent = intersects[0].object.parent;
-					// If I am hovering a new element
-					if(this.last_parent_hover !== this.parent) {
-						this.last_parent_hover = this.parent;
-						this.play_hover_sound();
-						if(this.childrens!=null) {
-							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-								for(var s=this.childrens.length;s--;) {
-									if(this.childrens[s]['wireframe']) {
-										this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
-									}
-								}
-							}
-						}
-					}
 
-					if(this.childrens!=null) {
-						if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-							for(var x=this.childrens.length;x--;) {
-								if(this.childrens[x]['panel']) {
-									this.childrens[x].material[4].opacity = 0;
-								}
-							}
-						} else {
-							for(var z=this.childrens.length;z--;) {
-								if((z==1 || z==0) && intersects[0].object==this.childrens[z]) {
-									this.childrens[z].material[4].color = new THREE.Color('#327DFF');
-								}
-							}
+					// If I am hovering a new element different from my zoom
+					if(!this.zoomIn || (this.zoomOn !== null && this.parent !== this.last_parent_hover && this.parent !== this.zoomOn)) {
+						// If it's not my first time hovering on something
+						if(this.last_parent_hover !== null && this.last_parent_hover !== this.zoomOn) {
+							this.change_color_wireframe_childrens(this.last_parent_hover.children, WIREFRAME_COLOR);
+							this.change_panel_childrens(this.last_parent_hover.children, 0);
+							this.change_button_childrens(this.last_parent_hover.children, 0);
 						}
-					}
-					this.childrens = this.parent.children;
-					for(var j=this.childrens.length;j--;) {
-						if(this.childrens[j]['wireframe']) {
-							this.childrens[j].material.color = new THREE.Color(WIREFRAME_COLOR_HOVER);
-						}
-						if(this.childrens[j]['panel']) {
-							this.childrens[j].material[4].opacity = 1;
-						}
+
+						this.play_hover_sound();
+						this.change_color_wireframe_childrens(this.parent.children, WIREFRAME_COLOR_HOVER);
+						this.change_panel_childrens(this.parent.children, 1);
+						this.change_button_childrens(this.parent.children, 0);
+
+						this.last_parent_hover = this.parent;
 					}
 				}
 			} else {
 				document.body.style.cursor = 'inherit';
 				this.parent=null;
 			}
+		},
+		/**
+		* Change to affect to panel when hovered
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {number} opacity The opacity to give to panel
+		**/
+		change_panel_childrens(childrens, opacity) {
+			childrens.filter(children => children['panel']).map(children => {
+				children.material[4].opacity = opacity;
+			});
+		},
+		/**
+		* Change to affect the button of a board when hovered
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {number} opacity The opacity to give the button
+		**/
+		change_button_childrens(childrens, opacity) {
+			childrens.filter(children => children['button']).map(children => {
+				children.material[4].opacity = opacity;
+			});
+		},
+		/**
+		* Change the color of the wireframe by the childrens
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {string} color The color to affect to the wireframe
+		**/
+		change_color_wireframe_childrens(childrens, color) {
+			childrens.filter(children => children['wireframe']).map(children => {
+				children.material.color = new THREE.Color(color);
+			});
 		},
 		/**
 		* Check if the board is too far from being hover
@@ -430,16 +437,16 @@ export default {
 
 			// Construct the mesh piece by piece
 			const piece = [];
-			piece.push(this.createSideBoard(-160,0,0,0,0,0));
-			piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
+			//piece.push(this.createSideBoard(-160,0,0,0,0,0));
+			//piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
 			piece.push(this.createSideWireframe(-160,0,0,0,0,0));
 			piece.push(this.createSideWireframe(140,0,10,0,Math.PI,0));
 			piece.push(this.createCenterWireframe(-10,50,4,0,0,0));
 			piece.push(this.createCenterBoard(-10,50,8));
-			piece.push(this.createPanel(140, 40, 1,-10,140,8));
+			piece.push(this.createPanel(140, 40, 1,-10,140,8, 'panel'));
 			// The back button has to be the 7th mesh because of the return implementation
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-40,8));
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-40,8));
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-40,8, 'button'));
+			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-40,8, 'button'));
 
 
 			// Add the differents parts to the group of meshes
@@ -501,14 +508,14 @@ export default {
 			centerMesh.position.set(x,y,z);
 			return centerMesh;
 		},
-		createPanel(sx,sy,sz,x,y,z) {
-			return this.createPanelWithTexture(null,sx,sy,sz,x,y,z);
+		createPanel(sx,sy,sz,x,y,z, category) {
+			return this.createPanelWithTexture(null,sx,sy,sz,x,y,z, category);
 		},
-		createPanelWithTexture(texture,sx,sy,sz,x,y,z) {
+		createPanelWithTexture(texture,sx,sy,sz,x,y,z, category) {
 			const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true, opacity: 0 } );
 			const informationsMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( sx, sy, sz ), [0,0,0,0,material,0] );
 			informationsMesh.position.set(x,y,z);
-			informationsMesh['panel'] = true;
+			informationsMesh[category] = true;
 			return informationsMesh;
 		},
 		createSideWireframe(x,y,z,rx,ry,rz) {
@@ -534,13 +541,14 @@ export default {
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 
 			if(!this.movementCamera && intersects.length>0) {
-				if(intersects[0].object==this.childrens[1]) {
+				// If I am interacting with the back object of the board I am zooming on
+				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[1]) {
 					this.backToStart();
 					return true;
 				}
 
-				// If the user is interacting with the visit button
-				if(intersects[0].object==this.childrens[0]) {
+				// If the user is interacting with the visit button I am zooming on
+				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[0]) {
 					window.open(parent['url']);
 					return true;
 				}
@@ -554,12 +562,18 @@ export default {
 						this.rotationFinal[i] = this.parent['rotation'+ABSCISSA[i]];
 						this.positionReached[i] = false;
 					}
-					this.zoomOn = parent;
+					this.movementCamera = true;
+					if (this.zoomOn) {
+						this.change_panel_childrens(this.zoomOn.children, 0);
+						this.change_button_childrens(this.zoomOn.children, 0);
+					}
+					this.zoomOn = this.parent;
 					this.zoomIn = true;
 					this.getSpeedMovement();
 					this.getMovementWay();
-					this.movementCamera = true;
 					this.parent['lock'] = true;
+					this.change_color_wireframe_childrens(this.parent.children, WIREFRAME_COLOR);
+					this.change_button_childrens(this.zoomOn.children, 1);
 					return true;
 				}
 			}
@@ -614,11 +628,13 @@ export default {
 			for(var i=this.groupScene.length;i--;) {
 				this.groupScene[i]['lock'] = false;
 			}
+			this.movementCamera = true;
+			this.change_panel_childrens(this.zoomOn.children, 0);
+			this.change_button_childrens(this.zoomOn.children, 0);
 			this.zoomOn = null;
 			this.zoomIn = false;
 			this.getSpeedMovement();
 			this.getMovementWay();
-			this.movementCamera = true;
 		},
 		/**
     * Move the camera for switching to a new page
@@ -644,23 +660,23 @@ export default {
 			this.movementCamera = true;
 		},
 		loadTexturesOnMove() {
-			const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 1 } );
-			const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 1 } );
 			for(var i=0,countI=this.groupScene.length;i<countI;i++) {
+				const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 0 } );
+				const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 0 } );
 				const material3 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(PROJECT_TITLE_TEXTURE[i]), transparent: true, opacity: 1 } );
 				this.groupScene[i].children[0].material = [0,0,0,0,material2,0];
 				this.groupScene[i].children[1].material = [0,0,0,0,material,0];
 				this.groupScene[i].children[2].material = [0,0,0,0,material3,0];
 			}
 
-			this.childrens = this.groupScene[0].children;
-			if(this.childrens!=null) {
-				for(var j=this.childrens.length;j--;) {
-					if(this.childrens[j]['panel']) {
-						this.childrens[j].material[4].opacity = 1;
+			const childrens = this.groupScene[0].children;
+			if(childrens!=null) {
+				for(var j=childrens.length;j--;) {
+					if(childrens[j]['panel']) {
+						childrens[j].material[4].opacity = 1;
 						const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[0] );
 						const material = new THREE.MeshBasicMaterial( { map: texture } );
-						this.childrens[3].material[4] = material;
+						childrens[3].material[4] = material;
 					}
 				}
 			}
