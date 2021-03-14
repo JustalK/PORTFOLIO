@@ -52,8 +52,24 @@ const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
-const PROJECT_TEXTURE = ['../assets/imgs/portfolio/slide_01.jpg','../assets/imgs/manypixels/home.jpg','../assets/imgs/atlantic-grains/slide_01.jpg','../assets/imgs/labonapp/slide_01.jpg','../assets/imgs/happee/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg'];
-const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png'];
+const PROJECT_TEXTURE = [
+	'../assets/imgs/portfolio/home.jpg',
+	'../assets/imgs/manypixels/home.jpg',
+	'../assets/imgs/labonapp/home.jpg',
+	'../assets/imgs/rumarocket/home.jpg',
+	'../assets/imgs/portfolio/home.jpg',
+	'../assets/imgs/onarto/home.jpg',
+	'../assets/imgs/my-sweet-diane/home.jpg'
+];
+const PROJECT_TITLE_TEXTURE = [
+	'../assets/imgs/animations/portfolio_website.png',
+	'../assets/imgs/animations/manypixels_website.png',
+	'../assets/imgs/animations/labonapp_website.png',
+	'../assets/imgs/animations/predictive_insight_website.png',
+	'../assets/imgs/animations/altantic_grains_app.png',
+	'../assets/imgs/animations/onarto_website.png',
+	'../assets/imgs/animations/valentines_app.png'
+];
 
 export default {
 	components: {
@@ -461,12 +477,12 @@ export default {
 			//piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
 			piece.push(this.createSideWireframe(-160,0,0,0,0,0));
 			piece.push(this.createSideWireframe(140,0,10,0,Math.PI,0));
-			piece.push(this.createCenterWireframe(-10,50,4,0,0,0));
+			piece.push(this.createCenterWireframe(-10, 50, 4, 0, 0, 0));
 			piece.push(this.createCenterBoard(-10,50,8));
-			piece.push(this.createPanel(140, 40, 1,-10,140,8, 'panel'));
+			piece.push(this.createPanel(140, 40, 1, -10, 150, 8, 'panel'));
 			// The back button has to be the 7th mesh because of the return implementation
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-40,8, 'button'));
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-40,8, 'button'));
+			piece.push(this.createPanelWithTexture(null, 128, 64, 1, 80, -60, 8, 'button'));
+			piece.push(this.createPanelWithTexture(null, 128, 64, 1, -80, -60, 8, 'button'));
 
 
 			// Add the differents parts to the group of meshes
@@ -548,8 +564,8 @@ export default {
 			return sideWireframe;
 		},
 		createCenterWireframe(x,y,z,rx,ry,rz) {
-			const geometryBoard = new THREE.BoxBufferGeometry( 120, 70, 1 );
-			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 1 } );
+			const geometryBoard = new THREE.BoxBufferGeometry( 250, 128, 1 );
+			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 4 } );
 			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
 			sideWireframe['wireframe'] = true;
 			sideWireframe.position.set( x, y, z );
