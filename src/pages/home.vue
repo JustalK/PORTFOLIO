@@ -156,7 +156,7 @@ export default {
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
 		},
 		initCamera() {
-			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
+			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 7500 );
 			this.camera.position.set(CAMERA_START_POSITION_X,CAMERA_START_POSITION_Y,CAMERA_START_POSITION_Z);
 			this.camera.rotation.set(CAMERA_START_ROTATION_X,CAMERA_START_ROTATION_Y,CAMERA_START_ROTATION_Z);
 		},
@@ -620,7 +620,7 @@ export default {
 		* @param {Number} position_z The z position of the user
 		**/
 		move_to_darkness(position_z) {
-			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(1 - position_z / CAMERA_START_POSITION_Z, 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
+			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
@@ -676,15 +676,10 @@ export default {
 		/**
     * Move the camera for switching to a new page
     **/
-		move_camera_new_page() {
-			this.positionFinal[0] = 0;
-			this.positionFinal[1] = 0;
-			this.positionFinal[2] = -10000;
-			this.rotationFinal[0] = CAMERA_START_ROTATION_X;
-			this.rotationFinal[1] = CAMERA_START_ROTATION_Y;
-			this.rotationFinal[2] = CAMERA_START_ROTATION_Z;
-			this.positionReached = [false,false,false];
-			this.rotationReached = [false,false,false];
+		move_camera_new_page(z, speed) {
+			this.positionFinal[2] = z;
+			this.positionReached = [true, true, false];
+			this.rotationReached = [true, true, true];
 			for(var i=this.groupScene.length;i--;) {
 				this.groupScene[i]['lock'] = false;
 			}
@@ -692,7 +687,7 @@ export default {
 			this.zoomIn = false;
 			this.parent = true;
 			this.getSpeedMovement();
-			this.speedTranslation[2] = 7000;
+			this.speedTranslation[2] = speed;
 			this.getMovementWay();
 			this.movementCamera = true;
 		},
@@ -722,7 +717,7 @@ export default {
 			utils.add_class_to_element(ref, 'invisible');
 			utils.add_class_to_element(this.$refs.home, 'invisible');
 			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page();
+			this.move_camera_new_page(-10000, 7000);
 			setTimeout(() => {
 				this.pausing_ambient_sound();
 			}, 500);
@@ -733,7 +728,7 @@ export default {
 		async move_to_slug() {
 			utils.add_class_to_element(this.$refs.home, 'invisible');
 			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page();
+			this.move_camera_new_page(20000, 10000);
 			const tags = await api.get_tags();
 			const project = await api.get_project_by_slug('portfolio');
 			setTimeout(() => {
@@ -741,7 +736,7 @@ export default {
 			}, 500);
 			setTimeout(() => {
 				this.$router.push({ name: 'project', params: {slug: 'portfolio', project, tags}});
-			}, 2200);
+			}, 2000);
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
