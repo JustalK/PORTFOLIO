@@ -21,7 +21,7 @@ import * as THREE from '../libs/three.js';
 
 const ABSCISSA = ['x','y','z'];
 const FOV = 50;
-const MAX_DISTANCE_HOVER = 6000;
+const MAX_DISTANCE_HOVER = 7000;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x61C3FF;
@@ -54,21 +54,21 @@ const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
 const PROJECT_TEXTURE = [
 	'../assets/imgs/portfolio/home.jpg',
+	'../assets/imgs/my-sweet-diane/home.jpg',
 	'../assets/imgs/manypixels/home.jpg',
-	'../assets/imgs/labonapp/home.jpg',
 	'../assets/imgs/rumarocket/home.jpg',
-	'../assets/imgs/portfolio/home.jpg',
+	'../assets/imgs/atlantic-grains/home.jpg',
 	'../assets/imgs/onarto/home.jpg',
-	'../assets/imgs/my-sweet-diane/home.jpg'
+	'../assets/imgs/labonapp/home.jpg'
 ];
 const PROJECT_TITLE_TEXTURE = [
 	'../assets/imgs/animations/portfolio_website.png',
+	'../assets/imgs/animations/valentines_app.png',
 	'../assets/imgs/animations/manypixels_website.png',
-	'../assets/imgs/animations/labonapp_website.png',
 	'../assets/imgs/animations/predictive_insight_website.png',
 	'../assets/imgs/animations/altantic_grains_app.png',
 	'../assets/imgs/animations/onarto_website.png',
-	'../assets/imgs/animations/valentines_app.png'
+	'../assets/imgs/animations/labonapp_website.png'
 ];
 
 export default {
@@ -585,7 +585,8 @@ export default {
 
 				// If the user is interacting with the visit button I am zooming on
 				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[0]) {
-					window.open(parent['url']);
+					//window.open(parent['url']);
+					this.move_to_slug();
 					return true;
 				}
 
@@ -727,6 +728,19 @@ export default {
 			}, 500);
 			setTimeout(() => {
 				this.$router.push({name: page});
+			}, 2200);
+		},
+		async move_to_slug() {
+			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.is_true_darkness_allowed = true;
+			this.move_camera_new_page();
+			const tags = await api.get_tags();
+			const project = await api.get_project_by_slug('portfolio');
+			setTimeout(() => {
+				this.pausing_ambient_sound();
+			}, 500);
+			setTimeout(() => {
+				this.$router.push({ name: 'project', params: {slug: 'portfolio', project, tags}});
 			}, 2200);
 		},
 		async get_my_identity() {
