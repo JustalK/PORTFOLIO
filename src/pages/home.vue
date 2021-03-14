@@ -269,7 +269,7 @@ export default {
 					this.parent = intersects[0].object.parent;
 
 					// If I am hovering a new element different from my zoom
-					if(!this.zoomIn || (this.zoomOn !== null && this.parent !== this.last_parent_hover && this.parent !== this.zoomOn)) {
+					if(this.parent !== this.last_parent_hover && (!this.zoomIn || (this.zoomOn !== null && this.parent !== this.zoomOn))) {
 						// If it's not my first time hovering on something
 						if(this.last_parent_hover !== null && this.last_parent_hover !== this.zoomOn) {
 							this.change_color_wireframe_childrens(this.last_parent_hover.children, WIREFRAME_COLOR);
