@@ -7,6 +7,7 @@
 	background: @background-bloc-3;
 	position: relative;
 	box-shadow: 10px 10px #000;
+	.transition(all 0.5s ease);
 
 	& a {
 		overflow: hidden;
@@ -71,6 +72,11 @@
 		text-align: center;
 		margin: 0;
 		text-transform: uppercase;
+	}
+
+	&.is_animated {
+		opacity: 0;
+		transform: translateY(100%);
 	}
 }
 

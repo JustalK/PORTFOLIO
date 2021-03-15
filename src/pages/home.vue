@@ -735,7 +735,7 @@ export default {
 				this.pausing_ambient_sound();
 			}, 500);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: 'portfolio', project, tags}});
+				this.$router.push({ name: 'project', params: {slug: 'portfolio', project, tags, is_animated: true}});
 			}, 2000);
 		},
 		async get_my_identity() {
