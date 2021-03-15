@@ -2,8 +2,6 @@
 	<div
 		id="RESUME"
 		ref="resume">
-		<components_github
-			:invisible="invisible" />
 		<div>
 			<components_back
 				:invisible="invisible"
@@ -29,7 +27,6 @@
 </template>
 <script>
 import pubs from '../components/pubs';
-import github from '../components/main/github';
 import back from '../components/main/back';
 import text from '../components/main/text';
 import api from '../services/api';
@@ -39,8 +36,7 @@ export default {
 	components: {
 		components_text: text,
 		components_pubs: pubs,
-		components_back: back,
-		components_github: github
+		components_back: back
 	},
 	data: () => {
 		return {

@@ -3,8 +3,6 @@
 		id="PROJECT"
 		ref="project"
 		:class="{is_animated}">
-		<components_github
-			:invisible="invisible" />
 		<div>
 			<components_back
 				:is_animated="is_animated"
@@ -33,7 +31,6 @@
 </template>
 <script>
 import informations from '../components/informations';
-import github from '../components/main/github';
 import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
@@ -45,8 +42,7 @@ export default {
 		components_informations: informations,
 		components_pubs: pubs,
 		components_back: back,
-		components_slides: slides,
-		components_github: github
+		components_slides: slides
 	},
 	data: () => {
 		return {

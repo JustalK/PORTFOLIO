@@ -2,9 +2,8 @@
 	<div
 		id="PORTFOLIO"
 		ref="portfolio">
-		<components_github
-			:invisible="invisible" />
 		<div>
+			<components_links />
 			<components_back
 				:invisible="invisible"
 				@back="back" />
@@ -31,9 +30,9 @@
 <script>
 import informations from '../components/informations';
 import pubs from '../components/pubs';
-import github from '../components/main/github';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
+import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
@@ -43,7 +42,7 @@ export default {
 		components_sliders: sliders,
 		components_pubs: pubs,
 		components_back: back,
-		components_github: github
+		components_links: links
 	},
 	data: () => {
 		return {
