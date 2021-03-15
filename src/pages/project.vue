@@ -4,6 +4,9 @@
 		ref="project"
 		:class="{is_animated}">
 		<div>
+			<components_links
+				:invisible="invisible"
+				:is_animated="is_animated" />
 			<components_back
 				:is_animated="is_animated"
 				:invisible="invisible"
@@ -34,6 +37,7 @@ import informations from '../components/informations';
 import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
+import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
@@ -42,7 +46,8 @@ export default {
 		components_informations: informations,
 		components_pubs: pubs,
 		components_back: back,
-		components_slides: slides
+		components_slides: slides,
+		components_links: links
 	},
 	data: () => {
 		return {

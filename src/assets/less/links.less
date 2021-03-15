@@ -5,15 +5,35 @@
 	font-family: 'Lato-Light', sans-serif;
 	position: absolute;
 	right: -75px;
-	top: 50px;
+	top: 100px;
 	font-weight: bold;
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 4rem;
 	transform: translateX(100%) translateY(-12.5px) rotateZ(90deg);
 	transform-origin: left;
+	.transition(transform 0.25s ease 0.75s);
+
+	display: flex;
 
 	& a {
 		margin-right: 20px;
+		display: flex;
+		.transition(all 0.25s ease);
+
+		&:hover {
+			color: @text-color;
+		}
+
+		& span:hover {
+			transform: translateY(10px);
+			color: @background-bloc-2;
+			.transition(all 0.25s ease);
+		}
+	}
+
+	&.is_animated,
+	&.invisible {
+		transform: translateX(100%) translateY(-450px) rotateZ(90deg);
 	}
 }

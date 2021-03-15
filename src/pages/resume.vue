@@ -3,6 +3,8 @@
 		id="RESUME"
 		ref="resume">
 		<div>
+			<components_links
+				:invisible="invisible" />
 			<components_back
 				:invisible="invisible"
 				@back="back" />
@@ -29,6 +31,7 @@
 import pubs from '../components/pubs';
 import back from '../components/main/back';
 import text from '../components/main/text';
+import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
@@ -36,7 +39,8 @@ export default {
 	components: {
 		components_text: text,
 		components_pubs: pubs,
-		components_back: back
+		components_back: back,
+		components_links: links
 	},
 	data: () => {
 		return {

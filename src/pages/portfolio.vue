@@ -3,7 +3,8 @@
 		id="PORTFOLIO"
 		ref="portfolio">
 		<div>
-			<components_links />
+			<components_links
+				:invisible="invisible" />
 			<components_back
 				:invisible="invisible"
 				@back="back" />
