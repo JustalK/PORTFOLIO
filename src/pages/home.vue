@@ -3,6 +3,9 @@
 		id="HOME"
 		ref="home">
 		<div class="border" />
+		<components_music
+			:is_music_active="is_music_active"
+			@toggle_music="toggle_music" />
 		<div
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction
@@ -14,6 +17,7 @@
 	</div>
 </template>
 <script>
+import music from '../components/main/music';
 import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
@@ -75,7 +79,8 @@ const PROJECT_TITLE_TEXTURE = [
 
 export default {
 	components: {
-		components_introduction: introduction
+		components_introduction: introduction,
+		components_music: music
 	},
 	data: () => {
 		return {
@@ -87,6 +92,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			animation: true,
+			is_music_active: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
 			particleSystem: [],
@@ -383,6 +389,9 @@ export default {
 		* @param {Number} volume The volume of the sound to be played
 		**/
 		play_sound(listener, path_sound, volume, loop = false) {
+			if (listener === this.eventSoundListener && !this.is_music_active) {
+				return;
+			}
 			if(!listener.isPlaying && this.eventSoundActive) {
 				const sound = new THREE.Audio(listener);
 				const audioLoader = new THREE.AudioLoader();
@@ -416,6 +425,22 @@ export default {
 				const reduced_volume = Math.max(volume - tick_value / time, 0);
 				this.ambientSoundListener.setMasterVolume(reduced_volume);
 				if (reduced_volume <= 0) {
+					clearInterval(reducer);
+				}
+			}, tick_value);
+		},
+		/**
+		* Increase the volume of the ambiant sound slowly by increasing the volume
+		* @param {Number} tick the number of part for increasing
+		* @param {Number} time The time in second for increasing the volume 0
+		**/
+		increasing_ambient_sound(tick, time) {
+			const tick_value = time / tick;
+			const reducer = setInterval(() => {
+				const volume = this.ambientSoundListener.getMasterVolume();
+				const reduced_volume = Math.min(volume + tick_value / time, 1);
+				this.ambientSoundListener.setMasterVolume(reduced_volume);
+				if (reduced_volume >= 1) {
 					clearInterval(reducer);
 				}
 			}, tick_value);
@@ -756,6 +781,14 @@ export default {
 				android_url,
 				github_url
 			};
+		},
+		toggle_music() {
+			this.is_music_active = !this.is_music_active;
+			if (this.is_music_active) {
+				this.increasing_ambient_sound(100, 2000);
+			} else {
+				this.reducing_ambient_sound(100, 1000);
+			}
 		},
 		radians(degrees) {
 			return degrees * Math.PI / 180;
