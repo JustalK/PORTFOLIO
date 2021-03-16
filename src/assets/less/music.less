@@ -9,6 +9,7 @@
 	height: 20px;
 	transform: translateY(-10px);
 	z-index: @LAYER-ANIMATION;
+	.transition(opacity 1s ease 1.2s);
 
 	& div {
 		position: absolute;
@@ -44,6 +45,10 @@
 			left: 75%;
 			background: @background-bloc-3;
 		}
+	}
+
+	&.invisible {
+		opacity: 0;
 	}
 
 	&:not(.active) {

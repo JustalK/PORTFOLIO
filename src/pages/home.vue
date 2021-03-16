@@ -5,6 +5,7 @@
 		<div class="border" />
 		<components_music
 			:is_music_active="is_music_active"
+			:invisible="invisible"
 			@toggle_music="toggle_music" />
 		<div
 			:class="{panel: true, active: go_zoom}">
@@ -392,6 +393,7 @@ export default {
 			if (listener === this.eventSoundListener && !this.is_music_active) {
 				return;
 			}
+
 			if(!listener.isPlaying && this.eventSoundActive) {
 				const sound = new THREE.Audio(listener);
 				const audioLoader = new THREE.AudioLoader();
