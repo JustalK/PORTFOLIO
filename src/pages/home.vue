@@ -26,6 +26,8 @@ const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
 const WIREFRAME_COLOR = 0x61C3FF;
 const WIREFRAME_COLOR_HOVER = 0x001d2e;
+const BUTTON_COLOR = '#FFFFFF';
+const BUTTON_COLOR_HOVER = '#327DFF';
 const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
@@ -84,6 +86,7 @@ export default {
 			clock: null,
 			raycaster: null,
 			parent: null,
+			animation: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
 			particleSystem: [],
@@ -231,31 +234,33 @@ export default {
 			}
 		},
 		animate() {
-			setTimeout(this.animate, framerate );
-			this.renderer.render( this.scene, this.camera );
+			if (this.animation) {
+				setTimeout(this.animate, framerate );
+				this.renderer.render( this.scene, this.camera );
 
-			this.delta = this.clock.getDelta();
-			for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
-				this.particleSystem[ps].rotation.x += ROTATION_SPEED_PARTICLES * (1 + ps) / 2;
-				this.particleSystem[ps].rotation.y += ROTATION_SPEED_PARTICLES * ps;
-			}
-
-			for(var i=this.groupScene.length;i--;) {
-				this.perpetual(this.groupScene[i]);
-			}
-
-			if(this.movementCamera && this.parent!=null) {
-				document.body.style.cursor = 'inherit';
-				this.move_to_darkness(this.camera.position.z);
-				// If I have not reached the final position on each abcisse
-				if(this.isPositionNotReached()) {
-					this.moveCameraToBoard();
-				} else {
-					this.movementCamera=false;
-					this.resetPositionReached();
+				this.delta = this.clock.getDelta();
+				for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
+					this.particleSystem[ps].rotation.x += ROTATION_SPEED_PARTICLES * (1 + ps) / 2;
+					this.particleSystem[ps].rotation.y += ROTATION_SPEED_PARTICLES * ps;
 				}
-			} else if(!this.movementCamera) {
-				this.searchingMatchMouseAndMesh();
+
+				for(var i=this.groupScene.length;i--;) {
+					this.perpetual(this.groupScene[i]);
+				}
+
+				if(this.movementCamera && this.parent!=null) {
+					utils.remove_class_to_element(this.$refs.home, 'pointer');
+					this.move_to_darkness(this.camera.position.z);
+					// If I have not reached the final position on each abcisse
+					if(this.isPositionNotReached()) {
+						this.moveCameraToBoard();
+					} else {
+						this.movementCamera=false;
+						this.resetPositionReached();
+					}
+				} else if(!this.movementCamera) {
+					this.searchingMatchMouseAndMesh();
+				}
 			}
 		},
 		searchingMatchMouseAndMesh() {
@@ -265,7 +270,7 @@ export default {
 			if(intersects.length>0) {
 				// If the user trying to interact with a new mesh
 				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
-					document.body.style.cursor = 'pointer';
+					utils.add_class_to_element(this.$refs.home, 'pointer');
 					this.parent = intersects[0].object.parent;
 
 					// If I am hovering a new element different from my zoom
@@ -287,28 +292,22 @@ export default {
 
 					// If I am hovering my zoom, I might want to click on the button inside
 					if (this.parent === this.zoomOn) {
-						// If I am hovering the visit button
-						if (intersects[0].object === this.zoomOn.children[0]) {
-							this.zoomOn.children[0].material[4].color = new THREE.Color('#327DFF');
-						} else {
-							this.zoomOn.children[0].material[4].color = new THREE.Color('#FFFFFF');
-						}
-
-						// If I am hovering the back button
-						if (intersects[0].object === this.zoomOn.children[1]) {
-							this.zoomOn.children[1].material[4].color = new THREE.Color('#327DFF');
-						} else {
-							this.zoomOn.children[1].material[4].color = new THREE.Color('#FFFFFF');
-						}
-					} else {
-						this.zoomOn.children[0].material[4].color = new THREE.Color('#FFFFFF');
-						this.zoomOn.children[1].material[4].color = new THREE.Color('#FFFFFF');
+						const color_button_visit = intersects[0].object === this.zoomOn.children[0] ? BUTTON_COLOR_HOVER : BUTTON_COLOR;
+						const color_button_back = intersects[0].object === this.zoomOn.children[1] ? BUTTON_COLOR_HOVER : BUTTON_COLOR;
+						this.change_color_button_childrens(this.zoomOn, color_button_visit, color_button_back);
 					}
 				}
 			} else {
-				document.body.style.cursor = 'inherit';
+				utils.remove_class_to_element(this.$refs.home, 'pointer');
 				this.parent=null;
+				if (this.zoomOn) {
+					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
+				}
 			}
+		},
+		change_color_button_childrens(parent, color_button_visit, color_button_back) {
+			parent.children[0].material[4].color = new THREE.Color(color_button_visit);
+			parent.children[1].material[4].color = new THREE.Color(color_button_back);
 		},
 		/**
 		* Change to affect to panel when hovered
@@ -468,7 +467,7 @@ export default {
 			this.camera.updateProjectionMatrix();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
-		createBoard(url,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
+		createBoard(slug,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
 			const boardTmp = new THREE.Group();
 
 			// Construct the mesh piece by piece
@@ -503,7 +502,7 @@ export default {
 			boardTmp['rotationy'] = rotationY;
 			boardTmp['rotationz'] = rotationZ;
 			boardTmp['lock'] = false;
-			boardTmp['url'] = url;
+			boardTmp['slug'] = slug;
 
 			// Position of the board in the scene
 			boardTmp.position.set(x,y,z);
@@ -585,8 +584,7 @@ export default {
 
 				// If the user is interacting with the visit button I am zooming on
 				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[0]) {
-					//window.open(parent['url']);
-					this.move_to_slug();
+					this.move_to_slug(this.zoomOn['slug']);
 					return true;
 				}
 
@@ -611,6 +609,7 @@ export default {
 					this.parent['lock'] = true;
 					this.change_color_wireframe_childrens(this.parent.children, WIREFRAME_COLOR);
 					this.change_button_childrens(this.zoomOn.children, 1);
+					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
 					return true;
 				}
 			}
@@ -623,13 +622,13 @@ export default {
 			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
-			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
-			this.groupScene.push(this.createBoard('http://www.gouters-magiques.com/pro/',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
-			this.groupScene.push(this.createBoard('https://www.hapee.fr/',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
-			this.groupScene.push(this.createBoard('https://onarto.com/',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('http://www.odyssea.info/',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
-			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
+			this.groupScene.push(this.createBoard('portfolio',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
+			this.groupScene.push(this.createBoard('my-sweet-diane',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
+			this.groupScene.push(this.createBoard('manypixels-website',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
+			this.groupScene.push(this.createBoard('rumarocket',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('atlantic-grains',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
+			this.groupScene.push(this.createBoard('onarto', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
@@ -723,19 +722,25 @@ export default {
 			}, 500);
 			setTimeout(() => {
 				this.$router.push({name: page});
+				this.animation = false;
 			}, 2200);
 		},
-		async move_to_slug() {
+		/**
+		* Move the user to the slug page of the project
+		* @param {string} slug The slug of the page we want to go
+		**/
+		async move_to_slug(slug) {
 			utils.add_class_to_element(this.$refs.home, 'invisible');
 			this.is_true_darkness_allowed = true;
 			this.move_camera_new_page(20000, 10000);
 			const tags = await api.get_tags();
-			const project = await api.get_project_by_slug('portfolio');
+			const project = await api.get_project_by_slug(slug);
 			setTimeout(() => {
 				this.pausing_ambient_sound();
 			}, 500);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: 'portfolio', project, tags, is_animated: true}});
+				this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
+				this.animation = false;
 			}, 2000);
 		},
 		async get_my_identity() {
