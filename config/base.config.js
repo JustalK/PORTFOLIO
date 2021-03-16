@@ -18,6 +18,17 @@ module.exports = {
 		extensions: [ '.js', '.vue', '.json' ],
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js'
+		},
+		fallback: {
+			'http': require.resolve('stream-http'),
+			'https': require.resolve('https-browserify'),
+			'util': require.resolve('util/'),
+			'stream': require.resolve('stream-browserify'),
+			'tty': require.resolve('tty-browserify'),
+			'zlib': require.resolve('browserify-zlib'),
+			'assert': require.resolve('assert/'),
+			'fs': false,
+			'net': false
 		}
 	},
 	output: {
@@ -96,7 +107,10 @@ module.exports = {
 					options: {
 						postcssOptions: {
 							plugins: [
-								[ 'postcss-preset-env' ],
+								[
+									'postcss-preset-env',
+									require('autoprefixer')(),
+								],
 							],
 						},
 					} }, 'less-loader' ]
