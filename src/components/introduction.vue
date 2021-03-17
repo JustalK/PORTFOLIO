@@ -3,7 +3,9 @@
 		ref="introduction"
 		class="introduction">
 		<div class="intro">
-			<span class="name">{{ props_introduction.name }}</span>
+			<h1 class="name">
+				{{ props_introduction.name }}
+			</h1>
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
