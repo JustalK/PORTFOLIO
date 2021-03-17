@@ -1,17 +1,21 @@
 <template>
 	<div
 		id="PROJECT"
-		ref="project">
-		<components_github
-			:invisible="invisible" />
+		ref="project"
+		:class="{is_animated}">
 		<div>
+			<components_links
+				:invisible="invisible"
+				:is_animated="is_animated" />
 			<components_back
+				:is_animated="is_animated"
 				:invisible="invisible"
 				@back="back" />
 			<components_informations
 				:description="description"
 				:tags="tags"
 				:tags_selected="tags_selected"
+				:is_animated="is_animated"
 				:title="title"
 				:unmounted="unmounted"
 				:desactivate="desactivate"
@@ -21,6 +25,7 @@
 			<components_slides
 				:title="title"
 				:background_image="background_image"
+				:is_animated="is_animated"
 				:all_slides="all_slides" />
 			<components_pubs
 				:invisible="invisible" />
@@ -29,10 +34,10 @@
 </template>
 <script>
 import informations from '../components/informations';
-import github from '../components/main/github';
 import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
+import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
@@ -42,7 +47,7 @@ export default {
 		components_pubs: pubs,
 		components_back: back,
 		components_slides: slides,
-		components_github: github
+		components_links: links
 	},
 	data: () => {
 		return {
@@ -51,6 +56,7 @@ export default {
 			tags_selected: [],
 			invisible: false,
 			invisible_text: true,
+			is_animated: false,
 			desactivate: true,
 			unmounted: false,
 			description: 'Loading...',
@@ -72,6 +78,7 @@ export default {
 		const tags = this.$route.params.tags ? this.$route.params.tags : await this.get_all_tags();
 		const slug = this.$route.params.slug;
 		const project = this.$route.params.project ? this.$route.params.project : await this.get_project_by_slug(slug);
+		this.is_animated = this.$route.params.is_animated ? this.$route.params.is_animated : false;
 
 		this.update_page(project);
 		this.background_image = project.background_image;
@@ -82,9 +89,18 @@ export default {
 		}
 
 		await this.$nextTick();
-		setTimeout(() => {
-			this.invisible_text = false;
-		}, 1);
+		if (!this.is_animated) {
+			setTimeout(() => {
+				this.invisible_text = false;
+			}, 1);
+		} else {
+			setTimeout(() => {
+				this.is_animated = false;
+				setTimeout(() => {
+					this.invisible_text = false;
+				}, 1000);
+			}, 1);
+		}
 	},
 	async mounted() {
 		utils.add_class_to_element_delay(this.$refs.project, 'mounted', 200);

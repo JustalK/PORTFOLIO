@@ -1,0 +1,69 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#MUSIC {
+	position: absolute;
+	right: 2%;
+	top: 4%;
+	width: 20px;
+	height: 20px;
+	transform: translateY(-10px);
+	z-index: @LAYER-ANIMATION;
+	.transition(opacity 1s ease 1.2s);
+
+	& div {
+		position: absolute;
+		bottom: 0;
+		max-height: 40%;
+		width: 20%;
+		background: @background-bloc-0;
+		animation-name: risefall;
+		animation-iteration-count: infinite;
+		animation-duration: 1.5s;
+		.transition(background 0.25s ease);
+
+		&:nth-child(2) {
+			max-height: 80%;
+			animation-duration: 1s;
+			animation-delay: 0.25s;
+			left: 25%;
+			background: @background-bloc-1;
+		}
+
+		&:nth-child(3) {
+			max-height: 100%;
+			animation-duration: 1.25s;
+			animation-delay: 0.5s;
+			left: 50%;
+			background: @background-bloc-2;
+		}
+
+		&:nth-child(4) {
+			max-height: 70%;
+			animation-duration: 1.5s;
+			animation-delay: 0.75s;
+			left: 75%;
+			background: @background-bloc-3;
+		}
+	}
+
+	&.invisible {
+		opacity: 0;
+	}
+
+	&:not(.active) {
+		& div {
+			animation-play-state: initial;
+			min-height: 1px;
+			max-height: 1px;
+		}
+	}
+
+	&:hover {
+		cursor: pointer;
+
+		& div {
+			background: @text-color-white;
+		}
+	}
+}

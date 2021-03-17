@@ -1,5 +1,7 @@
 <template>
-	<div id="SLIDE">
+	<div
+		id="SLIDE"
+		:class="{is_animated: is_animated}">
 		<a>
 			<i class="fake_button" />
 			<div
@@ -34,6 +36,9 @@ export default {
 		background_image: {
 			type: Object,
 			required: true
+		},
+		is_animated: {
+			type: Boolean
 		}
 	},
 	data: () => {

@@ -1,7 +1,6 @@
 <template>
 	<div
-		class="back"
-		:class="{invisible: invisible}">
+		:class="{back:true, invisible: invisible, is_animated: is_animated}">
 		<a
 			href="#"
 			@click.stop="back">
@@ -18,6 +17,9 @@ export default {
 		invisible: {
 			type: Boolean,
 			required: true
+		},
+		is_animated: {
+			type: Boolean
 		}
 	},
 	emits: ['back'],

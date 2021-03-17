@@ -2,8 +2,10 @@
 @import (reference) "libs/mixins.less";
 
 .informations {
+	.transition(all 0.5s ease);
+
 	& > h1 {
-		padding-top: 50px;
+		padding-top: 100px;
 		margin: 0;
 		color: @text-color-white;
 		text-transform: uppercase;
@@ -23,12 +25,17 @@
 
 		font-style: italic;
 	}
+
+	&.is_animated {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
 }
 
-@media screen and (max-width: @PHONE_MQ) {
+@media screen and (max-width: @SCREEN_900) {
 	.informations {
 		& > h1 {
-			padding-top: 135px;
+			padding-top: 220px;
 			text-align: center;
 			.font-size(6);
 		}
@@ -39,6 +46,14 @@
 
 		& span:nth-child(4) {
 			.font-size(1.4);
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_900) {
+	.informations {
+		& > h1 {
+			.font-size(5);
 		}
 	}
 }

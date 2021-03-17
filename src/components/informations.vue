@@ -1,5 +1,5 @@
 <template>
-	<div class="informations">
+	<div :class="{informations: true, is_animated: is_animated}">
 		<h1>
 			<components_text
 				:text="title"
@@ -67,6 +67,9 @@ export default {
 		unmounted: {
 			type: Boolean,
 			required: true
+		},
+		is_animated: {
+			type: Boolean
 		}
 	},
 	emits: ['filter'],

@@ -37,6 +37,7 @@
 
 		&.desactivate {
 			pointer-events: none;
+			opacity: 0.2;
 		}
 
 		&::before {
@@ -69,6 +70,7 @@
 			background: @text-color;
 			color: @text-color-white;
 			box-shadow: none;
+			opacity: 1 !important;
 		}
 	}
 
@@ -79,7 +81,7 @@
 	}
 }
 
-@media screen and (min-width: @PHONE_MQ) {
+@media screen and (min-width: @SCREEN_900) {
 	.tags {
 		&-tag {
 			&:hover {
@@ -98,7 +100,7 @@
 	}
 }
 
-@media screen and (max-width: @PHONE_MQ) {
+@media screen and (max-width: @SCREEN_900) {
 	.tags {
 		&-tag {
 			.font-size(1.2);
