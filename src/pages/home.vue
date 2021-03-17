@@ -2,50 +2,47 @@
 	<div
 		id="HOME"
 		ref="home">
-		<components_github
-			:invisible="invisible" />
+		<div class="border" />
+		<components_music
+			:is_music_active="is_music_active"
+			:invisible="invisible"
+			@toggle_music="toggle_music" />
 		<div
-			:class="{active: go_zoom}">
-			<components_introduction_side
-				:props_link="props_links[0]"
+			:class="{panel: true, active: go_zoom}">
+			<components_introduction
 				:props_introduction="props_introduction"
-				:props_go_open_door="go_open_door"
-				@zoom="zoom"
-				@hovering="hovering" />
-			<components_introduction_side
-				:props_link="props_links[1]"
-				:props_introduction="props_introduction"
-				:props_go_open_door="go_open_door"
-				@zoom="zoom"
-				@hovering="hovering" />
+				@click="move_to_page"
+				@hover_big="play_hover_menu_sound"
+				@hover_small="play_hover_small_menu_sound" />
 		</div>
 	</div>
 </template>
 <script>
-import introduction_side from '../components/introduction/introduction_side';
-import github from '../components/main/github';
+import music from '../components/main/music';
+import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
 
 const ABSCISSA = ['x','y','z'];
 const FOV = 50;
+const MAX_DISTANCE_HOVER = 7000;
 const WINDOWS_WIDTH = window.innerWidth;
 const WINDOWS_HEIGHT = window.innerHeight;
-const WIREFRAME_COLOR = 0x555555;
-const WIREFRAME_COLOR_HOVER = 0x000000;
+const WIREFRAME_COLOR = 0x61C3FF;
+const WIREFRAME_COLOR_HOVER = 0x001d2e;
+const BUTTON_COLOR = '#FFFFFF';
+const BUTTON_COLOR_HOVER = '#327DFF';
 const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
 const	CAMERA_START_POSITION_X = 0;
-const	CAMERA_START_POSITION_Y = 0;
-const	CAMERA_START_POSITION_Z = 8000;
+const	CAMERA_START_POSITION_Y = -380;
+const	CAMERA_START_POSITION_Z = 8500;
 const	CAMERA_START_ROTATION_X = 0;
 const	CAMERA_START_ROTATION_Y = 0;
 const	CAMERA_START_ROTATION_Z = 0;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
-const TRIANGLE_COLOR = 0x111116;
-const TRIANGLE_COLOR_HOVER = 0xFFFFFF;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
 const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
@@ -62,13 +59,29 @@ const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
-const PROJECT_TEXTURE = ['../assets/imgs/portfolio/slide_01.jpg','../assets/imgs/manypixels/home.jpg','../assets/imgs/atlantic-grains/slide_01.jpg','../assets/imgs/labonapp/slide_01.jpg','../assets/imgs/happee/slide_01.jpg','../assets/imgs/rumarocket/slide_01.jpg'];
-const PROJECT_TITLE_TEXTURE = ['../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png','../assets/imgs/test.png'];
+const PROJECT_TEXTURE = [
+	'../assets/imgs/portfolio/home.jpg',
+	'../assets/imgs/my-sweet-diane/home.jpg',
+	'../assets/imgs/manypixels/home.jpg',
+	'../assets/imgs/rumarocket/home.jpg',
+	'../assets/imgs/atlantic-grains/home.jpg',
+	'../assets/imgs/onarto/home.jpg',
+	'../assets/imgs/labonapp/home.jpg'
+];
+const PROJECT_TITLE_TEXTURE = [
+	'../assets/imgs/animations/portfolio_website.png',
+	'../assets/imgs/animations/valentines_app.png',
+	'../assets/imgs/animations/manypixels_website.png',
+	'../assets/imgs/animations/predictive_insight_website.png',
+	'../assets/imgs/animations/altantic_grains_app.png',
+	'../assets/imgs/animations/onarto_website.png',
+	'../assets/imgs/animations/labonapp_website.png'
+];
 
 export default {
 	components: {
-		components_introduction_side: introduction_side,
-		components_github: github
+		components_introduction: introduction,
+		components_music: music
 	},
 	data: () => {
 		return {
@@ -79,7 +92,10 @@ export default {
 			clock: null,
 			raycaster: null,
 			parent: null,
-			childrens: null,
+			animation: true,
+			is_music_active: true,
+			last_parent_hover: null,
+			is_true_darkness_allowed: false,
 			particleSystem: [],
 			positionReached: [false,false,false],
 			rotationReached: [false,false,false],
@@ -88,6 +104,9 @@ export default {
 			groupScene: [],
 			zoomIn: false,
 			zoomOn: null,
+			eventSoundListener: null,
+			eventSoundActive: false,
+			ambientSoundListener: null,
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
@@ -121,6 +140,8 @@ export default {
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
 		setTimeout(() => {
 			this.invisible = false;
+			this.eventSoundActive = true;
+			this.play_ambient_sound();
 		}, 1000);
 	},
 	methods: {
@@ -130,6 +151,7 @@ export default {
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initClock();
 			this.initFog(true);
+			this.initSoundListener();
 			this.initRaycaster();
 			this.createWorld();
 			this.renderWebGL();
@@ -144,7 +166,7 @@ export default {
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
 		},
 		initCamera() {
-			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 15000 );
+			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 7500 );
 			this.camera.position.set(CAMERA_START_POSITION_X,CAMERA_START_POSITION_Y,CAMERA_START_POSITION_Z);
 			this.camera.rotation.set(CAMERA_START_ROTATION_X,CAMERA_START_ROTATION_Y,CAMERA_START_ROTATION_Z);
 		},
@@ -158,6 +180,7 @@ export default {
 			this.renderer.gammaInput = true;
 			this.renderer.gammaOutput = true;
 			this.renderer.powerPreference = 'high-performance';
+			this.renderer.setClearColor( 0x000000, 0 );
 		},
 		initLight(color) {
 			this.scene.add(new THREE.AmbientLight(color,0.8));
@@ -171,7 +194,20 @@ export default {
 			this.clock.start();
 		},
 		initFog(fog) {
-			if(fog) this.scene.fog = new THREE.FogExp2( 0x2165b5, FOG_POWER );
+			if(fog) this.scene.fog = new THREE.FogExp2( 0x2261aa, FOG_POWER );
+		},
+		/**
+		* Create and add the event sound listener to the camera
+		**/
+		initSoundListener() {
+			this.eventSoundListener = new THREE.AudioListener();
+			this.ambientSoundListener = new THREE.AudioListener();
+			this.camera.add(this.eventSoundListener);
+			this.camera.add(this.ambientSoundListener);
+		},
+		initAmbientSoundListener() {
+			this.ambientSoundListener = new THREE.AudioListener();
+			this.camera.add(this.ambientSoundListener);
 		},
 		initRaycaster() {
 			this.raycaster = new THREE.Raycaster();
@@ -205,93 +241,211 @@ export default {
 			}
 		},
 		animate() {
-			setTimeout(this.animate, framerate );
-			this.renderer.render( this.scene, this.camera );
+			if (this.animation) {
+				setTimeout(this.animate, framerate );
+				this.renderer.render( this.scene, this.camera );
 
-			this.delta = this.clock.getDelta();
-			for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
-				this.particleSystem[ps].rotation.x += ROTATION_SPEED_PARTICLES * (1 + ps) / 2;
-				this.particleSystem[ps].rotation.y += ROTATION_SPEED_PARTICLES * ps;
-			}
-
-			for(var i=this.groupScene.length;i--;) {
-				this.perpetual(this.groupScene[i]);
-			}
-
-			if(this.movementCamera && this.parent!=null) {
-				document.body.style.cursor = 'inherit';
-				// If I have not reached the final position on each abcisse
-				if(this.isPositionNotReached()) {
-					this.moveCameraToBoard();
-				} else {
-					this.movementCamera=false;
-					this.resetPositionReached();
+				this.delta = this.clock.getDelta();
+				for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
+					this.particleSystem[ps].rotation.x += ROTATION_SPEED_PARTICLES * (1 + ps) / 2;
+					this.particleSystem[ps].rotation.y += ROTATION_SPEED_PARTICLES * ps;
 				}
-			} else {
-				this.searchingMatchMouseAndMesh();
+
+				for(var i=this.groupScene.length;i--;) {
+					this.perpetual(this.groupScene[i]);
+				}
+
+				if(this.movementCamera && this.parent!=null) {
+					utils.remove_class_to_element(this.$refs.home, 'pointer');
+					this.move_to_darkness(this.camera.position.z);
+					// If I have not reached the final position on each abcisse
+					if(this.isPositionNotReached()) {
+						this.moveCameraToBoard();
+					} else {
+						this.movementCamera=false;
+						this.resetPositionReached();
+					}
+				} else if(!this.movementCamera) {
+					this.searchingMatchMouseAndMesh();
+				}
 			}
 		},
 		searchingMatchMouseAndMesh() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
-			const triangleIntersects = this.raycaster.intersectObjects( this.triangleHover, true );
 
-			if(triangleIntersects.length>0) {
-				for(var i=this.triangleHover.length;i--;) {
-					if(triangleIntersects[0].object==this.triangleHover[i]) {
-						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR_HOVER);
-					} else {
-						this.triangleHover[i].material.color = new THREE.Color(TRIANGLE_COLOR);
+			if(intersects.length>0) {
+				// If the user trying to interact with a new mesh
+				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
+					utils.add_class_to_element(this.$refs.home, 'pointer');
+					this.parent = intersects[0].object.parent;
+
+					// If I am hovering a new element different from my zoom
+					if(this.parent !== this.last_parent_hover && (!this.zoomIn || (this.zoomOn !== null && this.parent !== this.zoomOn))) {
+						// If it's not my first time hovering on something
+						if(this.last_parent_hover !== null && this.last_parent_hover !== this.zoomOn) {
+							this.change_color_wireframe_childrens(this.last_parent_hover.children, WIREFRAME_COLOR);
+							this.change_panel_childrens(this.last_parent_hover.children, 0);
+							this.change_button_childrens(this.last_parent_hover.children, 0);
+						}
+
+						this.play_hover_sound();
+						this.change_color_wireframe_childrens(this.parent.children, WIREFRAME_COLOR_HOVER);
+						this.change_panel_childrens(this.parent.children, 1);
+						this.change_button_childrens(this.parent.children, 0);
+
+						this.last_parent_hover = this.parent;
+					}
+
+					// If I am hovering my zoom, I might want to click on the button inside
+					if (this.parent === this.zoomOn) {
+						const color_button_visit = intersects[0].object === this.zoomOn.children[0] ? BUTTON_COLOR_HOVER : BUTTON_COLOR;
+						const color_button_back = intersects[0].object === this.zoomOn.children[1] ? BUTTON_COLOR_HOVER : BUTTON_COLOR;
+						this.change_color_button_childrens(this.zoomOn, color_button_visit, color_button_back);
 					}
 				}
 			} else {
-				if(intersects.length>0) {
-					// If the user trying to interact with a new mesh
-					if(this.parent==null || this.parent!=intersects[0].object.parent) {
-						document.body.style.cursor = 'pointer';
-						this.parent = intersects[0].object.parent;
-						if(this.childrens!=null) {
-							if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-								for(var x=this.childrens.length;x--;) {
-									if(this.childrens[x]['panel']) {
-										this.childrens[x].material[4].opacity = 0;
-									}
-								}
-							} else {
-								for(var z=this.childrens.length;z--;) {
-									if((z==1 || z==0) && intersects[0].object==this.childrens[z]) {
-										this.childrens[z].material[4].color = new THREE.Color('#327DFF');
-									}
-								}
-							}
-						}
-						this.childrens = this.parent.children;
-						for(var j=this.childrens.length;j--;) {
-							if(this.childrens[j]['wireframe']) {
-								this.childrens[j].material.color = new THREE.Color(WIREFRAME_COLOR_HOVER);
-							}
-							if(this.childrens[j]['panel']) {
-								this.childrens[j].material[4].opacity = 1;
-							}
-						}
-					}
-				} else {
-					document.body.style.cursor = 'inherit';
-					if(this.childrens!=null) {
-						if(this.zoomIn==false || (this.zoomOn!=null && this.zoomOn.children!=this.childrens)) {
-							for(var s=this.childrens.length;s--;) {
-								if(this.childrens[s]['wireframe']) {
-									this.childrens[s].material.color = new THREE.Color(WIREFRAME_COLOR);
-								}
-							}
-						}
-						for(var d=this.childrens.length;d--;) {
-							if(d==1 || d==0) this.childrens[d].material[4].color = new THREE.Color('#FFFFFF');
-						}
-					}
-					this.parent=null;
+				utils.remove_class_to_element(this.$refs.home, 'pointer');
+				this.parent=null;
+				if (this.zoomOn) {
+					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
 				}
 			}
+		},
+		change_color_button_childrens(parent, color_button_visit, color_button_back) {
+			parent.children[0].material[4].color = new THREE.Color(color_button_visit);
+			parent.children[1].material[4].color = new THREE.Color(color_button_back);
+		},
+		/**
+		* Change to affect to panel when hovered
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {number} opacity The opacity to give to panel
+		**/
+		change_panel_childrens(childrens, opacity) {
+			childrens.filter(children => children['panel']).map(children => {
+				children.material[4].opacity = opacity;
+			});
+		},
+		/**
+		* Change to affect the button of a board when hovered
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {number} opacity The opacity to give the button
+		**/
+		change_button_childrens(childrens, opacity) {
+			childrens.filter(children => children['button']).map(children => {
+				children.material[4].opacity = opacity;
+			});
+		},
+		/**
+		* Change the color of the wireframe by the childrens
+		* @param {object} childrens The list of the children of the board to affect
+		* @param {string} color The color to affect to the wireframe
+		**/
+		change_color_wireframe_childrens(childrens, color) {
+			childrens.filter(children => children['wireframe']).map(children => {
+				children.material.color = new THREE.Color(color);
+			});
+		},
+		/**
+		* Check if the board is too far from being hover
+		* @param {Object} board the board to check
+		* @return True if the board is in a good distance or else false
+		**/
+		is_object_close_enough_for_hover(board) {
+			return board.position.z > this.camera.position.z - MAX_DISTANCE_HOVER;
+		},
+		play_ambient_sound() {
+			if (this.ambientSoundListener.context.state === 'suspended') {
+				this.ambientSoundListener.context.resume();
+			}
+			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1, true);
+		},
+		/**
+		* Play a sound when you hover on an object
+		**/
+		play_hover_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
+		},
+		/**
+		* Play a sound when you hover on a big menu
+		**/
+		play_hover_menu_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
+		},
+		/**
+		* Play a sound when you hover on a small menu
+		**/
+		play_hover_small_menu_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
+		},
+		/**
+		* Play a sound when you click on an object
+		**/
+		play_click_sound() {
+			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
+		},
+		/**
+		* Play a sound on the event sound listener with a certain volume
+		* @param {String} path_sound The path of the sound
+		* @param {Number} volume The volume of the sound to be played
+		**/
+		play_sound(listener, path_sound, volume, loop = false) {
+			if (listener === this.eventSoundListener && !this.is_music_active) {
+				return;
+			}
+
+			if(!listener.isPlaying && this.eventSoundActive) {
+				const sound = new THREE.Audio(listener);
+				const audioLoader = new THREE.AudioLoader();
+				audioLoader.load(path_sound, buffer => {
+					sound.setBuffer(buffer);
+					sound.setVolume(volume);
+					sound.setLoop(loop);
+					sound.play();
+				});
+			}
+		},
+		/**
+		* Pausing the ambiant sound when visiting other pages
+		**/
+		pausing_ambient_sound() {
+			const time_for_pausing_in_seconds = 1500;
+			this.reducing_ambient_sound(100, time_for_pausing_in_seconds);
+			setTimeout(() => {
+				this.ambientSoundListener.context.suspend();
+			}, time_for_pausing_in_seconds);
+		},
+		/**
+		* Reduce the volume of the ambiant sound slowly by reducing the volume
+		* @param {Number} tick the number of part for reducing
+		* @param {Number} time The time in second for reaching the volume 0
+		**/
+		reducing_ambient_sound(tick, time) {
+			const tick_value = time / tick;
+			const reducer = setInterval(() => {
+				const volume = this.ambientSoundListener.getMasterVolume();
+				const reduced_volume = Math.max(volume - tick_value / time, 0);
+				this.ambientSoundListener.setMasterVolume(reduced_volume);
+				if (reduced_volume <= 0) {
+					clearInterval(reducer);
+				}
+			}, tick_value);
+		},
+		/**
+		* Increase the volume of the ambiant sound slowly by increasing the volume
+		* @param {Number} tick the number of part for increasing
+		* @param {Number} time The time in second for increasing the volume 0
+		**/
+		increasing_ambient_sound(tick, time) {
+			const tick_value = time / tick;
+			const reducer = setInterval(() => {
+				const volume = this.ambientSoundListener.getMasterVolume();
+				const reduced_volume = Math.min(volume + tick_value / time, 1);
+				this.ambientSoundListener.setMasterVolume(reduced_volume);
+				if (reduced_volume >= 1) {
+					clearInterval(reducer);
+				}
+			}, tick_value);
 		},
 		moveCameraToBoard() {
 			for(var i=this.movements.length;i--;) {
@@ -323,6 +477,8 @@ export default {
 			this.rotationReached = [false,false,false];
 			if(!this.zoomIn) {
 				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+				this.last_parent_hover = null;
+				this.parent = null;
 			}
 		},
 		perpetual(board) {
@@ -338,21 +494,21 @@ export default {
 			this.camera.updateProjectionMatrix();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
-		createBoard(url,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
+		createBoard(slug,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
 			const boardTmp = new THREE.Group();
 
 			// Construct the mesh piece by piece
 			const piece = [];
-			piece.push(this.createSideBoard(-160,0,0,0,0,0));
-			piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
+			//piece.push(this.createSideBoard(-160,0,0,0,0,0));
+			//piece.push(this.createSideBoard(140,0,10,0,Math.PI,0));
 			piece.push(this.createSideWireframe(-160,0,0,0,0,0));
 			piece.push(this.createSideWireframe(140,0,10,0,Math.PI,0));
-			piece.push(this.createCenterWireframe(-10,50,4,0,0,0));
+			piece.push(this.createCenterWireframe(-10, 50, 4, 0, 0, 0));
 			piece.push(this.createCenterBoard(-10,50,8));
-			piece.push(this.createPanel(140, 40, 1,-10,140,8));
+			piece.push(this.createPanel(140, 40, 1, -10, 150, 8, 'panel'));
 			// The back button has to be the 7th mesh because of the return implementation
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,20,-40,8));
-			piece.push(this.createPanelWithTexture(null,40, 20, 1,-40,-40,8));
+			piece.push(this.createPanelWithTexture(null, 128, 64, 1, 80, -60, 8, 'button'));
+			piece.push(this.createPanelWithTexture(null, 128, 64, 1, -80, -60, 8, 'button'));
 
 
 			// Add the differents parts to the group of meshes
@@ -373,7 +529,7 @@ export default {
 			boardTmp['rotationy'] = rotationY;
 			boardTmp['rotationz'] = rotationZ;
 			boardTmp['lock'] = false;
-			boardTmp['url'] = url;
+			boardTmp['slug'] = slug;
 
 			// Position of the board in the scene
 			boardTmp.position.set(x,y,z);
@@ -414,14 +570,14 @@ export default {
 			centerMesh.position.set(x,y,z);
 			return centerMesh;
 		},
-		createPanel(sx,sy,sz,x,y,z) {
-			return this.createPanelWithTexture(null,sx,sy,sz,x,y,z);
+		createPanel(sx,sy,sz,x,y,z, category) {
+			return this.createPanelWithTexture(null,sx,sy,sz,x,y,z, category);
 		},
-		createPanelWithTexture(texture,sx,sy,sz,x,y,z) {
+		createPanelWithTexture(texture,sx,sy,sz,x,y,z, category) {
 			const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true, opacity: 0 } );
 			const informationsMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( sx, sy, sz ), [0,0,0,0,material,0] );
 			informationsMesh.position.set(x,y,z);
-			informationsMesh['panel'] = true;
+			informationsMesh[category] = true;
 			return informationsMesh;
 		},
 		createSideWireframe(x,y,z,rx,ry,rz) {
@@ -434,8 +590,8 @@ export default {
 			return sideWireframe;
 		},
 		createCenterWireframe(x,y,z,rx,ry,rz) {
-			const geometryBoard = new THREE.BoxBufferGeometry( 120, 70, 1 );
-			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 1 } );
+			const geometryBoard = new THREE.BoxBufferGeometry( 250, 128, 1 );
+			const material = new THREE.LineBasicMaterial( { color: WIREFRAME_COLOR, linewidth: 4 } );
 			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
 			sideWireframe['wireframe'] = true;
 			sideWireframe.position.set( x, y, z );
@@ -447,42 +603,59 @@ export default {
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 
 			if(!this.movementCamera && intersects.length>0) {
-				if(intersects[0].object==this.childrens[1]) {
+				// If I am interacting with the back object of the board I am zooming on
+				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[1]) {
 					this.backToStart();
 					return true;
 				}
 
-				// If the user is interacting with the visit button
-				if(intersects[0].object==this.childrens[0]) {
-					window.open(parent['url']);
+				// If the user is interacting with the visit button I am zooming on
+				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[0]) {
+					this.move_to_slug(this.zoomOn['slug']);
 					return true;
 				}
 
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
 						this.rotationFinal[i] = this.parent['rotation'+ABSCISSA[i]];
 						this.positionReached[i] = false;
 					}
-					this.zoomOn = parent;
+					this.movementCamera = true;
+					if (this.zoomOn) {
+						this.change_panel_childrens(this.zoomOn.children, 0);
+						this.change_button_childrens(this.zoomOn.children, 0);
+					}
+					this.zoomOn = this.parent;
 					this.zoomIn = true;
 					this.getSpeedMovement();
 					this.getMovementWay();
-					this.movementCamera = true;
 					this.parent['lock'] = true;
+					this.change_color_wireframe_childrens(this.parent.children, WIREFRAME_COLOR);
+					this.change_button_childrens(this.zoomOn.children, 1);
+					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
 					return true;
 				}
 			}
 		},
+		/**
+		* Add a mask for making the background darker when we go deep into the ocean
+		* @param {Number} position_z The z position of the user
+		**/
+		move_to_darkness(position_z) {
+			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
+		},
 		loadProjectsTextures() {
-			this.groupScene.push(this.createBoard('https://www.zip-world.fr/',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
-			this.groupScene.push(this.createBoard('http://www.gouters-magiques.com/pro/',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
-			this.groupScene.push(this.createBoard('https://www.hapee.fr/',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
-			this.groupScene.push(this.createBoard('https://onarto.com/',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('http://www.odyssea.info/',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
-			this.groupScene.push(this.createBoard('http://www.promarine-boats.com/', 600,500,-600,0,0,this.radians(-60), 550,500,-150,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('portfolio',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
+			this.groupScene.push(this.createBoard('my-sweet-diane',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
+			this.groupScene.push(this.createBoard('manypixels-website',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
+			this.groupScene.push(this.createBoard('rumarocket',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('atlantic-grains',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
+			this.groupScene.push(this.createBoard('onarto', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
@@ -518,54 +691,106 @@ export default {
 			for(var i=this.groupScene.length;i--;) {
 				this.groupScene[i]['lock'] = false;
 			}
+			this.movementCamera = true;
+			this.change_panel_childrens(this.zoomOn.children, 0);
+			this.change_button_childrens(this.zoomOn.children, 0);
 			this.zoomOn = null;
 			this.zoomIn = false;
 			this.getSpeedMovement();
 			this.getMovementWay();
+		},
+		/**
+    * Move the camera for switching to a new page
+    **/
+		move_camera_new_page(z, speed) {
+			this.positionFinal[2] = z;
+			this.positionReached = [true, true, false];
+			this.rotationReached = [true, true, true];
+			for(var i=this.groupScene.length;i--;) {
+				this.groupScene[i]['lock'] = false;
+			}
+			this.zoomOn = null;
+			this.zoomIn = false;
+			this.parent = true;
+			this.getSpeedMovement();
+			this.speedTranslation[2] = speed;
+			this.getMovementWay();
 			this.movementCamera = true;
 		},
 		loadTexturesOnMove() {
-			const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 1 } );
-			const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 1 } );
 			for(var i=0,countI=this.groupScene.length;i<countI;i++) {
+				const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 0 } );
+				const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 0 } );
 				const material3 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(PROJECT_TITLE_TEXTURE[i]), transparent: true, opacity: 1 } );
 				this.groupScene[i].children[0].material = [0,0,0,0,material2,0];
 				this.groupScene[i].children[1].material = [0,0,0,0,material,0];
 				this.groupScene[i].children[2].material = [0,0,0,0,material3,0];
 			}
 
-			this.childrens = this.groupScene[0].children;
-			if(this.childrens!=null) {
-				for(var j=this.childrens.length;j--;) {
-					if(this.childrens[j]['panel']) {
-						this.childrens[j].material[4].opacity = 1;
+			const childrens = this.groupScene[0].children;
+			if(childrens!=null) {
+				for(var j=childrens.length;j--;) {
+					if(childrens[j]['panel']) {
+						childrens[j].material[4].opacity = 1;
 						const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[0] );
 						const material = new THREE.MeshBasicMaterial( { map: texture } );
-						this.childrens[3].material[4] = material;
+						childrens[3].material[4] = material;
 					}
 				}
 			}
 		},
-		zoom() {
-			this.go_zoom = true;
-			this.go_open_door = true;
-			this.invisible = true;
-			utils.add_class_to_element(this.$refs.home, 'unmounted');
+		move_to_page(page, ref) {
+			utils.add_class_to_element(ref, 'invisible');
+			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.is_true_darkness_allowed = true;
+			this.move_camera_new_page(-10000, 7000);
+			setTimeout(() => {
+				this.pausing_ambient_sound();
+			}, 500);
+			setTimeout(() => {
+				this.$router.push({name: page});
+				this.animation = false;
+			}, 2200);
 		},
-		hovering(event) {
-			if(event) {
-				utils.add_class_to_element(this.$refs.home, 'hovering');
-			} else {
-				utils.remove_class_to_element(this.$refs.home, 'hovering');
-			}
+		/**
+		* Move the user to the slug page of the project
+		* @param {string} slug The slug of the page we want to go
+		**/
+		async move_to_slug(slug) {
+			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.is_true_darkness_allowed = true;
+			this.move_camera_new_page(20000, 10000);
+			const tags = await api.get_tags();
+			const project = await api.get_project_by_slug(slug);
+			setTimeout(() => {
+				this.pausing_ambient_sound();
+			}, 500);
+			setTimeout(() => {
+				this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
+				this.animation = false;
+			}, 2000);
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
 			const image_path = my_identity.image !== null ? my_identity.image_alternative.path : null;
-			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url);
+			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url, my_identity.github_url);
 		},
-		update_introduction(name, email, image, android_url) {
-			this.props_introduction = {name, email, image, android_url};
+		update_introduction(name, email, image, android_url, github_url) {
+			this.props_introduction = {
+				name,
+				email,
+				image,
+				android_url,
+				github_url
+			};
+		},
+		toggle_music() {
+			this.is_music_active = !this.is_music_active;
+			if (this.is_music_active) {
+				this.increasing_ambient_sound(100, 2000);
+			} else {
+				this.reducing_ambient_sound(100, 1000);
+			}
 		},
 		radians(degrees) {
 			return degrees * Math.PI / 180;

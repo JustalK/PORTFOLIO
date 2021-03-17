@@ -2,9 +2,9 @@
 	<div
 		id="RESUME"
 		ref="resume">
-		<components_github
-			:invisible="invisible" />
 		<div>
+			<components_links
+				:invisible="invisible" />
 			<components_back
 				:invisible="invisible"
 				@back="back" />
@@ -29,9 +29,9 @@
 </template>
 <script>
 import pubs from '../components/pubs';
-import github from '../components/main/github';
 import back from '../components/main/back';
 import text from '../components/main/text';
+import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
@@ -40,7 +40,7 @@ export default {
 		components_text: text,
 		components_pubs: pubs,
 		components_back: back,
-		components_github: github
+		components_links: links
 	},
 	data: () => {
 		return {

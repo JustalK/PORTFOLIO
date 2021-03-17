@@ -1,0 +1,66 @@
+@import (reference) "libs/constants.less";
+@import (reference) "libs/mixins.less";
+
+#LINKS {
+	font-family: 'Lato-Light', sans-serif;
+	position: absolute;
+	right: -75px;
+	top: 100px;
+	font-weight: bold;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 4rem;
+	transform: translateX(100%) translateY(-12.5px) rotateZ(90deg);
+	transform-origin: left;
+	.transition(transform 0.25s ease 0.75s);
+
+	display: flex;
+
+	& a {
+		margin-right: 20px;
+		display: flex;
+		.transition(all 0.25s ease);
+
+		&:hover {
+			color: @text-color;
+		}
+
+		& span:hover {
+			transform: rotateZ(180deg);
+			color: @background-bloc-2;
+			.transition(all 0.25s ease);
+		}
+	}
+
+	&.is_animated,
+	&.invisible {
+		transform: translateX(100%) translateY(-450px) rotateZ(90deg);
+	}
+}
+
+@media screen and (max-width: @SCREEN_900) {
+	#LINKS {
+		right: 0;
+		top: 55px;
+		font-size: 3rem;
+		line-height: 3rem;
+		transform: translateY(50%);
+
+		&.is_animated,
+		&.invisible {
+			transform: translateY(-450px);
+		}
+
+		& a:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+@media screen and (max-width: @MOBILE) {
+	#LINKS {
+		font-size: 2rem;
+		line-height: 2rem;
+		top: 65px;
+	}
+}
