@@ -47,25 +47,25 @@
 			word-spacing: 2rem;
 			margin-left: 2rem;
 			text-shadow: 0 0 8px #bddcff;
-			.font-size(9.5);
+			.font-size(20);
 		}
 
 		& .jobs {
 			text-transform: uppercase;
 			word-spacing: 0.6rem;
-			.font-size(1.4);
+			.font-size(2.6);
 		}
 
 		& .big {
 			position: absolute;
-			bottom: -120px;
+			bottom: -180px;
 			width: 20%;
-			font-size: 2rem;
 			text-transform: uppercase;
 			line-height: 80px;
 			color: #009bfa;
 			cursor: pointer;
 			transition: color 0.25s ease;
+			.font-size(3);
 
 			&::after,
 			&::before {
@@ -174,9 +174,9 @@
 			width: 80px;
 			height: 80px;
 			position: absolute;
-			bottom: -120px;
+			bottom: -180px;
 			left: 50%;
-			transform: translateX(-50%) rotateZ(45deg);
+			transform: translateX(-50%) rotateZ(45deg) scale(2);
 
 			& a,
 			& div {
@@ -284,8 +284,132 @@
 	50% { border-color: @text-color; }
 }
 
-@media screen and (max-width: @PHONE_MQ) {
-	.intro {
-		.font-size(2.5);
+@media screen and (max-width: @SCREEN_2200) {
+	.introduction {
+		.intro {
+			& .name {
+				.font-size(15);
+			}
+
+			& .jobs {
+				.font-size(2);
+			}
+
+			& .big {
+				.font-size(2.5);
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1800) {
+	.introduction {
+		.intro {
+			& .name {
+				.font-size(12.5);
+			}
+
+			& .jobs {
+				.font-size(1.7);
+			}
+
+			& .big {
+				.font-size(2);
+			}
+
+			& .links {
+				transform: translateX(-50%) rotateZ(45deg) scale(1.5);
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1600) {
+	.introduction {
+		.intro {
+			& .name {
+				.font-size(9.5);
+			}
+
+			& .jobs {
+				.font-size(1.4);
+			}
+
+			& .big {
+				bottom: -120px;
+			}
+
+			& .links {
+				transform: translateX(-50%) rotateZ(45deg) scale(1);
+				bottom: -120px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_1100) {
+	.introduction {
+		.intro {
+			& .name {
+				.font-size(8);
+			}
+
+			& .jobs {
+				.font-size(1.2);
+			}
+
+			& .big {
+				width: 30%;
+			}
+
+			& .portfolio {
+				right: calc(50% + 55px);
+			}
+
+			& .resume {
+				left: calc(50% + 55px);
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @TABLET) {
+	.introduction {
+		.intro {
+			& .name {
+				letter-spacing: 1rem;
+				word-spacing: 1rem;
+				.font-size(4);
+			}
+
+			& .jobs {
+				display: none;
+			}
+
+			& .big {
+				width: 30%;
+				.font-size(1.5);
+
+				&::before,
+				&::after,
+				& i {
+					display: none;
+				}
+			}
+
+			& .links {
+				transform: translateX(-50%) rotateZ(45deg) scale(0.8);
+			}
+
+			& .portfolio {
+				margin-right: 8%;
+				right: calc(50% + 55px);
+			}
+
+			& .resume {
+				margin-left: 8%;
+				left: calc(50% + 55px);
+			}
+		}
 	}
 }

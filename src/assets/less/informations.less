@@ -32,10 +32,10 @@
 	}
 }
 
-@media screen and (max-width: @PHONE_MQ) {
+@media screen and (max-width: @SCREEN_900) {
 	.informations {
 		& > h1 {
-			padding-top: 135px;
+			padding-top: 220px;
 			text-align: center;
 			.font-size(6);
 		}
@@ -46,6 +46,14 @@
 
 		& span:nth-child(4) {
 			.font-size(1.4);
+		}
+	}
+}
+
+@media screen and (max-width: @SCREEN_900) {
+	.informations {
+		& > h1 {
+			.font-size(5);
 		}
 	}
 }
