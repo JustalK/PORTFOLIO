@@ -83,6 +83,26 @@ export default {
 		components_introduction: introduction,
 		components_music: music
 	},
+	metaInfo() {
+		const title = this.blabla;
+		return {
+			title: 'French full stack developer',
+			titleTemplate: () => {
+				return title ? title : '%s | Justal Kevin Portfolio';
+			},
+			htmlAttrs: {
+				lang: 'en-US'
+			},
+			meta: [
+				{ charset: 'utf-8' },
+				{ name: 'description', content: 'French developer ' },
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+			],
+			noscript: [
+				{ innerHTML: 'This website requires JavaScript.' }
+			]
+		};
+	},
 	data: () => {
 		return {
 			camera: null,
@@ -110,6 +130,7 @@ export default {
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
+			blabla: '',
 			positionFinal: [0,0,0],
 			rotationFinal: [0,0,0],
 			speedTranslation: [0,0,0],
@@ -126,18 +147,12 @@ export default {
 			]
 		};
 	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				document.title = 'Justal Kevin - Home';
-			}
-		},
-	},
 	async mounted() {
 		this.init();
 		await this.get_my_identity();
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
+		this.blabla = 'asdasdasd';
+
 		setTimeout(() => {
 			this.invisible = false;
 			this.eventSoundActive = true;
