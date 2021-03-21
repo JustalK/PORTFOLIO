@@ -4,6 +4,29 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		title: 'Do you know me',
+		slug: 'do-you-know-me',
+		short_description: 'An app made for playing a question-answer game with my wife.',
+		long_description: 'A project made with React Native for the frontend. For the backend, I use Fastify, Apollo Server and GraphQl.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5872'),  // Personal Project
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React Native
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCMS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5912'), // Fastify
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5879'), // MongoDB
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99997')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaacc0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaacc0002')
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3fccc1e00aaa00001'),
+		order: -1
+	},
+	{
 		title: 'My Sweet Diane',
 		slug: 'my-sweet-diane',
 		short_description: 'An app made for expressing my love to my wife.',

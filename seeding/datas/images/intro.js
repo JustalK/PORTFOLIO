@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99997'),
+		name: 'Do You Know Me App',
+		path: './assets/imgs/do-you-know-me/intro.jpg',
+		path_low: './assets/imgs/do-you-know-me/intro_low.jpg'
+	},
+	{
 		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99998'),
 		name: 'My Sweet Diane App',
 		path: './assets/imgs/my-sweet-diane/intro.jpg',

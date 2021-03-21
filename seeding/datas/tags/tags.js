@@ -166,5 +166,9 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5911'),
 		name: 'Apollo Server'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5912'),
+		name: 'Fastify'
 	}
 ];
