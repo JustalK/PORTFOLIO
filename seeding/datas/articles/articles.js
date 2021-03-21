@@ -4,6 +4,25 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		title: 'My Sweet Diane',
+		slug: 'my-sweet-diane',
+		short_description: 'An app made for expressing my love to my wife.',
+		long_description: 'A project made with Flutter and Dart and connected to GraphCMS for showing to my wife all the moment we spent together with sweet messages.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5872'),  // Personal Project
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5900'), // Flutter/Dart
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCMS
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99998')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaabb0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaabb0002')
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffff1e00aaa00001'),
+		order: -1
+	},
+	{
 		title: 'Portfolio',
 		slug: 'portfolio',
 		short_description: 'A website for showing some of my work to the world.',
