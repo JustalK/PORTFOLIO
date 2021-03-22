@@ -66,6 +66,7 @@ const PROJECT_TEXTURE = [
 	'../assets/imgs/rumarocket/home.jpg',
 	'../assets/imgs/atlantic-grains/home.jpg',
 	'../assets/imgs/onarto/home.jpg',
+	'../assets/imgs/labonapp/home.jpg',
 	'../assets/imgs/labonapp/home.jpg'
 ];
 const PROJECT_TITLE_TEXTURE = [
@@ -75,6 +76,7 @@ const PROJECT_TITLE_TEXTURE = [
 	'../assets/imgs/animations/predictive_insight_website.png',
 	'../assets/imgs/animations/altantic_grains_app.png',
 	'../assets/imgs/animations/onarto_website.png',
+	'../assets/imgs/animations/labonapp_website.png',
 	'../assets/imgs/animations/labonapp_website.png'
 ];
 
@@ -509,7 +511,7 @@ export default {
 			this.camera.updateProjectionMatrix();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
-		createBoard(slug,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
+		createBoard(slug, x, y, z, rz) {
 			const boardTmp = new THREE.Group();
 
 			// Construct the mesh piece by piece
@@ -537,18 +539,18 @@ export default {
 			}
 
 			// Value for the perpetual movement
-			boardTmp['translationx'] = translationX;
-			boardTmp['translationy'] = translationY;
-			boardTmp['translationz'] = translationZ;
-			boardTmp['rotationx'] = rotationX;
-			boardTmp['rotationy'] = rotationY;
-			boardTmp['rotationz'] = rotationZ;
+			boardTmp['translationx'] = x;
+			boardTmp['translationy'] = y + 30;
+			boardTmp['translationz'] = z + 500;
+			boardTmp['rotationx'] = 0;
+			boardTmp['rotationy'] = 0;
+			boardTmp['rotationz'] = rz;
 			boardTmp['lock'] = false;
 			boardTmp['slug'] = slug;
 
 			// Position of the board in the scene
 			boardTmp.position.set(x,y,z);
-			boardTmp.rotation.set(rx,ry,rz);
+			boardTmp.rotation.set(0, 0, rz);
 
 			return boardTmp;
 		},
@@ -664,13 +666,14 @@ export default {
 			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
-			this.groupScene.push(this.createBoard('portfolio',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
-			this.groupScene.push(this.createBoard('my-sweet-diane',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
-			this.groupScene.push(this.createBoard('manypixels-website',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
-			this.groupScene.push(this.createBoard('rumarocket',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('atlantic-grains',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
-			this.groupScene.push(this.createBoard('onarto', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('labonapp', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
+			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
+			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(50)));
+			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(40)));
+			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
+			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
+			this.groupScene.push(this.createBoard('atlantic-grains', 600, 500, -600, this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 1300, 1300, -1500, this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
