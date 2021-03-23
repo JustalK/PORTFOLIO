@@ -1,5 +1,5 @@
 module.exports = {
-	get_meta: (meta_title, meta_description) => {
+	get_meta: (slug, meta_title, meta_description) => {
 		return {
 			title: meta_title,
 			titleTemplate: '%s | Justal Kevin Portfolio',
@@ -11,9 +11,12 @@ module.exports = {
 				{ name: 'description', content: meta_description },
 				{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
 			],
+			link: [
+				{rel: 'canonical', href: process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT + '/' + slug}
+			],
 			noscript: [
 				{ innerHTML: 'This website requires JavaScript.' }
 			]
 		};
 	}
-}
+};

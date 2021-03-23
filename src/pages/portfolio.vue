@@ -47,7 +47,7 @@ export default {
 		components_links: links
 	},
 	metaInfo() {
-		return helper_meta.get_meta(this.meta_title, this.meta_description);
+		return helper_meta.get_meta(this.$route.name, this.meta_title, this.meta_description);
 	},
 	data: () => {
 		return {

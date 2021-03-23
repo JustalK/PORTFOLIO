@@ -51,7 +51,7 @@ export default {
 		components_links: links
 	},
 	metaInfo() {
-		return helper_meta.get_meta(this.meta_title, this.meta_description);
+		return helper_meta.get_meta('portfolio/' + this.$route.params.slug, this.meta_title, this.meta_description);
 	},
 	data: () => {
 		return {
@@ -71,14 +71,6 @@ export default {
 			are_projects_loading: false,
 			help: 'Click on the image under for changing slide.'
 		};
-	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				document.title = 'Justal Kevin - ' + this.$route.params.slug;
-			}
-		},
 	},
 	async created() {
 		const tags = this.$route.params.tags ? this.$route.params.tags : await this.get_all_tags();
