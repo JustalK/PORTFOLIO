@@ -16,6 +16,9 @@
 				:data-id="p.id"
 				:class="{filtered: are_projects_loading, invisible: invisible}">
 				<a
+					@mouseover="entered"
+					@mouseleave="leave"
+					@mousemove="mousemove"
 					@click.stop="project($event, p.id)">
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
@@ -56,6 +59,11 @@ export default {
 		}
 	},
 	emits: ['change_page', 'project'],
+	data: () => {
+		return {
+			hovered: false
+		};
+	},
 	watch: {
 		async projects(projects_array) {
 			await this.$nextTick();
@@ -67,6 +75,10 @@ export default {
 				});
 			}, 1);
 		}
+	},
+	async mounted() {
+		document.addEventListener('mousemove', this.mousemove, false);
+
 	},
 	methods: {
 		set_lqip_background_project(project) {
@@ -99,6 +111,17 @@ export default {
 			utils.add_class_to_elements_increase(projects_li_unselected, 'project-unmounted', 0, 250);
 			utils.add_class_to_element_delay(event.target.parentElement, 'project-mounted', 1000);
 			this.$emit('project', id);
+		},
+		entered() {
+			this.hovered = true;
+		},
+		leave() {
+			this.hovered = false;
+		},
+		mousemove(event) {
+			if (this.hovered) {
+				//console.log(event.clientX, event.clientY);
+			}
 		}
 	}
 };
