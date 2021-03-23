@@ -61,7 +61,8 @@ export default {
 	emits: ['change_page', 'project'],
 	data: () => {
 		return {
-			hovered: false
+			hovered: false,
+			hovered_element: null
 		};
 	},
 	watch: {
@@ -112,15 +113,18 @@ export default {
 			utils.add_class_to_element_delay(event.target.parentElement, 'project-mounted', 1000);
 			this.$emit('project', id);
 		},
-		entered() {
+		entered(event) {
 			this.hovered = true;
+			this.hovered_element = event.target;
 		},
 		leave() {
 			this.hovered = false;
+			this.hovered_element = null;
 		},
 		mousemove(event) {
 			if (this.hovered) {
-				//console.log(event.clientX, event.clientY);
+				const mouseX = event.pageX;
+				const mouseY = event.pageY;
 			}
 		}
 	}
