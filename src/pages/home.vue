@@ -22,6 +22,7 @@ import music from '../components/main/music';
 import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import helper_meta from '../helper/meta.js';
 import * as THREE from '../libs/three.js';
 
 const ABSCISSA = ['x','y','z'];
@@ -86,27 +87,12 @@ export default {
 		components_music: music
 	},
 	metaInfo() {
-		const title = this.blabla;
-		return {
-			title: 'French full stack developer',
-			titleTemplate: () => {
-				return title ? title : '%s | Justal Kevin Portfolio';
-			},
-			htmlAttrs: {
-				lang: 'en-US'
-			},
-			meta: [
-				{ charset: 'utf-8' },
-				{ name: 'description', content: 'French developer ' },
-				{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
-			],
-			noscript: [
-				{ innerHTML: 'This website requires JavaScript.' }
-			]
-		};
+		return helper_meta.get_meta(this.meta_title, this.meta_description);
 	},
 	data: () => {
 		return {
+			meta_title: '',
+			meta_description: '',
 			camera: null,
 			scene: null,
 			renderer: null,
@@ -132,7 +118,6 @@ export default {
 			movementCamera: false,
 			movements: [0,0,0],
 			rotation: [0,0,0],
-			blabla: '',
 			positionFinal: [0,0,0],
 			rotationFinal: [0,0,0],
 			speedTranslation: [0,0,0],
@@ -150,10 +135,18 @@ export default {
 		};
 	},
 	async mounted() {
+		// Put the meta data for the page
+		const page = await api.get_pages(this.$route.name);
+		if (page.length > 0) {
+			this.meta_title = page[0].meta_title;
+			this.meta_description = page[0].meta_description;
+		}
+
+		// Initialize the three js
 		this.init();
+
 		await this.get_my_identity();
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
-		this.blabla = 'asdasdasd';
 
 		setTimeout(() => {
 			this.invisible = false;

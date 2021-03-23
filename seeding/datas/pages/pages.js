@@ -1,21 +1,31 @@
 'use strict';
 
-const mongoose = require('mongoose');
-
 module.exports = [
+	{
+		name: 'home',
+		title: 'Home',
+		meta_title: 'Home',
+		meta_description: 'Home Justal Kevin'
+	},
 	{
 		name: 'portfolio',
 		title: 'Work',
+		meta_title: 'Portfolio',
+		meta_description: 'Portfolio Justal Kevin',
 		description: 'From Web Components and UI/UX animations to React.JS, Vue.JS and Node.JS, I have been working in many different fields and countries! Check out my latest projects and work.'
 	},
 	{
 		name: 'resume',
 		title: 'My resume',
+		meta_title: 'Resume',
+		meta_description: 'Resume Justal Kevin',
 		description: 'Under you will find my resume updated from github with my current and previous jobs, informations about some of my tasks and the technologies I am confortable using.'
 	},
 	{
 		name: 'privacy',
 		title: 'Privacy Policy',
+		meta_title: 'Resume',
+		meta_description: 'Resume Justal Kevin',
 		description: `<p>Effective as of January 25, 2019</p>
 
     <h2>Introduction</h2>
