@@ -24,7 +24,12 @@
 					<h2>{{ p.title }}</h2>
 					<div
 						ref="info"
-						class="info" />
+						class="info"
+						:style="set_lqip_background_project(p)" />
+					<div
+						ref="tag"
+						class="tag"
+						:style="set_lqip_background_project(p)" />
 					<div
 						ref="low"
 						class="low"
@@ -65,7 +70,8 @@ export default {
 	data: () => {
 		return {
 			hovered: false,
-			hovered_element: null
+			hovered_element_info: null,
+			hovered_element_tag: null
 		};
 	},
 	watch: {
@@ -120,21 +126,26 @@ export default {
 			this.hovered = true;
 			const projects_li = this.$refs.projects;
 			const projects_li_selected = projects_li.find(project_li => project_li.dataset.id === event.target.parentElement.dataset.id);
-			console.log(event.target);
-			this.hovered_element = projects_li_selected.querySelector('.info');
+			this.hovered_element_info = projects_li_selected.querySelector('.info');
+			this.hovered_element_tag = projects_li_selected.querySelector('.tag');
 		},
 		leave() {
 			this.hovered = false;
-			this.hovered_element.style.transform = 'translateX(-100%)';
-			this.hovered_element = null;
+			this.hovered_element_info.style.transform = 'translateX(-100%)';
+			this.hovered_element_tag.style.transform = 'translateY(100%)';
+			this.hovered_element_info = null;
+			this.hovered_element_tag = null;
 		},
 		mousemove(event) {
 			if (this.hovered) {
 				const mouseX = event.pageX;
+				const mouseY = event.pageY;
 				const target = event.target;
 
-				const position_relative_in_slide = ((mouseX - target.getBoundingClientRect().left) / target.getBoundingClientRect().width) * 100 - 100;
-				this.hovered_element.style.transform = `translateX(${position_relative_in_slide}%)`;
+				const position_relative_in_slide_X = ((mouseX - target.getBoundingClientRect().left) / target.getBoundingClientRect().width) * 100 - 100;
+				const position_relative_in_slide_Y = Math.abs((target.getBoundingClientRect().top + document.documentElement.scrollTop - mouseY) / target.getBoundingClientRect().height) * 100;
+				this.hovered_element_info.style.transform = `translateX(${position_relative_in_slide_X}%)`;
+				this.hovered_element_tag.style.transform = `translateY(${position_relative_in_slide_Y}%)`;
 			}
 		}
 	}

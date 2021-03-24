@@ -137,6 +137,7 @@
 			opacity: 0;
 		}
 
+		.tag,
 		.info {
 			position: absolute;
 			width: 100%;
@@ -145,7 +146,11 @@
 			transform: translateX(-100%);
 			z-index: 0;
 			pointer-events: none;
-			.transition(transform 0.35s ease-in);
+			.transition(transform 0.35s ease-in 0.2s);
+		}
+
+		.tag {
+			transform: translateX(100%);
 		}
 
 		& a {
@@ -253,6 +258,7 @@
 					transform: translateY(0);
 				}
 
+				& .tag,
 				& .info {
 					.transition(transform 0s ease-in);
 				}
