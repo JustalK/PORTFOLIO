@@ -23,6 +23,9 @@
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
 					<div
+						ref="info"
+						class="info" />
+					<div
 						ref="low"
 						class="low"
 						:style="set_lqip_background_project(p)" />
@@ -115,16 +118,23 @@ export default {
 		},
 		entered(event) {
 			this.hovered = true;
-			this.hovered_element = event.target;
+			const projects_li = this.$refs.projects;
+			const projects_li_selected = projects_li.find(project_li => project_li.dataset.id === event.target.parentElement.dataset.id);
+			console.log(event.target);
+			this.hovered_element = projects_li_selected.querySelector('.info');
 		},
 		leave() {
 			this.hovered = false;
+			this.hovered_element.style.transform = 'translateX(-100%)';
 			this.hovered_element = null;
 		},
 		mousemove(event) {
 			if (this.hovered) {
 				const mouseX = event.pageX;
-				const mouseY = event.pageY;
+				const target = event.target;
+
+				const position_relative_in_slide = ((mouseX - target.getBoundingClientRect().left) / target.getBoundingClientRect().width) * 100 - 100;
+				this.hovered_element.style.transform = `translateX(${position_relative_in_slide}%)`;
 			}
 		}
 	}
