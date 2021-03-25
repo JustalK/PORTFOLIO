@@ -66,7 +66,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5908') // Jenkins
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00002')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00002'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caaa80003')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa9001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa9002'),
@@ -98,7 +101,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999'),
+			mongoose.Types.ObjectId('5f9d88d3fddd1e00baa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
@@ -126,7 +132,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5910') // Hubspot
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000'),
+			mongoose.Types.ObjectId('5f9d88d3fddd1e00aaa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
@@ -152,7 +161,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5906'), // PM2
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5908')  // Jenkins
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00003')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00003'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caaa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa1001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa1002')
@@ -175,7 +187,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5871')
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00001')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00001'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caa123002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa2001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa2002')

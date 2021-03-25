@@ -24,8 +24,7 @@
 					<h2>{{ p.title }}</h2>
 					<div
 						ref="info"
-						class="info"
-						:style="set_lqip_background_project(p)" />
+						class="info" />
 					<div
 						ref="tag"
 						class="tag"
@@ -82,13 +81,13 @@ export default {
 			setTimeout(() => {
 				projects_array.map((project, index) => {
 					this.set_hq_background_project(project, index);
+					this.set_hq_background_panel(project, index);
 				});
 			}, 1);
 		}
 	},
 	async mounted() {
 		document.addEventListener('mousemove', this.mousemove, false);
-
 	},
 	methods: {
 		set_lqip_background_project(project) {
@@ -109,6 +108,12 @@ export default {
 				tmp.addEventListener('load',() => {
 					this.$refs.low[index].classList.add('loaded');
 				});
+			}
+		},
+		set_hq_background_panel(project, index) {
+			if (project.images !== undefined && project.images.length >= 2) {
+				this.$refs.info[index].style.backgroundImage='url(\'' + project.images[1].path + '\')';
+				this.$refs.tag[index].style.backgroundImage='url(\'' + project.images[1].path + '\')';
 			}
 		},
 		change_page(direction) {
