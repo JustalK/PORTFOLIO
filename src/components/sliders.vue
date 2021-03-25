@@ -16,19 +16,12 @@
 				:data-id="p.id"
 				:class="{filtered: are_projects_loading, invisible: invisible}">
 				<a
-					@mouseover="entered"
-					@mouseleave="leave"
-					@mousemove="mousemove"
 					@click.stop="project($event, p.id)">
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
 					<div
 						ref="info"
 						class="info" />
-					<div
-						ref="tag"
-						class="tag"
-						:style="set_lqip_background_project(p)" />
 					<div
 						ref="low"
 						class="low"
@@ -66,13 +59,6 @@ export default {
 		}
 	},
 	emits: ['change_page', 'project'],
-	data: () => {
-		return {
-			hovered: false,
-			hovered_element_info: null,
-			hovered_element_tag: null
-		};
-	},
 	watch: {
 		async projects(projects_array) {
 			await this.$nextTick();
@@ -111,9 +97,8 @@ export default {
 			}
 		},
 		set_hq_background_panel(project, index) {
-			if (project.images !== undefined && project.images.length >= 2) {
+			if (project.images !== undefined && project.images.length >= 1) {
 				this.$refs.info[index].style.backgroundImage='url(\'' + project.images[1].path + '\')';
-				this.$refs.tag[index].style.backgroundImage='url(\'' + project.images[1].path + '\')';
 			}
 		},
 		change_page(direction) {
@@ -126,32 +111,6 @@ export default {
 			utils.add_class_to_elements_increase(projects_li_unselected, 'project-unmounted', 0, 250);
 			utils.add_class_to_element_delay(event.target.parentElement, 'project-mounted', 1000);
 			this.$emit('project', id);
-		},
-		entered(event) {
-			this.hovered = true;
-			const projects_li = this.$refs.projects;
-			const projects_li_selected = projects_li.find(project_li => project_li.dataset.id === event.target.parentElement.dataset.id);
-			this.hovered_element_info = projects_li_selected.querySelector('.info');
-			this.hovered_element_tag = projects_li_selected.querySelector('.tag');
-		},
-		leave() {
-			this.hovered = false;
-			this.hovered_element_info.style.transform = 'translateX(-100%)';
-			this.hovered_element_tag.style.transform = 'translateY(100%)';
-			this.hovered_element_info = null;
-			this.hovered_element_tag = null;
-		},
-		mousemove(event) {
-			if (this.hovered) {
-				const mouseX = event.pageX;
-				const mouseY = event.pageY;
-				const target = event.target;
-
-				const position_relative_in_slide_X = ((mouseX - target.getBoundingClientRect().left) / target.getBoundingClientRect().width) * 100 - 100;
-				const position_relative_in_slide_Y = Math.abs((target.getBoundingClientRect().top + document.documentElement.scrollTop - mouseY) / target.getBoundingClientRect().height) * 100;
-				this.hovered_element_info.style.transform = `translateX(${position_relative_in_slide_X}%)`;
-				this.hovered_element_tag.style.transform = `translateY(${position_relative_in_slide_Y}%)`;
-			}
 		}
 	}
 };
