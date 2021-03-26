@@ -15,4 +15,14 @@ export class Particle {
 		this.ctx.closePath();
 		this.ctx.fill();
 	}
+	update(mouse_x, mouse_y) {
+		const dx = mouse_x - this.x;
+		const dy = mouse_y - this.y;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+		if (distance < 100) {
+			this.size = 10;
+		} else {
+			this.size = 3;
+		}
+	}
 }

@@ -2,11 +2,13 @@
 	<div
 		ref="introduction"
 		class="introduction">
+		<canvas
+			ref="name"
+			@mousemove="mouse_position" />
 		<div class="intro">
 			<h1 class="name">
 				{{ props_introduction.name }}
 			</h1>
-			<canvas ref="name" />
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
@@ -60,6 +62,8 @@ export default {
 			particles: [],
 			ww: null,
 			wh: null,
+			mouse_x: 0,
+			mouse_y: 0,
 			ctx: null,
 			amount: 0
 		};
@@ -99,15 +103,21 @@ export default {
 		},
 		init_particle() {
 			this.particles = [];
-			this.particles.push(new Particle(500, 300, this.ctx));
-			this.particles.push(new Particle(800, 500, this.ctx));
+			for (let i = 0; i < 500; i++) {
+				this.particles.push(new Particle(Math.random() * this.ww, Math.random() * this.wh, this.ctx));
+			}
 		},
 		animate() {
 			this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
 			this.particles.map(particle => {
 				particle.draw();
+				particle.update(this.mouse_x, this.mouse_y);
 			});
 			requestAnimationFrame(this.animate);
+		},
+		mouse_position(event) {
+			this.mouse_x = event.x;
+			this.mouse_y = event.y;
 		},
 		async get_my_jobs() {
 			return api.get_my_jobs();
