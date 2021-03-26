@@ -1,4 +1,4 @@
-class Particle {
+export class Particle {
 	constructor(x, y, ctx) {
 		this.ctx = ctx;
 		this.x = x;
