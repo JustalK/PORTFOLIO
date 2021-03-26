@@ -44,6 +44,25 @@
 import api from '../services/api';
 import utils from '../helper/utils.js';
 
+class Particle {
+	constructor(x, y, ctx) {
+		this.ctx = ctx;
+		this.x = x;
+		this.y = y;
+		this.size = 3;
+		this.base_x = this.x;
+		this.base_y = this.y;
+		this.density = (Math.random() * 30) + 1;
+	}
+	draw() {
+		this.ctx.fillStyle = 'white';
+		this.ctx.beginPath();
+		this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+		this.ctx.closePath();
+		this.ctx.fill();
+	}
+}
+
 export default {
 	props: {
 		props_introduction: {
@@ -77,8 +96,8 @@ export default {
 			this.ww = window.innerWidth;
 			this.wh = window.innerHeight;
 			this.ctx = this.$refs.name.getContext('2d');
-			this.$refs.name.width = 1200;
-			this.$refs.name.height = 400;
+			this.$refs.name.width = this.ww;
+			this.$refs.name.height = this.wh;
 
 			this.ctx.fillStyle = '#61C3FF';
 			this.ctx.font = '95px Lato-Light';
@@ -91,15 +110,21 @@ export default {
 			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2);
 			const data = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
 			console.log(data);
-
-			class Particle {
-				constructor(x, y) {
-					this.x = x;
-					this.y = y;
-				}
-			}
-
-			console.log(new Particle(10, 10));
+			this.init_particle();
+			console.log(this.particles);
+			this.animate();
+		},
+		init_particle() {
+			this.particles = [];
+			this.particles.push(new Particle(500, 300, this.ctx));
+			this.particles.push(new Particle(800, 500, this.ctx));
+		},
+		animate() {
+			this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
+			this.particles.map(particle => {
+				particle.draw();
+			});
+			requestAnimationFrame(this.animate);
 		},
 		async get_my_jobs() {
 			return api.get_my_jobs();
