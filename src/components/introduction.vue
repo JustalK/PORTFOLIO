@@ -6,9 +6,6 @@
 			ref="name"
 			@mousemove="mouse_position" />
 		<div class="intro">
-			<h1 class="name">
-				{{ props_introduction.name }}
-			</h1>
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
@@ -90,21 +87,26 @@ export default {
 			this.ctx.font = '95px Lato-Light';
 			this.ctx.textAlign = 'center';
 			this.ctx.textBaseline = 'middle';
+			/**
 			this.ctx.shadowColor='#bddcff';
 			this.ctx.shadowBlur=10;
 			this.ctx.lineWidth=10;
 			this.ctx.shadowBlur=10;
-			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2);
-			const data = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
-			console.log(data);
-			this.init_particle();
+			**/
+			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2 - 80);
+			const text_coordinates = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
+			this.init_particle(text_coordinates);
 			console.log(this.particles);
 			this.animate();
 		},
-		init_particle() {
+		init_particle(text_coordinates) {
 			this.particles = [];
-			for (let i = 0; i < 500; i++) {
-				this.particles.push(new Particle(Math.random() * this.ww, Math.random() * this.wh, this.ctx));
+			for (let y = 0, y2 = text_coordinates.height; y < y2; y++) {
+				for (let x = 0, x2 = text_coordinates.width; x < x2; x++) {
+					if (text_coordinates.data[(y * 4 * text_coordinates.width) + (x * 4) + 3] > 250) {
+						this.particles.push(new Particle(x, y, this.ctx));
+					}
+				}
 			}
 		},
 		animate() {

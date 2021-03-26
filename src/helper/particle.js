@@ -3,13 +3,13 @@ export class Particle {
 		this.ctx = ctx;
 		this.x = x;
 		this.y = y;
-		this.size = 3;
+		this.size = 1;
 		this.base_x = this.x;
 		this.base_y = this.y;
 		this.density = (Math.random() * 40) + 5;
 	}
 	draw() {
-		this.ctx.fillStyle = 'white';
+		this.ctx.fillStyle = '#61C3FF';
 		this.ctx.beginPath();
 		this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
 		this.ctx.closePath();
