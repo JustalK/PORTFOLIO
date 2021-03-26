@@ -6,7 +6,7 @@ export class Particle {
 		this.size = 3;
 		this.base_x = this.x;
 		this.base_y = this.y;
-		this.density = (Math.random() * 30) + 1;
+		this.density = (Math.random() * 40) + 5;
 	}
 	draw() {
 		this.ctx.fillStyle = 'white';
@@ -19,10 +19,24 @@ export class Particle {
 		const dx = mouse_x - this.x;
 		const dy = mouse_y - this.y;
 		const distance = Math.sqrt(dx * dx + dy * dy);
-		if (distance < 100) {
-			this.size = 10;
+		const force_direction_x = dx / distance;
+		const force_direction_y = dy / distance;
+		const max_distance = 300;
+		const force = (max_distance - distance) / max_distance;
+		const direction_x = force_direction_x * force * this.density;
+		const direction_y = force_direction_y * force * this.density;
+		if (distance < max_distance) {
+			this.x -= direction_x;
+			this.y -= direction_y;
 		} else {
-			this.size = 3;
+			if (this.x !== this.base_x) {
+				const dx_move = this.x -this.base_x;
+				this.x -= dx_move / 10;
+			}
+			if (this.y !== this.base_y) {
+				const dy_move = this.y -this.base_y;
+				this.y -= dy_move / 10;
+			}
 		}
 	}
 }
