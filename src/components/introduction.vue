@@ -6,6 +6,7 @@
 			<h1 class="name">
 				{{ props_introduction.name }}
 			</h1>
+			<canvas ref="name" />
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
@@ -53,15 +54,53 @@ export default {
 	emits: ['click', 'hover_big', 'hover_small'],
 	data: () => {
 		return {
-			jobs: []
+			jobs: [],
+			particles: [],
+			ww: null,
+			wh: null,
+			ctx: null,
+			amount: 0
 		};
 	},
 	async mounted() {
 		const jobs = await this.get_my_jobs();
 		const jobs_title = jobs.map(job => job.title);
 		this.update_jobs(jobs_title);
+
+		setTimeout(() => {
+
+			this.init();
+		}, 2000);
 	},
 	methods: {
+		init() {
+			this.ww = window.innerWidth;
+			this.wh = window.innerHeight;
+			this.ctx = this.$refs.name.getContext('2d');
+			this.$refs.name.width = 1200;
+			this.$refs.name.height = 400;
+
+			this.ctx.fillStyle = '#61C3FF';
+			this.ctx.font = '95px Lato-Light';
+			this.ctx.textAlign = 'center';
+			this.ctx.textBaseline = 'middle';
+			this.ctx.shadowColor='#bddcff';
+			this.ctx.shadowBlur=10;
+			this.ctx.lineWidth=10;
+			this.ctx.shadowBlur=10;
+			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2);
+			const data = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
+			console.log(data);
+
+			class Particle {
+				constructor(x, y) {
+					this.x = x;
+					this.y = y;
+				}
+			}
+
+			console.log(new Particle(10, 10));
+		},
 		async get_my_jobs() {
 			return api.get_my_jobs();
 		},
