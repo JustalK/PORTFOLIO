@@ -50,6 +50,10 @@ export default {
 		props_introduction: {
 			type: Object,
 			required: true
+		},
+		animation_introduction: {
+			type: Boolean,
+			required: true
 		}
 	},
 	emits: ['click', 'hover_big', 'hover_small'],
@@ -64,6 +68,11 @@ export default {
 			ctx: null,
 			amount: 0
 		};
+	},
+	watch: {
+		animation_introduction() {
+			this.animate();
+		}
 	},
 	async mounted() {
 		const jobs = await this.get_my_jobs();
@@ -110,12 +119,14 @@ export default {
 			}
 		},
 		animate() {
-			this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
-			this.particles.map(particle => {
-				particle.draw();
-				particle.update(this.mouse_x, this.mouse_y);
-			});
-			requestAnimationFrame(this.animate);
+			if (this.animation_introduction) {
+				this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
+				this.particles.map(particle => {
+					particle.draw();
+					particle.update(this.mouse_x, this.mouse_y);
+				});
+				requestAnimationFrame(this.animate);
+			}
 		},
 		mouse_position(event) {
 			this.mouse_x = event.x;

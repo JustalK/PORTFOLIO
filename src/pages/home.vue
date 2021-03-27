@@ -11,6 +11,7 @@
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction
 				:props_introduction="props_introduction"
+				:animation_introduction="animation_introduction"
 				@click="move_to_page"
 				@hover_big="play_hover_menu_sound"
 				@hover_small="play_hover_small_menu_sound" />
@@ -101,6 +102,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			animation: true,
+			animation_introduction: true,
 			is_music_active: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
@@ -489,6 +491,7 @@ export default {
 				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
 				this.last_parent_hover = null;
 				this.parent = null;
+				this.animation_introduction = true;
 			}
 		},
 		perpetual(board) {
@@ -628,6 +631,7 @@ export default {
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.animation_introduction = false;
 					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
