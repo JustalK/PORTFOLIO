@@ -80,8 +80,8 @@ export default {
 		this.update_jobs(jobs_title);
 
 		setTimeout(() => {
-
 			this.init();
+			window.addEventListener('resize', this.resize);
 		}, 2000);
 	},
 	methods: {
@@ -93,7 +93,7 @@ export default {
 			this.$refs.name.height = this.wh;
 
 			this.ctx.fillStyle = '#61C3FF';
-			this.ctx.font = '95px Lato-Light';
+			this.ctx.font = this.perfect_size(this.ww) + 'px Lato-Light';
 			this.ctx.textAlign = 'center';
 			this.ctx.textBaseline = 'middle';
 			/**
@@ -105,7 +105,6 @@ export default {
 			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2 - 80);
 			const text_coordinates = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
 			this.init_particle(text_coordinates);
-			console.log(this.particles);
 			this.animate();
 		},
 		init_particle(text_coordinates) {
@@ -148,6 +147,20 @@ export default {
 		},
 		hover_big() {
 			this.$emit('hover_big');
+		},
+		perfect_size(width) {
+			if (width > 1200) {
+				return 95;
+			} else if (width <= 1200 && width > 900) {
+				return 80;
+			} else if (width > 425) {
+				return 60;
+			} else {
+				return 40;
+			}
+		},
+		resize() {
+			console.log('resize');
 		}
 	}
 };
