@@ -10,12 +10,14 @@ import page_not_found from './pages/page_not_found';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import VueMeta from 'vue-meta';
 
 library.add(faGooglePlay);
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
+Vue.use(VueMeta);
 
 const routes = [
 	{ path: '/', name: 'home', component: home },

@@ -4,6 +4,48 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		title: 'Do you know me',
+		slug: 'do-you-know-me',
+		short_description: 'An app made for playing a question-answer game with my wife.',
+		long_description: 'A project made with React Native for the frontend. For the backend, I use Fastify, Apollo Server and GraphQl.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5872'),  // Personal Project
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React Native
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCMS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5912'), // Fastify
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5879'), // MongoDB
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99997')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaacc0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaacc0002')
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3fccc1e00aaa00001'),
+		order: -1
+	},
+	{
+		title: 'My Sweet Diane',
+		slug: 'my-sweet-diane',
+		short_description: 'An app made for expressing my love to my wife.',
+		long_description: 'A project made with Flutter and Dart and connected to GraphCMS for showing to my wife all the moment we spent together with sweet messages.',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5872'),  // Personal Project
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5900'), // Flutter/Dart
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCMS
+		],
+		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99998')],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b11100aaabb0001'),
+			mongoose.Types.ObjectId('5f76018c9b11100aaabb0002')
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffff1e00aaa00001'),
+		order: -1
+	},
+	{
 		title: 'Portfolio',
 		slug: 'portfolio',
 		short_description: 'A website for showing some of my work to the world.',
@@ -24,7 +66,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5908') // Jenkins
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00002')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00002'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caaa80003')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa9001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa9002'),
@@ -38,7 +83,7 @@ module.exports = [
 		title: 'Manypixels Customer App',
 		slug: 'manypixels-customer-app',
 		short_description: 'The customer app of Manypixels.co',
-		long_description: 'A customer app is written with React.js, Prisma, Express, GraphQl, Apollo Server. This website/app is what manypixels is selling as a product for their client.',
+		long_description: 'A customer app/website written with React.js, Prisma, Express, GraphQl, Apollo Server. This app/website is what Manypixels is selling as a product for their client.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
@@ -56,7 +101,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999'),
+			mongoose.Types.ObjectId('5f9d88d3fddd1e00baa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
@@ -68,7 +116,7 @@ module.exports = [
 		title: 'Manypixels Website',
 		slug: 'manypixels-website',
 		short_description: 'The static website of Manypixels.co',
-		long_description: 'A static website written with Next.js, Bulma, Sass. The content of the website arrive from GraphCms. The website is also linked to Hubspot.',
+		long_description: 'A static website written with Next.js, Bulma, Sass. The content of the website comes from GraphCms. The website is also linked to Hubspot.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5873'), // Next.js
@@ -84,7 +132,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5910') // Hubspot
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000'),
+			mongoose.Types.ObjectId('5f9d88d3fddd1e00aaa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b11100aaaaa0002'),
@@ -96,7 +147,7 @@ module.exports = [
 		title: 'Altantic Grains App',
 		slug: 'atlantic-grains',
 		short_description: 'An applications for managing clients, sales, processes, trucks, stocks and deliveries.',
-		long_description: 'A complexe React application for android and Iphone coupled with a Node.js for the backend connected to MongoDB and MS SQL Server.',
+		long_description: 'A complexe React application for android and iPhone coupled with a Node.js for the backend connected to MongoDB and MS SQL Server.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
@@ -110,7 +161,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5906'), // PM2
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5908')  // Jenkins
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00003')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00003'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caaa00002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa1001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa1002')
@@ -122,7 +176,7 @@ module.exports = [
 		title: 'Predictive Insights',
 		slug: 'predictive-insights',
 		short_description: 'A web-application for helping on the managing of employees and on the hiring process by using artificial intelligence.',
-		long_description: 'A React App for predicting the behavior of your employee and helping to make the right decision at the right moment with the help of an artificial intelligence.',
+		long_description: 'A React App for predicting the behavior of your employee and help make the right decision at the right moment with the help of artificial intelligence.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -133,7 +187,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5871')
 		],
-		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00001')],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00001'),
+			mongoose.Types.ObjectId('5f9d88d3faed1e8caa123002')
+		],
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa2001'),
 			mongoose.Types.ObjectId('5f76018c9b16e910daaa2002')
@@ -145,7 +202,7 @@ module.exports = [
 		title: 'COVID19PH API',
 		slug: 'covid19ph-api',
 		short_description: 'An REST API for getting all the informations about the cases in the Philippines by using the data from the csv of DOH.',
-		long_description: 'With the cases of covid in Philippines increasing rapidly, I decide to help at my level an create an API that use the latest data from DOH.',
+		long_description: 'With the cases of covid in Philippines increasing rapidly, I decided to help at my level and create an API that uses the latest data from Department Of Health.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5872')
 		],
@@ -161,7 +218,7 @@ module.exports = [
 		title: 'Citiglobal Nudge',
 		slug: 'citiglobal-nudge',
 		short_description: 'A backend app for keeping the whole company updated about the work of their employees and managers.',
-		long_description: 'A Restify backend app receiving informations from Typeform and GoogleSheet by webhook and sending different emails to list of employee and manager according to it.',
+		long_description: 'A Restify backend app receiving informations from Typeform and GoogleSheet by webhook and sends different emails to list of employees and managers according to the client.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5877'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -181,7 +238,7 @@ module.exports = [
 		title: 'Bounty AI',
 		slug: 'bounty-ai',
 		short_description: 'A web-app for predicting the best location for building a futur malls by using artificial intelligence.',
-		long_description: 'A React app for predicting where is the best place in Manila for building a mall using big data and artifical intelligence.',
+		long_description: 'A React app for predicting where is the best place in Manila for building shops using big data and artifical intelligence.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -203,7 +260,7 @@ module.exports = [
 		title: 'Labonapp',
 		slug: 'labonapp',
 		short_description: 'A web-app for discovering the restaurant around you, getting the latest promotions and making reservations.',
-		long_description: 'A React Native app and a PHP website for discovering the restaurant around you, getting the latest promotions and making reservations.',
+		long_description: 'A React Native app and a PHP website for discovering restaurants around you, getting the latest promotions and making reservations.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -225,7 +282,7 @@ module.exports = [
 		title: 'Hapee',
 		slug: 'hapee',
 		short_description: 'A website for renting a motorvan to a private individual, discovering new destinations and getting informations about travelling in motorvan.',
-		long_description: 'A PHP website made from scratch for renting a motorvan to a private individual, discovering new destinations and getting informations about travelling in motorvan.',
+		long_description: 'A PHP website made from scratch for renting a motorvan to private individuals, discovering new destinations and getting informations about travelling in motorvan.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -288,7 +345,7 @@ module.exports = [
 		title: 'Saona Villas',
 		slug: 'saona-villas',
 		short_description: 'A multilanguage website for renting beautiful villas in different countries accross the world.',
-		long_description: 'A multilanguage website made in PHP from scratch using PhpMyAdmin database for renting beautiful villas in different countries accross the world.',
+		long_description: 'A multilanguage website made in PHP from scratch using PhpMyAdmin database for renting beautiful villas in different countries across the world.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -308,7 +365,7 @@ module.exports = [
 		title: 'Maison Lucas',
 		slug: 'maison-lucas',
 		short_description: 'A website for selling premium sea food and ordering special sea food meal from a professional chef.',
-		long_description: 'A WordPress website using PhpMyAdmin database for selling premium sea food and ordering special sea food meal from a professional chef.',
+		long_description: 'A WordPress website using PhpMyAdmin database for selling premium seafood and ordering special seafood meals from a professional chef.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5875'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
@@ -348,7 +405,7 @@ module.exports = [
 		title: 'Le gout du vin',
 		slug: 'le-gout-du-vin-56',
 		short_description: 'A website for giving all the latest news and events about wines and some alcohol in Britany.',
-		long_description: 'A website in PHP made from scratch using a PhpMyAdmin database about wines and different alcohol from Britany.',
+		long_description: 'A website in PHP made from scratch using a PhpMyAdmin database about wines and different alcohols from Brittany.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -368,7 +425,7 @@ module.exports = [
 		title: 'Finistere Assurance',
 		slug: 'finistere assurance',
 		short_description: 'The official website of the Finister Assurance insurrance based in Britany.',
-		long_description: 'A website in PHP made from scratch using PhpMyAdmin database for an insurrance company in Britany.',
+		long_description: 'A website in PHP made from scratch using PhpMyAdmin database for an insurance company in Brittany.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
@@ -468,7 +525,7 @@ module.exports = [
 		title: 'Onarto',
 		slug: 'onarto',
 		short_description: 'A website for selling Thai painting and scultures, presenting the best events in Bangkok involving arts and giving informations about arts in general.',
-		long_description: 'A multilanguage WordPress website using a PhpMyAdmin database for selling Thai painting and scultures.',
+		long_description: 'A multilanguage WordPress website using a PhpMyAdmin database for selling Thai paintings and scultures.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5875'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
@@ -489,7 +546,7 @@ module.exports = [
 		title: 'Odyssea',
 		slug: 'odyssea',
 		short_description: 'The official website for the association Odyssea who create events and raise money for the research against the breast cancer.',
-		long_description: 'A french WordPress website using a PhpMyAdmin database for the association Odyssea.',
+		long_description: 'A French WordPress website using a PhpMyAdmin database for the Odyssea Assocition.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5875'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
@@ -510,7 +567,7 @@ module.exports = [
 		title: 'Le monde de Zip',
 		slug: 'le-monde-de-zip',
 		short_description: 'A website giving a lot of advises about what are the countries to visit or those who are to be avoid.',
-		long_description: 'A Code Igniter website using a PhpMyAdmin database for giving a lot of advises about what are the countries to visit or those who are to be avoid.',
+		long_description: 'A Code Igniter website using a PhpMyAdmin database for giving advises about what countries to visit or those to be avoid.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5889'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),
@@ -531,7 +588,7 @@ module.exports = [
 		title: 'El Mercado',
 		slug: 'el-mercado',
 		short_description: 'A website for selling imported food from Europe in Thailand.',
-		long_description: 'A multilanguage WordPress website using a PhpMyAdmin database for selling imported food from Europe in Thailand.',
+		long_description: 'A multilanguage WordPress website using a PhpMyAdmin database for selling imported foods from Europe in Thailand.',
 		tags: [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5875'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5880'),

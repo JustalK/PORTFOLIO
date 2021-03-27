@@ -19,9 +19,12 @@
 		margin-bottom: 10px;
 		user-select: none;
 		cursor: pointer;
-		color: @background-bloc-2;
-		background: @text-color-dark;
-		box-shadow: 10px 10px @background-shadow;
+		color: @background-bloc-0;
+		background: @text-color-h2;
+		border-radius: 5px;
+		border: 1px solid @background-shadow;
+		min-width: 50px;
+		text-align: center;
 		position: relative;
 		overflow: hidden;
 
@@ -35,7 +38,7 @@
 			opacity: 0;
 		}
 
-		&.desactivate {
+		&.desactivate:not(&--active) {
 			pointer-events: none;
 			opacity: 0.2;
 		}
@@ -70,7 +73,7 @@
 			background: @text-color;
 			color: @text-color-white;
 			box-shadow: none;
-			opacity: 1 !important;
+			opacity: 1;
 		}
 	}
 

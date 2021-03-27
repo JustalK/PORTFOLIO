@@ -36,6 +36,7 @@ import back from '../components/main/back';
 import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import helper_meta from '../helper/meta.js';
 
 export default {
 	components: {
@@ -45,8 +46,13 @@ export default {
 		components_back: back,
 		components_links: links
 	},
+	metaInfo() {
+		return helper_meta.get_meta(this.$route.name, this.meta_title, this.meta_description);
+	},
 	data: () => {
 		return {
+			meta_title: '',
+			meta_description: '',
 			title: '',
 			invisible: true,
 			unmounted: false,
@@ -59,17 +65,13 @@ export default {
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				document.title = 'Justal Kevin - Portfolio';
-			}
-		},
-	},
 	async created() {
 		const tags = await this.get_all_tags();
 		const page = await this.get_page(this.$route.name);
+		if (page.length > 0) {
+			this.meta_title = page[0].meta_title;
+			this.meta_description = page[0].meta_description;
+		}
 
 		if (tags !== null && tags.length > 0) {
 			const projects = await this.get_all_projects_with_tags(tags[0]._id);

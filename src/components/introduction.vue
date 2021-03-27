@@ -2,8 +2,10 @@
 	<div
 		ref="introduction"
 		class="introduction">
+		<canvas
+			ref="name"
+			@mousemove="mouse_position" />
 		<div class="intro">
-			<span class="name">{{ props_introduction.name }}</span>
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
 				class="big portfolio"
@@ -40,26 +42,96 @@
 <script>
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import { Particle } from '../helper/particle.js';
+
 
 export default {
 	props: {
 		props_introduction: {
 			type: Object,
 			required: true
+		},
+		animation_introduction: {
+			type: Boolean,
+			required: true
 		}
 	},
 	emits: ['click', 'hover_big', 'hover_small'],
 	data: () => {
 		return {
-			jobs: []
+			jobs: [],
+			particles: [],
+			ww: null,
+			wh: null,
+			mouse_x: 0,
+			mouse_y: 0,
+			ctx: null,
+			amount: 0
 		};
+	},
+	watch: {
+		animation_introduction() {
+			this.animate();
+		}
 	},
 	async mounted() {
 		const jobs = await this.get_my_jobs();
 		const jobs_title = jobs.map(job => job.title);
 		this.update_jobs(jobs_title);
+
+		setTimeout(() => {
+
+			this.init();
+		}, 2000);
 	},
 	methods: {
+		init() {
+			this.ww = window.innerWidth;
+			this.wh = window.innerHeight;
+			this.ctx = this.$refs.name.getContext('2d');
+			this.$refs.name.width = this.ww;
+			this.$refs.name.height = this.wh;
+
+			this.ctx.fillStyle = '#61C3FF';
+			this.ctx.font = '95px Lato-Light';
+			this.ctx.textAlign = 'center';
+			this.ctx.textBaseline = 'middle';
+			/**
+			this.ctx.shadowColor='#bddcff';
+			this.ctx.shadowBlur=10;
+			this.ctx.lineWidth=10;
+			this.ctx.shadowBlur=10;
+			**/
+			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2 - 80);
+			const text_coordinates = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
+			this.init_particle(text_coordinates);
+			console.log(this.particles);
+			this.animate();
+		},
+		init_particle(text_coordinates) {
+			this.particles = [];
+			for (let y = 0, y2 = text_coordinates.height; y < y2; y++) {
+				for (let x = 0, x2 = text_coordinates.width; x < x2; x++) {
+					if (text_coordinates.data[(y * 4 * text_coordinates.width) + (x * 4) + 3] > 250) {
+						this.particles.push(new Particle(x, y, this.ctx));
+					}
+				}
+			}
+		},
+		animate() {
+			if (this.animation_introduction) {
+				this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
+				this.particles.map(particle => {
+					particle.draw();
+					particle.update(this.mouse_x, this.mouse_y);
+				});
+				requestAnimationFrame(this.animate);
+			}
+		},
+		mouse_position(event) {
+			this.mouse_x = event.x;
+			this.mouse_y = event.y;
+		},
 		async get_my_jobs() {
 			return api.get_my_jobs();
 		},

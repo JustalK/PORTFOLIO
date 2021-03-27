@@ -11,6 +11,7 @@
 			:class="{panel: true, active: go_zoom}">
 			<components_introduction
 				:props_introduction="props_introduction"
+				:animation_introduction="animation_introduction"
 				@click="move_to_page"
 				@hover_big="play_hover_menu_sound"
 				@hover_small="play_hover_small_menu_sound" />
@@ -22,6 +23,7 @@ import music from '../components/main/music';
 import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import helper_meta from '../helper/meta.js';
 import * as THREE from '../libs/three.js';
 
 const ABSCISSA = ['x','y','z'];
@@ -66,6 +68,7 @@ const PROJECT_TEXTURE = [
 	'../assets/imgs/rumarocket/home.jpg',
 	'../assets/imgs/atlantic-grains/home.jpg',
 	'../assets/imgs/onarto/home.jpg',
+	'../assets/imgs/labonapp/home.jpg',
 	'../assets/imgs/labonapp/home.jpg'
 ];
 const PROJECT_TITLE_TEXTURE = [
@@ -75,6 +78,7 @@ const PROJECT_TITLE_TEXTURE = [
 	'../assets/imgs/animations/predictive_insight_website.png',
 	'../assets/imgs/animations/altantic_grains_app.png',
 	'../assets/imgs/animations/onarto_website.png',
+	'../assets/imgs/animations/labonapp_website.png',
 	'../assets/imgs/animations/labonapp_website.png'
 ];
 
@@ -83,8 +87,13 @@ export default {
 		components_introduction: introduction,
 		components_music: music
 	},
+	metaInfo() {
+		return helper_meta.get_meta(this.$route.name, this.meta_title, this.meta_description);
+	},
 	data: () => {
 		return {
+			meta_title: '',
+			meta_description: '',
 			camera: null,
 			scene: null,
 			renderer: null,
@@ -93,6 +102,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			animation: true,
+			animation_introduction: true,
 			is_music_active: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
@@ -126,18 +136,20 @@ export default {
 			]
 		};
 	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				document.title = 'Justal Kevin - Home';
-			}
-		},
-	},
 	async mounted() {
+		// Put the meta data for the page
+		const page = await api.get_pages(this.$route.name);
+		if (page.length > 0) {
+			this.meta_title = page[0].meta_title;
+			this.meta_description = page[0].meta_description;
+		}
+
+		// Initialize the three js
 		this.init();
+
 		await this.get_my_identity();
 		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
+
 		setTimeout(() => {
 			this.invisible = false;
 			this.eventSoundActive = true;
@@ -479,6 +491,7 @@ export default {
 				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
 				this.last_parent_hover = null;
 				this.parent = null;
+				this.animation_introduction = true;
 			}
 		},
 		perpetual(board) {
@@ -494,7 +507,7 @@ export default {
 			this.camera.updateProjectionMatrix();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
 		},
-		createBoard(slug,x,y,z,rx,ry,rz,translationX,translationY,translationZ,rotationX,rotationY,rotationZ) {
+		createBoard(slug, x, y, z, rz) {
 			const boardTmp = new THREE.Group();
 
 			// Construct the mesh piece by piece
@@ -522,18 +535,18 @@ export default {
 			}
 
 			// Value for the perpetual movement
-			boardTmp['translationx'] = translationX;
-			boardTmp['translationy'] = translationY;
-			boardTmp['translationz'] = translationZ;
-			boardTmp['rotationx'] = rotationX;
-			boardTmp['rotationy'] = rotationY;
-			boardTmp['rotationz'] = rotationZ;
+			boardTmp['translationx'] = x;
+			boardTmp['translationy'] = y + 30;
+			boardTmp['translationz'] = z + 500;
+			boardTmp['rotationx'] = 0;
+			boardTmp['rotationy'] = 0;
+			boardTmp['rotationz'] = rz;
 			boardTmp['lock'] = false;
 			boardTmp['slug'] = slug;
 
 			// Position of the board in the scene
 			boardTmp.position.set(x,y,z);
-			boardTmp.rotation.set(rx,ry,rz);
+			boardTmp.rotation.set(0, 0, rz);
 
 			return boardTmp;
 		},
@@ -618,6 +631,7 @@ export default {
 				// If I'm on a board, I move to the new position
 				if(this.parent!=null && !this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.animation_introduction = false;
 					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
 						this.positionFinal[i] = this.parent['translation'+ABSCISSA[i]];
@@ -649,13 +663,14 @@ export default {
 			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
-			this.groupScene.push(this.createBoard('portfolio',-450, 90,6600,0,0,this.radians(20),-450, 110,7100,0,0,this.radians(20)));
-			this.groupScene.push(this.createBoard('my-sweet-diane',-400,1000,2600,0,0,this.radians(50),-400,1000,3000,0,0,this.radians(50)));
-			this.groupScene.push(this.createBoard('manypixels-website',600,300,4000,0,this.radians(-90),this.radians(-40),600,350,4500,0,0,this.radians(-40)));
-			this.groupScene.push(this.createBoard('rumarocket',1800,1800,1000,0,0,this.radians(-60),1800,1800,1500,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('atlantic-grains',2000,250,2400,0,0,this.radians(-70),2000,250,3000,0,0,this.radians(-70)));
-			this.groupScene.push(this.createBoard('onarto', 600,500,-600,0,0,this.radians(-60), 650,500,-50,0,0,this.radians(-60)));
-			this.groupScene.push(this.createBoard('labonapp', 1300, 1300,-2500,0,0,this.radians(30), 1350, 1300,-1950,0,0,this.radians(30)));
+			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
+			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(50)));
+			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(40)));
+			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
+			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
+			this.groupScene.push(this.createBoard('atlantic-grains', 600, 500, -600, this.radians(-60)));
+			this.groupScene.push(this.createBoard('labonapp', 1300, 1300, -1500, this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
@@ -703,6 +718,7 @@ export default {
     * Move the camera for switching to a new page
     **/
 		move_camera_new_page(z, speed) {
+			this.animation_introduction = false;
 			this.positionFinal[2] = z;
 			this.positionReached = [true, true, false];
 			this.rotationReached = [true, true, true];

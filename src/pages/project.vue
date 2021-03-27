@@ -40,6 +40,7 @@ import back from '../components/main/back';
 import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import helper_meta from '../helper/meta.js';
 
 export default {
 	components: {
@@ -49,8 +50,13 @@ export default {
 		components_slides: slides,
 		components_links: links
 	},
+	metaInfo() {
+		return helper_meta.get_meta('portfolio/' + this.$route.params.slug, this.meta_title, this.meta_description);
+	},
 	data: () => {
 		return {
+			meta_title: '',
+			meta_description: '',
 			title: 'Loading...',
 			tags: [],
 			tags_selected: [],
@@ -66,19 +72,14 @@ export default {
 			help: 'Click on the image under for changing slide.'
 		};
 	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler() {
-				document.title = 'Justal Kevin - ' + this.$route.params.slug;
-			}
-		},
-	},
 	async created() {
 		const tags = this.$route.params.tags ? this.$route.params.tags : await this.get_all_tags();
 		const slug = this.$route.params.slug;
 		const project = this.$route.params.project ? this.$route.params.project : await this.get_project_by_slug(slug);
 		this.is_animated = this.$route.params.is_animated ? this.$route.params.is_animated : false;
+
+		this.meta_title = project.title;
+		this.meta_description = project.short_description;
 
 		this.update_page(project);
 		this.background_image = project.background_image;

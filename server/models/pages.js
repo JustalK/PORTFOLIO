@@ -19,6 +19,15 @@ const schema = new mongoose.Schema(
 		},
 		description: {
 			type: String,
+			trim: true
+		},
+		meta_description: {
+			type: String,
+			trim: true,
+			require: true
+		},
+		meta_title: {
+			type: String,
 			trim: true,
 			require: true
 		}
