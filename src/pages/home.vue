@@ -718,6 +718,7 @@ export default {
     * Move the camera for switching to a new page
     **/
 		move_camera_new_page(z, speed) {
+			this.animation_introduction = false;
 			this.positionFinal[2] = z;
 			this.positionReached = [true, true, false];
 			this.rotationReached = [true, true, true];
