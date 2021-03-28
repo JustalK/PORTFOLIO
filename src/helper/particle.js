@@ -1,11 +1,11 @@
 export class Particle {
-	constructor(x, y, ctx) {
+	constructor(x, y, base_x, base_y, ctx) {
 		this.ctx = ctx;
 		this.x = x;
 		this.y = y;
 		this.size = 1;
-		this.base_x = this.x;
-		this.base_y = this.y;
+		this.base_x = base_x;
+		this.base_y = base_y;
 		this.density = (Math.random() * 40) + 5;
 	}
 	draw() {

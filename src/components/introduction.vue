@@ -112,7 +112,7 @@ export default {
 			for (let y = 0, y2 = text_coordinates.height; y < y2; y += 2) {
 				for (let x = 0, x2 = text_coordinates.width; x < x2; x += 2) {
 					if (text_coordinates.data[(y * 4 * text_coordinates.width) + (x * 4) + 3] > 250) {
-						this.particles.push(new Particle(x, y, this.ctx));
+						this.particles.push(new Particle(this.ww * (2 * Math.random() - 1), this.wh * (2 * Math.random() - 1), x, y, this.ctx));
 					}
 				}
 			}
