@@ -177,8 +177,8 @@ export default {
 			this.animate();
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
-			window.addEventListener( 'resize', this.onWindowResize, false );
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
+			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 7500 );
