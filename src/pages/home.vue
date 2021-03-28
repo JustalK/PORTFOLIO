@@ -468,13 +468,19 @@ export default {
 			for(var i=this.movements.length;i--;) {
 				if(this.isMoveCameraTo(this.movements[i], this.camera.position.getComponent(i), this.positionFinal[i])) {
 					const add = this.delta * this.movements[i] * this.speedTranslation[i];
-					this.camera.position.setComponent(i, this.camera.position.getComponent(i) + add);
+					const position_perfected = this.movements[i] > 0 ?
+						Math.min(this.camera.position.getComponent(i) + add, this.positionFinal[i]) :
+						Math.max(this.camera.position.getComponent(i) + add, this.positionFinal[i]);
+					this.camera.position.setComponent(i, position_perfected);
 				} else {
 					this.positionReached[i] = true;
 				}
 				if(this.isMoveCameraTo(this.rotation[i], this.camera.rotation.toVector3().getComponent(i), this.rotationFinal[i])) {
 					const add = this.delta * this.rotation[i] * this.speedRotation[i];
-					this.camera.rotation[ABSCISSA[i]] = this.camera.rotation.toVector3().getComponent(i) + add;
+					const rotation_perfected = this.rotation[i] > 0 ?
+						Math.min(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]) :
+						Math.max(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]);
+					this.camera.rotation[ABSCISSA[i]] = rotation_perfected;
 				} else {
 					this.rotationReached[i] = true;
 				}
@@ -540,9 +546,9 @@ export default {
 			}
 
 			// Value for the perpetual movement
-			const distance = WINDOWS_WIDTH < 768 ? 1000 : 500;
+			const distance = WINDOWS_WIDTH < 768 ? 1000 : 600;
 			boardTmp['translationx'] = x;
-			boardTmp['translationy'] = y + 30;
+			boardTmp['translationy'] = y;
 			boardTmp['translationz'] = z + distance;
 			boardTmp['rotationx'] = 0;
 			boardTmp['rotationy'] = 0;
@@ -676,8 +682,8 @@ export default {
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
-			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(50)));
-			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(40)));
+			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(120)));
+			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(45)));
 			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
 			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
 			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
