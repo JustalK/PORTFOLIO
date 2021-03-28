@@ -43,8 +43,8 @@
 
 		& .big {
 			position: absolute;
-			bottom: -180px;
-			width: 20%;
+			bottom: -120px;
+			width: 250px;
 			text-transform: uppercase;
 			line-height: 80px;
 			color: #009bfa;
@@ -72,7 +72,7 @@
 			}
 
 			& i {
-				width: 25%;
+				width: 20%;
 				height: 1px;
 				background: #61c3ff;
 				position: absolute;
@@ -100,8 +100,7 @@
 		}
 
 		& .portfolio {
-			margin-right: 5%;
-			right: calc(50% + 80px);
+			right: calc(50% + 50px);
 
 			& i {
 				left: 0;
@@ -109,8 +108,7 @@
 		}
 
 		& .resume {
-			margin-left: 5%;
-			left: calc(50% + 80px);
+			left: calc(50% + 50px);
 
 			&::after,
 			&::before {
@@ -146,11 +144,11 @@
 				}
 
 				&::after {
-					width: 250%;
+					width: 300px;
 				}
 
 				&::before {
-					width: 150%;
+					width: 120px;
 				}
 			}
 		}
@@ -159,9 +157,9 @@
 			width: 80px;
 			height: 80px;
 			position: absolute;
-			bottom: -180px;
+			bottom: -120px;
 			left: 50%;
-			transform: translateX(-50%) rotateZ(45deg) scale(2);
+			transform: translateX(-50%) rotateZ(45deg);
 
 			& a,
 			& div {
@@ -281,10 +279,6 @@
 			& .big {
 				.font-size(2);
 			}
-
-			& .links {
-				transform: translateX(-50%) rotateZ(45deg) scale(1.5);
-			}
 		}
 	}
 }
@@ -301,11 +295,6 @@
 			}
 
 			& .big {
-				bottom: -120px;
-			}
-
-			& .links {
-				transform: translateX(-50%) rotateZ(45deg) scale(1);
 				bottom: -120px;
 			}
 		}
@@ -362,10 +351,6 @@
 				}
 			}
 
-			& .links {
-				transform: translateX(-50%) rotateZ(45deg) scale(0.8);
-			}
-
 			& .portfolio {
 				margin-right: 8%;
 				right: calc(50% + 55px);
@@ -379,7 +364,7 @@
 	}
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: @MOBILE) {
 	.introduction {
 		.intro {
 			display: none;

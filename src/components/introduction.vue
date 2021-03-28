@@ -57,7 +57,7 @@
 					target="_blank"
 					@mouseenter="hover_small">
 					<img
-						:src="require('../assets/imgs/github.png').default"
+						:src="require('../assets/imgs/github.png')"
 						alt="Github Justal Kevin">
 				</a>
 				<div />
@@ -66,7 +66,7 @@
 					target="_blank"
 					@mouseenter="hover_small">
 					<img
-						:src="require('../assets/imgs/google.png').default"
+						:src="require('../assets/imgs/google.png')"
 						alt="Google App | Justal Kevin">
 				</a>
 			</div>
@@ -194,7 +194,8 @@ export default {
 			}
 		},
 		resize() {
-			console.log('resize');
+			this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
+			this.init();
 		}
 	}
 };
