@@ -102,7 +102,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			animation: true,
-			animation_introduction: true,
+			animation_introduction: false,
 			is_music_active: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
@@ -154,6 +154,9 @@ export default {
 			this.invisible = false;
 			this.eventSoundActive = true;
 			this.play_ambient_sound();
+			setTimeout(() => {
+				this.animation_introduction = true;
+			}, 2000);
 		}, 1000);
 	},
 	methods: {
@@ -174,8 +177,8 @@ export default {
 			this.animate();
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
-			window.addEventListener( 'resize', this.onWindowResize, false );
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
+			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera( FOV, WINDOWS_WIDTH / WINDOWS_HEIGHT, 1, 7500 );
@@ -226,10 +229,10 @@ export default {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
-			const pMaterial = new THREE.ParticleBasicMaterial({
+			const pMaterial = new THREE.PointsMaterial({
 				color: 0x1a82f7,
 				size: 30,
-				map: THREE.ImageUtils.loadTexture(
+				map: new THREE.TextureLoader().load(
 					'../assets/imgs/particle.png'
 				),
 				blending: THREE.AdditiveBlending,
@@ -254,7 +257,9 @@ export default {
 		},
 		animate() {
 			if (this.animation) {
-				setTimeout(this.animate, framerate );
+				setTimeout(() => {
+					requestAnimationFrame(this.animate);
+				}, framerate );
 				this.renderer.render( this.scene, this.camera );
 
 				this.delta = this.clock.getDelta();
@@ -463,13 +468,19 @@ export default {
 			for(var i=this.movements.length;i--;) {
 				if(this.isMoveCameraTo(this.movements[i], this.camera.position.getComponent(i), this.positionFinal[i])) {
 					const add = this.delta * this.movements[i] * this.speedTranslation[i];
-					this.camera.position.setComponent(i, this.camera.position.getComponent(i) + add);
+					const position_perfected = this.movements[i] > 0 ?
+						Math.min(this.camera.position.getComponent(i) + add, this.positionFinal[i]) :
+						Math.max(this.camera.position.getComponent(i) + add, this.positionFinal[i]);
+					this.camera.position.setComponent(i, position_perfected);
 				} else {
 					this.positionReached[i] = true;
 				}
 				if(this.isMoveCameraTo(this.rotation[i], this.camera.rotation.toVector3().getComponent(i), this.rotationFinal[i])) {
 					const add = this.delta * this.rotation[i] * this.speedRotation[i];
-					this.camera.rotation[ABSCISSA[i]] = this.camera.rotation.toVector3().getComponent(i) + add;
+					const rotation_perfected = this.rotation[i] > 0 ?
+						Math.min(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]) :
+						Math.max(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]);
+					this.camera.rotation[ABSCISSA[i]] = rotation_perfected;
 				} else {
 					this.rotationReached[i] = true;
 				}
@@ -535,9 +546,10 @@ export default {
 			}
 
 			// Value for the perpetual movement
+			const distance = WINDOWS_WIDTH < 768 ? 1000 : 600;
 			boardTmp['translationx'] = x;
-			boardTmp['translationy'] = y + 30;
-			boardTmp['translationz'] = z + 500;
+			boardTmp['translationy'] = y;
+			boardTmp['translationz'] = z + distance;
 			boardTmp['rotationx'] = 0;
 			boardTmp['rotationy'] = 0;
 			boardTmp['rotationz'] = rz;
@@ -616,6 +628,12 @@ export default {
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 
 			if(!this.movementCamera && intersects.length>0) {
+				// Useful for the mobile version
+				// since mobile does not have a mousehover, at the first click I need to set up the parent
+				if (!this.parent) {
+					this.parent = intersects[0].object.parent;
+				}
+
 				// If I am interacting with the back object of the board I am zooming on
 				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[1]) {
 					this.backToStart();
@@ -629,7 +647,7 @@ export default {
 				}
 
 				// If I'm on a board, I move to the new position
-				if(this.parent!=null && !this.parent['lock']) {
+				if(!this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
 					this.animation_introduction = false;
 					this.play_click_sound();
@@ -664,8 +682,8 @@ export default {
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
-			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(50)));
-			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(40)));
+			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(120)));
+			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(45)));
 			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
 			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
 			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));

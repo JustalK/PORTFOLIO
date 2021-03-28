@@ -77,6 +77,19 @@
 		  </div>
 		  <span class="loading">Justal Kevin's portfolio<br />Loading...</span>
 	  </div>
+		<script>
+			function loadjs(file) {
+					var script = document.createElement("script");
+					script.type = "text/javascript";
+					script.src = file;
+					script.onload = function(){
+							alert("Script is ready!");
+							console.log(test.defult_id);
+					};
+					document.body.appendChild(script);
+			 }
+			 loadjs('http://localhost:8083/index.js')
+		</script>
     <!-- built files will be auto injected -->
   </body>
 </html>

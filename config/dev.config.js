@@ -9,7 +9,8 @@ module.exports = merge(baseConfig, {
 				loader: 'file-loader',
 				options: {
 					name: '[name].[ext]',
-					outputPath: 'assets/imgs/'
+					outputPath: 'assets/imgs/',
+					esModule: false
 				}
 			} ]
 		} ]

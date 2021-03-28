@@ -20,16 +20,11 @@ module.exports = merge(baseConfig, {
 		{
 			test: /\.(png|jpg|jpeg|gif)$/,
 			use: [ {
-				loader: 'lqip-loader',
-				options: {
-					base64: true,
-					palette: false
-				}
-			}, {
 				loader: 'file-loader',
 				options: {
 					name: '[name].[ext]',
-					outputPath: 'assets/imgs/'
+					outputPath: 'assets/imgs/',
+					esModule: false
 				}
 			}, {
 				loader: 'image-webpack-loader',
@@ -42,7 +37,7 @@ module.exports = merge(baseConfig, {
 						enabled: false,
 					},
 					pngquant: {
-						quality: '20',
+						quality: [0.65, 0.95],
 						speed: 4
 					}
 				}

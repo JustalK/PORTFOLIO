@@ -7,7 +7,8 @@ const path = require('path');
 const webpack = require('webpack');
 const mode = process.env.NODE_ENV !== undefined ? process.env.NODE_ENV : 'production';
 require('dotenv').config({ path: './env/.env.' + mode });
-const base_url = process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT;
+const port = process.env.PORT ? ':' + process.env.PORT : '';
+const base_url = process.env.PROTOCOL + '://' + process.env.HOST + port;
 
 
 module.exports = {
