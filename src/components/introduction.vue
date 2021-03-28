@@ -59,6 +59,7 @@ export default {
 	emits: ['click', 'hover_big', 'hover_small'],
 	data: () => {
 		return {
+			loaded: false,
 			jobs: [],
 			particles: [],
 			ww: null,
@@ -71,6 +72,10 @@ export default {
 	},
 	watch: {
 		animation_introduction() {
+			if (!this.loaded) {
+				this.init();
+				this.loaded = true;
+			}
 			this.animate();
 		}
 	},
@@ -78,11 +83,7 @@ export default {
 		const jobs = await this.get_my_jobs();
 		const jobs_title = jobs.map(job => job.title);
 		this.update_jobs(jobs_title);
-
-		setTimeout(() => {
-			this.init();
-			window.addEventListener('resize', this.resize);
-		}, 2000);
+		window.addEventListener('resize', this.resize);
 	},
 	methods: {
 		init() {
@@ -105,12 +106,11 @@ export default {
 			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2 - 80);
 			const text_coordinates = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
 			this.init_particle(text_coordinates);
-			this.animate();
 		},
 		init_particle(text_coordinates) {
 			this.particles = [];
-			for (let y = 0, y2 = text_coordinates.height; y < y2; y++) {
-				for (let x = 0, x2 = text_coordinates.width; x < x2; x++) {
+			for (let y = 0, y2 = text_coordinates.height; y < y2; y += 2) {
+				for (let x = 0, x2 = text_coordinates.width; x < x2; x += 2) {
 					if (text_coordinates.data[(y * 4 * text_coordinates.width) + (x * 4) + 3] > 250) {
 						this.particles.push(new Particle(x, y, this.ctx));
 					}

@@ -102,7 +102,7 @@ export default {
 			raycaster: null,
 			parent: null,
 			animation: true,
-			animation_introduction: true,
+			animation_introduction: false,
 			is_music_active: true,
 			last_parent_hover: null,
 			is_true_darkness_allowed: false,
@@ -154,6 +154,9 @@ export default {
 			this.invisible = false;
 			this.eventSoundActive = true;
 			this.play_ambient_sound();
+			setTimeout(() => {
+				this.animation_introduction = true;
+			}, 2000);
 		}, 1000);
 	},
 	methods: {
@@ -226,10 +229,10 @@ export default {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
 		},
 		createWorld() {
-			const pMaterial = new THREE.ParticleBasicMaterial({
+			const pMaterial = new THREE.PointsMaterial({
 				color: 0x1a82f7,
 				size: 30,
-				map: THREE.ImageUtils.loadTexture(
+				map: new THREE.TextureLoader().load(
 					'../assets/imgs/particle.png'
 				),
 				blending: THREE.AdditiveBlending,
@@ -254,7 +257,9 @@ export default {
 		},
 		animate() {
 			if (this.animation) {
-				setTimeout(this.animate, framerate );
+				setTimeout(() => {
+					requestAnimationFrame(this.animate);
+				}, framerate );
 				this.renderer.render( this.scene, this.camera );
 
 				this.delta = this.clock.getDelta();
