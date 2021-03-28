@@ -5,6 +5,36 @@
 		<canvas
 			ref="name"
 			@mousemove="mouse_position" />
+		<div class="mobile">
+			<h1 class="name">
+				{{ props_introduction.name }}
+			</h1>
+			<ul>
+				<li
+					class="link"
+					@click.stop="open($event, 'portfolio')"
+					@mouseenter="hover_big">
+					Portfolio
+				</li>
+				<li
+					class="link"
+					@click.stop="open($event, 'resume')"
+					@mouseenter="hover_big">
+					Resume/CV
+				</li>
+				<li
+					class="link">
+					<a>
+						Github
+					</a>
+				</li>
+				<li
+					class="link">
+					<i />
+					App
+				</li>
+			</ul>
+		</div>
 		<div class="intro">
 			<span class="jobs">{{ jobs.join(' | ') }}</span>
 			<a
@@ -26,14 +56,18 @@
 					:href="props_introduction.github_url"
 					target="_blank"
 					@mouseenter="hover_small">
-					<span>Github</span>
+					<img
+						:src="require('../assets/imgs/github.png').default"
+						alt="Github Justal Kevin">
 				</a>
 				<div />
 				<a
 					:href="props_introduction.android_url"
 					target="_blank"
 					@mouseenter="hover_small">
-					<span>Apps</span>
+					<img
+						:src="require('../assets/imgs/google.png').default"
+						alt="Google App | Justal Kevin">
 				</a>
 			</div>
 		</div>

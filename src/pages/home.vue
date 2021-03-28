@@ -540,9 +540,10 @@ export default {
 			}
 
 			// Value for the perpetual movement
+			const distance = WINDOWS_WIDTH < 768 ? 1000 : 500;
 			boardTmp['translationx'] = x;
 			boardTmp['translationy'] = y + 30;
-			boardTmp['translationz'] = z + 500;
+			boardTmp['translationz'] = z + distance;
 			boardTmp['rotationx'] = 0;
 			boardTmp['rotationy'] = 0;
 			boardTmp['rotationz'] = rz;
@@ -621,6 +622,12 @@ export default {
 			const intersects = this.raycaster.intersectObjects( this.objectInteraction, true );
 
 			if(!this.movementCamera && intersects.length>0) {
+				// Useful for the mobile version
+				// since mobile does not have a mousehover, at the first click I need to set up the parent
+				if (!this.parent) {
+					this.parent = intersects[0].object.parent;
+				}
+
 				// If I am interacting with the back object of the board I am zooming on
 				if(this.zoomOn !== null && intersects[0].object==this.zoomOn.children[1]) {
 					this.backToStart();
@@ -634,7 +641,7 @@ export default {
 				}
 
 				// If I'm on a board, I move to the new position
-				if(this.parent!=null && !this.parent['lock']) {
+				if(!this.parent['lock']) {
 					utils.add_class_to_element(this.$refs.home, 'move_to_three');
 					this.animation_introduction = false;
 					this.play_click_sound();
