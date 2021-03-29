@@ -1,95 +1,79 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="shortcut icon" type="image/png" href="../assets/favicon/portfolio.png">
-    <title>PORTFOLIO</title>
+		<title>PORTFOLIO</title>
 	<!-- No call needed for the CSS - faster -->
 	<style type="text/css">
 		html,
 		body,
 		#app {
 			position: relative;
-			background-color: #1e1e27;
+			background-color: #000;
 			margin: 0;
 			width: 100%;
 			height: 100%;
 		}
-		.logo {
+		#bar {
+			width: 100%;
+			height: 15px;
+			max-width: 250px;
 			position: absolute;
-		    left: 50%;
-		    top: 50%;
-		    width: 150px;
-		    height: 150px;
-		    transform: translate(-50%, -70%) rotate(45deg);
-			animation: rotation 5s infinite;
-			animation-timing-function: ease-in-out;
+			top: 50%;
+			left: 50%;
+			background: white;
+			box-shadow: 0 0 2px white;
+			border-radius: 4px;
+			transform: translateX(-50%) translateY(50%);
 		}
-		.squares {
+		#loading {
+			content: ' ';
+			width: 0;
+			height: 100%;
 			position: absolute;
-			width: 48%;
-			height: 48%;
-			background: red;
-		}
-		.square_1 {
 			left: 0;
 			top: 0;
-			background-color: #61C3FF;
-		}
-		.square_2 {
-			right: 0;
-			top: 0;
-			background-color: #009bfa;
-		}
-		.square_3 {
-			left: 0;
-			bottom: 0;
-			background-color: #001d2e;
-		}
-		.square_4 {
-			right: 0;
-			bottom: 0;
-			background-color: #005c94;
-		}
-		.loading {
-			position: absolute;
-		    left: 50%;
-		    top: 75%;
-		    transform: translate(-50%, -50%);
-		    color: white;
-		    text-transform: uppercase;
-		    text-align: center;
-		    font-size: 0.8rem;
-		}
-		@keyframes rotation {
-		  from {transform: translate(-50%, -70%) rotate(45deg);}
-		  to {transform: translate(-50%, -70%) rotate(405deg);}
+			z-index: 0;
+			background: #61C3FF;
+			box-shadow: 0 0 10px #61C3FF;
+			border-radius: 4px;
+			transition: width 2s linear;
 		}
 	</style>
-  </head>
-  <body>
-	  <div id="app">
-		  <div class="logo">
-			  <i class="squares square_1"></i>
-			  <i class="squares square_2"></i>
-			  <i class="squares square_3"></i>
-			  <i class="squares square_4"></i>
-		  </div>
-		  <span class="loading">Justal Kevin's portfolio<br />Loading...</span>
-	  </div>
+	</head>
+	<body>
+		<div id="app">
+			<div id="bar">
+				<div id="loading">
+			</div>
+		</div>
 		<script>
-			function loadjs(file) {
-					var script = document.createElement("script");
-					script.type = "text/javascript";
-					script.src = file;
-					script.onload = function(){
-							alert("Script is ready!");
-							console.log(test.defult_id);
-					};
-					document.body.appendChild(script);
-			 }
-			 loadjs('http://localhost:8083/index.js')
+			// Vamila JS
+			const xhr = new XMLHttpRequest;
+			const tag = document.createElement("script");
+			const loading = document.querySelector('#loading');
+			xhr.open("GET", "http://localhost:8083/index.js", true);
+
+			xhr.onload = function (e) {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						tag.text = xhr.response;
+						//document.head.appendChild(tag);
+					} else {
+						alert("error");
+						console.error(xhr.response);
+					}
+				}
+			};
+
+			xhr.onprogress = function (e) {
+				const percentage = 100 * e.loaded / + e.total
+				loading.style.width = percentage + '%';
+				console.log('Loading JavaScript: ' + (100 * e.loaded / + e.total) + '%');
+			};
+
+			xhr.send();
 		</script>
-    <!-- built files will be auto injected -->
-  </body>
+	</body>
 </html>
