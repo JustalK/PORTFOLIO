@@ -109,7 +109,9 @@
 					for (let x = 0, x2 = coordinates.width; x < x2; x += 4) {
 						if (coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 3] > 128) {
 							const color = `rgb(${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 0]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 1]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 2]})`
-							particles.push(new Particle(x, y, x, y, color, ctx));
+							if (x <  (canvas.width / 2 + 100) && x > (canvas.width / 2 - 100)) {
+								particles.push(new Particle(x, y, x, y, color, ctx));
+							}
 						}
 					}
 				}
@@ -141,6 +143,9 @@
 				ctx.lineWidth=20;
 				ctx.strokeStyle='rgba(191, 191, 191, 0.2)'
 				ctx.arc(center_x, center_y, r - 20, 0, 2 * Math.PI);
+				ctx.fillStyle = '#bddcff';
+				ctx.closePath();
+				ctx.fill();
 				ctx.stroke();
 				ctx.beginPath();
 				ctx.shadowBlur=10;
@@ -148,6 +153,7 @@
 				ctx.strokeStyle="#bddcff"
 				ctx.arc(center_x, center_y, r - 20, 0, actual_percentage);
 				ctx.stroke();
+				ctx.closePath();
 			}
 
 
