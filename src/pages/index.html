@@ -29,7 +29,7 @@
 			transition: opacity 1s ease;
 			opacity: 0;
 		}
-		.click {
+		#instruction {
 			position: absolute;
 	    top: 50%;
 	    left: 50%;
@@ -40,19 +40,39 @@
 	    letter-spacing: 0.5rem;
 	    text-shadow: 0px 0px 10px white;
 	    user-select: none;
+			width: 100%;
+			text-align: center;
+			opacity: 0;
+		}
+		@keyframes show {
+		  0%   {opacity: 0}
+		  50%  {opacity: 1}
+		  100% {opacity: 0}
+		}
+		.loaded {
+			animation-name: show;
+			animation-duration: 4s;
+			animation-iteration-count: infinite;
+		}
+		.stop {
+			animation-iteration-count: 0;
 		}
 	</style>
 	</head>
 	<body>
 		<div id="app">
 			<canvas id="canvas" class="invisible"></canvas>
-			<span class="click">Click or Leave</span>
+			<span id="instruction">Click or die</span>
 		</div>
 		<script>
 			const canvas = document.querySelector('#canvas');
+			const app = document.querySelector('#app');
+			const instruction = document.querySelector('#instruction');
 			const ctx = canvas.getContext('2d');
-      const rayon = 125;
+      let rayon = 125;
 			let loaded = false;
+			let loading_complete = false;
+			let switch_page = false;
 			canvas.width =  window.innerWidth;
 			canvas.height = window.innerHeight;
 
@@ -68,6 +88,7 @@
 					this.base_x = base_x;
 					this.base_y = base_y;
 					this.density = (Math.random() * 15) + 1;
+					this.explosion = false;
 				}
 				draw() {
 					this.ctx.fillStyle = this.color;
@@ -86,25 +107,27 @@
 					const force = (max_distance - distance) / max_distance;
 					const direction_x = force_direction_x * force * this.density;
 					const direction_y = force_direction_y * force * this.density;
-					if (distance < max_distance) {
-						this.color = '#FFFFFF';
-						this.x -= direction_x;
-						this.y -= direction_y;
-					} else {
-            this.color = this.base_color;
-						if (this.x !== this.base_x) {
-							const dx_move = this.x -this.base_x;
-							this.x -= dx_move / this.density;
+						if (distance < max_distance && !this.explosion) {
+							this.color = '#FFFFFF';
+							this.x -= direction_x;
+							this.y -= direction_y;
+						} else {
+							this.color = this.base_color;
+							if (this.x !== this.base_x) {
+								const dx_move = this.x -this.base_x;
+								this.x -= dx_move / this.density;
+							}
+							if (this.y !== this.base_y) {
+								const dy_move = this.y -this.base_y;
+								this.y -= dy_move / this.density;
+							}
 						}
-						if (this.y !== this.base_y) {
-							const dy_move = this.y -this.base_y;
-							this.y -= dy_move / this.density;
-						}
-					}
 				}
 				explode() {
-					const random_x_sign = Math.round(Math.random()) * 2 - 1;
-					const random_y_sign = Math.round(Math.random()) * 2 - 1;
+					this.explosion = true
+					this.density = 30
+					const random_x_sign = 2 * Math.round(Math.random()) * 2 - 1;
+					const random_y_sign = 2 * Math.round(Math.random()) * 2 - 1;
 					const random_position_outside = random_x_sign * canvas.width * (Math.random() + 1)
 					const random_position_inside = random_y_sign * canvas.height * (Math.random() * 2)
 					const random_order =  Math.random() > 0.5;
@@ -148,7 +171,6 @@
 				}
 			}
 
-			const step = 0.01;
 			image.addEventListener('load', () => {
 				canvas.classList.remove('invisible');
 				ctx.drawImage(image, canvas.width/2 - rayon, canvas.height/2 - rayon, 2 * rayon, 2 * rayon)
@@ -156,6 +178,18 @@
 				init_particle(scannedImage)
 			})
 
+			const click = () => {
+				if (loaded) {
+					switch_page = true;
+					instruction.classList.add('stop');
+					particles.map(particle => {
+						particle.explode();
+					});
+				}
+			}
+			app.addEventListener("click", click);
+
+			let full_step;
 			const draw = percentage => {
 				ctx.restore();
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -163,16 +197,19 @@
 				const center_y = canvas.height / 2;
 				const final_percentage = 2 * Math.PI;
 				const loading_percentage = percentage * final_percentage / 100;
+				if (!full_step && loaded) {
+					full_step = (loading_percentage - actual_percentage) / 60;
+				}
 				actual_percentage = loading_percentage > actual_percentage ?
 					percentage === 100 ?
-						actual_percentage + 0.05 :
+						Math.min(actual_percentage + full_step, final_percentage):
 						actual_percentage + (loading_percentage - actual_percentage) / 60 :
 					actual_percentage;
 				ctx.save();
 				ctx.beginPath();
 				ctx.strokeStyle='rgba(191, 191, 191, 0.2)'
 				ctx.arc(center_x, center_y, rayon - 20, 0, 2 * Math.PI);
-				ctx.fillStyle = 'rgba(191, 191, 191, 0.2)';
+				ctx.fillStyle = '#1e1e27';
 				ctx.closePath();
 				ctx.fill();
 				ctx.stroke();
@@ -181,16 +218,30 @@
 				ctx.shadowBlur=20;
 				ctx.shadowColor='#bddcff';
 				ctx.strokeStyle="#bddcff"
+				if (actual_percentage === final_percentage) {
+					loading_complete = true;
+					ctx.shadowColor='#ffffff';
+					ctx.strokeStyle="#ffffff";
+				}
 				ctx.arc(center_x, center_y, rayon - 20, 0, actual_percentage);
 				ctx.stroke();
 				ctx.closePath();
 			}
 
+			const xhr = new XMLHttpRequest;
+			const tag = document.createElement("script");
 
 			const animate = () => {
 					ctx.clearRect(0, 0, canvas.width, canvas.height);
 					draw(percentage);
 					ctx.shadowBlur=0;
+					if (switch_page && loading_complete && rayon <= 2*canvas.width) {
+						rayon += canvas.width / 60;
+						if (rayon >= Math.sqrt(Math.pow(canvas.width, 2) +  Math.pow(canvas.height, 2)) / 2 + 100) {
+							document.head.appendChild(tag);
+							return;
+						}
+					}
 					particles.map((particle, index) => {
 						particle.draw();
 						particle.update(mouse_x, mouse_y);
@@ -200,11 +251,6 @@
 
 			animate()
 
-			const xhr = new XMLHttpRequest;
-			const tag = document.createElement("script");
-			const app = document.querySelector('#app');
-			const loading = document.querySelector('#loading');
-
 			xhr.open("GET", "http://localhost:8083/index.js", true);
 
 			xhr.onload = function (e) {
@@ -213,7 +259,7 @@
 						tag.text = xhr.response;
 						loaded = true;
 						setTimeout(() => {
-							//app.classList.add('invisible');
+							instruction.classList.add('loaded');
 						}, 2000)
 						setTimeout(() => {
 							//document.head.appendChild(tag);
