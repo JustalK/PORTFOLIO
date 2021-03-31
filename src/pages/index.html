@@ -29,18 +29,30 @@
 			transition: opacity 1s ease;
 			opacity: 0;
 		}
+		.click {
+			position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translateX(-50%) translateY(140px);
+	    text-transform: uppercase;
+	    color: white;
+	    font-size: 0.8rem;
+	    letter-spacing: 0.5rem;
+	    text-shadow: 0px 0px 10px white;
+	    user-select: none;
+		}
 	</style>
 	</head>
 	<body>
 		<div id="app">
 			<canvas id="canvas" class="invisible"></canvas>
-			<div id="bar">
-				<div id="loading">
-			</div>
+			<span class="click">Click or Leave</span>
 		</div>
 		<script>
 			const canvas = document.querySelector('#canvas');
 			const ctx = canvas.getContext('2d');
+      const rayon = 125;
+			let loaded = false;
 			canvas.width =  window.innerWidth;
 			canvas.height = window.innerHeight;
 
@@ -52,9 +64,10 @@
 					this.y = y;
 					this.size = 1;
 					this.color = color;
+					this.base_color = color;
 					this.base_x = base_x;
 					this.base_y = base_y;
-					this.density = (Math.random() * 40) + 5;
+					this.density = (Math.random() * 15) + 1;
 				}
 				draw() {
 					this.ctx.fillStyle = this.color;
@@ -69,23 +82,34 @@
 					const distance = Math.sqrt(dx * dx + dy * dy);
 					const force_direction_x = dx / distance;
 					const force_direction_y = dy / distance;
-					const max_distance = 300;
+					const max_distance = 100;
 					const force = (max_distance - distance) / max_distance;
 					const direction_x = force_direction_x * force * this.density;
 					const direction_y = force_direction_y * force * this.density;
 					if (distance < max_distance) {
+						this.color = '#FFFFFF';
 						this.x -= direction_x;
 						this.y -= direction_y;
 					} else {
+            this.color = this.base_color;
 						if (this.x !== this.base_x) {
 							const dx_move = this.x -this.base_x;
-							this.x -= dx_move / 10;
+							this.x -= dx_move / this.density;
 						}
 						if (this.y !== this.base_y) {
 							const dy_move = this.y -this.base_y;
-							this.y -= dy_move / 10;
+							this.y -= dy_move / this.density;
 						}
 					}
+				}
+				explode() {
+					const random_x_sign = Math.round(Math.random()) * 2 - 1;
+					const random_y_sign = Math.round(Math.random()) * 2 - 1;
+					const random_position_outside = random_x_sign * canvas.width * (Math.random() + 1)
+					const random_position_inside = random_y_sign * canvas.height * (Math.random() * 2)
+					const random_order =  Math.random() > 0.5;
+					this.base_x = random_order ? random_position_outside : random_position_inside
+					this.base_y = !random_order ? random_position_outside : random_position_inside
 				}
 			}
 
@@ -109,8 +133,15 @@
 					for (let x = 0, x2 = coordinates.width; x < x2; x += 4) {
 						if (coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 3] > 128) {
 							const color = `rgb(${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 0]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 1]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 2]})`
-							if (x <  (canvas.width / 2 + 100) && x > (canvas.width / 2 - 100)) {
-								particles.push(new Particle(x, y, x, y, color, ctx));
+              // Calcul the distance from the center of the website
+							const d = Math.sqrt(Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2));
+							if (d <= rayon - 25) {
+								const random_x_sign = Math.round(Math.random()) * 2 - 1;
+								const random_y_sign = Math.round(Math.random()) * 2 - 1;
+								const random_position_outside = random_x_sign * canvas.width * (Math.random() + 1)
+								const random_position_inside = random_y_sign * canvas.height * (Math.random() * 2)
+								const random_order =  Math.random() > 0.5;
+								particles.push(new Particle(random_order ? random_position_outside : random_position_inside, !random_order ? random_position_outside : random_position_inside, x, y, color, ctx));
 							}
 						}
 					}
@@ -120,7 +151,7 @@
 			const step = 0.01;
 			image.addEventListener('load', () => {
 				canvas.classList.remove('invisible');
-				ctx.drawImage(image, canvas.width/2 - 125, canvas.height/2 - 125, 250, 250)
+				ctx.drawImage(image, canvas.width/2 - rayon, canvas.height/2 - rayon, 2 * rayon, 2 * rayon)
 				const scannedImage = ctx.getImageData(0, 0, canvas.width, canvas.height)
 				init_particle(scannedImage)
 			})
@@ -130,7 +161,6 @@
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				const center_x = canvas.width / 2;
 				const center_y = canvas.height / 2;
-				const r = 125;
 				const final_percentage = 2 * Math.PI;
 				const loading_percentage = percentage * final_percentage / 100;
 				actual_percentage = loading_percentage > actual_percentage ?
@@ -140,18 +170,18 @@
 					actual_percentage;
 				ctx.save();
 				ctx.beginPath();
-				ctx.lineWidth=20;
 				ctx.strokeStyle='rgba(191, 191, 191, 0.2)'
-				ctx.arc(center_x, center_y, r - 20, 0, 2 * Math.PI);
-				ctx.fillStyle = '#bddcff';
+				ctx.arc(center_x, center_y, rayon - 20, 0, 2 * Math.PI);
+				ctx.fillStyle = 'rgba(191, 191, 191, 0.2)';
 				ctx.closePath();
 				ctx.fill();
 				ctx.stroke();
 				ctx.beginPath();
-				ctx.shadowBlur=10;
+				ctx.lineWidth=5;
+				ctx.shadowBlur=20;
 				ctx.shadowColor='#bddcff';
 				ctx.strokeStyle="#bddcff"
-				ctx.arc(center_x, center_y, r - 20, 0, actual_percentage);
+				ctx.arc(center_x, center_y, rayon - 20, 0, actual_percentage);
 				ctx.stroke();
 				ctx.closePath();
 			}
@@ -181,6 +211,7 @@
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200) {
 						tag.text = xhr.response;
+						loaded = true;
 						setTimeout(() => {
 							//app.classList.add('invisible');
 						}, 2000)
@@ -196,7 +227,6 @@
 
 			xhr.onprogress = function (e) {
 				percentage = 100 * e.loaded / + e.total
-				//draw(percentage);
 				console.log('Loading JavaScript: ' + (100 * e.loaded / + e.total) + '%');
 			};
 
