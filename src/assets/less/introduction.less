@@ -173,6 +173,7 @@
 
 				& img {
 					transform: rotateZ(-45deg);
+					width: 50%;
 				}
 
 				&:nth-child(1) {
@@ -233,6 +234,12 @@
 					color: @text-color-white;
 				}
 			}
+		}
+
+		& .big:hover ~ div > div {
+			.transition(background 0.35s ease 0.45s);
+
+			background: white;
 		}
 	}
 
