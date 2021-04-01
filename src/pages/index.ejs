@@ -264,8 +264,7 @@
 			}
 
 			animate()
-
-			xhr.open('GET', 'http://localhost:8083/index.js', true);
+			xhr.open('GET', '<%= htmlWebpackPlugin.options.url %>', true);
 
 			xhr.onload = () => {
 				if (xhr.readyState === 4) {

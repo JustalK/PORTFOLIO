@@ -53,8 +53,10 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			title: 'Custom template',
+			url: base_url + '/index.js',
 			filename: '../' + process.env.FOLDER + '/index.html',
-			template: 'src/pages/index.html'
+			template: 'src/pages/index.ejs',
+			inject: false
 		}),
 		new StyleLintPlugin({
 			fix: true,
