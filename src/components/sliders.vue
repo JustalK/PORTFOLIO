@@ -20,9 +20,6 @@
 					<i class="fake_button" />
 					<h2>{{ p.title }}</h2>
 					<div
-						ref="info"
-						class="info" />
-					<div
 						ref="low"
 						class="low"
 						:style="set_lqip_background_project(p)" />
@@ -30,6 +27,8 @@
 						<span>{{ p.short_description }}</span>
 					</div>
 				</a>
+				<div class="borders_top_right" />
+				<div class="borders_bottom_left" />
 			</li>
 		</ul>
 		<div
@@ -67,7 +66,6 @@ export default {
 			setTimeout(() => {
 				projects_array.map((project, index) => {
 					this.set_hq_background_project(project, index);
-					this.set_hq_background_panel(project, index);
 				});
 			}, 1);
 		}
@@ -94,11 +92,6 @@ export default {
 				tmp.addEventListener('load',() => {
 					this.$refs.low[index].classList.add('loaded');
 				});
-			}
-		},
-		set_hq_background_panel(project, index) {
-			if (project.images !== undefined && project.images.length >= 1) {
-				this.$refs.info[index].style.backgroundImage='url(\'' + project.images[1].path + '\')';
 			}
 		},
 		change_page(direction) {

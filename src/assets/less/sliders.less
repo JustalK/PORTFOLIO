@@ -123,6 +123,7 @@
 		float: left;
 		width: 48%;
 		height: 280px;
+		border: 1px solid #000;
 		position: absolute;
 		transform: initial;
 		opacity: 1;
@@ -132,21 +133,110 @@
 		.position-to-corner(3, bottom, left, 0.5s, 0, 0);
 		.position-to-corner(4, bottom, right, 0.75s, 0, 0);
 
+		& .borders_bottom_left,
+		& .borders_top_right {
+			overflow: hidden;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			pointer-events: none;
+
+			&::after,
+			&::before {
+				content: ' ';
+				position: absolute;
+				z-index: @LAYER-ANIMATION;
+			}
+		}
+
+		& .borders_top_right {
+			&::before {
+				width: 100%;
+				height: 1px;
+				top: 0;
+				left: 0;
+				background: linear-gradient(to right, transparent, #61c3ff);
+				animation: going_right 2s linear infinite;
+			}
+
+			@keyframes going_right {
+				0% {
+					transform: translateX(-100%);
+				}
+
+				100% {
+					transform: translateX(100%);
+				}
+			}
+
+			&::after {
+				width: 1px;
+				height: 100%;
+				top: 0;
+				right: 0;
+				background: linear-gradient(to bottom, transparent, #61c3ff);
+				animation: going_down 2s linear infinite;
+				animation-delay: 1s;
+			}
+
+			@keyframes going_down {
+				0% {
+					transform: translateY(-100%);
+				}
+
+				100% {
+					transform: translateY(100%);
+				}
+			}
+		}
+
+		& .borders_bottom_left {
+			&::before {
+				width: 100%;
+				height: 1px;
+				bottom: 0;
+				right: 0;
+				background: linear-gradient(to left, transparent, #61c3ff);
+				animation: going_left 2s linear infinite;
+			}
+
+			@keyframes going_left {
+				0% {
+					transform: translateX(100%);
+				}
+
+				100% {
+					transform: translateX(-100%);
+				}
+			}
+
+			&::after {
+				width: 1px;
+				height: 100%;
+				bottom: 0;
+				left: 0;
+				background: linear-gradient(to top, transparent, #61c3ff);
+				animation: going_top 2s linear infinite;
+				animation-delay: 1s;
+			}
+
+			@keyframes going_top {
+				0% {
+					transform: translateY(100%);
+				}
+
+				100% {
+					transform: translateY(-100%);
+				}
+			}
+		}
+
 		&.invisible {
 			transform: translateY(100%);
 			opacity: 0;
-		}
-
-		.info {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			background-size: contain;
-			background-position: center 40px;
-			transform: translateX(-100%);
-			z-index: 0;
-			pointer-events: none;
-			.transition(transform 0.25s ease-in);
 		}
 
 		& a {
@@ -158,7 +248,6 @@
 			height: 100%;
 			cursor: pointer;
 			text-decoration: none;
-			border: 1px solid #000;
 			background-size: cover;
 			background-position: center center;
 			transition: all 0.5s cubic-bezier(0.8, 0, 0.25, 1);
@@ -249,7 +338,6 @@
 					left: 0;
 				}
 
-				& .info,
 				& .panel,
 				& .low {
 					transform: translateY(0);
@@ -258,10 +346,13 @@
 				& .panel {
 					.transition(all 0.35s cubic-bezier(0.8, 0, 0.25, 1));
 				}
+			}
+		}
 
-				& .info {
-					.transition(transform 0.35s cubic-bezier(0.8, 0, 0.25, 1) 0.25s);
-				}
+		&:hover {
+			& .borders_bottom_left,
+			& .borders_top_right {
+				opacity: 1;
 			}
 		}
 	}
