@@ -77,7 +77,8 @@
 			particles = [],
 			fps = 60,
 			max_distance = 105
-			color_white = '#FFFFFF'
+			color_white = '#FFFFFF',
+			color_circle = window.location.pathname === '/' ? '#1e1e27' : '#111116';
 			size_stroke = 20;
 
       let rayon = 125,
@@ -216,7 +217,7 @@
 				ctx.beginPath();
 				ctx.strokeStyle='rgba(191, 191, 191, 0.2)'
 				ctx.arc(center_x, center_y, rayon - size_stroke, 0, 2 * Math.PI);
-				ctx.fillStyle = '#1e1e27';
+				ctx.fillStyle = color_circle;
 				ctx.closePath();
 				ctx.fill();
 				ctx.stroke();
