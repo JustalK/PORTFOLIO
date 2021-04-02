@@ -13,7 +13,7 @@
 				<span> {{ tag.name }} </span>
 			</li>
 		</ul>
-		<svg>
+		<svg id="SVG_EFFECT">
 			<defs>
 				<filter id="wave">
 					<feTurbulence
@@ -72,6 +72,7 @@ export default {
 			for (let i = 0; i < steps; i++) {
 				setTimeout(() => {
 					vertical_frequency += 0.05;
+					vertical_frequency = Math.min(vertical_frequency, 2.5);
 					this.$refs.turbulence.setAttribute('baseFrequency', vertical_frequency + ' ' + vertical_frequency);
 				}, i * interval);
 			}
