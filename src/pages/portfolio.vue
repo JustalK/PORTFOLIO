@@ -62,6 +62,8 @@ export default {
 			description: '',
 			slide: 0,
 			are_projects_loading: false,
+			timeout_update_projects: null,
+			timeout_update_projects_loading: null,
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
@@ -139,15 +141,17 @@ export default {
 			}, 1050);
 		},
 		async change_page(direction) {
+			clearTimeout(this.timeout_update_projects);
+			clearTimeout(this.timeout_update_projects_loading);
 			this.are_projects_loading = true;
 			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
 			this.update_slide(next_slide);
 			await this.$nextTick();
 			const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
-			setTimeout(() => {
+			this.timeout_update_projects = setTimeout(() => {
 				this.update_projects(projects);
 			}, 1000);
-			setTimeout(() => {
+			this.timeout_update_projects_loading = setTimeout(() => {
 				this.are_projects_loading = false;
 			}, 1050);
 		},
