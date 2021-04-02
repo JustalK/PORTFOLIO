@@ -286,7 +286,7 @@
 					position: absolute;
 				}
 
-				& span {
+				& div {
 					text-align: center;
 					transform: translateY(-50%);
 					display: block;
@@ -296,7 +296,27 @@
 					position: absolute;
 					top: calc(50% + 20px);
 					text-shadow: 0 0 8px #000;
+					overflow: hidden;
 					.font-size(1.6);
+
+					&::after {
+						content: ' ';
+						position: absolute;
+						bottom: 0;
+						height: 1px;
+						width: 0;
+						background: white;
+						left: 50%;
+						transform: translateX(-50%);
+						.transition(width 0.2s cubic-bezier(0.8, 0, 0.25, 1) 0.35s);
+					}
+
+					& span {
+						display: block;
+						padding-bottom: 10px;
+						transform: translateY(100%);
+						.transition(transform 0.35s cubic-bezier(0.8, 0, 0.25, 1) 0.55s);
+					}
 				}
 			}
 
@@ -344,6 +364,14 @@
 
 				& .panel {
 					.transition(all 0.35s cubic-bezier(0.8, 0, 0.25, 1));
+
+					& span {
+						transform: translateY(0);
+					}
+
+					& div::after {
+						width: 100%;
+					}
 				}
 			}
 		}

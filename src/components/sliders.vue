@@ -24,7 +24,9 @@
 						class="low"
 						:style="set_lqip_background_project(p)" />
 					<div class="panel">
-						<span>{{ p.short_description }}</span>
+						<div>
+							<span>{{ p.short_description }}</span>
+						</div>
 					</div>
 				</a>
 				<div class="borders_top_right" />
