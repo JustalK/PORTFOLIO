@@ -19,7 +19,7 @@
 					<feTurbulence
 						ref="turbulence"
 						type="fractalNoise"
-						baseFrequency="0.00001 0.00001"
+						baseFrequency="1.1 1.1"
 						numOctaves="1"
 						result="warp" />
 					<feDisplacementMap
@@ -65,8 +65,8 @@ export default {
 			this.$emit('new_tags_selected', id_tags_active);
 		},
 		hover_enter() {
-			let vertical_frequency = 0.00001;
-			this.$refs.turbulence.setAttribute('baseFrequency', vertical_frequency + ' 0.00001');
+			let vertical_frequency = 1.1;
+			this.$refs.turbulence.setAttribute('baseFrequency', vertical_frequency + ' ' + vertical_frequency);
 			const steps = 30;
 			const interval = 10;
 			for (let i = 0; i < steps; i++) {
