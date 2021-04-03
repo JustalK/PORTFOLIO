@@ -37,23 +37,23 @@
 		}
 		#instruction {
 			position: absolute;
-	    top: 50%;
-	    left: 50%;
-	    transform: translateX(-50%) translateY(140px);
-	    text-transform: uppercase;
-	    color: white;
-	    font-size: 0.8rem;
-	    letter-spacing: 0.5rem;
-	    text-shadow: 0px 0px 10px white;
-	    user-select: none;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(140px);
+			text-transform: uppercase;
+			color: white;
+			font-size: 0.8rem;
+			letter-spacing: 0.5rem;
+			text-shadow: 0px 0px 10px white;
+			user-select: none;
 			width: 100%;
 			text-align: center;
 			opacity: 0;
 		}
 		@keyframes show {
-		  0%   {opacity: 0}
-		  50%  {opacity: 1}
-		  100% {opacity: 0}
+			0%   {opacity: 0}
+			50%  {opacity: 1}
+			100% {opacity: 0}
 		}
 		.website_loaded {
 			animation-name: show;
@@ -88,7 +88,7 @@
 			color_circle = window.location.pathname === '/' ? '#1e1e27' : '#111116';
 			size_stroke = 20;
 
-      let rayon = 125,
+			let rayon = 125,
 			loaded = false,
 			loading_complete = false,
 			switch_page = false,
@@ -114,7 +114,7 @@
 					this.base_x = base_x;
 					this.base_y = base_y;
 					this.density = (Math.random() * 15) + 1;
-					this.explosion = false;
+					this.mouseDesactivated = false;
 				}
 				draw() {
 					this.ctx.fillStyle = this.color;
@@ -133,7 +133,7 @@
 					const force = (max_distance - distance) / max_distance;
 					const direction_x = force_direction_x * force * this.density;
 					const direction_y = force_direction_y * force * this.density;
-						if (distance < max_distance && !this.explosion) {
+						if (distance < max_distance && !this.mouseDesactivated) {
 							this.color = color_white;
 							this.x -= direction_x;
 							this.y -= direction_y;
@@ -150,7 +150,7 @@
 						}
 				}
 				explode() {
-					this.explosion = true
+					this.mouseDesactivated = true
 					this.density = 30
 					const random_x_sign = 2 * Math.round(Math.random()) * 2 - 1;
 					const random_y_sign = 2 * Math.round(Math.random()) * 2 - 1;
@@ -173,7 +173,7 @@
 					for (let x = 0, x2 = coordinates.width; x < x2; x += 4) {
 						if (coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 3] > 128) {
 							const color = `rgb(${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 0]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 1]}, ${coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 2]})`
-              // Calcul the distance from the center of the website
+							// Calcul the distance from the center of the website
 							const d = Math.sqrt(Math.pow(x - center_x, 2) + Math.pow(y - center_y, 2));
 							if (d <= rayon - 25) {
 								const random_x_sign = Math.round(Math.random()) * 2 - 1;
