@@ -76,6 +76,11 @@
 			background: @text-color-white;
 		}
 
+		& ~ ul > li {
+			.if(@pos_y, right, transform, translateX(-30px));
+			.if(@pos_y, left, transform, translateX(30px));
+		}
+
 		em::before {
 			.if(@pos_y, right, transform, translateX(15px) translateY(-50%) rotateZ(-50deg));
 			.if(@pos_y, left, transform, translateX(-15px) translateY(-50%) rotateZ(50deg));

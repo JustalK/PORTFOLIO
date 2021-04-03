@@ -8,6 +8,12 @@
 			<span>previous</span>
 			<em />
 		</div>
+		<div
+			:class="{next: true, invisible: invisible}"
+			@click.stop="change_page('next')">
+			<span>next</span>
+			<em />
+		</div>
 		<ul ref="projects_list">
 			<li
 				v-for="p in projects"
@@ -33,12 +39,6 @@
 				<div class="borders_bottom_left" />
 			</li>
 		</ul>
-		<div
-			:class="{next: true, invisible: invisible}"
-			@click.stop="change_page('next')">
-			<span>next</span>
-			<em />
-		</div>
 	</div>
 </template>
 <script>
