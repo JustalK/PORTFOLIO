@@ -6,8 +6,35 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<img
-			ref="slide_image">
+		<div class="slider_images">
+			<img
+				ref="slide_image">
+			<span class="legend">
+				Oh about that ?
+			</span>
+		</div>
+		<div class="informations">
+			<div class="field">
+				<span class="legend">Client</span>
+				<span class="value">Manypixels</span>
+			</div>
+			<div class="field">
+				<span class="legend">Industry</span>
+				<span class="value">Services</span>
+			</div>
+			<div class="field">
+				<span class="legend">Position</span>
+				<span class="value">Lead FullStack Developer</span>
+			</div>
+		</div>
+		<div class="description">
+			<div class="block block_1">
+				<div class="block_title">
+					<span>test</span>
+				</div>
+				<span class="block_information">test test test test test test test test test test test test</span>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
