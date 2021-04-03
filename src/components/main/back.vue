@@ -1,14 +1,19 @@
 <template>
 	<div
 		:class="{back:true, invisible: invisible, is_animated: is_animated}">
-		<a
-			href="#"
-			@click.stop="back">
-			<div
-				v-for="index in 4"
-				:key="index" />
-		</a>
-		<span>back</span>
+		<div @click.stop="back">
+			<div class="legend">
+				<span>B</span>
+				<span>A</span>
+				<span>C</span>
+				<span>K</span>
+			</div>
+			<a>
+				<div
+					v-for="index in 4"
+					:key="index" />
+			</a>
+		</div>
 	</div>
 </template>
 <script>
