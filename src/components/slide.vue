@@ -30,9 +30,19 @@
 		<div class="description">
 			<div class="block block_1">
 				<div class="block_title">
-					<span>test</span>
+					<span>Slide 1</span>
 				</div>
-				<span class="block_information">test test test test test test test test test test test test</span>
+				<div class="block_information">
+					<span>{{ slide.first_text }}</span>
+				</div>
+			</div>
+			<div class="block block_2">
+				<div class="block_title">
+					<span>Slide 2</span>
+				</div>
+				<div class="block_information">
+					<span>{{ slide.second_text }}</span>
+				</div>
 			</div>
 		</div>
 	</div>
