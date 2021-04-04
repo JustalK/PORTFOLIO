@@ -53,11 +53,29 @@
 		left: 0;
 		top: 0;
 		padding-top: 42px;
-		height: 100%;
+		height: calc(100% - 42px);
 		width: 30%;
 		background: #1d1d23ab;
 		min-width: 250px;
 		border-right: 1px solid black;
+
+		& .slider_index {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+
+			& li {
+				height: 42px;
+				list-style-type: none;
+				background: #302c30;
+				width: 100%;
+				border-top: 1px solid black;
+			}
+		}
 
 		& .field {
 			margin: 20px;

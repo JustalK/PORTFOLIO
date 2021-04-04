@@ -26,6 +26,11 @@
 				<span class="legend">Position</span>
 				<span class="value">Lead FullStack Developer</span>
 			</div>
+			<ul class="slider_index">
+				<li>Presentation</li>
+				<li>Work</li>
+				<li>Technical Challenges</li>
+			</ul>
 		</div>
 		<div class="description">
 			<div class="block block_1">
