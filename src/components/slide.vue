@@ -6,7 +6,9 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<canvas class="slider_images" />
+		<div
+			ref="canvas"
+			class="slider_images" />
 		<img
 			ref="slide_image">
 		<span
@@ -62,6 +64,8 @@
 </template>
 <script>
 import utils from '../helper/utils.js';
+import * as THREE from '../libs/three.js';
+
 
 export default {
 	props: {
@@ -75,12 +79,46 @@ export default {
 		}
 	},
 	emits: ['change_slide'],
+	data: () => {
+		return {
+			camera: null,
+			scene: null,
+			renderer: null
+		};
+	},
 	watch: {
 		slide() {
 			this.slide_image();
 		}
 	},
+	async mounted() {
+		this.initCamera();
+		this.animate();
+	},
 	methods: {
+		initCamera() {
+			this.camera = new THREE.PerspectiveCamera(70, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
+			this.camera.position.z = 50;
+
+			this.scene = new THREE.Scene();
+
+			var boxGeometry = new THREE.BoxGeometry(10, 10, 10);
+			var basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD});
+			var cube = new THREE.Mesh(boxGeometry, basicMaterial);
+			this.scene.add(cube);
+			cube.rotation.set(0.4, 0.2, 0);
+
+			this.renderer = new THREE.WebGLRenderer( { antialias: true } );
+			this.renderer.setPixelRatio( window.devicePixelRatio );
+			this.renderer.setClearColor(0xDDDDDD, 1);
+			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
+			this.$refs.canvas.appendChild( this.renderer.domElement );
+		},
+		animate() {
+			requestAnimationFrame( this.animate );
+
+			this.renderer.render( this.scene, this.camera );
+		},
 		change_slide() {
 			this.$refs.slide_image.classList.remove('loaded');
 			this.$emit('change_slide');
