@@ -6,13 +6,12 @@
 		<span>{{ slide.title }}</span>
 		<p>{{ slide.first_text }}</p>
 		<p>{{ slide.second_text }}</p>
-		<div class="slider_images">
-			<img
-				ref="slide_image">
-			<span class="legend">
-				Oh about that ?
-			</span>
-		</div>
+		<canvas class="slider_images" />
+		<img
+			ref="slide_image">
+		<span
+			ref="image_legend"
+			class="slider_legend" />
 		<div class="informations">
 			<div class="field">
 				<span class="legend">Client</span>
@@ -26,10 +25,19 @@
 				<span class="legend">Position</span>
 				<span class="value">Lead FullStack Developer</span>
 			</div>
-			<ul class="slider_index">
-				<li>Presentation</li>
-				<li>Work</li>
-				<li>Technical Challenges</li>
+			<ul
+				ref="summary"
+				class="slider_index">
+				<li
+					class="selected">
+					Presentation
+				</li>
+				<li>
+					Work
+				</li>
+				<li>
+					Technical Challenges
+				</li>
 			</ul>
 		</div>
 		<div class="description">
@@ -82,9 +90,17 @@ export default {
 			if (this.slide.image.path === undefined) {
 				return null;
 			}
-
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
+			this.$refs.image_legend.innerHTML = this.slide.image.name;
+			const li = this.$refs.summary.querySelectorAll('li');
+			const liSelected = this.$refs.summary.querySelector('.selected');
+			let index = 0;
+			for(let i = li.length; i--;) {
+				index = li[i] == liSelected ? i : index;
+			}
+			liSelected.classList.remove('selected');
+			li[(index + 1)%li.length].classList.add('selected');
 			tmp.addEventListener('load',() => {
 				this.$refs.slide_image.classList.add('loaded');
 			});
