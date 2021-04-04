@@ -43,7 +43,6 @@
 			border-top: 1px solid black;
 			font-size: 1.2rem;
 			font-family: 'Lato-Bold', sans-serif;
-			text-transform: uppercase;
 			box-shadow: 0 0 5px rgb(0 0 0 / 75%);
 		}
 	}
@@ -71,9 +70,25 @@
 			& li {
 				height: 42px;
 				list-style-type: none;
-				background: #302c30;
-				width: 100%;
+				background: #1d1d23;
+				padding-left: 10px;
+				display: flex;
 				border-top: 1px solid black;
+				align-items: center;
+				font-size: 1.2rem;
+				font-family: 'Lato-Bold', sans-serif;
+				color: white;
+				position: relative;
+
+				&::before {
+					content: ' ';
+					display: block;
+					width: 15px;
+					height: 15px;
+					margin-right: 8px;
+					background: #302c30;
+					border-radius: 50%;
+				}
 			}
 		}
 
@@ -121,7 +136,7 @@
 
 				& span {
 					transform: skewX(20deg);
-					font-size: 1.8rem;
+					font-size: 1.5rem;
 					width: 330px;
 				}
 			}
@@ -144,7 +159,6 @@
 					transform: rotateZ(-90deg);
 					font-size: 1.2rem;
 					color: white;
-					text-transform: uppercase;
 				}
 			}
 
@@ -195,17 +209,17 @@
 			transform: skewX(-20deg) translateX(50%);
 			z-index: 5;
 		}
+
+		&:hover {
+			& .block_1 {
+				transform: translate3d(calc(100% - 109px), 0, 0);
+			}
+		}
 	}
 
 	&.invisible {
 		& img {
 			transform: translateX(200%);
-		}
-	}
-
-	&:hover {
-		& .block_1 {
-			transform: translate3d(calc(100% - 109px), 0, 0);
 		}
 	}
 }
