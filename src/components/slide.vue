@@ -100,14 +100,15 @@ export default {
 	methods: {
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera(70, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
-			this.camera.position.z = 200;
+			this.camera.position.z = 180;
 
 			this.scene = new THREE.Scene();
 
-			var boxGeometry = new THREE.BoxGeometry(10, 10, 10);
+			var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 			var basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD});
 			var cube = new THREE.Mesh(boxGeometry, basicMaterial);
 			this.scene.add(cube);
+			cube.rotation.set(0, 0, 0);
 			cube.rotation.set(0.4, 0.2, 0);
 
 			this.scene.add(this.createBoard());
@@ -123,34 +124,36 @@ export default {
 
 			// Construct the mesh piece by piece
 			const piece = [];
-			piece.push(this.createSideWireframe(0,0,0,0,0,0));
+			piece.push(this.createSideWireframe(-103,0,0,0,0,0));
+			piece.push(this.createSideWireframe(103,0,10,0,Math.PI,0));
+			piece.push(this.createCenterBoard(0,0,0));
 
 			// Add the differents parts to the group of meshes
 			for(var i=piece.length;i--;) {
 				boardTmp.add(piece[i]);
 			}
 
-			boardTmp.position.set(-150, 0, 0);
+			boardTmp.position.set(0, 0, 0);
 			boardTmp.rotation.set(0, 0, 0);
 
 			return boardTmp;
 		},
 		createShape() {
 			const leftShape = new THREE.Shape();
-			leftShape.moveTo( -5, -40 );
-			leftShape.lineTo( 0, 15 );
-			leftShape.lineTo( 10, 25 );
-			leftShape.lineTo( 10, 70 );
-			leftShape.lineTo( 0, 80 );
-			leftShape.lineTo( -5, 130 );
-			leftShape.lineTo( 40, 120 );
-			leftShape.lineTo( 45, 115 );
-			leftShape.lineTo( 25, 115 );
-			leftShape.lineTo( 20, 110 );
-			leftShape.lineTo( 20, -10 );
-			leftShape.lineTo( 25, -15 );
-			leftShape.lineTo( 45, -15 );
-			leftShape.lineTo( 40, -20 );
+			leftShape.moveTo( -50, -85 );
+			leftShape.lineTo( -45, -30 );
+			leftShape.lineTo( -35, -20 );
+			leftShape.lineTo( -35, 25 );
+			leftShape.lineTo( -45, 35 );
+			leftShape.lineTo( -50, 85 );
+			leftShape.lineTo( -5, 75 );
+			leftShape.lineTo( 0, 64 );
+			leftShape.lineTo( -20, 64 );
+			leftShape.lineTo( -25, 60 );
+			leftShape.lineTo( -25, -55 );
+			leftShape.lineTo( -20, -60 );
+			leftShape.lineTo( 0, -64 );
+			leftShape.lineTo( -5, -75 );
 			return leftShape;
 		},
 		createSideWireframe(x,y,z,rx,ry,rz) {
@@ -161,6 +164,12 @@ export default {
 			sideWireframe.position.set( x, y, z );
 			sideWireframe.rotation.set( rx, ry, rz );
 			return sideWireframe;
+		},
+		createCenterBoard(x,y,z) {
+			const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 256, 128, 1 ),  [0,0,0,0,material,0] );
+			centerMesh.position.set(x,y,z);
+			return centerMesh;
 		},
 		animate() {
 			requestAnimationFrame( this.animate );
