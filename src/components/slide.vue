@@ -108,8 +108,8 @@ export default {
 	},
 	methods: {
 		initCamera() {
-			this.camera = new THREE.PerspectiveCamera(70, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
-			this.camera.position.z = 180;
+			this.camera = new THREE.PerspectiveCamera(50, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
+			this.camera.position.z = 250;
 			this.clock = new THREE.Clock();
 			this.clock.start();
 
