@@ -66,6 +66,14 @@
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
 
+const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
+const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
+const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
+const DEFAULT_ROTATION_PERPETUAL_Y_START = 0;
+const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
+const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
+const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
+const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 
 
@@ -85,7 +93,8 @@ export default {
 		return {
 			camera: null,
 			scene: null,
-			renderer: null
+			renderer: null,
+			groupScene: []
 		};
 	},
 	watch: {
@@ -101,6 +110,8 @@ export default {
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera(70, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
 			this.camera.position.z = 180;
+			this.clock = new THREE.Clock();
+			this.clock.start();
 
 			this.scene = new THREE.Scene();
 
@@ -111,7 +122,11 @@ export default {
 			cube.rotation.set(0, 0, 0);
 			cube.rotation.set(0.4, 0.2, 0);
 
-			this.scene.add(this.createBoard());
+			this.groupScene.push(this.createBoard());
+
+			for(var i=this.groupScene.length;i--;) {
+				this.scene.add(this.groupScene[i]);
+			}
 
 			this.renderer = new THREE.WebGLRenderer( { antialias: true } );
 			this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -173,8 +188,20 @@ export default {
 		},
 		animate() {
 			requestAnimationFrame( this.animate );
+			this.delta = this.clock.getDelta();
+
+			for(var i=this.groupScene.length;i--;) {
+				this.perpetual(this.groupScene[i]);
+			}
 
 			this.renderer.render( this.scene, this.camera );
+		},
+		perpetual(board) {
+			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
+			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
+		},
+		radians(degrees) {
+			return degrees * Math.PI / 180;
 		},
 		change_slide() {
 			this.$refs.slide_image.classList.remove('loaded');
