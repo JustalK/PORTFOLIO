@@ -74,6 +74,7 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
+const BOARD_COLOR = 0x1d1d23;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 
 
@@ -108,12 +109,13 @@ export default {
 	},
 	methods: {
 		initCamera() {
-			this.camera = new THREE.PerspectiveCamera(50, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
-			this.camera.position.z = 250;
+			this.camera = new THREE.PerspectiveCamera(40, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
+			this.camera.position.z = 350;
 			this.clock = new THREE.Clock();
 			this.clock.start();
 
 			this.scene = new THREE.Scene();
+			this.scene.add(new THREE.AmbientLight(0xFFFFFF, 1));
 
 			var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 			var basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD});
@@ -139,6 +141,8 @@ export default {
 
 			// Construct the mesh piece by piece
 			const piece = [];
+			piece.push(this.createSideBoard(-103,0,0,0,0,0));
+			piece.push(this.createSideBoard(103,0,10,0,Math.PI,0));
 			piece.push(this.createSideWireframe(-103,0,0,0,0,0));
 			piece.push(this.createSideWireframe(103,0,10,0,Math.PI,0));
 			piece.push(this.createCenterBoard(0,0,0));
@@ -171,9 +175,18 @@ export default {
 			leftShape.lineTo( -5, -75 );
 			return leftShape;
 		},
+		createSideBoard(x,y,z,rx,ry,rz) {
+			const materialBoard = new THREE.MeshPhongMaterial( {  color: BOARD_COLOR } );
+			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
+			const sideMesh = new THREE.Mesh( geometryBoard, materialBoard );
+
+			sideMesh.position.set( x, y, z );
+			sideMesh.rotation.set( rx, ry, rz );
+			return sideMesh;
+		},
 		createSideWireframe(x,y,z,rx,ry,rz) {
 			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
-			const material = new THREE.LineBasicMaterial( { color: 0xFFFFFF, linewidth: 1 } );
+			const material = new THREE.LineBasicMaterial( { color: 0x61c3ff, linewidth: 1 } );
 			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
 			sideWireframe['wireframe'] = true;
 			sideWireframe.position.set( x, y, z );
