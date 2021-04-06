@@ -66,6 +66,11 @@
 import utils from '../helper/utils.js';
 import * as THREE from '../libs/three.js';
 
+const FOV = 40;
+const BOARD_WIDTH = 256;
+const BOARD_HEIGHT = 128;
+// Half of the board minus the distance between the inside of the shape to the extremity right
+const SIDE_BOARD_X = BOARD_WIDTH / 2 - 25;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
 const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
@@ -74,9 +79,27 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
-const BOARD_COLOR = 0x1d1d23;
-const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
-
+const WHITE_MATERIAL = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
+const BLACK_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+const BOARD_MATERIAL = new THREE.MeshPhongMaterial( {  color: 0x1d1d23 } );
+const BLUE_LINE_MATERIAL = new THREE.LineBasicMaterial( { color: 0x61c3ff, linewidth: 1 } );
+const EXTRUDE_SETTINGS = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
+const SHAPE = new THREE.Shape();
+SHAPE.moveTo( -50, -85 );
+SHAPE.lineTo( -45, -30 );
+SHAPE.lineTo( -35, -20 );
+SHAPE.lineTo( -35, 25 );
+SHAPE.lineTo( -45, 35 );
+SHAPE.lineTo( -50, 85 );
+SHAPE.lineTo( -5, 75 );
+SHAPE.lineTo( 0, 64 );
+SHAPE.lineTo( -20, 64 );
+SHAPE.lineTo( -25, 60 );
+SHAPE.lineTo( -25, -55 );
+SHAPE.lineTo( -20, -60 );
+SHAPE.lineTo( 0, -64 );
+SHAPE.lineTo( -5, -75 );
+const GEOMETRY_FROM_SHAPE = new THREE.ExtrudeGeometry( SHAPE, EXTRUDE_SETTINGS );
 
 export default {
 	props: {
@@ -96,7 +119,8 @@ export default {
 			scene: null,
 			renderer: null,
 			new_image: false,
-			groupScene: []
+			switch_image: false,
+			board: null
 		};
 	},
 	watch: {
@@ -110,26 +134,17 @@ export default {
 	},
 	methods: {
 		initCamera() {
-			this.camera = new THREE.PerspectiveCamera(40, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
-			this.camera.position.z = 350;
+			this.camera = new THREE.PerspectiveCamera(FOV, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
+			this.camera.position.z = BOARD_WIDTH + 100;
 			this.clock = new THREE.Clock();
 			this.clock.start();
 
 			this.scene = new THREE.Scene();
 			this.scene.add(new THREE.AmbientLight(0xFFFFFF, 1));
 
-			var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-			var basicMaterial = new THREE.MeshBasicMaterial({color: 0x0095DD});
-			var cube = new THREE.Mesh(boxGeometry, basicMaterial);
-			this.scene.add(cube);
-			cube.rotation.set(0, 0, 0);
-			cube.rotation.set(0.4, 0.2, 0);
-
-			this.groupScene.push(this.createBoard());
-
-			for(var i=this.groupScene.length;i--;) {
-				this.scene.add(this.groupScene[i]);
-			}
+			// Initialize the board
+			this.board = this.initialize_board();
+			this.scene.add(this.board);
 
 			this.renderer = new THREE.WebGLRenderer( { antialias: true } );
 			this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -140,72 +155,62 @@ export default {
 		/**
 		* Construct a board piece by piece
 		**/
-		createBoard() {
-			const boardTmp = new THREE.Group();
-			boardTmp.add(this.createCenterBoard(0,0,0));
-			boardTmp.add(this.createSideBoard(-103,0,0,0,0,0));
-			boardTmp.add(this.createSideBoard(103,0,10,0,Math.PI,0));
-			boardTmp.add(this.createSideWireframe(-103,0,0,0,0,0));
-			boardTmp.add(this.createSideWireframe(103,0,10,0,Math.PI,0));
-			boardTmp.position.set(0, 0, 0);
-			boardTmp.rotation.set(0, 0, 0);
-			return boardTmp;
+		initialize_board() {
+			const board = new THREE.Group();
+			board.add(this.create_center_board('center'));
+			board.add(this.createSideBoard('left', -SIDE_BOARD_X));
+			board.add(this.createSideBoard('right', SIDE_BOARD_X, true));
+			board.add(this.createSideWireframe('left_wireframe', -SIDE_BOARD_X));
+			board.add(this.createSideWireframe('right_wireframe', SIDE_BOARD_X, true));
+			return board;
 		},
-		createShape() {
-			const leftShape = new THREE.Shape();
-			leftShape.moveTo( -50, -85 );
-			leftShape.lineTo( -45, -30 );
-			leftShape.lineTo( -35, -20 );
-			leftShape.lineTo( -35, 25 );
-			leftShape.lineTo( -45, 35 );
-			leftShape.lineTo( -50, 85 );
-			leftShape.lineTo( -5, 75 );
-			leftShape.lineTo( 0, 64 );
-			leftShape.lineTo( -20, 64 );
-			leftShape.lineTo( -25, 60 );
-			leftShape.lineTo( -25, -55 );
-			leftShape.lineTo( -20, -60 );
-			leftShape.lineTo( 0, -64 );
-			leftShape.lineTo( -5, -75 );
-			return leftShape;
+		createSideBoard(name, x, symmetry = false) {
+			const mesh = new THREE.Mesh( GEOMETRY_FROM_SHAPE, BOARD_MATERIAL );
+			mesh.position.set(x, 0, 0);
+			if (symmetry) {
+				this.apply_symmetry(mesh);
+			}
+			return mesh;
 		},
-		createSideBoard(x,y,z,rx,ry,rz) {
-			const materialBoard = new THREE.MeshPhongMaterial( {  color: BOARD_COLOR } );
-			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
-			const sideMesh = new THREE.Mesh( geometryBoard, materialBoard );
-
-			sideMesh.position.set( x, y, z );
-			sideMesh.rotation.set( rx, ry, rz );
-			return sideMesh;
+		createSideWireframe(name, x, symmetry = false) {
+			const wireframe = new THREE.LineSegments( new THREE.EdgesGeometry(GEOMETRY_FROM_SHAPE), BLUE_LINE_MATERIAL);
+			wireframe['wireframe'] = true;
+			wireframe.position.set(x, 0, 0);
+			if (symmetry) {
+				this.apply_symmetry(wireframe);
+			}
+			wireframe.name = name;
+			return wireframe;
 		},
-		createSideWireframe(x,y,z,rx,ry,rz) {
-			const geometryBoard = new THREE.ExtrudeGeometry( this.createShape(), extrudeSettings );
-			const material = new THREE.LineBasicMaterial( { color: 0x61c3ff, linewidth: 1 } );
-			const sideWireframe = new THREE.LineSegments( new THREE.EdgesGeometry( geometryBoard ), material );
-			sideWireframe['wireframe'] = true;
-			sideWireframe.position.set( x, y, z );
-			sideWireframe.rotation.set( rx, ry, rz );
-			return sideWireframe;
+		apply_symmetry(mesh) {
+			mesh.position.z = 10;
+			mesh.rotation.y = Math.PI;
 		},
-		createCenterBoard(x,y,z) {
-			const material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 256, 128, 1 ),  [0,0,0,0,material,0] );
-			centerMesh.position.set(x,y,z);
-			centerMesh.name = 'image';
-			return centerMesh;
+		create_center_board(name) {
+			const mesh =  new THREE.Mesh(new THREE.BoxBufferGeometry(BOARD_WIDTH, BOARD_HEIGHT, 1), [
+				BLACK_MATERIAL,
+				BLACK_MATERIAL,
+				BLACK_MATERIAL,
+				BLACK_MATERIAL,
+				WHITE_MATERIAL,
+				BLACK_MATERIAL
+			]);
+			mesh.name = name;
+			return mesh;
 		},
 		animate() {
 			requestAnimationFrame( this.animate );
 			this.delta = this.clock.getDelta();
 
-			for(var i=this.groupScene.length;i--;) {
-				this.perpetual(this.groupScene[i]);
+			this.perpetual(this.board);
+			if (this.switch_image) {
+				this.explosion(this.board);
 			}
 
 			if (this.new_image) {
 				const texture = new THREE.TextureLoader().load( utils.absolute_path_from_relative(this.slide.image.path) );
 				const material = new THREE.MeshBasicMaterial( { map: texture } );
-				this.groupScene[0].children[0].material[4] = material;
+				this.board.children[0].material[4] = material;
 				this.new_image = false;
 			}
 
@@ -214,6 +219,14 @@ export default {
 		perpetual(board) {
 			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
 			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
+		},
+		explosion(board) {
+			const center_board = board.children[0];
+			const side_board_left = board.children[1];
+			const side_board_right = board.children[2];
+			center_board.rotation.x = center_board.rotation.x < this.radians(170) ? center_board.rotation.x + 0.1 : center_board.rotation.x;
+			side_board_left.position.x = side_board_left.position.x > -165 ? side_board_left.position.x - this.clock.elapsedTime * 10 : side_board_left.position.x;
+			side_board_right.position.x = side_board_right.position.x < 165 ? side_board_right.position.x + this.clock.elapsedTime * 10 : side_board_right.position.x;
 		},
 		radians(degrees) {
 			return degrees * Math.PI / 180;
@@ -229,7 +242,7 @@ export default {
 			}
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
-			this.new_image = true;
+			this.switch_image = true;
 
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
 			const li = this.$refs.summary.querySelectorAll('li');
