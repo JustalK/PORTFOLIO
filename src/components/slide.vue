@@ -95,6 +95,7 @@ export default {
 			camera: null,
 			scene: null,
 			renderer: null,
+			new_image: false,
 			groupScene: []
 		};
 	},
@@ -136,25 +137,18 @@ export default {
 			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
 			this.$refs.canvas.appendChild( this.renderer.domElement );
 		},
+		/**
+		* Construct a board piece by piece
+		**/
 		createBoard() {
 			const boardTmp = new THREE.Group();
-
-			// Construct the mesh piece by piece
-			const piece = [];
-			piece.push(this.createSideBoard(-103,0,0,0,0,0));
-			piece.push(this.createSideBoard(103,0,10,0,Math.PI,0));
-			piece.push(this.createSideWireframe(-103,0,0,0,0,0));
-			piece.push(this.createSideWireframe(103,0,10,0,Math.PI,0));
-			piece.push(this.createCenterBoard(0,0,0));
-
-			// Add the differents parts to the group of meshes
-			for(var i=piece.length;i--;) {
-				boardTmp.add(piece[i]);
-			}
-
+			boardTmp.add(this.createCenterBoard(0,0,0));
+			boardTmp.add(this.createSideBoard(-103,0,0,0,0,0));
+			boardTmp.add(this.createSideBoard(103,0,10,0,Math.PI,0));
+			boardTmp.add(this.createSideWireframe(-103,0,0,0,0,0));
+			boardTmp.add(this.createSideWireframe(103,0,10,0,Math.PI,0));
 			boardTmp.position.set(0, 0, 0);
 			boardTmp.rotation.set(0, 0, 0);
-
 			return boardTmp;
 		},
 		createShape() {
@@ -194,9 +188,10 @@ export default {
 			return sideWireframe;
 		},
 		createCenterBoard(x,y,z) {
-			const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+			const material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 			const centerMesh =  new THREE.Mesh( new THREE.BoxBufferGeometry( 256, 128, 1 ),  [0,0,0,0,material,0] );
 			centerMesh.position.set(x,y,z);
+			centerMesh.name = 'image';
 			return centerMesh;
 		},
 		animate() {
@@ -205,6 +200,13 @@ export default {
 
 			for(var i=this.groupScene.length;i--;) {
 				this.perpetual(this.groupScene[i]);
+			}
+
+			if (this.new_image) {
+				const texture = new THREE.TextureLoader().load( utils.absolute_path_from_relative(this.slide.image.path) );
+				const material = new THREE.MeshBasicMaterial( { map: texture } );
+				this.groupScene[0].children[0].material[4] = material;
+				this.new_image = false;
 			}
 
 			this.renderer.render( this.scene, this.camera );
@@ -227,6 +229,8 @@ export default {
 			}
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
+			this.new_image = true;
+
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
 			const li = this.$refs.summary.querySelectorAll('li');
 			const liSelected = this.$refs.summary.querySelector('.selected');
