@@ -14,55 +14,78 @@
 			background: @color;
 		}
 	}
+}
 
-	&:hover div:nth-child(@{index}) {
+.blocks-square-hover(@index, @pos_x, @pos_y) {
+	div:nth-child(@{index}) {
 		@{pos_x}: 0;
 		@{pos_y}: 0;
 	}
 }
 
 .back {
-	& a {
-		position: absolute;
-		left: -120px;
-		top: 100px;
-		width: 50px;
-		height: 50px;
+	position: absolute;
+	left: -75px;
+	top: 100px;
+	width: 185px;
+	height: 50px;
+	transform-origin: left;
+	transform: translateY(165px) rotateZ(-90deg);
+
+	& div {
 		cursor: pointer;
-		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+		display: flex;
+		justify-content: space-between;
 
-		transform: rotateZ(45deg);
+		& a {
+			width: 50px;
+			height: 50px;
+			transform: rotateZ(45deg);
+			.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
 
-		.blocks-square(1, left, top, @background-bloc-0);
-		.blocks-square(2, right, top, @background-bloc-1);
-		.blocks-square(3, right, bottom, @background-bloc-2);
-		.blocks-square(4, left, bottom, @background-bloc-3);
-
-		&:hover {
-			transform: rotateZ(-45deg) scale(0.8);
+			.blocks-square(1, left, top, @background-bloc-0);
+			.blocks-square(2, right, top, @background-bloc-1);
+			.blocks-square(3, right, bottom, @background-bloc-2);
+			.blocks-square(4, left, bottom, @background-bloc-3);
 		}
-	}
 
-	& span {
-		position: absolute;
-		left: -86px;
-		top: 139px;
-		transform: rotateZ(-45deg);
-		color: @background-bloc-2;
-		opacity: 1;
-		user-select: none;
-		.font-size(1.4);
-		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1) 0.25s);
+		& .legend {
+			display: flex;
+
+			& span {
+				font-family: 'Lato-Light', sans-serif;
+				font-weight: bold;
+				color: #fff;
+				font-size: 4rem;
+			}
+		}
 	}
 
 	&.is_animated,
 	&.invisible {
+		& div {
+			& a {
+				transform: rotateZ(45deg) scale(0);
+			}
+		}
+	}
+
+	& div:hover {
 		& a {
-			transform: rotateZ(45deg) scale(0);
+			transform: rotateZ(-45deg) scale(0.8);
+			.blocks-square-hover(1, left, top);
+			.blocks-square-hover(2, right, top);
+			.blocks-square-hover(3, right, bottom);
+			.blocks-square-hover(4, left, bottom);
 		}
 
 		& span {
-			opacity: 0;
+			color: @text-color;
+
+			&:hover {
+				color: @background-bloc-2;
+				.transition(all 0.25s ease);
+			}
 		}
 	}
 }
