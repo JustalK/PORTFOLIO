@@ -69,6 +69,11 @@ import * as THREE from '../libs/three.js';
 const FOV = 40;
 const BOARD_WIDTH = 256;
 const BOARD_HEIGHT = 128;
+const BOARD_NAME_CENTER = 'center';
+const BOARD_NAME_LEFT = 'left';
+const BOARD_NAME_RIGHT = 'right';
+const BOARD_NAME_LEFT_WIREFRAME = 'left_wireframe';
+const BOARD_NAME_RIGHT_WIREFRAME = 'right_wireframe';
 // Half of the board minus the distance between the inside of the shape to the extremity right
 const SIDE_BOARD_X = BOARD_WIDTH / 2 - 25;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
@@ -119,8 +124,9 @@ export default {
 			scene: null,
 			renderer: null,
 			new_image: false,
-			switch_image: false,
-			board: null
+			board: null,
+			board_animation: false,
+			board_actual_rotation: 180
 		};
 	},
 	watch: {
@@ -157,11 +163,11 @@ export default {
 		**/
 		initialize_board() {
 			const board = new THREE.Group();
-			board.add(this.create_center_board('center'));
-			board.add(this.createSideBoard('left', -SIDE_BOARD_X));
-			board.add(this.createSideBoard('right', SIDE_BOARD_X, true));
-			board.add(this.createSideWireframe('left_wireframe', -SIDE_BOARD_X));
-			board.add(this.createSideWireframe('right_wireframe', SIDE_BOARD_X, true));
+			board.add(this.create_center_board(BOARD_NAME_CENTER));
+			board.add(this.createSideBoard(BOARD_NAME_LEFT, -SIDE_BOARD_X));
+			board.add(this.createSideBoard(BOARD_NAME_RIGHT, SIDE_BOARD_X, true));
+			board.add(this.createSideWireframe(BOARD_NAME_LEFT_WIREFRAME, -SIDE_BOARD_X));
+			board.add(this.createSideWireframe(BOARD_NAME_RIGHT_WIREFRAME, SIDE_BOARD_X, true));
 			return board;
 		},
 		createSideBoard(name, x, symmetry = false) {
@@ -170,6 +176,7 @@ export default {
 			if (symmetry) {
 				this.apply_symmetry(mesh);
 			}
+			mesh.name = name;
 			return mesh;
 		},
 		createSideWireframe(name, x, symmetry = false) {
@@ -198,13 +205,16 @@ export default {
 			mesh.name = name;
 			return mesh;
 		},
+		get_children_by_name(name) {
+			return this.board.children.find(children => children.name === name);
+		},
 		animate() {
 			requestAnimationFrame( this.animate );
 			this.delta = this.clock.getDelta();
 
 			this.perpetual(this.board);
-			if (this.switch_image) {
-				this.explosion(this.board);
+			if (this.board_animation) {
+				this.board_new_image_animation();
 			}
 
 			if (this.new_image) {
@@ -220,13 +230,49 @@ export default {
 			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
 			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
 		},
-		explosion(board) {
-			const center_board = board.children[0];
+		initialize_board_rotation() {
+
+			this.board_animation = true;
+			this.board_actual_rotation += 180;
+		},
+		board_new_image_animation() {
+			let step_1 = false,
+				step_2 = false;
+
+			// Remove the space between the side and the center
+			step_1 = this.space_side_board();
+
+			// rotate the center board
+			if(step_1) {
+				step_2 = this.rotate_center_board();
+			}
+			if(step_2) {
+				step_3 = this.rotate_center_board();
+			}
+			if(step_3) {
+				this.board_animation = false;
+			}
+			/**
 			const side_board_left = board.children[1];
 			const side_board_right = board.children[2];
-			center_board.rotation.x = center_board.rotation.x < this.radians(170) ? center_board.rotation.x + 0.1 : center_board.rotation.x;
 			side_board_left.position.x = side_board_left.position.x > -165 ? side_board_left.position.x - this.clock.elapsedTime * 10 : side_board_left.position.x;
 			side_board_right.position.x = side_board_right.position.x < 165 ? side_board_right.position.x + this.clock.elapsedTime * 10 : side_board_right.position.x;
+			**/
+		},
+		space_side_board() {
+			const left_side_board = [
+				this.get_children_by_name(BOARD_NAME_LEFT),
+				this.get_children_by_name(BOARD_NAME_LEFT_WIREFRAME)
+			];
+			left_side_board.map(children => {
+				children.position.x = Math.max(-165, children.position.x - this.clock.elapsedTime * 10);
+			});
+			return left_side_board[0].position.x === -165 && left_side_board[1].position.x === -165;
+		},
+		rotate_center_board() {
+			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
+			board_center.rotation.x = Math.min(this.radians(this.board_actual_rotation), board_center.rotation.x + 0.1);
+			return board_center.rotation.x === this.radians(this.board_actual_rotation);
 		},
 		radians(degrees) {
 			return degrees * Math.PI / 180;
@@ -242,7 +288,7 @@ export default {
 			}
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
-			this.switch_image = true;
+			this.initialize_board_rotation();
 
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
 			const li = this.$refs.summary.querySelectorAll('li');
