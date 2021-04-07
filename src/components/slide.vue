@@ -126,7 +126,8 @@ export default {
 			new_image: false,
 			board: null,
 			board_animation: false,
-			board_actual_rotation: 180
+			board_animation_step: 0,
+			board_actual_rotation: 0
 		};
 	},
 	watch: {
@@ -234,40 +235,73 @@ export default {
 
 			this.board_animation = true;
 			this.board_actual_rotation += 180;
+			this.board_animation_step = 0;
 		},
 		board_new_image_animation() {
-			let step_1 = false,
-				step_2 = false;
 
 			// Remove the space between the side and the center
-			step_1 = this.space_side_board();
+			if(this.board_animation_step === 0) {
+				const left_step = this.space_negative_side_board(-165, BOARD_NAME_LEFT, BOARD_NAME_LEFT_WIREFRAME);
+				const right_step = this.space_positive_side_board(165, BOARD_NAME_RIGHT, BOARD_NAME_RIGHT_WIREFRAME);
+				this.board_animation_step = left_step && right_step ? 1 : 0;
+			}
 
 			// rotate the center board
-			if(step_1) {
-				step_2 = this.rotate_center_board();
+			if(this.board_animation_step === 1) {
+				this.board_animation_step = this.rotate_center_board() ? 2 : 1;
 			}
-			if(step_2) {
-				step_3 = this.rotate_center_board();
+
+			// Make the sides come back
+			if(this.board_animation_step === 2) {
+				const left_step = this.space_positive_side_board_2(-SIDE_BOARD_X, BOARD_NAME_LEFT, BOARD_NAME_LEFT_WIREFRAME);
+				const right_step = this.space_negative_side_board_2(SIDE_BOARD_X, BOARD_NAME_RIGHT, BOARD_NAME_RIGHT_WIREFRAME);
+				this.board_animation_step = left_step && right_step ? 3 : 2;
 			}
-			if(step_3) {
+
+			// Animation over
+			if(this.board_animation_step === 3) {
 				this.board_animation = false;
 			}
-			/**
-			const side_board_left = board.children[1];
-			const side_board_right = board.children[2];
-			side_board_left.position.x = side_board_left.position.x > -165 ? side_board_left.position.x - this.clock.elapsedTime * 10 : side_board_left.position.x;
-			side_board_right.position.x = side_board_right.position.x < 165 ? side_board_right.position.x + this.clock.elapsedTime * 10 : side_board_right.position.x;
-			**/
 		},
-		space_side_board() {
+		space_negative_side_board(limit, board_name, wireframe_name) {
 			const left_side_board = [
-				this.get_children_by_name(BOARD_NAME_LEFT),
-				this.get_children_by_name(BOARD_NAME_LEFT_WIREFRAME)
+				this.get_children_by_name(board_name),
+				this.get_children_by_name(wireframe_name)
 			];
 			left_side_board.map(children => {
-				children.position.x = Math.max(-165, children.position.x - this.clock.elapsedTime * 10);
+				children.position.x = Math.max(limit, children.position.x - 2);
 			});
-			return left_side_board[0].position.x === -165 && left_side_board[1].position.x === -165;
+			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
+		},
+		space_negative_side_board_2(limit, board_name, wireframe_name) {
+			const left_side_board = [
+				this.get_children_by_name(board_name),
+				this.get_children_by_name(wireframe_name)
+			];
+			left_side_board.map(children => {
+				children.position.x = Math.max(limit, children.position.x - 2);
+			});
+			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
+		},
+		space_positive_side_board(limit, board_name, wireframe_name) {
+			const left_side_board = [
+				this.get_children_by_name(board_name),
+				this.get_children_by_name(wireframe_name)
+			];
+			left_side_board.map(children => {
+				children.position.x = Math.min(limit, children.position.x + 2);
+			});
+			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
+		},
+		space_positive_side_board_2(limit, board_name, wireframe_name) {
+			const left_side_board = [
+				this.get_children_by_name(board_name),
+				this.get_children_by_name(wireframe_name)
+			];
+			left_side_board.map(children => {
+				children.position.x = Math.min(limit, children.position.x + 2);
+			});
+			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
 		},
 		rotate_center_board() {
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
