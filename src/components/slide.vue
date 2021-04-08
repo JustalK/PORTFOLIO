@@ -31,14 +31,10 @@
 				ref="summary"
 				class="slider_index">
 				<li
+					v-for="title in titles"
+					:key="title"
 					class="selected">
-					Presentation
-				</li>
-				<li>
-					Work
-				</li>
-				<li>
-					Technical Challenges
+					{{ title }}
 				</li>
 			</ul>
 		</div>
@@ -76,6 +72,8 @@ const BOARD_NAME_LEFT_WIREFRAME = 'left_wireframe';
 const BOARD_NAME_RIGHT_WIREFRAME = 'right_wireframe';
 // Half of the board minus the distance between the inside of the shape to the extremity right
 const SIDE_BOARD_X = BOARD_WIDTH / 2 - 25;
+const SPEED_MOVEMENT_CENTER_BOARD = 12;
+const SPEED_MOVEMENT_SIDE_BOARD = 450;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
 const DEFAULT_ROTATION_PERPETUAL_X_START = 0;
@@ -110,6 +108,10 @@ export default {
 	props: {
 		invisible_slide: {
 			type: Boolean,
+			required: true
+		},
+		titles: {
+			type: Array,
 			required: true
 		},
 		slide: {
@@ -269,7 +271,7 @@ export default {
 				this.get_children_by_name(wireframe_name)
 			];
 			const is_limit_reached = side_board.map(children => {
-				children.position.x = fc(limit, children, 300);
+				children.position.x = fc(limit, children, SPEED_MOVEMENT_SIDE_BOARD);
 				return children.position.x === limit;
 			});
 			return is_limit_reached[0] && is_limit_reached[1];
@@ -286,7 +288,7 @@ export default {
 		},
 		rotate_center_board() {
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
-			board_center.rotation.x = Math.min(this.radians(this.board_actual_rotation), board_center.rotation.x + 0.1);
+			board_center.rotation.x = Math.min(this.radians(this.board_actual_rotation), board_center.rotation.x + this.delta * SPEED_MOVEMENT_CENTER_BOARD);
 			return board_center.rotation.x === this.radians(this.board_actual_rotation);
 		},
 		radians(degrees) {

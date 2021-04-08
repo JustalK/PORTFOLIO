@@ -11,6 +11,7 @@
 			<components_slide
 				:invisible_slide="invisible_slide"
 				:slide="slide"
+				:titles="titles"
 				@change_slide="change_slide" />
 		</a>
 	</div>
@@ -45,11 +46,13 @@ export default {
 		return {
 			invisible_slide: true,
 			actual_index_slide: 0,
+			titles: [],
 			slide: {}
 		};
 	},
 	watch: {
 		async all_slides(slides) {
+			this.titles = slides.map(slide => slide.title);
 			const slide_obj = await this.get_slide_by_id(slides[0]);
 			this.update_slide(slide_obj);
 			await this.$nextTick();
@@ -61,6 +64,7 @@ export default {
 	},
 	async mounted() {
 		if (this.all_slides.length > 0) {
+			this.titles = this.all_slides.map(slide => slide.title);
 			const slide_obj = await this.get_slide_by_id(this.all_slides[0]);
 			this.update_slide(slide_obj);
 			this.set_background_project();
@@ -91,8 +95,8 @@ export default {
 				this.$refs.background.classList.add('loaded');
 			});
 		},
-		async get_slide_by_id(id) {
-			return api.get_slide_by_id(id);
+		async get_slide_by_id(slide) {
+			return api.get_slide_by_id(slide.id);
 		},
 		next_index_slide() {
 			this.actual_index_slide++;

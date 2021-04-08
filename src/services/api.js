@@ -20,10 +20,10 @@ export default {
 		return axios_call(utils.get_server_address() + '/api/pages', {params: {name: name}});
 	},
 	get_project_by_id: async id => {
-		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {id: id, populate: true}});
+		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {id: id, populate: 1}});
 	},
 	get_project_by_slug: async slug => {
-		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {slug: slug, populate: true}});
+		return axios_call(utils.get_server_address() + '/api/articles/one', {params: {slug: slug, populate: 1}});
 	},
 	get_slide_by_id: async id => {
 		return axios_call(utils.get_server_address() + '/api/slides/one', {params: {id: id}});
