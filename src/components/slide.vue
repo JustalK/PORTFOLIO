@@ -253,8 +253,8 @@ export default {
 
 			// Make the sides come back
 			if(this.board_animation_step === 2) {
-				const left_step = this.space_positive_side_board_2(-SIDE_BOARD_X, BOARD_NAME_LEFT, BOARD_NAME_LEFT_WIREFRAME);
-				const right_step = this.space_negative_side_board_2(SIDE_BOARD_X, BOARD_NAME_RIGHT, BOARD_NAME_RIGHT_WIREFRAME);
+				const left_step = this.space_positive_side_board(-SIDE_BOARD_X, BOARD_NAME_LEFT, BOARD_NAME_LEFT_WIREFRAME);
+				const right_step = this.space_negative_side_board(SIDE_BOARD_X, BOARD_NAME_RIGHT, BOARD_NAME_RIGHT_WIREFRAME);
 				this.board_animation_step = left_step && right_step ? 3 : 2;
 			}
 
@@ -263,45 +263,26 @@ export default {
 				this.board_animation = false;
 			}
 		},
-		space_negative_side_board(limit, board_name, wireframe_name) {
-			const left_side_board = [
+		space_side_board(limit, board_name, wireframe_name, fc) {
+			const side_board = [
 				this.get_children_by_name(board_name),
 				this.get_children_by_name(wireframe_name)
 			];
-			left_side_board.map(children => {
-				children.position.x = Math.max(limit, children.position.x - 2);
+			const is_limit_reached = side_board.map(children => {
+				children.position.x = fc(limit, children, 300);
+				return children.position.x === limit;
 			});
-			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
+			return is_limit_reached[0] && is_limit_reached[1];
 		},
-		space_negative_side_board_2(limit, board_name, wireframe_name) {
-			const left_side_board = [
-				this.get_children_by_name(board_name),
-				this.get_children_by_name(wireframe_name)
-			];
-			left_side_board.map(children => {
-				children.position.x = Math.max(limit, children.position.x - 2);
+		space_negative_side_board(limit, board_name, wireframe_name) {
+			return this.space_side_board(limit, board_name, wireframe_name, (limit, children, speed) => {
+				return Math.max(limit, children.position.x - this.delta * speed);
 			});
-			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
 		},
 		space_positive_side_board(limit, board_name, wireframe_name) {
-			const left_side_board = [
-				this.get_children_by_name(board_name),
-				this.get_children_by_name(wireframe_name)
-			];
-			left_side_board.map(children => {
-				children.position.x = Math.min(limit, children.position.x + 2);
+			return this.space_side_board(limit, board_name, wireframe_name, (limit, children, speed) => {
+				return Math.min(limit, children.position.x + this.delta * speed);
 			});
-			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
-		},
-		space_positive_side_board_2(limit, board_name, wireframe_name) {
-			const left_side_board = [
-				this.get_children_by_name(board_name),
-				this.get_children_by_name(wireframe_name)
-			];
-			left_side_board.map(children => {
-				children.position.x = Math.min(limit, children.position.x + 2);
-			});
-			return left_side_board[0].position.x === limit && left_side_board[1].position.x === limit;
 		},
 		rotate_center_board() {
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
