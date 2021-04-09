@@ -84,6 +84,7 @@ const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
 const WHITE_MATERIAL = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 const BLACK_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+const GREEN_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x1d1d23 } );
 const BOARD_MATERIAL = new THREE.MeshPhongMaterial( {  color: 0x1d1d23 } );
 const BLUE_LINE_MATERIAL = new THREE.LineBasicMaterial( { color: 0x61c3ff, linewidth: 1 } );
 const EXTRUDE_SETTINGS = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
@@ -203,7 +204,7 @@ export default {
 				BLACK_MATERIAL,
 				BLACK_MATERIAL,
 				WHITE_MATERIAL,
-				BLACK_MATERIAL
+				GREEN_MATERIAL
 			]);
 			mesh.name = name;
 			return mesh;
@@ -220,21 +221,25 @@ export default {
 				this.board_new_image_animation();
 			}
 
-			if (this.new_image) {
-				const texture = new THREE.TextureLoader().load( utils.absolute_path_from_relative(this.slide.image.path) );
-				const material = new THREE.MeshBasicMaterial( { map: texture } );
-				this.board.children[0].material[4] = material;
-				this.new_image = false;
-			}
-
 			this.renderer.render( this.scene, this.camera );
+		},
+		change_image(path) {
+			const index = this.board_actual_rotation % 360 === 0 ? 4 : 5;
+			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
+			const texture = new THREE.TextureLoader().load(utils.absolute_path_from_relative(path));
+			if(index === 5) {
+				texture.flipY = false;
+				texture.wrapS = THREE.RepeatWrapping;
+				texture.repeat.x = - 1;
+			}
+			const material = new THREE.MeshBasicMaterial({map: texture});
+			board_center.material[index] = material;
 		},
 		perpetual(board) {
 			board.rotation.x = (this.radians(DEFAULT_ROTATION_PERPETUAL_X_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_X_SPEED * DEFAULT_ROTATION_PERPETUAL_X) * this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE));
 			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
 		},
 		initialize_board_rotation() {
-
 			this.board_animation = true;
 			this.board_actual_rotation += 180;
 			this.board_animation_step = 0;
@@ -311,24 +316,13 @@ export default {
 			if (this.slide.image.path === undefined) {
 				return null;
 			}
-			console.log(this.slide);
 			this.change_summary(this.slide.title);
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
-			this.initialize_board_rotation();
-
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
-			/**
-				const li = this.$refs.summary.querySelectorAll('li');
-				const liSelected = this.$refs.summary.querySelector('.selected');
-				let index = 0;
-				for(let i = li.length; i--;) {
-					index = li[i] == liSelected ? i : index;
-				}
-				liSelected.classList.remove('selected');
-				li[(index + 1)%li.length].classList.add('selected');
-			**/
+			this.initialize_board_rotation();
 			tmp.addEventListener('load',() => {
+				this.change_image(this.slide.image.path);
 				this.$refs.slide_image.classList.add('loaded');
 			});
 		}
