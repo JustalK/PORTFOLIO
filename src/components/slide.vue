@@ -33,7 +33,7 @@
 				<li
 					v-for="title in titles"
 					:key="title"
-					class="selected">
+					:data-title="title">
 					{{ title }}
 				</li>
 			</ul>
@@ -298,24 +298,36 @@ export default {
 			this.$refs.slide_image.classList.remove('loaded');
 			this.$emit('change_slide');
 		},
+		change_summary(title) {
+			const liPrevious = this.$refs.summary.querySelector('.selected');
+			const liNext = this.$refs.summary.querySelector('li[data-title=\''+title+'\']');
+			liNext.classList.add('selected');
+			if(liPrevious) {
+				liPrevious.classList.remove('selected');
+			}
+		},
 		slide_image() {
 			const tmp = new Image();
 			if (this.slide.image.path === undefined) {
 				return null;
 			}
+			console.log(this.slide);
+			this.change_summary(this.slide.title);
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.initialize_board_rotation();
 
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
-			const li = this.$refs.summary.querySelectorAll('li');
-			const liSelected = this.$refs.summary.querySelector('.selected');
-			let index = 0;
-			for(let i = li.length; i--;) {
-				index = li[i] == liSelected ? i : index;
-			}
-			liSelected.classList.remove('selected');
-			li[(index + 1)%li.length].classList.add('selected');
+			/**
+				const li = this.$refs.summary.querySelectorAll('li');
+				const liSelected = this.$refs.summary.querySelector('.selected');
+				let index = 0;
+				for(let i = li.length; i--;) {
+					index = li[i] == liSelected ? i : index;
+				}
+				liSelected.classList.remove('selected');
+				li[(index + 1)%li.length].classList.add('selected');
+			**/
 			tmp.addEventListener('load',() => {
 				this.$refs.slide_image.classList.add('loaded');
 			});
