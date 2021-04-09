@@ -163,7 +163,7 @@
 				top: 0;
 				left: 0;
 				background: linear-gradient(to right, transparent, #61c3ff);
-				animation: going_right 2s linear infinite;
+				animation: going_right 8s linear infinite;
 			}
 
 			@keyframes going_right {
@@ -182,8 +182,8 @@
 				top: 0;
 				right: 0;
 				background: linear-gradient(to bottom, transparent, #61c3ff);
-				animation: going_down 2s linear infinite;
-				animation-delay: 1s;
+				animation: going_down 8s linear infinite;
+				animation-delay: 4s;
 			}
 
 			@keyframes going_down {
@@ -204,7 +204,7 @@
 				bottom: 0;
 				right: 0;
 				background: linear-gradient(to left, transparent, #61c3ff);
-				animation: going_left 2s linear infinite;
+				animation: going_left 8s linear infinite;
 			}
 
 			@keyframes going_left {
@@ -223,8 +223,8 @@
 				bottom: 0;
 				left: 0;
 				background: linear-gradient(to top, transparent, #61c3ff);
-				animation: going_top 2s linear infinite;
-				animation-delay: 1s;
+				animation: going_top 8s linear infinite;
+				animation-delay: 4s;
 			}
 
 			@keyframes going_top {
@@ -403,9 +403,6 @@
 		}
 
 		&:hover {
-			box-shadow: 0 0 3px @background-bloc-2;
-			border: 1px solid @background-bloc-3;
-
 			& h2 {
 				transition: all 0.25s ease 0.3s;
 				color: @background-bloc-2;
