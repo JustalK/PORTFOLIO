@@ -56,6 +56,8 @@
 				</div>
 			</div>
 		</div>
+		<div class="borders_top_right" />
+		<div class="borders_bottom_left" />
 	</div>
 </template>
 <script>
