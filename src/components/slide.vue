@@ -38,7 +38,9 @@
 				</li>
 			</ul>
 		</div>
-		<div class="description">
+		<div
+			ref="description"
+			class="description">
 			<div class="block block_1">
 				<div class="block_title">
 					<span>Slide 1</span>
@@ -228,7 +230,9 @@ export default {
 		change_image(path) {
 			const index = this.board_actual_rotation % 360 === 0 ? 4 : 5;
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
-			const texture = new THREE.TextureLoader().load(utils.absolute_path_from_relative(path));
+			const texture = new THREE.TextureLoader().load(utils.absolute_path_from_relative(path), () => {
+				console.log('loaded');
+			});
 			if(index === 5) {
 				texture.flipY = false;
 				texture.wrapS = THREE.RepeatWrapping;
@@ -314,6 +318,7 @@ export default {
 			}
 		},
 		slide_image() {
+			this.$refs.description.classList.add('loading');
 			const tmp = new Image();
 			if (this.slide.image.path === undefined) {
 				return null;
@@ -325,7 +330,7 @@ export default {
 			this.initialize_board_rotation();
 			tmp.addEventListener('load',() => {
 				this.change_image(this.slide.image.path);
-				this.$refs.slide_image.classList.add('loaded');
+				this.$refs.description.classList.remove('loading');
 			});
 		}
 	}

@@ -73,15 +73,10 @@ export default {
 		}
 	},
 	methods: {
-		change_slide() {
-			this.invisible_slide = true;
-			setTimeout(async () => {
-				const index_slide = this.next_index_slide();
-				const slide_obj = await this.get_slide_by_id(index_slide);
-				this.update_slide(slide_obj, this.actual_index_slide);
-				await this.$nextTick();
-				this.invisible_slide = false;
-			}, 500);
+		async change_slide() {
+			const index_slide = this.next_index_slide();
+			const slide_obj = await this.get_slide_by_id(index_slide);
+			this.update_slide(slide_obj, this.actual_index_slide);
 		},
 		set_background_project() {
 			const tmp = new Image();

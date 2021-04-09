@@ -247,6 +247,7 @@
 					transform: skewX(20deg);
 					font-size: 1.5rem;
 					width: 330px;
+					.transition(all 0.25s cubic-bezier(0.8, 0, 0.25, 1));
 				}
 			}
 
@@ -289,6 +290,16 @@
 
 				& .block_information {
 					width: calc(100% - 109px);
+				}
+			}
+		}
+
+		&.loading {
+			& .block {
+				& .block_information {
+					span {
+						opacity: 0;
+					}
 				}
 			}
 		}
