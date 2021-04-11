@@ -26,6 +26,21 @@ const schema = new mongoose.Schema(
 			type: String,
 			trim: true
 		},
+		client: {
+			type: String,
+			trim: true,
+			require: true
+		},
+		industry: {
+			type: String,
+			trim: true,
+			require: true
+		},
+		position: {
+			type: String,
+			trim: true,
+			require: true
+		},
 		tags: [ {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'tags'

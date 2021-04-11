@@ -12,6 +12,9 @@
 				:invisible_slide="invisible_slide"
 				:slide="slide"
 				:titles="titles"
+				:client="client"
+				:industry="industry"
+				:position="position"
 				@change_slide="change_slide" />
 		</a>
 	</div>
@@ -27,6 +30,18 @@ export default {
 	},
 	props: {
 		title: {
+			type: String,
+			required: true
+		},
+		client: {
+			type: String,
+			required: true
+		},
+		industry: {
+			type: String,
+			required: true
+		},
+		position: {
 			type: String,
 			required: true
 		},

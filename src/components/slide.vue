@@ -17,15 +17,15 @@
 		<div class="informations">
 			<div class="field">
 				<span class="legend">Client</span>
-				<span class="value">Manypixels</span>
+				<span class="value">{{ client }}</span>
 			</div>
 			<div class="field">
 				<span class="legend">Industry</span>
-				<span class="value">Services</span>
+				<span class="value">{{ industry }}</span>
 			</div>
 			<div class="field">
 				<span class="legend">Position</span>
-				<span class="value">Lead FullStack Developer</span>
+				<span class="value">{{ position }}</span>
 			</div>
 			<ul
 				ref="summary"
@@ -121,6 +121,18 @@ export default {
 		},
 		slide: {
 			type: Object,
+			required: true
+		},
+		client: {
+			type: String,
+			required: true
+		},
+		industry: {
+			type: String,
+			required: true
+		},
+		position: {
+			type: String,
 			required: true
 		}
 	},

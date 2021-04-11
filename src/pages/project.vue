@@ -24,6 +24,9 @@
 				:help="help" />
 			<components_slides
 				:title="title"
+				:client="client"
+				:industry="industry"
+				:position="position"
 				:background_image="background_image"
 				:is_animated="is_animated"
 				:all_slides="all_slides" />
@@ -66,6 +69,9 @@ export default {
 			desactivate: true,
 			unmounted: false,
 			description: 'Loading...',
+			client: 'Loading...',
+			industry: 'Loading...',
+			position: 'Loading...',
 			background_image: {},
 			all_slides: [],
 			are_projects_loading: false,
@@ -122,6 +128,9 @@ export default {
 		update_page(page) {
 			this.description = page.long_description;
 			this.title = page.title;
+			this.client = page.client;
+			this.industry = page.industry;
+			this.position = page.position;
 			this.all_slides = page.slides;
 			this.slide = page.slides !== undefined ? page.slides[0] : {};
 		},
