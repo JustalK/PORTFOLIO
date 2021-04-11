@@ -3,14 +3,9 @@
 		class="slide"
 		:class="{invisible: invisible_slide}"
 		@click.stop="change_slide()">
-		<span>{{ slide.title }}</span>
-		<p>{{ slide.first_text }}</p>
-		<p>{{ slide.second_text }}</p>
 		<div
 			ref="canvas"
 			class="slider_images" />
-		<img
-			ref="slide_image">
 		<span
 			ref="image_legend"
 			class="slider_legend" />
@@ -318,7 +313,6 @@ export default {
 			return degrees * Math.PI / 180;
 		},
 		change_slide() {
-			this.$refs.slide_image.classList.remove('loaded');
 			this.$emit('change_slide');
 		},
 		change_summary(title) {
@@ -337,7 +331,6 @@ export default {
 			}
 			this.change_summary(this.slide.title);
 			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
-			this.$refs.slide_image.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
 			this.initialize_board_rotation();
 			tmp.addEventListener('load',() => {
