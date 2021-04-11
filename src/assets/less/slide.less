@@ -361,3 +361,25 @@
 		}
 	}
 }
+
+@media screen and (max-width: @SCREEN_1200) {
+	.slide {
+		& .informations {
+			height: calc(100% - 243px);
+			min-width: initial;
+
+			& .slider_index {
+				display: flex;
+				flex-wrap: wrap;
+
+				& li {
+					width: calc(50% - 10px);
+				}
+			}
+		}
+
+		& .description {
+			width: 100%;
+		}
+	}
+}

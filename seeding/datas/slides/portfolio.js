@@ -19,7 +19,7 @@ module.exports = [
 	},
 	{
 		id: mongoose.Types.ObjectId('5f76018c9b16e910daaa9003'),
-		title: 'Technical Challenges',
+		title: 'Challenges',
 		first_text: 'I improved the website a little more as I add the new projects I\'m working on. And sometimes, what you did before or what you want is making your life really hard. When I work on my homepage I wanted an animation welcoming new visitors to enter my world. I wanted a door.',
 		second_text: 'This wish will make the website a lot more complicated because now I have a duplication on the left and on the right of the home page. Because of that, a simple hovering become tricky. If you pass over the image on the home page, I needed to also event the other side of the website of this hovering. So I play with the event system of Vue.js',
 		image: mongoose.Types.ObjectId('5f9d88d3faed1e8caaa80004')
