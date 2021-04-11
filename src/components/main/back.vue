@@ -2,7 +2,7 @@
 	<div
 		:class="{back:true, invisible: invisible, is_animated: is_animated}">
 		<div @click.stop="back">
-			<div class="legend">
+			<div :class="{legend:true, invisible: invisible}">
 				<span>B</span>
 				<span>A</span>
 				<span>C</span>
