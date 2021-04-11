@@ -383,3 +383,50 @@
 		}
 	}
 }
+
+@media screen and (max-width: @SCREEN_900) {
+	.slide {
+		& .slider_images {
+			width: 100%;
+		}
+
+		& .slider_legend {
+			width: 100%;
+			border-bottom: 1px solid @background-shadow;
+		}
+
+		& .informations {
+			top: 400px;
+			padding-top: 0;
+			height: calc(100% - 400px);
+
+			& .slider_index {
+				display: unset;
+
+				& li {
+					width: unset;
+				}
+			}
+		}
+
+		& .description_mobile {
+			background: #1d1d23;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: calc(70% - 1px);
+			height: calc(100% - 400px);
+			overflow: auto;
+
+			& span {
+				font-size: 1.5rem;
+				padding: 20px;
+				display: block;
+			}
+		}
+
+		& .description {
+			display: none;
+		}
+	}
+}

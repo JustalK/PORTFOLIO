@@ -33,6 +33,10 @@
 				</li>
 			</ul>
 		</div>
+		<div class="description_mobile">
+			<span>{{ slide.first_text }}</span>
+			<span>{{ slide.second_text }}</span>
+		</div>
 		<div
 			ref="description"
 			class="description">
