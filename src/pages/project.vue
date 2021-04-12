@@ -7,6 +7,8 @@
 			<components_links
 				:invisible="invisible"
 				:is_animated="is_animated" />
+			<components_menu
+				:invisible="invisible" />
 			<components_back
 				:is_animated="is_animated"
 				:invisible="invisible"
@@ -41,6 +43,7 @@ import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
 import links from '../components/main/links';
+import menu from '../components/main/menu';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
@@ -48,6 +51,7 @@ import helper_meta from '../helper/meta.js';
 export default {
 	components: {
 		components_informations: informations,
+		components_menu: menu,
 		components_pubs: pubs,
 		components_back: back,
 		components_slides: slides,
