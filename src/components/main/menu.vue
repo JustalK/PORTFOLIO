@@ -41,7 +41,7 @@ export default {
 	},
 	methods: {
 		back() {
-			this.$emit('back');
+			this.$emit('back', 'portfolio');
 		},
 		show_menu() {
 			this.active = !this.active;

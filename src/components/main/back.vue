@@ -30,7 +30,7 @@ export default {
 	emits: ['back'],
 	methods: {
 		back() {
-			this.$emit('back');
+			this.$emit('back', 'portfolio');
 		}
 	}
 };
