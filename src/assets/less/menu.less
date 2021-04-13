@@ -17,80 +17,87 @@
 }
 
 #MENU {
-	position: fixed;
-	left: 0;
-	z-index: @LAYER-COUCHE-2;
+	display: none;
+}
 
-	& .bar {
+@media screen and (max-width: @SCREEN_900) {
+	#MENU {
+		display: block;
 		position: fixed;
-		width: 90%;
 		left: 0;
-		background: #1d1d23;
-		height: 50px;
-		padding: 0 5%;
-		border-bottom: 1px solid #1d1d23;
-		box-shadow: 0 0 5px #000000bf;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		z-index: @LAYER-COUCHE-1;
+		z-index: @LAYER-COUCHE-2;
 
-		& span {
-			font-family: 'Lato-Bold', sans-serif;
+		& .bar {
+			position: fixed;
+			width: 90%;
+			left: 0;
+			background: #1d1d23;
+			height: 50px;
+			padding: 0 5%;
+			border-bottom: 1px solid #1d1d23;
+			box-shadow: 0 0 5px #000000bf;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			z-index: @LAYER-COUCHE-1;
+
+			& span {
+				font-family: 'Lato-Bold', sans-serif;
+				display: flex;
+				align-items: center;
+				height: 100%;
+				text-transform: uppercase;
+				font-size: 1.2rem;
+				color: @background-bloc-0;
+
+				& .logo {
+					width: 30px;
+					display: block;
+					height: 30px;
+					position: relative;
+					margin-right: 10px;
+					transform: rotateZ(45deg);
+
+					.blocks-square(1, left, top, @background-bloc-0);
+					.blocks-square(2, right, top, @background-bloc-1);
+					.blocks-square(3, right, bottom, @background-bloc-2);
+					.blocks-square(4, left, bottom, @background-bloc-3);
+				}
+			}
+
+			& .hamburger {
+				& div {
+					width: 20px;
+					height: 2px;
+					background-color: @background-bloc-0;
+					margin: 6px 0;
+				}
+			}
+		}
+
+		& nav {
+			z-index: @LAYER-COUCHE--1;
+			width: 100%;
+			height: 100vh;
+			position: fixed;
+			background: @text-color-h2;
+			transform: translateY(-100%);
 			display: flex;
 			align-items: center;
-			height: 100%;
-			text-transform: uppercase;
-			font-size: 1.2rem;
-			color: @background-bloc-0;
+			justify-content: center;
+			flex-direction: column;
+			.transition(all 0.45s ease);
 
-			& .logo {
-				width: 30px;
-				display: block;
-				height: 30px;
-				position: relative;
-				margin-right: 10px;
-				transform: rotateZ(45deg);
-
-				.blocks-square(1, left, top, @background-bloc-0);
-				.blocks-square(2, right, top, @background-bloc-1);
-				.blocks-square(3, right, bottom, @background-bloc-2);
-				.blocks-square(4, left, bottom, @background-bloc-3);
+			& a {
+				width: 100%;
+				text-align: center;
+				margin: 10px 0;
+				font-size: 3rem;
 			}
-		}
 
-		& .hamburger {
-			& div {
-				width: 20px;
-				height: 2px;
-				background-color: @background-bloc-0;
-				margin: 6px 0;
+			&.active {
+				transform: translateY(0);
 			}
-		}
-	}
-
-	& nav {
-		z-index: @LAYER-COUCHE--1;
-		width: 100%;
-		height: 100vh;
-		position: fixed;
-		background: @text-color-h2;
-		transform: translateY(-100%);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		.transition(all 0.45s ease);
-
-		& a {
-			width: 100%;
-			text-align: center;
-			margin: 10px 0;
-			font-size: 3rem;
-		}
-
-		&.active {
-			transform: translateY(0);
 		}
 	}
 }

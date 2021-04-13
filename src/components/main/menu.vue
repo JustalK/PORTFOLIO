@@ -19,9 +19,11 @@
 			</div>
 		</div>
 		<nav :class="{active: active}">
-			<a href="#">AAAA</a>
-			<a href="#">AAAA</a>
-			<a href="#">AAAA</a>
+			<a @click.stop="change_by_menu('home')">HOME</a>
+			<a @click.stop="change_by_menu('project')">PROJECT</a>
+			<a @click.stop="change_by_menu('resume')">RESUME</a>
+			<a href="https://play.google.com/store/apps/details?id=com.justalk.portfolio">APP</a>
+			<a href="https://github.com/JustalK">GITHUB</a>
 		</nav>
 	</div>
 </template>
@@ -33,7 +35,7 @@ export default {
 			required: true
 		}
 	},
-	emits: ['back'],
+	emits: ['back', 'change_by_menu'],
 	data: () => {
 		return {
 			active: false
@@ -41,10 +43,13 @@ export default {
 	},
 	methods: {
 		back() {
-			this.$emit('back', 'portfolio');
+			this.$emit('back');
 		},
 		show_menu() {
 			this.active = !this.active;
+		},
+		change_by_menu(slug) {
+			this.$emit('change_by_menu', slug);
 		}
 	}
 };
