@@ -8,7 +8,8 @@
 				:invisible="invisible"
 				:is_animated="is_animated" />
 			<components_menu
-				:invisible="invisible" />
+				:invisible="invisible"
+				@back="back" />
 			<components_back
 				:is_animated="is_animated"
 				:invisible="invisible"

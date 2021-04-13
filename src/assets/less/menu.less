@@ -1,25 +1,85 @@
 @import (reference) "libs/constants.less";
 @import (reference) "libs/mixins.less";
 
+.blocks-square(@index, @pos_x, @pos_y, @color) {
+	& div {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		.transition(all 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+		&:nth-child(@{index}) {
+			@{pos_x}: @BACK_BLOCKS_DISTANCE;
+			@{pos_y}: @BACK_BLOCKS_DISTANCE;
+			background: @color;
+		}
+	}
+}
+
 #MENU {
 	position: fixed;
 	left: 0;
-	z-index: 6;
+	z-index: 4;
 
 	& .bar {
 		position: fixed;
-		width: 100%;
+		width: 90%;
 		left: 0;
 		background: #1d1d23;
 		height: 50px;
+		padding: 0 5%;
 		border-bottom: 1px solid #1d1d23;
 		box-shadow: 0 0 5px #000000bf;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 3;
+
+		& span {
+			font-family: 'Lato-Bold', sans-serif;
+			display: flex;
+			align-items: center;
+			height: 100%;
+			text-transform: uppercase;
+			font-size: 1.2rem;
+			color: @background-bloc-0;
+
+			& .logo {
+				width: 30px;
+				display: block;
+				height: 30px;
+				position: relative;
+				margin-right: 10px;
+				transform: rotateZ(45deg);
+
+				.blocks-square(1, left, top, @background-bloc-0);
+				.blocks-square(2, right, top, @background-bloc-1);
+				.blocks-square(3, right, bottom, @background-bloc-2);
+				.blocks-square(4, left, bottom, @background-bloc-3);
+			}
+		}
+
+		& .hamburger {
+			& div {
+				width: 20px;
+				height: 2px;
+				background-color: @background-bloc-0;
+				margin: 6px 0;
+			}
+		}
 	}
 
 	& nav {
+		z-index: 2;
 		width: 100%;
 		height: 100vh;
 		position: fixed;
+		background: red;
 		transform: translateY(-100%);
+		.transition(all 0.45s ease);
+
+		&.active {
+			transform: translateY(0);
+		}
 	}
 }
