@@ -2,11 +2,15 @@
 	<div
 		id="PROJECT"
 		ref="project"
-		:class="{is_animated}">
+		:class="{is_animated: true}">
 		<div>
 			<components_links
 				:invisible="invisible"
 				:is_animated="is_animated" />
+			<components_menu
+				:invisible="invisible"
+				@back="back"
+				@change_by_menu="change_by_menu" />
 			<components_back
 				:is_animated="is_animated"
 				:invisible="invisible"
@@ -24,6 +28,9 @@
 				:help="help" />
 			<components_slides
 				:title="title"
+				:client="client"
+				:industry="industry"
+				:position="position"
 				:background_image="background_image"
 				:is_animated="is_animated"
 				:all_slides="all_slides" />
@@ -38,13 +45,16 @@ import slides from '../components/slides';
 import pubs from '../components/pubs';
 import back from '../components/main/back';
 import links from '../components/main/links';
+import menu from '../components/main/menu';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
+import helper_navigation from '../helper/navigation.js';
 
 export default {
 	components: {
 		components_informations: informations,
+		components_menu: menu,
 		components_pubs: pubs,
 		components_back: back,
 		components_slides: slides,
@@ -66,6 +76,9 @@ export default {
 			desactivate: true,
 			unmounted: false,
 			description: 'Loading...',
+			client: 'Loading...',
+			industry: 'Loading...',
+			position: 'Loading...',
 			background_image: {},
 			all_slides: [],
 			are_projects_loading: false,
@@ -122,15 +135,22 @@ export default {
 		update_page(page) {
 			this.description = page.long_description;
 			this.title = page.title;
+			this.client = page.client;
+			this.industry = page.industry;
+			this.position = page.position;
 			this.all_slides = page.slides;
 			this.slide = page.slides !== undefined ? page.slides[0] : {};
 		},
+		change_by_menu(slug) {
+			this.change_page(slug);
+		},
 		back() {
+			this.change_page('portfolio');
+		},
+		change_page(slug) {
 			utils.add_class_to_element(this.$refs.project, 'unmounted');
 			utils.add_class_to_element(this.$refs.project, 'invisible');
-			setTimeout(() => {
-				this.$router.push({name: 'portfolio'});
-			},2000);
+			helper_navigation.change_page(this, slug);
 		},
 		async project(id) {
 			this.unmounted = true;

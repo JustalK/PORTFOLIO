@@ -37,29 +37,14 @@
 	}
 }
 
-@media screen and (max-width: @SCREEN_900) {
+@media screen and (max-width: @SCREEN_1200) {
 	#LINKS {
-		right: 0;
-		top: 55px;
-		font-size: 3rem;
-		line-height: 3rem;
-		transform: translateY(50%);
-
-		&.is_animated,
-		&.invisible {
-			transform: translateY(-450px);
-		}
-
-		& a:last-child {
-			margin-right: 0;
-		}
+		right: -55px;
 	}
 }
 
-@media screen and (max-width: @MOBILE) {
+@media screen and (max-width: @SCREEN_900) {
 	#LINKS {
-		font-size: 2rem;
-		line-height: 2rem;
-		top: 65px;
+		display: none;
 	}
 }

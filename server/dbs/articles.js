@@ -21,7 +21,7 @@ module.exports = {
 	get_one_populated: (find) => {
 		return model
 			.findOne(find)
-			.populate({path: 'slides', populate: {path: 'image'}})
+			.populate('slides', 'id title')
 			.populate('background_image')
 			.populate('images');
 	},

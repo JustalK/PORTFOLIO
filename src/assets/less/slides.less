@@ -57,7 +57,7 @@
 		top: 0;
 		.font-size(1.2);
 
-		color: @text-color-white;
+		color: @background-bloc-2;
 		background: @text-color-h2;
 		height: 40px;
 		pointer-events: none;
@@ -79,7 +79,7 @@
 
 @media screen and (max-width: @SCREEN_900) {
 	#SLIDE {
-		height: 1000px;
+		height: 800px;
 
 		& i {
 			display: none;
@@ -88,5 +88,11 @@
 		& h2 {
 			.font-size(1.2);
 		}
+	}
+}
+
+@media screen and (max-width: @MOBILE) {
+	#SLIDE {
+		height: 900px;
 	}
 }

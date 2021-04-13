@@ -51,6 +51,7 @@
 
 		& .legend {
 			display: flex;
+			.transition(all 0.25s ease 0.75s);
 
 			& span {
 				font-family: 'Lato-Light', sans-serif;
@@ -66,6 +67,11 @@
 		& div {
 			& a {
 				transform: rotateZ(45deg) scale(0);
+			}
+
+			& .legend {
+				transform: translateX(-200%);
+				opacity: 0;
 			}
 		}
 	}
@@ -90,17 +96,14 @@
 	}
 }
 
+@media screen and (max-width: @SCREEN_1200) {
+	.back {
+		left: -55px;
+	}
+}
+
 @media screen and (max-width: @SCREEN_900) {
 	.back {
-		& a {
-			left: 4px;
-			top: 60px;
-		}
-
-		& span {
-			left: 39px;
-			top: 98px;
-			.font-size(1.5);
-		}
+		display: none;
 	}
 }
