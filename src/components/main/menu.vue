@@ -20,7 +20,7 @@
 		</div>
 		<nav :class="{active: active}">
 			<a @click.stop="change_by_menu('home')">HOME</a>
-			<a @click.stop="change_by_menu('project')">PROJECT</a>
+			<a @click.stop="change_by_menu('portfolio')">PORTFOLIO</a>
 			<a @click.stop="change_by_menu('resume')">RESUME</a>
 			<a href="https://play.google.com/store/apps/details?id=com.justalk.portfolio">APP</a>
 			<a href="https://github.com/JustalK">GITHUB</a>

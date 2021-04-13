@@ -5,6 +5,10 @@
 		<div>
 			<components_links
 				:invisible="invisible" />
+			<components_menu
+				:invisible="invisible"
+				@back="back"
+				@change_by_menu="change_by_menu" />
 			<components_back
 				:invisible="invisible"
 				@back="back" />
@@ -29,17 +33,20 @@
 </template>
 <script>
 import pubs from '../components/pubs';
+import menu from '../components/main/menu';
 import back from '../components/main/back';
 import text from '../components/main/text';
 import links from '../components/main/links';
 import api from '../services/api';
 import utils from '../helper/utils.js';
+import helper_navigation from '../helper/navigation.js';
 
 export default {
 	components: {
 		components_text: text,
 		components_pubs: pubs,
 		components_back: back,
+		components_menu: menu,
 		components_links: links
 	},
 	data: () => {
@@ -65,11 +72,15 @@ export default {
 		}, 1);
 	},
 	methods: {
+		change_by_menu(slug) {
+			this.change_page_by_slug(slug);
+		},
 		back() {
+			this.change_page_by_slug('home');
+		},
+		change_page_by_slug(slug) {
 			utils.add_class_to_element(this.$refs.resume, 'unmounted');
-			setTimeout(() => {
-				this.$router.push({name: 'home'});
-			},1000);
+			helper_navigation.change_page(this, slug);
 		},
 		async get_page(name) {
 			return api.get_pages(name);

@@ -8,6 +8,10 @@
 			<components_back
 				:invisible="invisible"
 				@back="back" />
+			<components_menu
+				:invisible="invisible"
+				@back="back"
+				@change_by_menu="change_by_menu" />
 			<components_informations
 				:description="description"
 				:tags="tags"
@@ -34,13 +38,16 @@ import pubs from '../components/pubs';
 import sliders from '../components/sliders';
 import back from '../components/main/back';
 import links from '../components/main/links';
+import menu from '../components/main/menu';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
+import helper_navigation from '../helper/navigation.js';
 
 export default {
 	components: {
 		components_informations: informations,
+		components_menu: menu,
 		components_sliders: sliders,
 		components_pubs: pubs,
 		components_back: back,
@@ -121,11 +128,15 @@ export default {
 			this.description = page.description;
 			this.title = page.title;
 		},
+		change_by_menu(slug) {
+			this.change_page_by_slug(slug);
+		},
 		back() {
+			this.change_page_by_slug('home');
+		},
+		change_page_by_slug(slug) {
 			utils.add_class_to_element(this.$refs.portfolio, 'unmounted');
-			setTimeout(() => {
-				this.$router.push({name: 'home'});
-			},1000);
+			helper_navigation.change_page(this, slug);
 		},
 		async filter(tags_selected) {
 			clearTimeout(this.timeout_update_projects);
