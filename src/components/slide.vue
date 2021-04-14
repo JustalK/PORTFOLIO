@@ -176,6 +176,7 @@ export default {
 			this.renderer.setClearColor(0x111116, 1);
 			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
 			this.$refs.canvas.appendChild( this.renderer.domElement );
+			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		/**
 		* Construct a board piece by piece
@@ -341,6 +342,11 @@ export default {
 				this.change_image(this.slide.image.path);
 				this.$refs.description.classList.remove('loading');
 			});
+		},
+		onWindowResize() {
+			this.camera.aspect = this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
 		}
 	}
 };
