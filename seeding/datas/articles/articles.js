@@ -4,6 +4,76 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		title: 'Portfolio App',
+		slug: 'portfolio-app',
+		short_description: '',
+		long_description: '',
+		client: 'Personal',
+		industry: 'Services',
+		position: 'Creator',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCms
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // Less
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5899'), // GraphQl
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+		],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99995')
+		],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16e91aaacc0001'),
+			mongoose.Types.ObjectId('5f76018c9b16e91aaacc0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3eeed1e00aaa00001'),
+		order: -1
+	},
+	{
+		title: 'Transcom Internal Website',
+		slug: 'transcom',
+		short_description: '',
+		long_description: '',
+		client: 'Transcom',
+		industry: 'Services',
+		position: 'Lead Backend Developer and Dev Operator',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCms
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // Less
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5899'), // GraphQl
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+		],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99996')
+		],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16e91aaabb0001'),
+			mongoose.Types.ObjectId('5f76018c9b16e91aaabb0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3feee1e00aaa00001'),
+		order: -1
+	},
+	{
 		title: 'Do you know me',
 		slug: 'do-you-know-me',
 		short_description: 'An app made for playing a question-answer game with my wife.',
