@@ -6,27 +6,18 @@ module.exports = [
 	{
 		title: 'Portfolio App',
 		slug: 'portfolio-app',
-		short_description: '',
-		long_description: '',
+		short_description: 'An app for showing my work to the world.',
+		long_description: 'An app written with React Native for presenting my professional work and my personnal project. The app is connected to the backend of my website so they share the same content.',
 		client: 'Personal',
 		industry: 'Services',
 		position: 'Creator',
 		tags: [
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5872'), // Personal projects
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5903'), // GraphCms
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // Less
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5899'), // GraphQl
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907') // Typescript
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99995')
@@ -124,8 +115,8 @@ module.exports = [
 	{
 		title: 'Portfolio',
 		slug: 'portfolio',
-		short_description: 'A website for showing some of my work to the world.',
-		long_description: 'A simple but effective website written with Vue.js, Node.js and Express for presenting my professional work and my personnal project.',
+		short_description: 'A website for showing my work to the world.',
+		long_description: 'A website written with Vue.js, Node.js and Express for presenting my professional work and my personnal project.',
 		client: 'Personal',
 		industry: 'Portfolio',
 		position: 'Creator and Developer',
