@@ -4,6 +4,18 @@ const mongoose = require('mongoose');
 
 module.exports = [
 	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99995'),
+		name: 'Portfolio App',
+		path: './assets/imgs/portfolio-app/intro.jpg',
+		path_low: './assets/imgs/portfolio-app/intro_low.jpg'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99996'),
+		name: 'Transcom Internal Website',
+		path: './assets/imgs/transcom/intro.jpg',
+		path_low: './assets/imgs/transcom/intro_low.jpg'
+	},
+	{
 		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99997'),
 		name: 'Do You Know Me App',
 		path: './assets/imgs/do-you-know-me/intro.jpg',

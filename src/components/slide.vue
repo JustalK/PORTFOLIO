@@ -67,6 +67,7 @@ import * as THREE from '../libs/three.js';
 
 const FOV = 40;
 const BOARD_WIDTH = 256;
+const DEFAULT_POSITION_Z_CAMERA = BOARD_WIDTH + 150;
 const BOARD_HEIGHT = 128;
 const BOARD_NAME_CENTER = 'center';
 const BOARD_NAME_LEFT = 'left';
@@ -160,7 +161,7 @@ export default {
 	methods: {
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera(FOV, this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight);
-			this.camera.position.z = BOARD_WIDTH + 100;
+			this.update_camera_z();
 			this.clock = new THREE.Clock();
 			this.clock.start();
 
@@ -176,6 +177,7 @@ export default {
 			this.renderer.setClearColor(0x111116, 1);
 			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
 			this.$refs.canvas.appendChild( this.renderer.domElement );
+			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		/**
 		* Construct a board piece by piece
@@ -341,6 +343,21 @@ export default {
 				this.change_image(this.slide.image.path);
 				this.$refs.description.classList.remove('loading');
 			});
+		},
+		update_camera_z() {
+			if (this.$refs.canvas.clientWidth < 650) {
+				this.camera.position.z = 642.927 - 0.434518 * this.$refs.canvas.clientWidth;
+			} else if (this.$refs.canvas.clientWidth > 800) {
+				this.camera.position.z = BOARD_WIDTH + 75;
+			} else {
+				this.camera.position.z = DEFAULT_POSITION_Z_CAMERA;
+			}
+		},
+		onWindowResize() {
+			this.camera.aspect = this.$refs.canvas.clientWidth / this.$refs.canvas.clientHeight;
+			this.update_camera_z();
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize( this.$refs.canvas.clientWidth, this.$refs.canvas.clientHeight );
 		}
 	}
 };
