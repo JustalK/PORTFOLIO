@@ -32,8 +32,8 @@ module.exports = [
 	{
 		title: 'Transcom Internal Website',
 		slug: 'transcom',
-		short_description: '',
-		long_description: '',
+		short_description: 'A website for transforming complexe data into simple nudge.',
+		long_description: 'The website transform complexe data into simple nudge. It has been written in React for the frontend, Node.js and Express for the backend.',
 		client: 'Transcom',
 		industry: 'Services',
 		position: 'Lead Backend Developer and Dev Operator',
