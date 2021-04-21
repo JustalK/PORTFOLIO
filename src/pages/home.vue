@@ -785,6 +785,7 @@ export default {
 		move_to_page(page, ref) {
 			if (!this.locked) {
 				this.locked = true;
+				this.animation_introduction = false;
 				utils.add_class_to_element(ref, 'invisible');
 				this.invisible_parent = true;
 				this.is_true_darkness_allowed = true;
@@ -805,6 +806,7 @@ export default {
 		async move_to_slug(slug) {
 			if (!this.locked) {
 				this.locked = true;
+				this.animation_introduction = false;
 				this.invisible_parent = true;
 				this.is_true_darkness_allowed = true;
 				this.move_camera_new_page(20000, 10000);
