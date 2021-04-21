@@ -1,7 +1,8 @@
 <template>
 	<div
 		id="RESUME"
-		ref="resume">
+		ref="resume"
+		:class="{unmounted: unmounted_parent, locked: locked}">
 		<div>
 			<components_links
 				:invisible="invisible" />
@@ -38,7 +39,6 @@ import back from '../components/main/back';
 import text from '../components/main/text';
 import links from '../components/main/links';
 import api from '../services/api';
-import utils from '../helper/utils.js';
 import helper_navigation from '../helper/navigation.js';
 
 export default {
@@ -79,7 +79,8 @@ export default {
 			this.change_page_by_slug('home');
 		},
 		change_page_by_slug(slug) {
-			utils.add_class_to_element(this.$refs.resume, 'unmounted');
+			this.unmounted_parent = true;
+			this.locked = true;
 			helper_navigation.change_page(this, slug);
 		},
 		async get_page(name) {

@@ -1,7 +1,8 @@
 <template>
 	<div
 		id="HOME"
-		ref="home">
+		ref="home"
+		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent}">
 		<div class="border" />
 		<components_music
 			:is_music_active="is_music_active"
@@ -130,6 +131,10 @@ export default {
 			go_zoom: false,
 			props_introduction: {},
 			invisible: true,
+			invisible_parent: false,
+			pointer: false,
+			mounted: false,
+			move_to_three: false,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -148,7 +153,10 @@ export default {
 		this.init();
 
 		await this.get_my_identity();
-		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
+
+		setTimeout(() => {
+			this.mounted = true;
+		}, 200);
 
 		setTimeout(() => {
 			this.invisible = false;
@@ -171,7 +179,7 @@ export default {
 			this.createWorld();
 			this.renderWebGL();
 
-			this.$refs.home.appendChild( this.renderer.domElement );
+			this.$refs.home.appendChild(this.renderer.domElement);
 			this.loadProjectsTextures();
 
 			this.animate();
@@ -273,7 +281,7 @@ export default {
 				}
 
 				if(this.movementCamera && this.parent!=null) {
-					utils.remove_class_to_element(this.$refs.home, 'pointer');
+					this.pointer = false;
 					this.move_to_darkness(this.camera.position.z);
 					// If I have not reached the final position on each abcisse
 					if(this.isPositionNotReached()) {
@@ -294,7 +302,7 @@ export default {
 			if(intersects.length>0) {
 				// If the user trying to interact with a new mesh
 				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
-					utils.add_class_to_element(this.$refs.home, 'pointer');
+					this.pointer = true;
 					this.parent = intersects[0].object.parent;
 
 					// If I am hovering a new element different from my zoom
@@ -322,7 +330,7 @@ export default {
 					}
 				}
 			} else {
-				utils.remove_class_to_element(this.$refs.home, 'pointer');
+				this.pointer = false;
 				this.parent=null;
 				if (this.zoomOn) {
 					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
@@ -499,7 +507,7 @@ export default {
 			this.positionReached = [false,false,false];
 			this.rotationReached = [false,false,false];
 			if(!this.zoomIn) {
-				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+				this.move_to_three = false;
 				this.last_parent_hover = null;
 				this.parent = null;
 				this.animation_introduction = true;
@@ -648,7 +656,7 @@ export default {
 
 				// If I'm on a board, I move to the new position
 				if(!this.parent['lock']) {
-					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.move_to_three = true;
 					this.animation_introduction = false;
 					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
@@ -775,7 +783,7 @@ export default {
 		},
 		move_to_page(page, ref) {
 			utils.add_class_to_element(ref, 'invisible');
-			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.invisible_parent = true;
 			this.is_true_darkness_allowed = true;
 			this.move_camera_new_page(-10000, 7000);
 			setTimeout(() => {
@@ -791,7 +799,7 @@ export default {
 		* @param {string} slug The slug of the page we want to go
 		**/
 		async move_to_slug(slug) {
-			utils.add_class_to_element(this.$refs.home, 'invisible');
+			this.invisible_parent = true;
 			this.is_true_darkness_allowed = true;
 			this.move_camera_new_page(20000, 10000);
 			const tags = await api.get_tags();
