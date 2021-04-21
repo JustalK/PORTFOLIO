@@ -1,7 +1,8 @@
 <template>
 	<div
 		id="PORTFOLIO"
-		ref="portfolio">
+		ref="portfolio"
+		:class="{mounted: mounted, unmounted: unmounted_parent, locked: locked}">
 		<div>
 			<components_links
 				:invisible="invisible" />
@@ -40,7 +41,6 @@ import back from '../components/main/back';
 import links from '../components/main/links';
 import menu from '../components/main/menu';
 import api from '../services/api';
-import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
 import helper_navigation from '../helper/navigation.js';
 
@@ -62,7 +62,10 @@ export default {
 			meta_description: '',
 			title: '',
 			invisible: true,
+			unmounted_parent: false,
 			unmounted: false,
+			mounted: false,
+			locked: false,
 			tags: [],
 			tags_selected: [],
 			projects: [],
@@ -97,7 +100,7 @@ export default {
 		}, 1);
 	},
 	mounted() {
-		utils.add_class_to_element(this.$refs.portfolio, 'mounted');
+		this.mounted = true;
 	},
 	methods: {
 		async get_all_tags() {
@@ -135,7 +138,8 @@ export default {
 			this.change_page_by_slug('home');
 		},
 		change_page_by_slug(slug) {
-			utils.add_class_to_element(this.$refs.portfolio, 'unmounted');
+			this.locked = true;
+			this.unmounted_parent = true;
 			helper_navigation.change_page(this, slug);
 		},
 		async filter(tags_selected) {
@@ -169,6 +173,7 @@ export default {
 			}, 1050);
 		},
 		async project(id) {
+			this.locked = true;
 			this.unmounted = true;
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);

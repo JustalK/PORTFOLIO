@@ -153,11 +153,13 @@ export default {
 		},
 		animate() {
 			if (this.animation_introduction) {
-				this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
-				this.particles.map(particle => {
-					particle.draw();
-					particle.update(this.mouse_x, this.mouse_y);
-				});
+				if (this.$refs.name) {
+					this.ctx.clearRect(0, 0, this.$refs.name.width, this.$refs.name.height);
+					this.particles.map(particle => {
+						particle.draw();
+						particle.update(this.mouse_x, this.mouse_y);
+					});
+				}
 				requestAnimationFrame(this.animate);
 			}
 		},

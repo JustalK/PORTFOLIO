@@ -2,7 +2,7 @@
 	<div
 		id="PROJECT"
 		ref="project"
-		:class="{is_animated: true}">
+		:class="{is_animated: true, invisible: invisible_parent, unmounted: unmounted_parent, locked: locked}">
 		<div>
 			<components_links
 				:invisible="invisible"
@@ -70,10 +70,13 @@ export default {
 			title: 'Loading...',
 			tags: [],
 			tags_selected: [],
+			invisible_parent: false,
 			invisible: false,
 			invisible_text: true,
 			is_animated: false,
 			desactivate: true,
+			locked: false,
+			unmounted_parent: false,
 			unmounted: false,
 			description: 'Loading...',
 			client: 'Loading...',
@@ -148,8 +151,9 @@ export default {
 			this.change_page('portfolio');
 		},
 		change_page(slug) {
-			utils.add_class_to_element(this.$refs.project, 'unmounted');
-			utils.add_class_to_element(this.$refs.project, 'invisible');
+			this.unmounted_parent = true;
+			this.invisible_parent = true;
+			this.locked = true;
 			helper_navigation.change_page(this, slug);
 		},
 		async project(id) {

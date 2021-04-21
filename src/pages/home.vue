@@ -1,7 +1,8 @@
 <template>
 	<div
 		id="HOME"
-		ref="home">
+		ref="home"
+		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent, locked: locked}">
 		<div class="border" />
 		<components_music
 			:is_music_active="is_music_active"
@@ -61,26 +62,6 @@ const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
-const PROJECT_TEXTURE = [
-	'../assets/imgs/portfolio/home.jpg',
-	'../assets/imgs/my-sweet-diane/home.jpg',
-	'../assets/imgs/manypixels/home.jpg',
-	'../assets/imgs/rumarocket/home.jpg',
-	'../assets/imgs/atlantic-grains/home.jpg',
-	'../assets/imgs/onarto/home.jpg',
-	'../assets/imgs/labonapp/home.jpg',
-	'../assets/imgs/labonapp/home.jpg'
-];
-const PROJECT_TITLE_TEXTURE = [
-	'../assets/imgs/animations/portfolio_website.png',
-	'../assets/imgs/animations/valentines_app.png',
-	'../assets/imgs/animations/manypixels_website.png',
-	'../assets/imgs/animations/predictive_insight_website.png',
-	'../assets/imgs/animations/altantic_grains_app.png',
-	'../assets/imgs/animations/onarto_website.png',
-	'../assets/imgs/animations/labonapp_website.png',
-	'../assets/imgs/animations/labonapp_website.png'
-];
 
 export default {
 	components: {
@@ -130,6 +111,11 @@ export default {
 			go_zoom: false,
 			props_introduction: {},
 			invisible: true,
+			invisible_parent: false,
+			pointer: false,
+			mounted: false,
+			move_to_three: false,
+			locked: false,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -148,7 +134,10 @@ export default {
 		this.init();
 
 		await this.get_my_identity();
-		utils.add_class_to_element_delay(this.$refs.home, 'mounted', 200);
+
+		setTimeout(() => {
+			this.mounted = true;
+		}, 200);
 
 		setTimeout(() => {
 			this.invisible = false;
@@ -171,7 +160,7 @@ export default {
 			this.createWorld();
 			this.renderWebGL();
 
-			this.$refs.home.appendChild( this.renderer.domElement );
+			this.$refs.home.appendChild(this.renderer.domElement);
 			this.loadProjectsTextures();
 
 			this.animate();
@@ -273,7 +262,7 @@ export default {
 				}
 
 				if(this.movementCamera && this.parent!=null) {
-					utils.remove_class_to_element(this.$refs.home, 'pointer');
+					this.pointer = false;
 					this.move_to_darkness(this.camera.position.z);
 					// If I have not reached the final position on each abcisse
 					if(this.isPositionNotReached()) {
@@ -294,7 +283,7 @@ export default {
 			if(intersects.length>0) {
 				// If the user trying to interact with a new mesh
 				if((this.parent==null || this.parent!=intersects[0].object.parent) && this.is_object_close_enough_for_hover(intersects[0].object.parent)) {
-					utils.add_class_to_element(this.$refs.home, 'pointer');
+					this.pointer = true;
 					this.parent = intersects[0].object.parent;
 
 					// If I am hovering a new element different from my zoom
@@ -322,7 +311,7 @@ export default {
 					}
 				}
 			} else {
-				utils.remove_class_to_element(this.$refs.home, 'pointer');
+				this.pointer = false;
 				this.parent=null;
 				if (this.zoomOn) {
 					this.change_color_button_childrens(this.zoomOn, BUTTON_COLOR, BUTTON_COLOR);
@@ -499,7 +488,7 @@ export default {
 			this.positionReached = [false,false,false];
 			this.rotationReached = [false,false,false];
 			if(!this.zoomIn) {
-				utils.remove_class_to_element(this.$refs.home, 'move_to_three');
+				this.move_to_three = false;
 				this.last_parent_hover = null;
 				this.parent = null;
 				this.animation_introduction = true;
@@ -648,7 +637,7 @@ export default {
 
 				// If I'm on a board, I move to the new position
 				if(!this.parent['lock']) {
-					utils.add_class_to_element(this.$refs.home, 'move_to_three');
+					this.move_to_three = true;
 					this.animation_introduction = false;
 					this.play_click_sound();
 					for(var i=ABSCISSA.length;i--;) {
@@ -683,7 +672,7 @@ export default {
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
 			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(120)));
-			this.groupScene.push(this.createBoard('manypixels-website', 600, 300, 4000, this.radians(45)));
+			this.groupScene.push(this.createBoard('manypixels', 600, 300, 4000, this.radians(45)));
 			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
 			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
 			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
@@ -694,13 +683,23 @@ export default {
 				this.scene.add(this.groupScene[i]);
 			}
 
-			for(var j=0,countI=this.groupScene.length;j<countI;j++) {
-				const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[j] );
+			for(let j=0,countI=this.groupScene.length;j<countI;j++) {
+				const texture = new THREE.TextureLoader().load( this.get_path_texture_by_slug(this.groupScene[j].slug) );
+				const material_visit = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 0 } );
+				const material_back = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 0 } );
+				const material_title = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(this.get_path_title_by_slug(this.groupScene[j].slug)), transparent: true, opacity: j === 0 ? 1 : 0 } );
 				const material = new THREE.MeshBasicMaterial( { map: texture } );
+				this.groupScene[j].children[0].material = [0,0,0,0,material_visit,0];
+				this.groupScene[j].children[1].material = [0,0,0,0,material_back,0];
+				this.groupScene[j].children[2].material = [0,0,0,0,material_title,0];
 				this.groupScene[j].children[3].material[4] = material;
 			}
-
-			this.loadTexturesOnMove();
+		},
+		get_path_texture_by_slug(slug) {
+			return `../assets/imgs/${slug}/home.jpg`;
+		},
+		get_path_title_by_slug(slug) {
+			return `../assets/imgs/${slug}/title.png`;
 		},
 		getSpeedMovement() {
 			for(var i=ABSCISSA.length;i--;) {
@@ -751,58 +750,44 @@ export default {
 			this.getMovementWay();
 			this.movementCamera = true;
 		},
-		loadTexturesOnMove() {
-			for(var i=0,countI=this.groupScene.length;i<countI;i++) {
-				const material = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_BACK), transparent: true, opacity: 0 } );
-				const material2 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(TEXTURE_BUTTON_VISIT), transparent: true, opacity: 0 } );
-				const material3 = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(PROJECT_TITLE_TEXTURE[i]), transparent: true, opacity: 1 } );
-				this.groupScene[i].children[0].material = [0,0,0,0,material2,0];
-				this.groupScene[i].children[1].material = [0,0,0,0,material,0];
-				this.groupScene[i].children[2].material = [0,0,0,0,material3,0];
-			}
-
-			const childrens = this.groupScene[0].children;
-			if(childrens!=null) {
-				for(var j=childrens.length;j--;) {
-					if(childrens[j]['panel']) {
-						childrens[j].material[4].opacity = 1;
-						const texture = new THREE.TextureLoader().load( PROJECT_TEXTURE[0] );
-						const material = new THREE.MeshBasicMaterial( { map: texture } );
-						childrens[3].material[4] = material;
-					}
-				}
-			}
-		},
 		move_to_page(page, ref) {
-			utils.add_class_to_element(ref, 'invisible');
-			utils.add_class_to_element(this.$refs.home, 'invisible');
-			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page(-10000, 7000);
-			setTimeout(() => {
-				this.pausing_ambient_sound();
-			}, 500);
-			setTimeout(() => {
-				this.$router.push({name: page});
-				this.animation = false;
-			}, 2200);
+			if (!this.locked) {
+				this.locked = true;
+				this.animation_introduction = false;
+				utils.add_class_to_element(ref, 'invisible');
+				this.invisible_parent = true;
+				this.is_true_darkness_allowed = true;
+				this.move_camera_new_page(-10000, 7000);
+				setTimeout(() => {
+					this.pausing_ambient_sound();
+				}, 500);
+				setTimeout(() => {
+					this.$router.push({name: page});
+					this.animation = false;
+				}, 2200);
+			}
 		},
 		/**
 		* Move the user to the slug page of the project
 		* @param {string} slug The slug of the page we want to go
 		**/
 		async move_to_slug(slug) {
-			utils.add_class_to_element(this.$refs.home, 'invisible');
-			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page(20000, 10000);
-			const tags = await api.get_tags();
-			const project = await api.get_project_by_slug(slug);
-			setTimeout(() => {
-				this.pausing_ambient_sound();
-			}, 500);
-			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
-				this.animation = false;
-			}, 2000);
+			if (!this.locked) {
+				this.locked = true;
+				this.animation_introduction = false;
+				this.invisible_parent = true;
+				this.is_true_darkness_allowed = true;
+				this.move_camera_new_page(20000, 10000);
+				const tags = await api.get_tags();
+				const project = await api.get_project_by_slug(slug);
+				setTimeout(() => {
+					this.pausing_ambient_sound();
+				}, 500);
+				setTimeout(() => {
+					this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
+					this.animation = false;
+				}, 2000);
+			}
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
