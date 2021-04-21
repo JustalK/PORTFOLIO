@@ -2,7 +2,7 @@
 	<div
 		id="HOME"
 		ref="home"
-		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent}">
+		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent, locked: locked}">
 		<div class="border" />
 		<components_music
 			:is_music_active="is_music_active"
@@ -135,6 +135,7 @@ export default {
 			pointer: false,
 			mounted: false,
 			move_to_three: false,
+			locked: false,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -782,35 +783,41 @@ export default {
 			}
 		},
 		move_to_page(page, ref) {
-			utils.add_class_to_element(ref, 'invisible');
-			this.invisible_parent = true;
-			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page(-10000, 7000);
-			setTimeout(() => {
-				this.pausing_ambient_sound();
-			}, 500);
-			setTimeout(() => {
-				this.$router.push({name: page});
-				this.animation = false;
-			}, 2200);
+			if (!this.locked) {
+				this.locked = true;
+				utils.add_class_to_element(ref, 'invisible');
+				this.invisible_parent = true;
+				this.is_true_darkness_allowed = true;
+				this.move_camera_new_page(-10000, 7000);
+				setTimeout(() => {
+					this.pausing_ambient_sound();
+				}, 500);
+				setTimeout(() => {
+					this.$router.push({name: page});
+					this.animation = false;
+				}, 2200);
+			}
 		},
 		/**
 		* Move the user to the slug page of the project
 		* @param {string} slug The slug of the page we want to go
 		**/
 		async move_to_slug(slug) {
-			this.invisible_parent = true;
-			this.is_true_darkness_allowed = true;
-			this.move_camera_new_page(20000, 10000);
-			const tags = await api.get_tags();
-			const project = await api.get_project_by_slug(slug);
-			setTimeout(() => {
-				this.pausing_ambient_sound();
-			}, 500);
-			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
-				this.animation = false;
-			}, 2000);
+			if (!this.locked) {
+				this.locked = true;
+				this.invisible_parent = true;
+				this.is_true_darkness_allowed = true;
+				this.move_camera_new_page(20000, 10000);
+				const tags = await api.get_tags();
+				const project = await api.get_project_by_slug(slug);
+				setTimeout(() => {
+					this.pausing_ambient_sound();
+				}, 500);
+				setTimeout(() => {
+					this.$router.push({ name: 'project', params: {slug: slug, project, tags, is_animated: true}});
+					this.animation = false;
+				}, 2000);
+			}
 		},
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
