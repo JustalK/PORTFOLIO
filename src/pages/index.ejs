@@ -60,6 +60,9 @@
 			animation-duration: 4s;
 			animation-iteration-count: infinite;
 		}
+		.canvas_done {
+			cursor: pointer;
+		}
 		.stop {
 			animation-iteration-count: 0;
 		}
@@ -81,7 +84,6 @@
 			ctx = canvas.getContext('2d'),
 			xhr = new XMLHttpRequest,
 			tag = document.createElement("script"),
-			particles = [],
 			fps = 60,
 			max_distance = 105
 			color_white = '#FFFFFF',
@@ -89,6 +91,7 @@
 			size_stroke = 20;
 
 			let rayon = 125,
+			particles = [],
 			loaded = false,
 			loading_complete = false,
 			switch_page = false,
@@ -99,9 +102,9 @@
 
 			canvas.width =  window.innerWidth;
 			canvas.height = window.innerHeight;
-			const hypotenuse = Math.sqrt(Math.pow(canvas.width, 2) +  Math.pow(canvas.height, 2)) / 2,
 			center_x = canvas.width / 2,
 			center_y = canvas.height / 2;
+			let hypotenuse = Math.sqrt(Math.pow(canvas.width, 2) +  Math.pow(canvas.height, 2)) / 2;
 
 			class Particle {
 				constructor(x, y, base_x, base_y, color, ctx) {
@@ -169,6 +172,7 @@
 			window.addEventListener('mousemove', mouse_position);
 
 			const init_particle = coordinates => {
+				particles = [];
 				for (let y = 0, y2 = coordinates.height; y < y2; y += 4) {
 					for (let x = 0, x2 = coordinates.width; x < x2; x += 4) {
 						if (coordinates.data[(y * 4 * coordinates.width) + (x * 4) + 3] > 128) {
@@ -204,7 +208,18 @@
 					});
 				}
 			}
-			app.addEventListener("click", click);
+			app.addEventListener('click', click);
+			const resize = () => {
+				canvas.width =  window.innerWidth;
+				canvas.height = window.innerHeight;
+				center_x = canvas.width / 2,
+				center_y = canvas.height / 2;
+				hypotenuse = Math.sqrt(Math.pow(canvas.width, 2) +  Math.pow(canvas.height, 2)) / 2;
+				ctx.drawImage(image, center_x - rayon, center_y - rayon, 2 * rayon, 2 * rayon)
+				const scannedImage = ctx.getImageData(0, 0, canvas.width, canvas.height)
+				init_particle(scannedImage)
+			}
+			window.addEventListener('resize', resize, false);
 
 			let full_step;
 			const draw = percentage => {
@@ -246,6 +261,7 @@
 			**/
 			const clean = () => {
 				window.removeEventListener('mousemove', mouse_position);
+				window.removeEventListener('resize', resize);
 				app.removeEventListener("click", click);
 			}
 
@@ -282,6 +298,7 @@
 						// Adding a setTimeut for a 60fps animation on 1 second
 						setTimeout(() => {
 							instruction.classList.add('website_loaded');
+							canvas.classList.add('canvas_done');
 						}, 1000)
 					}
 				}
