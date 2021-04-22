@@ -673,11 +673,11 @@ export default {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
 			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(120)));
 			this.groupScene.push(this.createBoard('manypixels', 600, 300, 4000, this.radians(45)));
-			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
-			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
-			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
+			this.groupScene.push(this.createBoard('transcom', 1800, 1800, 1000, this.radians(-60)));
+			this.groupScene.push(this.createBoard('portfolio-app', 200, 2500, -1000, this.radians(30)));
+			this.groupScene.push(this.createBoard('odyssea', 1400, 1000, 2400, this.radians(-70)));
 			this.groupScene.push(this.createBoard('atlantic-grains', 600, 500, -600, this.radians(-60)));
-			this.groupScene.push(this.createBoard('portfolio-app', 1300, 1300, -1500, this.radians(30)));
+			this.groupScene.push(this.createBoard('labonapp', 1300, 1300, -1500, this.radians(30)));
 
 			for(var i=this.groupScene.length;i--;) {
 				this.scene.add(this.groupScene[i]);
