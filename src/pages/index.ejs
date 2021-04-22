@@ -288,7 +288,9 @@
 			};
 
 			xhr.onprogress = (e) => {
-				percentage = 100 * e.loaded / e.total
+				// Fix for google chrome which was returning 0 in e.total because the file is compressed.
+				const contentLength = e.lengthComputable ? e.total : parseInt(e.target.getResponseHeader('x-decompressed-content-length'), 10);
+				percentage = 100 * e.loaded / contentLength
 			};
 
 			xhr.send();
