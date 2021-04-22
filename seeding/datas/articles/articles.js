@@ -187,7 +187,7 @@ module.exports = [
 	},
 	{
 		title: 'Manypixels Website',
-		slug: 'manypixels-website',
+		slug: 'manypixels',
 		short_description: 'The static website of Manypixels.co',
 		long_description: 'A static website written with Next.js, Bulma, Sass. The content of the website comes from GraphCms. The website is also linked to Hubspot.',
 		client: 'Manypixels',
