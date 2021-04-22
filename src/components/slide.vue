@@ -86,9 +86,9 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
-const WHITE_MATERIAL = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
+const FRONT_BOARD_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x111116 } );
 const BLACK_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-const GREEN_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x1d1d23 } );
+const BACK_BOARD_MATERIAL = new THREE.MeshBasicMaterial( { color: 0x111116 } );
 const BOARD_MATERIAL = new THREE.MeshPhongMaterial( {  color: 0x1d1d23 } );
 const BLUE_LINE_MATERIAL = new THREE.LineBasicMaterial( { color: 0x61c3ff, linewidth: 1 } );
 const EXTRUDE_SETTINGS = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
@@ -144,6 +144,7 @@ export default {
 			renderer: null,
 			new_image: false,
 			board: null,
+			picture_loaded: false,
 			board_animation: false,
 			board_animation_step: 0,
 			board_actual_rotation: 0
@@ -220,8 +221,8 @@ export default {
 				BLACK_MATERIAL,
 				BLACK_MATERIAL,
 				BLACK_MATERIAL,
-				WHITE_MATERIAL,
-				GREEN_MATERIAL
+				FRONT_BOARD_MATERIAL,
+				BACK_BOARD_MATERIAL
 			]);
 			mesh.name = name;
 			return mesh;
@@ -244,7 +245,7 @@ export default {
 			const index = this.board_actual_rotation % 360 === 0 ? 4 : 5;
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
 			const texture = new THREE.TextureLoader().load(utils.absolute_path_from_relative(path), () => {
-				console.log('loaded');
+				this.picture_loaded = true;
 			});
 			if(index === 5) {
 				texture.flipY = false;
@@ -259,6 +260,7 @@ export default {
 			board.rotation.y = (this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) + Math.cos(this.clock.elapsedTime*DEFAULT_ROTATION_PERPETUAL_Y_SPEED * DEFAULT_ROTATION_PERPETUAL_Y + 300) * this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE));
 		},
 		initialize_board_rotation() {
+			this.picture_loaded = false;
 			this.board_animation = true;
 			this.board_actual_rotation += 180;
 			this.board_animation_step = 0;
@@ -312,7 +314,9 @@ export default {
 		},
 		rotate_center_board() {
 			const board_center = this.get_children_by_name(BOARD_NAME_CENTER);
-			board_center.rotation.x = Math.min(this.radians(this.board_actual_rotation), board_center.rotation.x + this.delta * SPEED_MOVEMENT_CENTER_BOARD);
+			if (this.picture_loaded) {
+				board_center.rotation.x = Math.min(this.radians(this.board_actual_rotation), board_center.rotation.x + this.delta * SPEED_MOVEMENT_CENTER_BOARD);
+			}
 			return board_center.rotation.x === this.radians(this.board_actual_rotation);
 		},
 		radians(degrees) {
@@ -331,18 +335,14 @@ export default {
 		},
 		slide_image() {
 			this.$refs.description.classList.add('loading');
-			const tmp = new Image();
 			if (this.slide.image.path === undefined) {
 				return null;
 			}
 			this.change_summary(this.slide.title);
-			tmp.src = utils.absolute_path_from_relative(this.slide.image.path);
 			this.$refs.image_legend.innerHTML = this.slide.image.name;
 			this.initialize_board_rotation();
-			tmp.addEventListener('load',() => {
-				this.change_image(this.slide.image.path);
-				this.$refs.description.classList.remove('loading');
-			});
+			this.change_image(this.slide.image.path);
+			this.$refs.description.classList.remove('loading');
 		},
 		update_camera_z() {
 			if (this.$refs.canvas.clientWidth < 650) {
