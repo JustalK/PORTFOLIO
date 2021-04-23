@@ -538,7 +538,7 @@ module.exports = [
 	},
 	{
 		title: 'Finistere Assurance',
-		slug: 'finistere assurance',
+		slug: 'finistere-assurance',
 		short_description: 'The official website of the Finister Assurance insurrance based in Britany.',
 		long_description: 'A website in PHP made from scratch using PhpMyAdmin database for an insurance company in Brittany.',
 		client: 'Finistere Assurance',
