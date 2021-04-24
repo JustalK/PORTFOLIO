@@ -115,7 +115,8 @@ export default {
 			mounted: false,
 			move_to_three: false,
 			locked: false,
-			hover_sound: null,
+			buffer_hover_sound: null,
+			buffer_sound_ambient: null,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -142,7 +143,6 @@ export default {
 		setTimeout(() => {
 			this.invisible = false;
 			this.eventSoundActive = true;
-			this.play_ambient_sound();
 			setTimeout(() => {
 				this.animation_introduction = true;
 			}, 2000);
@@ -203,10 +203,12 @@ export default {
 		/**
 		* Create and add the event sound listener to the camera
 		**/
-		initSoundListener() {
+		async initSoundListener() {
 			this.eventSoundListener = new THREE.AudioListener();
 			this.ambientSoundListener = new THREE.AudioListener();
-			this.hover_sound = this.load_sound('../assets/sounds/hover.wav');
+			this.buffer_hover_sound = await this.load_sound('../assets/sounds/hover.wav');
+			this.buffer_sound_ambient = await this.load_sound('../assets/sounds/ambient.mp3');
+			this.play_ambient_sound();
 			this.camera.add(this.eventSoundListener);
 			this.camera.add(this.ambientSoundListener);
 		},
@@ -362,51 +364,38 @@ export default {
 			if (this.ambientSoundListener.context.state === 'suspended') {
 				this.ambientSoundListener.context.resume();
 			}
-			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1, true);
+			this.play_sound(this.ambientSoundListener, this.buffer_sound_ambient, 1, true);
 		},
 		/**
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			/**
-			console.log(this.hover_sound.context);
-			if(this.hover_sound.isPlaying) {
-				this.hover_sound.pause();
-			}
-			this.hover_sound.play();
-			**/
-			const listener = new THREE.AudioListener();
-			const sound = new THREE.Audio(listener);
-			sound.setBuffer(this.hover_sound);
-			sound.setVolume(0.42);
-			sound.setLoop(false);
-			sound.play();
-			return sound;
-			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_sound, 0.42);
 		},
 		/**
 		* Play a sound when you hover on a big menu
 		**/
 		play_hover_menu_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
+			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
 		},
 		/**
 		* Play a sound when you hover on a small menu
 		**/
 		play_hover_small_menu_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
+			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
 		},
 		/**
 		* Play a sound when you click on an object
 		**/
 		play_click_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
+			//this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
 		},
-		load_sound(path_sound) {
-
-			const audioLoader = new THREE.AudioLoader();
-			audioLoader.load(path_sound, buffer => {
-				this.hover_sound = buffer;
+		async load_sound(path_sound) {
+			return new Promise(resolve => {
+				const audioLoader = new THREE.AudioLoader();
+				audioLoader.load(path_sound, buffer => {
+					resolve(buffer);
+				});
 			});
 		},
 		/**
@@ -414,20 +403,17 @@ export default {
 		* @param {String} path_sound The path of the sound
 		* @param {Number} volume The volume of the sound to be played
 		**/
-		play_sound(listener, path_sound, volume, loop = false) {
+		play_sound(listener, buffer, volume, loop = false) {
 			if (listener === this.eventSoundListener && !this.is_music_active) {
 				return;
 			}
 
-			if(!listener.isPlaying && this.eventSoundActive) {
+			if(this.eventSoundActive) {
 				const sound = new THREE.Audio(listener);
-				const audioLoader = new THREE.AudioLoader();
-				audioLoader.load(path_sound, buffer => {
-					sound.setBuffer(buffer);
-					sound.setVolume(volume);
-					sound.setLoop(loop);
-					sound.play();
-				});
+				sound.setBuffer(buffer);
+				sound.setVolume(volume);
+				sound.setLoop(loop);
+				sound.play();
 			}
 		},
 		/**
