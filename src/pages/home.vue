@@ -116,6 +116,9 @@ export default {
 			move_to_three: false,
 			locked: false,
 			buffer_hover_sound: null,
+			buffer_hover_menu: null,
+			buffer_hover_small_menu: null,
+			buffer_click: null,
 			buffer_sound_ambient: null,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
@@ -207,6 +210,9 @@ export default {
 			this.eventSoundListener = new THREE.AudioListener();
 			this.ambientSoundListener = new THREE.AudioListener();
 			this.buffer_hover_sound = await this.load_sound('../assets/sounds/hover.wav');
+			this.buffer_hover_menu = await this.load_sound('../assets/sounds/hover_menu.mp3');
+			this.buffer_hover_small_menu = await this.load_sound('../assets/sounds/hover_small_menu.mp3');
+			this.buffer_click = await this.load_sound('../assets/sounds/click.wav');
 			this.buffer_sound_ambient = await this.load_sound('../assets/sounds/ambient.mp3');
 			this.play_ambient_sound();
 			this.camera.add(this.eventSoundListener);
@@ -376,19 +382,19 @@ export default {
 		* Play a sound when you hover on a big menu
 		**/
 		play_hover_menu_sound() {
-			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_menu, 0.25);
 		},
 		/**
 		* Play a sound when you hover on a small menu
 		**/
 		play_hover_small_menu_sound() {
-			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_small_menu, 0.12);
 		},
 		/**
 		* Play a sound when you click on an object
 		**/
 		play_click_sound() {
-			//this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
+			this.play_sound(this.eventSoundListener, this.buffer_click, 0.85);
 		},
 		async load_sound(path_sound) {
 			return new Promise(resolve => {
