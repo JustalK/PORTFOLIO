@@ -145,7 +145,6 @@ export default {
 
 		setTimeout(() => {
 			this.invisible = false;
-			this.eventSoundActive = true;
 			setTimeout(() => {
 				this.animation_introduction = true;
 			}, 2000);
@@ -209,11 +208,24 @@ export default {
 		async initSoundListener() {
 			this.eventSoundListener = new THREE.AudioListener();
 			this.ambientSoundListener = new THREE.AudioListener();
-			this.buffer_hover_sound = await this.load_sound('../assets/sounds/hover.wav');
-			this.buffer_hover_menu = await this.load_sound('../assets/sounds/hover_menu.mp3');
-			this.buffer_hover_small_menu = await this.load_sound('../assets/sounds/hover_small_menu.mp3');
-			this.buffer_click = await this.load_sound('../assets/sounds/click.wav');
-			this.buffer_sound_ambient = await this.load_sound('../assets/sounds/ambient.mp3');
+			this.buffer_hover_sound = this.load_sound('../assets/sounds/hover.wav');
+			this.buffer_hover_menu = this.load_sound('../assets/sounds/hover_menu.mp3');
+			this.buffer_hover_small_menu = this.load_sound('../assets/sounds/hover_small_menu.mp3');
+			this.buffer_click = this.load_sound('../assets/sounds/click.wav');
+			this.buffer_sound_ambient = this.load_sound('../assets/sounds/ambient.mp3');
+			console.log(this.buffer_sound_ambient);
+			[ this.buffer_hover_sound,
+				this.buffer_hover_menu,
+				this.buffer_hover_small_menu,
+				this.buffer_click,
+				this.buffer_sound_ambient
+			] = await Promise.all([
+				this.buffer_hover_sound,
+				this.buffer_hover_menu,
+				this.buffer_hover_small_menu,
+				this.buffer_click,
+				this.buffer_sound_ambient]);
+			this.eventSoundActive = true;
 			this.play_ambient_sound();
 			this.camera.add(this.eventSoundListener);
 			this.camera.add(this.ambientSoundListener);
@@ -396,7 +408,7 @@ export default {
 		play_click_sound() {
 			this.play_sound(this.eventSoundListener, this.buffer_click, 0.85);
 		},
-		async load_sound(path_sound) {
+		load_sound(path_sound) {
 			return new Promise(resolve => {
 				const audioLoader = new THREE.AudioLoader();
 				audioLoader.load(path_sound, buffer => {
