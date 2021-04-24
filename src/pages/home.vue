@@ -58,7 +58,6 @@ const TOTAL_PARTICLES = 500;
 const CLUSTER_PARTICLES = 8;
 const ROTATION_SPEED_PARTICLES = 0.0002;
 const FOG_POWER = 0.0003;
-const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
@@ -245,9 +244,6 @@ export default {
 		},
 		animate() {
 			if (this.animation) {
-				setTimeout(() => {
-					requestAnimationFrame(this.animate);
-				}, framerate );
 				this.renderer.render( this.scene, this.camera );
 
 				this.delta = this.clock.getDelta();
@@ -273,6 +269,7 @@ export default {
 				} else if(!this.movementCamera) {
 					this.searchingMatchMouseAndMesh();
 				}
+				requestAnimationFrame(this.animate);
 			}
 		},
 		searchingMatchMouseAndMesh() {
