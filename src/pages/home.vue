@@ -115,6 +115,7 @@ export default {
 			mounted: false,
 			move_to_three: false,
 			locked: false,
+			hover_sound: null,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -205,6 +206,7 @@ export default {
 		initSoundListener() {
 			this.eventSoundListener = new THREE.AudioListener();
 			this.ambientSoundListener = new THREE.AudioListener();
+			this.hover_sound = this.load_sound('../assets/sounds/hover.wav');
 			this.camera.add(this.eventSoundListener);
 			this.camera.add(this.ambientSoundListener);
 		},
@@ -366,7 +368,21 @@ export default {
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
+			/**
+			console.log(this.hover_sound.context);
+			if(this.hover_sound.isPlaying) {
+				this.hover_sound.pause();
+			}
+			this.hover_sound.play();
+			**/
+			const listener = new THREE.AudioListener();
+			const sound = new THREE.Audio(listener);
+			sound.setBuffer(this.hover_sound);
+			sound.setVolume(0.42);
+			sound.setLoop(false);
+			sound.play();
+			return sound;
+			//this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
 		},
 		/**
 		* Play a sound when you hover on a big menu
@@ -385,6 +401,13 @@ export default {
 		**/
 		play_click_sound() {
 			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
+		},
+		load_sound(path_sound) {
+
+			const audioLoader = new THREE.AudioLoader();
+			audioLoader.load(path_sound, buffer => {
+				this.hover_sound = buffer;
+			});
 		},
 		/**
 		* Play a sound on the event sound listener with a certain volume
