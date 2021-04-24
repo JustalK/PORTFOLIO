@@ -6,6 +6,7 @@ require('dotenv').config({ path: './env/.env.' + mode });
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const logs = require('./libs/logs');
+const helmet = require('helmet');
 
 module.exports = {
 	create_server: (name, port) => {
@@ -29,6 +30,7 @@ module.exports = {
 			module.exports.adding_route('slides', '/api/slides', server);
 			module.exports.adding_route('jobs', '/api/jobs', server);
 			server.use(history());
+			server.use(helmet());
 
 			server.use('/api/documentation', express.static('documentation'));
 			server.use('/', express.static(process.env.FOLDER));
