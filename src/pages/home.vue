@@ -54,9 +54,9 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
-const TOTAL_PARTICLES = 500;
+const TOTAL_PARTICLES = 1000;
 const CLUSTER_PARTICLES = 8;
-const ROTATION_SPEED_PARTICLES = 0.0002;
+const ROTATION_SPEED_PARTICLES = 0.00005;
 const FOG_POWER = 0.0003;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
@@ -75,6 +75,8 @@ export default {
 			meta_title: '',
 			meta_description: '',
 			camera: null,
+			frame_counter: 0,
+			limit_frame_counter: 3,
 			scene: null,
 			renderer: null,
 			delta: null,
@@ -266,7 +268,13 @@ export default {
 		},
 		animate() {
 			if (this.animation) {
-				this.renderer.render( this.scene, this.camera );
+				// Trick for optimizing the app a bit when I am not using the background
+				this.limit_frame_counter = this.parent!=null ? 1 : 3;
+				this.frame_counter += 1;
+				if (this.frame_counter % this.limit_frame_counter === 0) {
+					this.frame_counter = 0;
+					this.renderer.render( this.scene, this.camera );
+				}
 
 				this.delta = this.clock.getDelta();
 				for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
