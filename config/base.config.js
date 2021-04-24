@@ -72,7 +72,7 @@ module.exports = {
 				{ from: 'src/assets/favicon', to: 'assets/favicon' },
 				{ from: 'src/assets/sounds', to: 'assets/sounds' },
 				{ from: 'src/libs', to: 'libs' },
-				{ from: 'src/pages', to: 'pages' }
+				{ from: 'src/pages/sitemap.xml', to: './' }
 			],
 		}),
 		new webpack.DefinePlugin({
@@ -100,15 +100,6 @@ module.exports = {
 					loader: 'file-loader',
 					options: {
 						name: 'assets/fonts/[name].[ext]',
-					},
-				},
-			},
-			{
-				test: /\.xml$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: 'libs/[name].[ext]',
 					},
 				},
 			},
