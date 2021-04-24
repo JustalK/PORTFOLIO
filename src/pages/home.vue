@@ -224,7 +224,6 @@ export default {
 				map: new THREE.TextureLoader().load(
 					'../assets/imgs/particle.png'
 				),
-				blending: THREE.AdditiveBlending,
 				transparent: true
 			});
 
