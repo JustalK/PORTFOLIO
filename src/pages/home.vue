@@ -54,11 +54,10 @@ const DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE = 20;
 const DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE = 15;
 const DEFAULT_ROTATION_PERPETUAL_X_SPEED = 100;
 const DEFAULT_ROTATION_PERPETUAL_Y_SPEED = 200;
-const TOTAL_PARTICLES = 500;
+const TOTAL_PARTICLES = 1000;
 const CLUSTER_PARTICLES = 8;
-const ROTATION_SPEED_PARTICLES = 0.0002;
+const ROTATION_SPEED_PARTICLES = 0.00005;
 const FOG_POWER = 0.0003;
-const framerate = 1000/60;
 const extrudeSettings = { amount: 10, bevelEnabled: true, bevelSegments: 1, steps: 2, bevelSize: 3, bevelThickness: 3 };
 const TEXTURE_BUTTON_BACK = '../assets/imgs/back.png';
 const TEXTURE_BUTTON_VISIT = '../assets/imgs/visit.png';
@@ -76,6 +75,8 @@ export default {
 			meta_title: '',
 			meta_description: '',
 			camera: null,
+			frame_counter: 0,
+			limit_frame_counter: 3,
 			scene: null,
 			renderer: null,
 			delta: null,
@@ -116,6 +117,11 @@ export default {
 			mounted: false,
 			move_to_three: false,
 			locked: false,
+			buffer_hover_sound: null,
+			buffer_hover_menu: null,
+			buffer_hover_small_menu: null,
+			buffer_click: null,
+			buffer_sound_ambient: null,
 			props_links: [
 				{name: 'Portfolio', link: 'portfolio', side: 'left'},
 				{name: 'Resume', link: 'resume', side: 'right'}
@@ -141,8 +147,6 @@ export default {
 
 		setTimeout(() => {
 			this.invisible = false;
-			this.eventSoundActive = true;
-			this.play_ambient_sound();
 			setTimeout(() => {
 				this.animation_introduction = true;
 			}, 2000);
@@ -203,9 +207,28 @@ export default {
 		/**
 		* Create and add the event sound listener to the camera
 		**/
-		initSoundListener() {
+		async initSoundListener() {
 			this.eventSoundListener = new THREE.AudioListener();
 			this.ambientSoundListener = new THREE.AudioListener();
+			this.buffer_hover_sound = this.load_sound('../assets/sounds/hover.wav');
+			this.buffer_hover_menu = this.load_sound('../assets/sounds/hover_menu.mp3');
+			this.buffer_hover_small_menu = this.load_sound('../assets/sounds/hover_small_menu.mp3');
+			this.buffer_click = this.load_sound('../assets/sounds/click.wav');
+			this.buffer_sound_ambient = this.load_sound('../assets/sounds/ambient.mp3');
+			console.log(this.buffer_sound_ambient);
+			[ this.buffer_hover_sound,
+				this.buffer_hover_menu,
+				this.buffer_hover_small_menu,
+				this.buffer_click,
+				this.buffer_sound_ambient
+			] = await Promise.all([
+				this.buffer_hover_sound,
+				this.buffer_hover_menu,
+				this.buffer_hover_small_menu,
+				this.buffer_click,
+				this.buffer_sound_ambient]);
+			this.eventSoundActive = true;
+			this.play_ambient_sound();
 			this.camera.add(this.eventSoundListener);
 			this.camera.add(this.ambientSoundListener);
 		},
@@ -224,7 +247,6 @@ export default {
 				map: new THREE.TextureLoader().load(
 					'../assets/imgs/particle.png'
 				),
-				blending: THREE.AdditiveBlending,
 				transparent: true
 			});
 
@@ -246,10 +268,13 @@ export default {
 		},
 		animate() {
 			if (this.animation) {
-				setTimeout(() => {
-					requestAnimationFrame(this.animate);
-				}, framerate );
-				this.renderer.render( this.scene, this.camera );
+				// Trick for optimizing the app a bit when I am not using the background
+				this.limit_frame_counter = this.parent!=null ? 1 : 3;
+				this.frame_counter += 1;
+				if (this.frame_counter % this.limit_frame_counter === 0) {
+					this.frame_counter = 0;
+					this.renderer.render( this.scene, this.camera );
+				}
 
 				this.delta = this.clock.getDelta();
 				for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
@@ -274,6 +299,7 @@ export default {
 				} else if(!this.movementCamera) {
 					this.searchingMatchMouseAndMesh();
 				}
+				requestAnimationFrame(this.animate);
 			}
 		},
 		searchingMatchMouseAndMesh() {
@@ -364,51 +390,56 @@ export default {
 			if (this.ambientSoundListener.context.state === 'suspended') {
 				this.ambientSoundListener.context.resume();
 			}
-			this.play_sound(this.ambientSoundListener, '../assets/sounds/ambient.mp3', 1, true);
+			this.play_sound(this.ambientSoundListener, this.buffer_sound_ambient, 1, true);
 		},
 		/**
 		* Play a sound when you hover on an object
 		**/
 		play_hover_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover.wav', 0.42);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_sound, 0.42);
 		},
 		/**
 		* Play a sound when you hover on a big menu
 		**/
 		play_hover_menu_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_menu.mp3', 0.25);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_menu, 0.25);
 		},
 		/**
 		* Play a sound when you hover on a small menu
 		**/
 		play_hover_small_menu_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/hover_small_menu.mp3', 0.12);
+			this.play_sound(this.eventSoundListener, this.buffer_hover_small_menu, 0.12);
 		},
 		/**
 		* Play a sound when you click on an object
 		**/
 		play_click_sound() {
-			this.play_sound(this.eventSoundListener, '../assets/sounds/click.wav', 0.85);
+			this.play_sound(this.eventSoundListener, this.buffer_click, 0.85);
+		},
+		load_sound(path_sound) {
+			return new Promise(resolve => {
+				const audioLoader = new THREE.AudioLoader();
+				audioLoader.load(path_sound, buffer => {
+					resolve(buffer);
+				});
+			});
 		},
 		/**
 		* Play a sound on the event sound listener with a certain volume
 		* @param {String} path_sound The path of the sound
 		* @param {Number} volume The volume of the sound to be played
 		**/
-		play_sound(listener, path_sound, volume, loop = false) {
+		play_sound(listener, buffer, volume, loop = false) {
 			if (listener === this.eventSoundListener && !this.is_music_active) {
 				return;
 			}
 
-			if(!listener.isPlaying && this.eventSoundActive) {
+			if(this.eventSoundActive) {
 				const sound = new THREE.Audio(listener);
-				const audioLoader = new THREE.AudioLoader();
-				audioLoader.load(path_sound, buffer => {
-					sound.setBuffer(buffer);
-					sound.setVolume(volume);
-					sound.setLoop(loop);
-					sound.play();
-				});
+				sound.setBuffer(buffer);
+				sound.setVolume(volume);
+				sound.setLoop(loop);
+				sound.play();
 			}
 		},
 		/**
@@ -673,9 +704,9 @@ export default {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));
 			this.groupScene.push(this.createBoard('my-sweet-diane', -400, 1000, 2600, this.radians(120)));
 			this.groupScene.push(this.createBoard('manypixels', 600, 300, 4000, this.radians(45)));
-			this.groupScene.push(this.createBoard('rumarocket', 1800, 1800, 1000, this.radians(-60)));
-			this.groupScene.push(this.createBoard('labonapp', 200, 2500, 2400, this.radians(30)));
-			this.groupScene.push(this.createBoard('onarto', 1400, 1000, 2400, this.radians(-70)));
+			this.groupScene.push(this.createBoard('transcom', 1800, 1800, 1000, this.radians(-60)));
+			this.groupScene.push(this.createBoard('portfolio-app', 200, 2500, -1000, this.radians(30)));
+			this.groupScene.push(this.createBoard('odyssea', 1400, 1000, 2400, this.radians(-70)));
 			this.groupScene.push(this.createBoard('atlantic-grains', 600, 500, -600, this.radians(-60)));
 			this.groupScene.push(this.createBoard('labonapp', 1300, 1300, -1500, this.radians(30)));
 

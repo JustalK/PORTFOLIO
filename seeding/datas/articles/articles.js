@@ -187,7 +187,7 @@ module.exports = [
 	},
 	{
 		title: 'Manypixels Website',
-		slug: 'manypixels-website',
+		slug: 'manypixels',
 		short_description: 'The static website of Manypixels.co',
 		long_description: 'A static website written with Next.js, Bulma, Sass. The content of the website comes from GraphCms. The website is also linked to Hubspot.',
 		client: 'Manypixels',
@@ -538,7 +538,7 @@ module.exports = [
 	},
 	{
 		title: 'Finistere Assurance',
-		slug: 'finistere assurance',
+		slug: 'finistere-assurance',
 		short_description: 'The official website of the Finister Assurance insurrance based in Britany.',
 		long_description: 'A website in PHP made from scratch using PhpMyAdmin database for an insurance company in Brittany.',
 		client: 'Finistere Assurance',

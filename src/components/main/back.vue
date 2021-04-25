@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="{back:true, invisible: invisible, is_animated: is_animated}">
+		:class="{back:true, invisible: invisible, is_animated: is_animated, is_activated: is_activated}">
 		<div @click.stop="back">
 			<div :class="{legend:true, invisible: invisible}">
 				<span>B</span>
@@ -28,8 +28,14 @@ export default {
 		}
 	},
 	emits: ['back'],
+	data: () => {
+		return {
+			is_activated: false
+		};
+	},
 	methods: {
 		back() {
+			this.is_activated = true;
 			this.$emit('back', 'portfolio');
 		}
 	}

@@ -46,6 +46,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "helmet": "^4.5.0",
     "https-browserify": "^1.0.0",
     "mongo-uri-builder": "^3.2.2",
     "mongodb": "^3.6.2",

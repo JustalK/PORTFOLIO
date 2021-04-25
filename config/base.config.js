@@ -71,7 +71,8 @@ module.exports = {
 				{ from: 'src/assets/fonts', to: 'assets/fonts' },
 				{ from: 'src/assets/favicon', to: 'assets/favicon' },
 				{ from: 'src/assets/sounds', to: 'assets/sounds' },
-				{ from: 'src/libs', to: 'libs' }
+				{ from: 'src/libs', to: 'libs' },
+				{ from: 'src/pages/sitemap.xml', to: './' }
 			],
 		}),
 		new webpack.DefinePlugin({

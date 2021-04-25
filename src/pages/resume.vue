@@ -53,8 +53,10 @@ export default {
 		return {
 			title: '',
 			description: '',
+			locked: false,
 			invisible: true,
 			invisible_text: true,
+			unmounted_parent: false,
 			unmounted: false
 		};
 	},

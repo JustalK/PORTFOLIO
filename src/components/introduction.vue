@@ -127,24 +127,18 @@ export default {
 			this.$refs.name.width = this.ww;
 			this.$refs.name.height = this.wh;
 
-			this.ctx.fillStyle = '#61C3FF';
+			this.ctx.fillStyle = '#FFFFFF';
 			this.ctx.font = this.perfect_size(this.ww) + 'px Lato-Light';
 			this.ctx.textAlign = 'center';
 			this.ctx.textBaseline = 'middle';
-			/**
-			this.ctx.shadowColor='#bddcff';
-			this.ctx.shadowBlur=10;
-			this.ctx.lineWidth=10;
-			this.ctx.shadowBlur=10;
-			**/
 			this.ctx.fillText('J U S T A L   K E V I N', this.$refs.name.width/2, this.$refs.name.height/2 - 80);
 			const text_coordinates = this.ctx.getImageData(0, 0, this.$refs.name.width, this.$refs.name.height);
 			this.init_particle(text_coordinates);
 		},
 		init_particle(text_coordinates) {
 			this.particles = [];
-			for (let y = 0, y2 = text_coordinates.height; y < y2; y += 2) {
-				for (let x = 0, x2 = text_coordinates.width; x < x2; x += 2) {
+			for (let y = 0, y2 = text_coordinates.height; y < y2; y += 4) {
+				for (let x = 0, x2 = text_coordinates.width; x < x2; x += 4) {
 					if (text_coordinates.data[(y * 4 * text_coordinates.width) + (x * 4) + 3] > 250) {
 						this.particles.push(new Particle(this.ww * (2 * Math.random() - 1), this.wh * (2 * Math.random() - 1), x, y, this.ctx));
 					}

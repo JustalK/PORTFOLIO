@@ -6,6 +6,7 @@ require('dotenv').config({ path: './env/.env.' + mode });
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const logs = require('./libs/logs');
+const helmet = require('helmet');
 
 module.exports = {
 	create_server: (name, port) => {
@@ -21,6 +22,9 @@ module.exports = {
 	start: async (name, host, port) => {
 		return new Promise((resolve) => {
 			const server = module.exports.create_server(name, port);
+			server.use(helmet({
+				contentSecurityPolicy: false
+			}));
 			module.exports.adding_route('apps', '/api/apps', server);
 			module.exports.adding_route('articles', '/api/articles', server);
 			module.exports.adding_route('tags', '/api/tags', server);
