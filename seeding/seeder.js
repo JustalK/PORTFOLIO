@@ -12,7 +12,7 @@ module.exports = {
 	},
 	seed: async () => {
 		const seeder = module.exports.get_seeder({
-			database: process.env.DB_URI_DATA + process.env.DB_NAME,
+			database: process.env.DB_URI_DATA,
 			dropDatabase: true,
 		})
 
