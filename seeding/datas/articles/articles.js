@@ -30,6 +30,37 @@ module.exports = [
 		order: -1
 	},
 	{
+		title: 'Smood B2B',
+		slug: 'smood-b2b',
+		short_description: 'A B2B platform for giving benefits to your employees for Smood',
+		long_description: 'Lorem ipsum.',
+		client: 'Smood',
+		industry: 'Services',
+		position: 'Lead FullStack Developer',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5913'), // Storybook
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+		],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00029')
+		],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0001'),
+			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0002'),
+			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0003'),
+			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0004'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffed1e07aaa00001'),
+		order: -1
+	},
+	{
 		title: 'Smood Front',
 		slug: 'smood-front',
 		short_description: 'A uber-like website for ordering food.',
@@ -52,12 +83,12 @@ module.exports = [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00028')
 		],
 		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0002'),
 			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0003'),
 			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0004'),
-			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0005'),
 		],
-		background_image: mongoose.Types.ObjectId('5f9d88d3ffed1e07aaa00001'),
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffad1e07aaa00001'),
 		order: -1
 	},
 	{

@@ -200,5 +200,11 @@ module.exports = [
 		name: 'SMOOD FRONT',
 		path: './assets/imgs/smood-front/intro.jpg',
 		path_low: './assets/imgs/smood-front/intro_low.jpg'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00029'),
+		name: 'SMOOD B2B',
+		path: './assets/imgs/smood-b2b/intro.jpg',
+		path_low: './assets/imgs/smood-b2b/intro_low.jpg'
 	}
 ];

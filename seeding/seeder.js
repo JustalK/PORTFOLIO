@@ -11,7 +11,6 @@ module.exports = {
 		return new Seeder(config);
 	},
 	seed: async () => {
-		console.log(mode, process.env.DB_URI_DATA)
 		const seeder = module.exports.get_seeder({
 			database: process.env.DB_URI_DATA,
 			dropDatabase: true,

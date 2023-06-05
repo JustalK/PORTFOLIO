@@ -27,7 +27,7 @@
 				ref="iframe"
 				:class="{invisible: invisible}"
 				src="../libs/web/viewer.html?file=resume.pdf" />
-			<components_pubs
+			<components_pubs 
 				:invisible="invisible" />
 		</div>
 	</div>
