@@ -170,5 +170,9 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5912'),
 		name: 'Fastify'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5913'),
+		name: 'Storybook'
 	}
 ];

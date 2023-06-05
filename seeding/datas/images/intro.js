@@ -194,5 +194,11 @@ module.exports = [
 		name: 'COVID19PH API',
 		path: './assets/imgs/covid19ph-api/intro.jpg',
 		path_low: './assets/imgs/covid19ph-api/intro_low.jpg'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00028'),
+		name: 'SMOOD FRONT',
+		path: './assets/imgs/smood-front/intro.jpg',
+		path_low: './assets/imgs/smood-front/intro_low.jpg'
 	}
 ];

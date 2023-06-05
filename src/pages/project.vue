@@ -28,7 +28,7 @@
 				:help="help" />
 			<components_slides
 				:title="title"
-				:client="client"
+				:client="client" 
 				:industry="industry"
 				:position="position"
 				:background_image="background_image"
