@@ -19,8 +19,8 @@
     "server-docker": "export NODE_ENV=docker && node -e 'require(\"./server/index\").start()'",
     "seed-docker": "export NODE_ENV=docker && npm run seed",
     "docker": "sudo docker-compose up --build --force-recreate",
-    "encode": "dotenv-encode ./env/.env.development -o ./encrypted/.env.development",
-    "decode": "dotenv-encode ./encrypted/.env.development -o ./env/.env.development -d"
+    "encode": "dotenv-encode ./env/ -o ./encrypted/",
+    "decode": "dotenv-encode ./encrypted/ -o ./env/ -d"
   },
   "engines": {
     "node": ">=12.0"
