@@ -23,6 +23,36 @@
 				:text="description"
 				:unmounted="unmounted"
 				:invisible="invisible_text" />
+			<ul
+				class="options">
+				<li
+					v-for="option in options"
+					:key="option.name"
+					ref="options"
+					:data-id="option.name"
+					:class="{'options-option': true}"
+					@mouseover="hover_enter">
+					<span> {{ option.name }} </span>
+				</li>
+			</ul>
+			<svg id="SVG_EFFECT">
+				<defs>
+					<filter id="wave">
+						<feTurbulence
+							ref="turbulence"
+							type="fractalNoise"
+							baseFrequency="1.1 1.1"
+							numOctaves="1"
+							result="warp" />
+						<feDisplacementMap
+							xChannelSelector="R"
+							yChannelSelector="G"
+							scale="80"
+							in="SourceGraphic"
+							in2="warpOffeset" />
+					</filter>
+				</defs>
+			</svg>
 			<iframe
 				ref="iframe"
 				:class="{invisible: invisible}"
@@ -52,6 +82,13 @@ export default {
 	data: () => {
 		return {
 			title: '',
+			options: [{
+				name: 'menu1'
+			}, {
+				name: 'menu2'
+			}, {
+				name: 'menu3'
+			}],
 			description: '',
 			locked: false,
 			invisible: true,
@@ -91,6 +128,19 @@ export default {
 		update_page(page) {
 			this.title = page.title;
 			this.description = page.description;
+		},
+		hover_enter() {
+			let vertical_frequency = 1.1;
+			this.$refs.turbulence.setAttribute('baseFrequency', vertical_frequency + ' ' + vertical_frequency);
+			const steps = 30;
+			const interval = 10;
+			for (let i = 0; i < steps; i++) {
+				setTimeout(() => {
+					vertical_frequency += 0.05;
+					vertical_frequency = Math.min(vertical_frequency, 2.5);
+					this.$refs.turbulence.setAttribute('baseFrequency', vertical_frequency + ' ' + vertical_frequency);
+				}, i * interval);
+			}
 		}
 	}
 };
