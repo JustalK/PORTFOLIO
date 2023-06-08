@@ -30,8 +30,9 @@
 					:key="option.name"
 					ref="options"
 					:data-id="option.name"
-					:class="{'options-option': true}"
-					@mouseover="hover_enter">
+					:class="{'options-option': true, 'options-option--active': selected_option._id === option._id }"
+					@mouseover="hover_enter"
+					@click="change_resume(option._id)">
 					<span> {{ option.name }} </span>
 				</li>
 			</ul>
@@ -56,7 +57,7 @@
 			<iframe
 				ref="iframe"
 				:class="{invisible: invisible}"
-				src="../libs/web/viewer.html?file=resume.pdf" />
+				:src="'../libs/web/viewer.html?file=' + selected_option.filename" />
 			<components_pubs 
 				:invisible="invisible" />
 		</div>
@@ -83,12 +84,23 @@ export default {
 		return {
 			title: '',
 			options: [{
-				name: 'menu1'
+				_id: 0,
+				name: 'Design resume',
+				filename: 'resume.pdf'
 			}, {
-				name: 'menu2'
+				_id: 1,
+				name: 'Classic english resume',
+				filename: 'resume_en.pdf'
 			}, {
-				name: 'menu3'
+				_id: 3,
+				name: 'Classic french resume',
+				filename: 'resume_fr.pdf'
 			}],
+			selected_option: {
+				_id: 0,
+				name: 'Design resume',
+				filename: 'resume.pdf'
+			},
 			description: '',
 			locked: false,
 			invisible: true,
@@ -99,6 +111,8 @@ export default {
 	},
 	async created() {
 		const page = await this.get_page(this.$route.name);
+
+		this.selected_option = this.options[0];
 
 		if (page !== null) {
 			this.update_page(page[0]);
@@ -128,6 +142,9 @@ export default {
 		update_page(page) {
 			this.title = page.title;
 			this.description = page.description;
+		},
+		change_resume(_id) {
+			this.selected_option = this.options.find((r) => r._id == _id);
 		},
 		hover_enter() {
 			let vertical_frequency = 1.1;
