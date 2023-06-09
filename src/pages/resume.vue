@@ -85,7 +85,7 @@ export default {
 			title: '',
 			options: [{
 				_id: 0,
-				name: 'Design resume',
+				name: 'Colorful resume',
 				filename: 'resume.pdf'
 			}, {
 				_id: 1,
@@ -98,7 +98,7 @@ export default {
 			}],
 			selected_option: {
 				_id: 0,
-				name: 'Design resume',
+				name: 'Colorful resume',
 				filename: 'resume.pdf'
 			},
 			description: '',

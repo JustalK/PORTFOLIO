@@ -16,10 +16,10 @@ module.exports = [
 	},
 	{
 		name: 'resume',
-		title: 'My resume',
-		meta_title: 'Resume',
-		meta_description: 'Resume Justal Kevin',
-		description: 'Under you will find my resume updated from github with my current and previous jobs, informations about some of my tasks and the technologies I am confortable using.'
+		title: 'My resumes',
+		meta_title: 'Resumes',
+		meta_description: 'Resumes Justal Kevin',
+		description: 'Under you will find my resumes updated from github with my current and previous jobs, informations about some of my tasks and the technologies I am confortable using.'
 	},
 	{
 		name: 'privacy',
