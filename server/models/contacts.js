@@ -28,6 +28,9 @@ const schema = new mongoose.Schema(
 		github_url: {
 			type: String
 		},
+		linkedin_url: {
+			type: String
+		},
 		image: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'images'

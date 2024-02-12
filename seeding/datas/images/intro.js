@@ -206,5 +206,17 @@ module.exports = [
 		name: 'SMOOD B2B',
 		path: './assets/imgs/smood-b2b/intro.jpg',
 		path_low: './assets/imgs/smood-b2b/intro_low.jpg'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00030'),
+		name: 'UBY PRODUCTIVITY',
+		path: './assets/imgs/uby-productivity/intro.jpg',
+		path_low: './assets/imgs/uby-productivity/intro_low.jpg'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00031'),
+		name: 'PIXELS MARKET',
+		path: './assets/imgs/pixelsmarket/intro.jpg',
+		path_low: './assets/imgs/pixelsmarket/intro_low.jpg'
 	}
 ];

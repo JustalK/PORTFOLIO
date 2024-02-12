@@ -30,10 +30,78 @@ module.exports = [
 		order: -1
 	},
 	{
+		title: 'Pixels Market',
+		slug: 'pixelsmarket',
+		short_description: 'A website for Manypixels to download custom SVGs',
+		long_description: 'As a freelancer, I developed a custom SVG download website for Manypixels using Next.js 14, Firebase, and Airtable, deployed on Netlify.',
+		client: 'Manypixels',
+		industry: 'Services',
+		position: 'Freelance',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5896'), // Next
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5917'), // Airtable
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5918'), // Firebase
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // LESS/SASS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5919'), // Netlify
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
+		],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00031')
+		],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16169aeeaa0001'),
+			mongoose.Types.ObjectId('5f76018c9b16169aeeaa0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffed1e07eea00001'),
+		order: -1
+	},
+	{
+		title: 'Uby Productivity',
+		slug: 'uby-productivity',
+		short_description: 'An IoT platform to optimize the management of the equipments on a construction site',
+		long_description: 'A B2B platform for Bouygues Telecom to monitor construction resources, using Vue.js, Elasticsearch, and Node.js.',
+		client: 'Uby',
+		industry: 'Construction',
+		position: 'Lead FullStack Developer',
+		tags: [
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'), // Professional projects
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'), // Javascript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5873'), // Vue
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5878'), // Express
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5895'), // UX/UI Design
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5914'), // Elastic Search
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5882'), // Swagger
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5884'), // LESS/SASS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5887'), // Bootstrap
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5897'), // Cypress
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5915'), // Python
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5916'), // Kubernetes
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
+		],
+		images: [
+			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00030')
+		],
+		slides: [
+			mongoose.Types.ObjectId('5f76018c9b16169aaeaa0001'),
+			mongoose.Types.ObjectId('5f76018c9b16169aaeaa0002'),
+		],
+		background_image: mongoose.Types.ObjectId('5f9d88d3ffed1e07aea00001'),
+		order: -1
+	},
+	{
 		title: 'Smood B2B',
 		slug: 'smood-b2b',
 		short_description: 'A B2B platform for giving benefits to your employees for Smood',
-		long_description: 'Lorem ipsum.',
+		long_description: 'I developed the Smood B2B platform in Switzerland, offering employee benefits using Next.js and Nest.js',
 		client: 'Smood',
 		industry: 'Services',
 		position: 'Lead FullStack Developer',
@@ -47,6 +115,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5913'), // Storybook
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5916'), // Kubernetes
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00029')
@@ -54,8 +124,6 @@ module.exports = [
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0002'),
-			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0003'),
-			mongoose.Types.ObjectId('5f76018c9b16170aaaaa0004'),
 		],
 		background_image: mongoose.Types.ObjectId('5f9d88d3ffed1e07aaa00001'),
 		order: -1
@@ -64,7 +132,7 @@ module.exports = [
 		title: 'Smood Front',
 		slug: 'smood-front',
 		short_description: 'A uber-like website for ordering food.',
-		long_description: 'Lorem ipsum.',
+		long_description: 'For Smood, a Swiss company, I led development of a React-based website and React Native app, enabling meal delivery from restaurants.',
 		client: 'Smood',
 		industry: 'Services',
 		position: 'FullStack Developer',
@@ -78,6 +146,10 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5913'), // Storybook
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5916'), // Kubernetes
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5915'), // Python
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5914'), // Elastic Search
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00028')
@@ -85,8 +157,6 @@ module.exports = [
 		slides: [
 			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0001'),
 			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0002'),
-			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0003'),
-			mongoose.Types.ObjectId('5f76018c9b16169aaaaa0004'),
 		],
 		background_image: mongoose.Types.ObjectId('5f9d88d3ffad1e07aaa00001'),
 		order: -1
@@ -114,7 +184,9 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5911'), // Apollo Server
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5918'), // Firebase
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99996')
@@ -196,7 +268,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5901'), // Travis
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5908') // Jenkins
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5908'), // Jenkins
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00002'),
@@ -234,7 +307,9 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5904'), // Docker
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5907'), // Typescript
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5911') // Apollo Server
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5911'), // Apollo Server
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5919'), // Netlify
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4db99999'),
@@ -268,7 +343,9 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5894'), // SEO
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5909'), // Bulma
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5874'), // React
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5910') // Hubspot
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5910'), // Hubspot
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5919'), // Netlify
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00000'),
@@ -300,7 +377,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'), // EsLint
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5905'), // Node.js
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5906'), // PM2
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5908')  // Jenkins
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5908'),  // Jenkins
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00003'),
@@ -329,7 +407,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5885'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5882'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'),
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5871')
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'),
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [
 			mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00001'),
@@ -374,7 +453,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5876'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5879'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5885'),
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5871')
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'),
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00004')],
 		slides: [
@@ -399,7 +479,8 @@ module.exports = [
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5879'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5885'),
 			mongoose.Types.ObjectId('5f95461688489acdd8ee5892'),
-			mongoose.Types.ObjectId('5f95461688489acdd8ee5871')
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5871'),
+			mongoose.Types.ObjectId('5f95461688489acdd8ee5920'), // AWS
 		],
 		images: [ mongoose.Types.ObjectId('5f9d88d3faed1e8c4dc00005')],
 		slides: [

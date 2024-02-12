@@ -215,7 +215,6 @@ export default {
 			this.buffer_hover_small_menu = this.load_sound('../assets/sounds/hover_small_menu.mp3');
 			this.buffer_click = this.load_sound('../assets/sounds/click.wav');
 			this.buffer_sound_ambient = this.load_sound('../assets/sounds/ambient.mp3');
-			console.log(this.buffer_sound_ambient);
 			[ this.buffer_hover_sound,
 				this.buffer_hover_menu,
 				this.buffer_hover_small_menu,
@@ -823,15 +822,16 @@ export default {
 		async get_my_identity() {
 			const my_identity = await api.get_my_identity();
 			const image_path = my_identity.image !== null ? my_identity.image_alternative.path : null;
-			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url, my_identity.github_url);
+			this.update_introduction(my_identity.fullname, my_identity.email, image_path, my_identity.android_url, my_identity.github_url, my_identity.linkedin_url);
 		},
-		update_introduction(name, email, image, android_url, github_url) {
+		update_introduction(name, email, image, android_url, github_url, linkedin_url) {
 			this.props_introduction = {
 				name,
 				email,
 				image,
 				android_url,
-				github_url
+				github_url,
+				linkedin_url
 			};
 		},
 		toggle_music() {

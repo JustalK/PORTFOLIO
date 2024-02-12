@@ -6,6 +6,7 @@
 		<div
 			ref="canvas"
 			class="slider_images" />
+		<div class="slider_ads">Click to change slide</div>
 		<span
 			ref="image_legend"
 			class="slider_legend" />

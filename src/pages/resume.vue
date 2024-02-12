@@ -35,6 +35,9 @@
 					@click="change_resume(option._id)">
 					<span> {{ option.name }} </span>
 				</li>
+				<li class="options-option-linkedin options-option" @mouseover="hover_enter" @click="go_linkedin()">
+					<span> Linkedin </span>
+				</li>
 			</ul>
 			<svg id="SVG_EFFECT">
 				<defs>
@@ -135,6 +138,9 @@ export default {
 			this.unmounted_parent = true;
 			this.locked = true;
 			helper_navigation.change_page(this, slug);
+		},
+		go_linkedin() {
+			window.open('https://www.linkedin.com/in/justalk/', '_blank', 'noreferrer');
 		},
 		async get_page(name) {
 			return api.get_pages(name);

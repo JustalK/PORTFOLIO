@@ -36,7 +36,9 @@
 			</ul>
 		</div>
 		<div class="intro">
-			<span class="jobs">{{ jobs.join(' | ') }}</span>
+			<span class="jobs"><span  v-for="(job, index) in jobs" :key="job"><span class="jobs_job">
+				{{ job }}
+			</span>{{ index !== jobs.length - 1 ? ' | ' : '' }}</span></span> 
 			<a
 				class="big portfolio"
 				@click.stop="open($event, 'portfolio')"
@@ -62,12 +64,12 @@
 				</a>
 				<div />
 				<a
-					:href="props_introduction.android_url"
+					:href="props_introduction.linkedin_url"
 					target="_blank"
 					@mouseenter="hover_small">
 					<img
-						:src="require('../assets/imgs/google.png')"
-						alt="Google App | Justal Kevin">
+						:src="require('../assets/imgs/in.png')"
+						alt="Linkedin | Justal Kevin">
 				</a>
 			</div>
 		</div>

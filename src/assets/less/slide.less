@@ -107,6 +107,23 @@
 		}
 	}
 
+	& .slider_ads {
+		position: absolute;
+		left: 30%;
+		top: calc(400px - 88px);
+		color: white;
+		width: 70%;
+		text-align: center;
+		animation: blinker 3s linear infinite;
+		.transition(all 0.25s cubic-bezier(0.8, 0, 0.25, 1) 0.5s);
+	}
+
+	@keyframes blinker {
+		50% {
+			opacity: 0;
+		}
+	}
+
 	& .slider_images {
 		position: absolute;
 		right: 0;
@@ -142,7 +159,7 @@
 		width: 70%;
 		text-align: center;
 		background: #1d1d23;
-		height: 42px;
+		height: 44px;
 		display: block;
 		line-height: 42px;
 		color: white;
@@ -353,6 +370,10 @@
 			transform: translateX(100%);
 		}
 
+		& .slider_ads {
+			transform: translateX(100%);
+		}
+
 		& .slider_legend {
 			transform: translateX(100%);
 		}
@@ -388,6 +409,11 @@
 @media screen and (max-width: @SCREEN_900) {
 	.slide {
 		& .slider_images {
+			width: 100%;
+		}
+
+		& .slider_ads {
+			left: 0;
 			width: 100%;
 		}
 

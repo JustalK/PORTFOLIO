@@ -174,5 +174,33 @@ module.exports = [
 	{
 		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5913'),
 		name: 'Storybook'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5914'),
+		name: 'Elastic Search'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5915'),
+		name: 'Python'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5916'),
+		name: 'Kubernetes'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5917'),
+		name: 'Airtable'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5918'),
+		name: 'Firebase'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5919'),
+		name: 'Netlify'
+	},
+	{
+		id: mongoose.Types.ObjectId('5f95461688489acdd8ee5920'),
+		name: 'AWS'
 	}
 ];

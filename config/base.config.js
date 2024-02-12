@@ -40,7 +40,7 @@ module.exports = {
 	plugins: [
 		new VueLoaderPlugin(),
 		new ESLintPlugin({
-			fix: true,
+			fix: false,
 			files: [
 				'src/**/*.vue',
 				'src/**/**/*.vue',
