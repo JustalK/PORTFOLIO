@@ -38,7 +38,7 @@ module.exports = {
 			server.use('/', express.static(process.env.FOLDER));
 
 			server.listen(port, host, () => {
-				logs.info(name + ' listening at ' + port);
+				logs.info(name + ' listening at ' + port + ' on ' + host);
 				resolve(server);
 			});
 		});
