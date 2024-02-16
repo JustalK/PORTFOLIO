@@ -54,6 +54,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Custom template',
             url: base_url + '/index.js',
+            baseurl: base_url,
             filename: '../' + process.env.FOLDER + '/index.html',
             template: 'src/pages/index.ejs',
             inject: false
