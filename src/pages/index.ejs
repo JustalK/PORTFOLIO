@@ -8,7 +8,7 @@
 		<meta name="description"
 			content="Justal Kevin is a French Full Stack Developer with deep knowledge on Javascript, Node, Server and so many other things all related to computer.">
 		<meta name="author" content="Justal Kevin">
-		<link rel="canonical" href="http://localhost:8080/" />
+		<link rel="canonical" href="https://www.justalkevin.com/" />
 		<!-- No call needed for the CSS - faster -->
 		<style type="text/css">
 		html,
@@ -291,7 +291,7 @@
 
 			animate()
 			//xhr.open('GET', '<%= htmlWebpackPlugin.options.url %>', true);
-			xhr.open('GET', 'http://localhost:8080/index.js', true);
+			xhr.open('GET', window.location.protocol + '//' +window.location.hostname + '/index.js', true);
 
 			xhr.onload = () => {
 				if (xhr.readyState === 4) {

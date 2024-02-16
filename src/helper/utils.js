@@ -36,6 +36,6 @@ module.exports = {
 	},
 	get_server_address() {
     const port = process.env.PORT ? ':' + process.env.PORT : '';
-		return process.env.PROTOCOL + '://' + process.env.HOST + port;
+		return process.env.PROTOCOL + '://' + window.location.hostname + port;
 	}
 }
