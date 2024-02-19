@@ -291,7 +291,8 @@
 
 			animate()
 			//xhr.open('GET', '<%= htmlWebpackPlugin.options.url %>', true);
-			xhr.open('GET', window.location.protocol + '//' +window.location.hostname + '/index.js', true);
+			console.log(window.location.protocol, window.location.hostname)
+			xhr.open('GET', window.location.protocol + '//' + window.location.host + '/index.js', true);
 
 			xhr.onload = () => {
 				if (xhr.readyState === 4) {

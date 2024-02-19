@@ -46,6 +46,11 @@
 		&.active {
 			transform: translateZ(100px);
 		}
+
+		&.inactive {
+			transition: transform 0.75s cubic-bezier(0.8, 0, 0.25, 1) 0s, opacity 0.2s cubic-bezier(0.8, 0, 0.25, 1);
+			transform: translateZ(-850px);
+		}
 	}
 
 	&.move_to_three > .panel {
@@ -99,6 +104,12 @@
 
 	&.invisible {
 		opacity: 0;
+	}
+
+	&.move_to_world {
+		opacity: 0;
+		pointer-events: none;
+		.transition(opacity 0.5s ease 0.25s);
 	}
 }
 

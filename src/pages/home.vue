@@ -2,14 +2,14 @@
 	<div
 		id="HOME"
 		ref="home"
-		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent, locked: locked}">
+		:class="{mounted: mounted, pointer: pointer, move_to_three: move_to_three, invisible: invisible_parent, locked: locked, move_to_world: move_to_world}">
 		<div class="border" />
 		<components_music
 			:is_music_active="is_music_active"
 			:invisible="invisible"
 			@toggle_music="toggle_music" />
 		<div
-			:class="{panel: true, active: go_zoom}">
+			:class="{panel: true, active: go_zoom, inactive: go_unzoom}">
 			<components_introduction
 				:props_introduction="props_introduction"
 				:animation_introduction="animation_introduction"
@@ -39,12 +39,12 @@ const BUTTON_COLOR_HOVER = '#327DFF';
 const BOARD_COLOR = 0x0a2234;
 const DEFAULT_MOVEMENT_CAMERA_SPEED = 1;
 const DEFAULT_ROTATION_CAMERA_SPEED = 1;
-const	CAMERA_START_POSITION_X = 0;
-const	CAMERA_START_POSITION_Y = -380;
-const	CAMERA_START_POSITION_Z = 8500;
-const	CAMERA_START_ROTATION_X = 0;
-const	CAMERA_START_ROTATION_Y = 0;
-const	CAMERA_START_ROTATION_Z = 0;
+const CAMERA_START_POSITION_X = 0;
+const CAMERA_START_POSITION_Y = -380;
+const CAMERA_START_POSITION_Z = 8500;
+const CAMERA_START_ROTATION_X = 0;
+const CAMERA_START_ROTATION_Y = 0;
+const CAMERA_START_ROTATION_Z = 0;
 const LIGHT_AMBIANT_COLOR = 0xFFFFFF;
 const DEFAULT_ROTATION_PERPETUAL_X = 0.001;
 const DEFAULT_ROTATION_PERPETUAL_Y = 0.002;
@@ -110,12 +110,14 @@ export default {
 			go_open_door: false,
 			go_3D: false,
 			go_zoom: false,
+			go_unzoom: false,
 			props_introduction: {},
 			invisible: true,
 			invisible_parent: false,
 			pointer: false,
 			mounted: false,
 			move_to_three: false,
+			move_to_world: false,
 			locked: false,
 			buffer_hover_sound: null,
 			buffer_hover_menu: null,
@@ -171,6 +173,7 @@ export default {
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
+			window.addEventListener( 'keypress', this.onDocumentKeypress, false );
 			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		initCamera() {
@@ -691,6 +694,18 @@ export default {
 					return true;
 				}
 			}
+		},
+		/**
+		 * Move the user to the world page
+		 */
+		onDocumentKeypress() {
+			this.animation_introduction = false;
+			this.invisible_parent = true;
+			this.is_true_darkness_allowed = false;
+			this.go_unzoom = true;
+			this.move_camera_new_page(50000, 15000);
+			this.move_to_world = true;
+			this.pausing_ambient_sound();
 		},
 		/**
 		* Add a mask for making the background darker when we go deep into the ocean
