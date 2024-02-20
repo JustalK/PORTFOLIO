@@ -35,7 +35,10 @@
 					@click="change_resume(option._id)">
 					<span> {{ option.name }} </span>
 				</li>
-				<li class="options-option-linkedin options-option" @mouseover="hover_enter" @click="go_linkedin()">
+				<li
+					class="options-option-linkedin options-option"
+					@mouseover="hover_enter"
+					@click="go_linkedin()">
 					<span> Linkedin </span>
 				</li>
 			</ul>

@@ -1,7 +1,7 @@
 const config = {
-	"trailingComma": "none",
-	"tabWidth": 4,
-	"singleQuote": true
-}
+	trailingComma: 'none',
+	useTabs: true,
+	singleQuote: true
+};
 
 module.exports = config;
