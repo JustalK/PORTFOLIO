@@ -706,6 +706,10 @@ export default {
 			this.move_camera_new_page(50000, 15000);
 			this.move_to_world = true;
 			this.pausing_ambient_sound();
+			setTimeout(() => {
+				this.$router.push({name: 'about'});
+				this.animation = false;
+			}, 2200);
 		},
 		/**
 		* Add a mask for making the background darker when we go deep into the ocean

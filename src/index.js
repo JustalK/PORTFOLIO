@@ -7,6 +7,7 @@ import privacy from './pages/privacy';
 import portfolio from './pages/portfolio';
 import project from './pages/project';
 import page_not_found from './pages/page_not_found';
+import about from './pages/about';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGooglePlay } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -24,6 +25,7 @@ const routes = [
 	{ path: '/portfolio', name: 'portfolio', component: portfolio },
 	{ path: '/portfolio/:slug', name: 'project', component: project },
 	{ path: '/resume', name: 'resume', component: resume },
+	{ path: '/about', name: 'about', component: about },
 	{ path: '/privacy', name: 'privacy', component: privacy },
 	{ path: '*', component: page_not_found }
 ];
