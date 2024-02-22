@@ -708,12 +708,12 @@ export default {
 			this.go_unzoom = true;
 			this.move_camera_new_page(100000, 10000);
 			this.move_to_world = true;
-			this.multiplicator_darkness = 1.2;
+			this.multiplicator_darkness = 1.5;
 			this.pausing_ambient_sound(250);
 			setTimeout(() => {
 				this.$router.push({name: 'about'});
 				this.animation = false;
-			}, 600);
+			}, 1500);
 		},
 		/**
 		* Add a mask for making the background darker when we go deep into the ocean
