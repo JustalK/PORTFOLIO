@@ -7,6 +7,7 @@
 		<components_music
 			:is_music_active="is_music_active"
 			:invisible="invisible"
+			:unzoom="go_unzoom"
 			@toggle_music="toggle_music" />
 		<div
 			:class="{panel: true, active: go_zoom, inactive: go_unzoom}">
@@ -113,6 +114,7 @@ export default {
 			go_unzoom: false,
 			props_introduction: {},
 			invisible: true,
+			multiplicator_darkness: 1,
 			invisible_parent: false,
 			pointer: false,
 			mounted: false,
@@ -447,8 +449,8 @@ export default {
 		/**
 		* Pausing the ambiant sound when visiting other pages
 		**/
-		pausing_ambient_sound() {
-			const time_for_pausing_in_seconds = 1500;
+		pausing_ambient_sound(seconds = 1500) {
+			const time_for_pausing_in_seconds = seconds;
 			this.reducing_ambient_sound(100, time_for_pausing_in_seconds);
 			setTimeout(() => {
 				this.ambientSoundListener.context.suspend();
@@ -701,22 +703,24 @@ export default {
 		onDocumentKeypress() {
 			this.animation_introduction = false;
 			this.invisible_parent = true;
-			this.is_true_darkness_allowed = false;
+			this.invisible = true;
+			this.is_true_darkness_allowed = true;
 			this.go_unzoom = true;
-			this.move_camera_new_page(50000, 15000);
+			this.move_camera_new_page(100000, 10000);
 			this.move_to_world = true;
-			this.pausing_ambient_sound();
+			this.multiplicator_darkness = 1.2;
+			this.pausing_ambient_sound(250);
 			setTimeout(() => {
 				this.$router.push({name: 'about'});
 				this.animation = false;
-			}, 2200);
+			}, 600);
 		},
 		/**
 		* Add a mask for making the background darker when we go deep into the ocean
 		* @param {Number} position_z The z position of the user
 		**/
 		move_to_darkness(position_z) {
-			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - position_z / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
+			this.renderer.setClearColor( 0x000000, this.is_true_darkness_allowed ? Math.min(Math.abs(1 - (position_z * this.multiplicator_darkness) / CAMERA_START_POSITION_Z), 1) : Math.min(1 - position_z / CAMERA_START_POSITION_Z, 0.8) );
 		},
 		loadProjectsTextures() {
 			this.groupScene.push(this.createBoard('portfolio',-450, 90, 6600, this.radians(20)));

@@ -51,6 +51,12 @@
 		opacity: 0;
 	}
 
+	&.unzoom {
+		.transition(opacity 0.5s ease 0s);
+
+		opacity: 0;
+	}
+
 	&:not(.active) {
 		& div {
 			animation-play-state: initial;

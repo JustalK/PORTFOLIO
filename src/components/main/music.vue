@@ -1,7 +1,7 @@
 <template>
 	<div
 		id="MUSIC"
-		:class="{active: is_music_active, invisible}"
+		:class="{active: is_music_active, invisible, unzoom}"
 		@click.stop="toggle_music()">
 		<div
 			v-for="index in 4"
@@ -16,6 +16,10 @@ export default {
 			required: true
 		},
 		invisible: {
+			type: Boolean,
+			required: true
+		},
+		unzoom: {
 			type: Boolean,
 			required: true
 		}

@@ -291,7 +291,6 @@
 
 			animate()
 			//xhr.open('GET', '<%= htmlWebpackPlugin.options.url %>', true);
-			console.log(window.location.protocol, window.location.hostname)
 			xhr.open('GET', window.location.protocol + '//' + window.location.host + '/index.js', true);
 
 			xhr.onload = () => {
@@ -300,6 +299,10 @@
 						tag.text = xhr.response;
 						loaded = true;
 						// Adding a setTimeut for a 60fps animation on 1 second
+						
+						// Two lines to remove once done with modification
+						instruction.classList.add('website_loaded');
+						canvas.classList.add('canvas_done');
 						setTimeout(() => {
 							instruction.classList.add('website_loaded');
 							canvas.classList.add('canvas_done');

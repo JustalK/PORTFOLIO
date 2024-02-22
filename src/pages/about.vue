@@ -59,10 +59,11 @@ export default {
 			this.scene = new THREE.Scene();
 		},
 		createWorld() {
-			const geometry = new THREE.BoxGeometry(1, 1, 1);
-			const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-			const cube = new THREE.Mesh(geometry, material);
-			this.scene.add(cube);
+			const geometry = new THREE.BoxGeometry( 20, 20, 20 ); 
+			const material = new THREE.MeshBasicMaterial( {color: 0x000000} ); 
+			const cube = new THREE.Mesh( geometry, material ); 
+			cube.position.z = -10;
+			this.scene.add( cube );
 
 			this.camera.position.z = 5;
 		},
@@ -73,10 +74,13 @@ export default {
 			this.renderer.gammaInput = true;
 			this.renderer.gammaOutput = true;
 			this.renderer.powerPreference = 'high-performance';
-			// this.renderer.setClearColor(0x000000, 0);
 		},
 		animate() {
 			this.renderer.render(this.scene, this.camera);
+			if (this.camera.position.z < 100) {
+				this.camera.position.z += 0.75;
+				this.camera.rotation.z += 0.015;
+			}
 			requestAnimationFrame(this.animate);
 		}
 	}
