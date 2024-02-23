@@ -126,6 +126,20 @@ export default {
 			background.position.z = 0;
 			this.scene.add(background);
 
+			const material5 = new THREE.LineBasicMaterial({
+				color: 0x0000ff
+			});
+
+			const points = [];
+			points.push( new THREE.Vector3( - 100, 0, 1 ) );
+			points.push( new THREE.Vector3( 0, 100, 1 ) );
+			points.push( new THREE.Vector3( 100, 0, 1 ) );
+
+			const geometry5 = new THREE.BufferGeometry().setFromPoints( points );
+
+			const line = new THREE.Line( geometry5, material5 );
+			this.scene.add( line );
+
 			/**
 			this.createCube(25, 25, 0x001d2e);
 			this.createCube(-25, -25, 0x005c94);
@@ -182,7 +196,7 @@ export default {
 			}
 			void main() {
 				vec3 color = vec3(0.035, 0.078, 0.356);
-				vec3 colorHover = vec3(0.978, 0.035, 0.356);
+				vec3 colorHover = vec3(0.38, 0.765, 1.0);
 				float circleMouse = circle(vUv, uMouse, 0.0005, 0.5);
 				float cornerLeftBottom = circle(vUv, vec2(0, 0), 0.0005, 4.0);
 				float cornerRightTop = circle(vUv, vec2(1, 1), 0.0005, 4.0);
