@@ -713,7 +713,7 @@ export default {
 			setTimeout(() => {
 				this.$router.push({name: 'about'});
 				this.animation = false;
-			}, 1500);
+			}, 1200);
 		},
 		/**
 		* Add a mask for making the background darker when we go deep into the ocean
