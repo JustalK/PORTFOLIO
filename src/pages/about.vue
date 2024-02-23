@@ -2,7 +2,7 @@
 	<div id="ABOUT" ref="about" />
 </template>
 <script>
-import * as THREE from '../libs/three.js';
+import * as THREE from 'three';
 
 const FOV = 75;
 const WINDOWS_WIDTH = window.innerWidth;
@@ -126,19 +126,21 @@ export default {
 			background.position.z = 0;
 			this.scene.add(background);
 
-			const material5 = new THREE.LineBasicMaterial({
-				color: 0x0000ff
-			});
+			const curve = new THREE.SplineCurve( [
+				new THREE.Vector2( -width, 0 ),
+				new THREE.Vector2( -50, 50 ),
+				new THREE.Vector2( 50, -50 ),
+				new THREE.Vector2( width, 0 )
+			] );
 
-			const points = [];
-			points.push( new THREE.Vector3( - 100, 0, 1 ) );
-			points.push( new THREE.Vector3( 0, 100, 1 ) );
-			points.push( new THREE.Vector3( 100, 0, 1 ) );
-
+			const points = curve.getPoints( 50 );
 			const geometry5 = new THREE.BufferGeometry().setFromPoints( points );
 
-			const line = new THREE.Line( geometry5, material5 );
-			this.scene.add( line );
+			const material5 = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+
+			// Create the final object to add to the scene
+			const splineObject = new THREE.Line( geometry5, material5 );
+			this.scene.add(splineObject);
 
 			/**
 			this.createCube(25, 25, 0x001d2e);
