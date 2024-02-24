@@ -39,7 +39,8 @@ export default {
 			height: 0,
 			line: null,
 			x: 0,
-			y: 0
+			y: 0,
+			limitMouseMove: null
 		};
 	},
 	async mounted() {
@@ -176,10 +177,10 @@ export default {
 				new THREE.Vector2(this.width, 0)
 			]);
 
-			const points = curve.getPoints(50);
+			const points = curve.getPoints(100);
 			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
 
-			const material5 = new THREE.LineBasicMaterial({ color: 0xff0000 });
+			const material5 = new THREE.LineBasicMaterial({ color: 0x0099ff });
 
 			// Create the final object to add to the scene
 			const splineObject = new THREE.Line(geometry5, material5);
@@ -231,7 +232,9 @@ export default {
 				}
 
 				for (const [i, index] of this.line.indexToReturn.entries()) {
-					positionAttribute.setXYZ( index, positionAttribute.original[0 + index*3], positionAttribute.original[1 + index*3], 0 );
+					const px = positionAttribute.array[0 + index*3] > positionAttribute.original[0 + index*3] ? Math.max(positionAttribute.array[0 + index*3] - 0.8, positionAttribute.original[0 + index*3]) : Math.min(positionAttribute.array[0 + index*3] + 0.8, positionAttribute.original[0 + index*3]);
+					const py = positionAttribute.array[1 + index*3] > positionAttribute.original[1 + index*3] ? Math.max(positionAttribute.array[1 + index*3] - 0.8, positionAttribute.original[1 + index*3]) : Math.min(positionAttribute.array[1 + index*3] + 0.8, positionAttribute.original[1 + index*3]);
+					positionAttribute.setXYZ( index, px, py, 0 );
 					if (positionAttribute.original[0 + index*3] === positionAttribute.array[0 + index*3] && positionAttribute.original[1 + index*3] === positionAttribute.array[1 + index*3]) {
 						this.line.indexToReturn.splice(i, 1);
 					}
@@ -286,29 +289,38 @@ export default {
 			}
 		},
 		onDocumentMouseMove(event) {
-			const positionAttribute = this.line.geometry.getAttribute( 'position' );
-			this.x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
-			this.y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
-			for ( let i = 0; i < positionAttribute.count; i ++ ) {
-				if (positionAttribute.original[1 + i*3] > this.y - 10 && positionAttribute.original[1 + i*3] < this.y + 10 && positionAttribute.original[0 + i*3] > this.x - 10 && positionAttribute.original[0 + i*3] < this.x + 10) {
-					if (!this.line.indexToMove.includes(i)) {
-						this.line.indexToMove.push(i);
-					}
-				} else {
-					if (this.line.indexToMove.includes(i) && !this.line.indexToReturn.includes(i)) {
-						const index = this.line.indexToMove.indexOf(i);
-						if (index !== -1) {
-							this.line.indexToMove.splice(index, 1);
+			if (this.limitMouseMove) {
+				clearTimeout(this.limitMouseMove);
+			}
+			this.limitMouseMove = setTimeout(() => {
+				const positionAttribute = this.line.geometry.getAttribute( 'position' );
+				this.x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
+				this.y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
+				for ( let i = 0; i < positionAttribute.count; i ++ ) {
+					if (positionAttribute.original[1 + i*3] > this.y - 10 && positionAttribute.original[1 + i*3] < this.y + 10 && positionAttribute.original[0 + i*3] > this.x - 10 && positionAttribute.original[0 + i*3] < this.x + 10) {
+						if (!this.line.indexToMove.includes(i)) {
+							const index = this.line.indexToReturn.indexOf(i);
+							if (index !== -1) {
+								this.line.indexToReturn.splice(index, 1);
+							}
+							this.line.indexToMove.push(i);
 						}
-						this.line.indexToReturn.push(i);
+					} else {
+						if (this.line.indexToMove.includes(i) && !this.line.indexToReturn.includes(i)) {
+							const index = this.line.indexToMove.indexOf(i);
+							if (index !== -1) {
+								this.line.indexToMove.splice(index, 1);
+							}
+							this.line.indexToReturn.push(i);
+						}
 					}
 				}
-			}
 
-			this.backgroundMaterial.uniforms.uMouse.value.x =
-				event.clientX / WINDOWS_WIDTH;
-			this.backgroundMaterial.uniforms.uMouse.value.y =
-				1.0 - event.clientY / WINDOWS_HEIGHT;
+				this.backgroundMaterial.uniforms.uMouse.value.x =
+					event.clientX / WINDOWS_WIDTH;
+				this.backgroundMaterial.uniforms.uMouse.value.y =
+					1.0 - event.clientY / WINDOWS_HEIGHT;
+			}, 2); // Reduce the number of call to the calculation
 		}
 	}
 };
