@@ -3,6 +3,8 @@
 </template>
 <script>
 import * as THREE from 'three';
+import { getWidthAndHeight } from '../helper/utils';
+import FogMaterial from '../materials/fog';
 
 const FOV = 75;
 const WINDOWS_WIDTH = window.innerWidth;
@@ -18,7 +20,6 @@ const CAMERA_START_ROTATION_Z = 0;
 const LIGHT_AMBIANT_COLOR = 0xffffff;
 
 const SPEED_LOGO = 1.25;
-const SPEED_ROTATION_LOGO = 0.03;
 
 export default {
 	data: () => {
@@ -40,6 +41,9 @@ export default {
 		this.init();
 	},
 	methods: {
+		/**
+		 * Initialize the screen
+		 */
 		init() {
 			this.initClock();
 			this.initCamera();
@@ -55,14 +59,23 @@ export default {
 			window.addEventListener('wheel', this.onDocumentScroll, false);
 			window.addEventListener('mousemove', this.onDocumentMouseMove, false);
 		},
+		/**
+		 * Start the clock
+		 */
 		initClock() {
 			this.clock = new THREE.Clock();
 			// Set the time to 0
 			this.clock.start();
 		},
+		/**
+		 * Reverse the animation for going back to the previous screen
+		 */
 		back() {
 			console.log('azeae');
 		},
+		/**
+		 * Initialize the camera
+		 */
 		initCamera() {
 			this.camera = new THREE.PerspectiveCamera(
 				FOV,
@@ -98,131 +111,71 @@ export default {
 			this.scene.add(light);
 		},
 		createWorld() {
-			const geometry = new THREE.BoxGeometry(20, 20, 20);
-			const material = new THREE.MeshPhongMaterial({ color: 0x000000 });
-			this.originalCube = new THREE.Mesh(geometry, material);
-			this.originalCube.position.z = -10;
-			this.scene.add(this.originalCube);
-
-			var vFOV = this.camera.fov * Math.PI / 180;
-			var height = 2 * Math.tan( vFOV / 2 ) * 100;
-			var width = height * this.camera.aspect; 
-			const geometry2 = new THREE.PlaneGeometry(width, height);
-			this.backgroundMaterial = new THREE.ShaderMaterial({
-				uniforms: {
-					uResolution: {
-						value: new THREE.Vector2(
-							window.innerHeight / window.innerWidth,
-							window.innerHeight / window.innerWidth
-						)
-					},
-					uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-					uTime: { type: 'f', value: 0.0 }
-				},
-				fragmentShader: this.fragmentShader(),
-				vertexShader: this.vertexShader()
-			});
-			const background = new THREE.Mesh(geometry2, this.backgroundMaterial);
-			background.position.z = 0;
-			this.scene.add(background);
-
-			const curve = new THREE.SplineCurve( [
-				new THREE.Vector2( -width, 0 ),
-				new THREE.Vector2( -50, 50 ),
-				new THREE.Vector2( 50, -50 ),
-				new THREE.Vector2( width, 0 )
-			] );
-
-			const points = curve.getPoints( 50 );
-			const geometry5 = new THREE.BufferGeometry().setFromPoints( points );
-
-			const material5 = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-
-			// Create the final object to add to the scene
-			const splineObject = new THREE.Line( geometry5, material5 );
-			this.scene.add(splineObject);
+			this.createBackground();
+			this.createLine();
 
 			/**
+			const curve = new THREE.SplineCurve([
+				new THREE.Vector2(-width, 0),
+				new THREE.Vector2(-50, 50),
+				new THREE.Vector2(50, -50),
+				new THREE.Vector2(width, 0)
+			]);
+
+			const points = curve.getPoints(50);
+			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
+
+			const material5 = new THREE.LineBasicMaterial({ color: 0xff0000 });
+
+			// Create the final object to add to the scene
+			const splineObject = new THREE.Line(geometry5, material5);
+			this.scene.add(splineObject);
+
 			this.createCube(25, 25, 0x001d2e);
 			this.createCube(-25, -25, 0x005c94);
 			this.createCube(-25, 25, 0x009bfa);
 			this.createCube(25, -25, 0x61c3ff);
 			**/
 		},
-		vertexShader() {
-			return `
-			varying vec2 vUv;
-			void main() {
-				vUv = uv;
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-			}`;
+		createBackground() {
+			const [width, height] = getWidthAndHeight(this.camera, 100);
+			const geometry = new THREE.PlaneGeometry(width, height);
+			this.backgroundMaterial = new THREE.ShaderMaterial({
+				uniforms: {
+					uResolution: {
+						value: new THREE.Vector2(
+							WINDOWS_HEIGHT / WINDOWS_WIDTH,
+							WINDOWS_HEIGHT / WINDOWS_WIDTH
+						)
+					},
+					uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+					uTime: { type: 'f', value: 0.0 }
+				},
+				fragmentShader: FogMaterial.fragmentShader(),
+				vertexShader: FogMaterial.vertexShader()
+			});
+			const background = new THREE.Mesh(geometry, this.backgroundMaterial);
+			background.name = 'background';
+			this.scene.add(background);
 		},
-		fragmentShader() {
-			return `
-			uniform float uTime;
-			uniform vec2 uResolution;
-			uniform vec2 uMouse;
-			varying vec2 vUv;
+		createLine() {
+			const [width] = getWidthAndHeight(this.camera, 100);
+			const curve = new THREE.SplineCurve([
+				new THREE.Vector2(-width, 0),
+				new THREE.Vector2(-50, 50),
+				new THREE.Vector2(50, -50),
+				new THREE.Vector2(width, 0)
+			]);
 
-			float random(in vec2 st) {
-				return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-			}
-			float noise(in vec2 st) {
-				vec2 i = floor(st);
-				vec2 f = fract(st);
+			const points = curve.getPoints(10);
+			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
 
-				float a = random(i + vec2(0.0, 0.0));
-				float b = random(i + vec2(1.0, 0.0));
-				float c = random(i + vec2(0.0, 1.0));
-				float d = random(i + vec2(1.0, 1.0));
-				vec2 u = f * f * (3.0 - 2.0 * f);
+			const material5 = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
-				return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-			}
-			float fbm(in vec2 st) {
-				float v = 0.0;
-				float a = 0.5;
-				int octave = 5;
-				for (int i = 0; i < 5; i++) {
-					v += a * noise(st);
-				st = st * 2.0;
-				a *= 0.5;
-				}
-				return v;
-			}
-			float circle(vec2 uv, vec2 disc_center, float disc_radius, float border_size) {
-				uv -= disc_center;
-				uv*=uResolution;
-				float dist = sqrt(dot(uv, uv));
-				return smoothstep(disc_radius+border_size, disc_radius-border_size, dist);
-			}
-			void main() {
-				vec3 color = vec3(0.035, 0.078, 0.356);
-				vec3 colorHover = vec3(0.38, 0.765, 1.0);
-				float circleMouse = circle(vUv, uMouse, 0.0005, 0.5);
-				float cornerLeftBottom = circle(vUv, vec2(0, 0), 0.0005, 4.0);
-				float cornerRightTop = circle(vUv, vec2(1, 1), 0.0005, 4.0);
-				float maskLeftBottom = smoothstep(0.4, 0.5, cornerLeftBottom);
-				float maskRightTop = smoothstep(0.4, 0.5, cornerRightTop);
-				float maskCenter = circle(vUv, vec2(0.5), 0.1, 0.1);
-				vec2 st = gl_FragCoord.xy * 0.001 / uResolution.xy;
-
-				vec2 q = vec2(0.0);
-				q.x = fbm(st + vec2(0.0));
-				q.y = fbm(st + vec2(1.0));
-
-				vec2 r = vec2(0.0);
-				r.x = fbm(st + (1.0 * q) + vec2(0.0, 9.2) + (0.1 * uTime));
-				//r.y = fbm(st + (1.0 * q) + vec2(0.0, 2.8) + (0.05 * uTime));
-				float f = fbm(st + r);
-
-				float coef = (f * f * f + (0.6 * f * f) + (0.5 * f));
-				vec4 mixed1 = mix(vec4(coef * color, 1.0), vec4(coef * colorHover, 1.0), circleMouse);
-				vec4 mixed2 = mix(mixed1, vec4(0.0, 0.0, 0.0, 1.0), maskLeftBottom);
-				vec4 mixed3 = mix(mixed2, vec4(0.0, 0.0, 0.0, 1.0), maskRightTop);
-				vec4 mixed4 = mix(mixed3, vec4(0.0, 0.0, 0.0, 1.0), maskCenter);
-				gl_FragColor = mixed4;
-			}`;
+			// Create the final object to add to the scene
+			const splineObject = new THREE.Line(geometry5, material5);
+			splineObject.name = 'line';
+			this.scene.add(splineObject);
 		},
 		createCube(x, y, color) {
 			const geometry = new THREE.BoxGeometry(20, 20, 60);
@@ -252,10 +205,31 @@ export default {
 			this.renderer.render(this.scene, this.camera);
 			this.delta = this.clock.getDelta();
 
+
+			
+			const line = this.scene.getObjectByName('line');
+			const positionAttribute = line.geometry.getAttribute( 'position' );
+
+			// let x = 0, y = 0, z = 0;
+			let y = 0;
+			for ( let i = 0; i < positionAttribute.count; i ++ ) {
+				positionAttribute.setXYZ( i, positionAttribute.array[0 + i*3], y, positionAttribute.array[2 + i*3] );
+
+				// x += ( Math.random() - 0.5 ) * 30;
+				if (i < positionAttribute.count) {
+					y = positionAttribute.array[1 + (i+1)*3] > 0 ? positionAttribute.array[1 + (i+1)*3] + 0.05 : positionAttribute.array[1 + (i+1)*3] - 0.05;
+				}
+				// z += ( Math.random() - 0.5 ) * 30;
+				
+			}
+
+			positionAttribute.needsUpdate = true;
+
+			line.geometry.computeBoundingBox();
+			line.geometry.computeBoundingSphere();
+
 			this.backgroundMaterial.uniforms.uTime.value =
 				this.clock.getElapsedTime();
-
-			console.log(SPEED_ROTATION_LOGO);
 
 			if (this.camera.position.z < 100) {
 				this.camera.position.z += SPEED_LOGO;
@@ -271,7 +245,7 @@ export default {
 						? Math.max(cubeLogo.position.y - 0.5, 11)
 						: Math.min(cubeLogo.position.y + 0.5, -11);
 			}
-			this.originalCube.position.z -= SPEED_LOGO;
+			//this.originalCube.position.z -= SPEED_LOGO;
 
 			this.moveCameraTo(this.nextBreakpoint);
 			requestAnimationFrame(this.animate);
@@ -310,8 +284,10 @@ export default {
 			}
 		},
 		onDocumentMouseMove(event) {
-			this.backgroundMaterial.uniforms.uMouse.value.x = event.clientX / WINDOWS_WIDTH;
-			this.backgroundMaterial.uniforms.uMouse.value.y = 1.0 - event.clientY / WINDOWS_HEIGHT;
+			this.backgroundMaterial.uniforms.uMouse.value.x =
+				event.clientX / WINDOWS_WIDTH;
+			this.backgroundMaterial.uniforms.uMouse.value.y =
+				1.0 - event.clientY / WINDOWS_HEIGHT;
 		}
 	}
 };
