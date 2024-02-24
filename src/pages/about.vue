@@ -36,7 +36,10 @@ export default {
 			delta: 0,
 			clock: null,
 			width: 0,
-			height: 0
+			height: 0,
+			line: null,
+			x: 0,
+			y: 0
 		};
 	},
 	async mounted() {
@@ -182,7 +185,10 @@ export default {
 			const splineObject = new THREE.Line(geometry5, material5);
 			const positionAttribute = splineObject.geometry.getAttribute( 'position' );
 			splineObject.geometry.attributes.position.original = [...positionAttribute.array];
+			splineObject.indexToMove = [];
+			splineObject.indexToReturn = [];
 			splineObject.name = 'line';
+			this.line = splineObject;
 			this.scene.add(splineObject);
 		},
 		createCube(x, y, color) {
@@ -216,28 +222,24 @@ export default {
 
 
 			if (this.delta  > 1 / 60) {
-				const line = this.scene.getObjectByName('line');
-				const positionAttribute = line.geometry.getAttribute( 'position' );
+				const positionAttribute = this.line.geometry.getAttribute( 'position' );
 
-				// let x = 0, y = 0, z = 0;
-				/**
-				let y = 0;
-				for ( let i = 0; i < positionAttribute.count; i ++ ) {
-					positionAttribute.setXYZ( i, positionAttribute.array[0 + i*3], y, positionAttribute.array[2 + i*3] );
-
-					// x += ( Math.random() - 0.5 ) * 30;
-					if (i < positionAttribute.count) {
-						y = positionAttribute.array[1 + (i+1)*3] > 0 ? positionAttribute.array[1 + (i+1)*3] + 0.05 : positionAttribute.array[1 + (i+1)*3] - 0.05;
-					}
-					// z += ( Math.random() - 0.5 ) * 30;
-					
+				for (const index of this.line.indexToMove) {
+					const px = positionAttribute.array[0 + index*3] > this.x ? Math.min(positionAttribute.array[0 + index*3] + 0.0001, this.x) : Math.max(positionAttribute.array[0 + index*3] - 0.0001, this.x);
+					const py = positionAttribute.array[1 + index*3] > this.y ? Math.min(positionAttribute.array[1 + index*3] + 0.0001, this.y) : Math.max(positionAttribute.array[1 + index*3] - 0.0001, this.y);
+					positionAttribute.setXYZ( index, px, py, 0 );
 				}
-				*/
+
+				for (const [i, index] of this.line.indexToReturn.entries()) {
+					const px = positionAttribute.array[0 + index*3] > positionAttribute.original[0 + index*3] ? Math.min(positionAttribute.array[0 + index*3] - 0.0001, positionAttribute.original[0 + index*3]) : Math.min(positionAttribute.array[0 + index*3] + 0.0001, positionAttribute.original[0 + index*3]);
+					const py = positionAttribute.array[1 + index*3] > positionAttribute.original[1 + index*3] ? Math.max(positionAttribute.array[1 + index*3] - 0.0001, positionAttribute.original[1 + index*3]) : Math.min(positionAttribute.array[1 + index*3] + 0.0001, positionAttribute.original[1 + index*3]);
+					positionAttribute.setXYZ( index, px, py, 0 );
+					if (positionAttribute.original[0 + index*3] === positionAttribute.array[0 + index*3] && positionAttribute.original[1 + index*3] === positionAttribute.array[1 + index*3]) {
+						this.line.indexToReturn.splice(i, 1);
+					}
+				}
 
 				positionAttribute.needsUpdate = true;
-
-				// line.geometry.computeBoundingBox();
-				// line.geometry.computeBoundingSphere();
 
 				this.backgroundMaterial.uniforms.uTime.value =
 					this.clock.getElapsedTime();
@@ -286,15 +288,22 @@ export default {
 			}
 		},
 		onDocumentMouseMove(event) {
-			const line = this.scene.getObjectByName('line');
-			const positionAttribute = line.geometry.getAttribute( 'position' );
-			const x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
-			const y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
+			const positionAttribute = this.line.geometry.getAttribute( 'position' );
+			this.x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
+			this.y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
 			for ( let i = 0; i < positionAttribute.count; i ++ ) {
-				if (positionAttribute.original[1 + i*3] > y - 10 && positionAttribute.original[1 + i*3] < y + 10 && positionAttribute.original[0 + i*3] > x - 10 && positionAttribute.original[0 + i*3] < x + 10) {
-					positionAttribute.setXYZ( i, positionAttribute.original[0 + i*3], (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT), 0 );
+				if (positionAttribute.original[1 + i*3] > this.y - 10 && positionAttribute.original[1 + i*3] < this.y + 10 && positionAttribute.original[0 + i*3] > this.x - 10 && positionAttribute.original[0 + i*3] < this.x + 10) {
+					if (!this.line.indexToMove.includes(i)) {
+						this.line.indexToMove.push(i);
+					}
 				} else {
-					positionAttribute.setXYZ( i, positionAttribute.original[0 + i*3], positionAttribute.original[1 + i*3], 0 );
+					if (this.line.indexToMove.includes(i) && !this.line.indexToReturn.includes(i)) {
+						const index = this.line.indexToMove.indexOf(i);
+						if (index !== -1) {
+							this.line.indexToMove.splice(index, 1);
+						}
+						this.line.indexToReturn.push(i);
+					}
 				}
 			}
 
