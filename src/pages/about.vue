@@ -225,15 +225,13 @@ export default {
 				const positionAttribute = this.line.geometry.getAttribute( 'position' );
 
 				for (const index of this.line.indexToMove) {
-					const px = positionAttribute.array[0 + index*3] > this.x ? Math.min(positionAttribute.array[0 + index*3] + 0.0001, this.x) : Math.max(positionAttribute.array[0 + index*3] - 0.0001, this.x);
-					const py = positionAttribute.array[1 + index*3] > this.y ? Math.min(positionAttribute.array[1 + index*3] + 0.0001, this.y) : Math.max(positionAttribute.array[1 + index*3] - 0.0001, this.y);
+					const px = positionAttribute.array[0 + index*3] > this.x ? Math.max(positionAttribute.array[0 + index*3] - 0.5, this.x) : Math.min(positionAttribute.array[0 + index*3] + 0.5, this.x);
+					const py = positionAttribute.array[1 + index*3] > this.y ? Math.max(positionAttribute.array[1 + index*3] - 0.5, this.y) : Math.min(positionAttribute.array[1 + index*3] + 0.5, this.y);
 					positionAttribute.setXYZ( index, px, py, 0 );
 				}
 
 				for (const [i, index] of this.line.indexToReturn.entries()) {
-					const px = positionAttribute.array[0 + index*3] > positionAttribute.original[0 + index*3] ? Math.min(positionAttribute.array[0 + index*3] - 0.0001, positionAttribute.original[0 + index*3]) : Math.min(positionAttribute.array[0 + index*3] + 0.0001, positionAttribute.original[0 + index*3]);
-					const py = positionAttribute.array[1 + index*3] > positionAttribute.original[1 + index*3] ? Math.max(positionAttribute.array[1 + index*3] - 0.0001, positionAttribute.original[1 + index*3]) : Math.min(positionAttribute.array[1 + index*3] + 0.0001, positionAttribute.original[1 + index*3]);
-					positionAttribute.setXYZ( index, px, py, 0 );
+					positionAttribute.setXYZ( index, positionAttribute.original[0 + index*3], positionAttribute.original[1 + index*3], 0 );
 					if (positionAttribute.original[0 + index*3] === positionAttribute.array[0 + index*3] && positionAttribute.original[1 + index*3] === positionAttribute.array[1 + index*3]) {
 						this.line.indexToReturn.splice(i, 1);
 					}
