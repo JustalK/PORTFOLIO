@@ -34,7 +34,9 @@ export default {
 			originalCube: null,
 			backgroundMaterial: null,
 			delta: 0,
-			clock: null
+			clock: null,
+			width: 0,
+			height: 0
 		};
 	},
 	async mounted() {
@@ -49,6 +51,7 @@ export default {
 			this.initCamera();
 			this.initScene();
 			this.initLight(LIGHT_AMBIANT_COLOR);
+			this.initSettings();
 			this.createWorld();
 			this.renderWebGL();
 
@@ -66,6 +69,11 @@ export default {
 			this.clock = new THREE.Clock();
 			// Set the time to 0
 			this.clock.start();
+		},
+		initSettings() {
+			const [width, height] = getWidthAndHeight(this.camera, 100);
+			this.width = width;
+			this.height = height;
 		},
 		/**
 		 * Reverse the animation for going back to the previous screen
@@ -138,8 +146,7 @@ export default {
 			**/
 		},
 		createBackground() {
-			const [width, height] = getWidthAndHeight(this.camera, 100);
-			const geometry = new THREE.PlaneGeometry(width, height);
+			const geometry = new THREE.PlaneGeometry(this.width, this.height);
 			this.backgroundMaterial = new THREE.ShaderMaterial({
 				uniforms: {
 					uResolution: {
@@ -159,21 +166,22 @@ export default {
 			this.scene.add(background);
 		},
 		createLine() {
-			const [width] = getWidthAndHeight(this.camera, 100);
 			const curve = new THREE.SplineCurve([
-				new THREE.Vector2(-width, 0),
+				new THREE.Vector2(-this.width, 0),
 				new THREE.Vector2(-50, 50),
 				new THREE.Vector2(50, -50),
-				new THREE.Vector2(width, 0)
+				new THREE.Vector2(this.width, 0)
 			]);
 
-			const points = curve.getPoints(10);
+			const points = curve.getPoints(50);
 			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
 
 			const material5 = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
 			// Create the final object to add to the scene
 			const splineObject = new THREE.Line(geometry5, material5);
+			const positionAttribute = splineObject.geometry.getAttribute( 'position' );
+			splineObject.geometry.attributes.position.original = [...positionAttribute.array];
 			splineObject.name = 'line';
 			this.scene.add(splineObject);
 		},
@@ -202,53 +210,47 @@ export default {
 			this.renderer.powerPreference = 'high-performance';
 		},
 		animate() {
-			this.renderer.render(this.scene, this.camera);
-			this.delta = this.clock.getDelta();
-
-
 			
-			const line = this.scene.getObjectByName('line');
-			const positionAttribute = line.geometry.getAttribute( 'position' );
-
-			// let x = 0, y = 0, z = 0;
-			let y = 0;
-			for ( let i = 0; i < positionAttribute.count; i ++ ) {
-				positionAttribute.setXYZ( i, positionAttribute.array[0 + i*3], y, positionAttribute.array[2 + i*3] );
-
-				// x += ( Math.random() - 0.5 ) * 30;
-				if (i < positionAttribute.count) {
-					y = positionAttribute.array[1 + (i+1)*3] > 0 ? positionAttribute.array[1 + (i+1)*3] + 0.05 : positionAttribute.array[1 + (i+1)*3] - 0.05;
-				}
-				// z += ( Math.random() - 0.5 ) * 30;
-				
-			}
-
-			positionAttribute.needsUpdate = true;
-
-			line.geometry.computeBoundingBox();
-			line.geometry.computeBoundingSphere();
-
-			this.backgroundMaterial.uniforms.uTime.value =
-				this.clock.getElapsedTime();
-
-			if (this.camera.position.z < 100) {
-				this.camera.position.z += SPEED_LOGO;
-				this.camera.original.position.z = this.camera.position.z;
-			}
-			for (const cubeLogo of this.groupCubeLogo) {
-				cubeLogo.position.x =
-					cubeLogo.origin.x > 10
-						? Math.max(cubeLogo.position.x - 0.5, 11)
-						: Math.min(cubeLogo.position.x + 0.5, -11);
-				cubeLogo.position.y =
-					cubeLogo.origin.y > 10
-						? Math.max(cubeLogo.position.y - 0.5, 11)
-						: Math.min(cubeLogo.position.y + 0.5, -11);
-			}
-			//this.originalCube.position.z -= SPEED_LOGO;
-
-			this.moveCameraTo(this.nextBreakpoint);
 			requestAnimationFrame(this.animate);
+			this.delta += this.clock.getDelta();
+
+
+			if (this.delta  > 1 / 60) {
+				const line = this.scene.getObjectByName('line');
+				const positionAttribute = line.geometry.getAttribute( 'position' );
+
+				// let x = 0, y = 0, z = 0;
+				/**
+				let y = 0;
+				for ( let i = 0; i < positionAttribute.count; i ++ ) {
+					positionAttribute.setXYZ( i, positionAttribute.array[0 + i*3], y, positionAttribute.array[2 + i*3] );
+
+					// x += ( Math.random() - 0.5 ) * 30;
+					if (i < positionAttribute.count) {
+						y = positionAttribute.array[1 + (i+1)*3] > 0 ? positionAttribute.array[1 + (i+1)*3] + 0.05 : positionAttribute.array[1 + (i+1)*3] - 0.05;
+					}
+					// z += ( Math.random() - 0.5 ) * 30;
+					
+				}
+				*/
+
+				positionAttribute.needsUpdate = true;
+
+				// line.geometry.computeBoundingBox();
+				// line.geometry.computeBoundingSphere();
+
+				this.backgroundMaterial.uniforms.uTime.value =
+					this.clock.getElapsedTime();
+
+				if (this.camera.position.z < 100) {
+					this.camera.position.z += SPEED_LOGO;
+					this.camera.original.position.z = this.camera.position.z;
+				}
+				//this.originalCube.position.z -= SPEED_LOGO;
+
+				this.moveCameraTo(this.nextBreakpoint);
+				this.renderer.render(this.scene, this.camera);
+			}
 		},
 		moveCameraTo(breakpoint) {
 			if (this.currentBreakpoint !== breakpoint) {
@@ -284,6 +286,18 @@ export default {
 			}
 		},
 		onDocumentMouseMove(event) {
+			const line = this.scene.getObjectByName('line');
+			const positionAttribute = line.geometry.getAttribute( 'position' );
+			const x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
+			const y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
+			for ( let i = 0; i < positionAttribute.count; i ++ ) {
+				if (positionAttribute.original[1 + i*3] > y - 10 && positionAttribute.original[1 + i*3] < y + 10 && positionAttribute.original[0 + i*3] > x - 10 && positionAttribute.original[0 + i*3] < x + 10) {
+					positionAttribute.setXYZ( i, positionAttribute.original[0 + i*3], (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT), 0 );
+				} else {
+					positionAttribute.setXYZ( i, positionAttribute.original[0 + i*3], positionAttribute.original[1 + i*3], 0 );
+				}
+			}
+
 			this.backgroundMaterial.uniforms.uMouse.value.x =
 				event.clientX / WINDOWS_WIDTH;
 			this.backgroundMaterial.uniforms.uMouse.value.y =
