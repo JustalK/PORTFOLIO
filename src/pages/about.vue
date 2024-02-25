@@ -3,8 +3,14 @@
 </template>
 <script>
 import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { getWidthAndHeight } from '../helper/utils';
 import FogMaterial from '../materials/fog';
+import ImageMaterial from '../materials/image';
+
+const TEXTURE_ME_ROLLER = '../assets/imgs/me_fake.jpg';
+const TEXTURE_ME_WIFE = '../assets/imgs/me_and_wife.jpg';
 
 const FOV = 75;
 const WINDOWS_WIDTH = window.innerWidth;
@@ -33,6 +39,8 @@ export default {
 			groupCubeLogo: [],
 			originalCube: null,
 			backgroundMaterial: null,
+			objectInteraction: [],
+			imageMaterial: null,
 			delta: 0,
 			clock: null,
 			width: 0,
@@ -41,10 +49,12 @@ export default {
 			x: 0,
 			y: 0,
 			limitMouseMove: null,
-			isFirstAnimation: true
+			isFirstAnimation: true,
+			raycaster: null,
+			mouse: { x: 0, y: 0 }
 		};
 	},
-	async mounted() {
+	mounted() {
 		this.init();
 	},
 	methods: {
@@ -57,10 +67,10 @@ export default {
 			this.initScene();
 			this.initLight(LIGHT_AMBIANT_COLOR);
 			this.initSettings();
-			this.createWorld();
+			this.initRaycaster();
 			this.renderWebGL();
-
 			this.$refs.about.appendChild(this.renderer.domElement);
+			this.createWorld();
 
 			this.animate();
 
@@ -123,10 +133,15 @@ export default {
 			light.position.set(-10, 0, 20);
 			this.scene.add(light);
 		},
+		initRaycaster() {
+			this.raycaster = new THREE.Raycaster();
+			this.raycaster.setFromCamera(this.mouse, this.camera);
+		},
 		createWorld() {
 			this.createBackground();
 			this.createLine();
 			this.createPhoto();
+			this.createTitle();
 		},
 		createBackground() {
 			const geometry = new THREE.PlaneGeometry(this.width, this.height);
@@ -151,34 +166,96 @@ export default {
 		createLine() {
 			const borderOffset = 20;
 			const curve = new THREE.SplineCurve([
-				new THREE.Vector2(-this.width/2 - borderOffset, 50),
+				new THREE.Vector2(-this.width / 2 - borderOffset, 50),
 				new THREE.Vector2(-50, 50),
 				new THREE.Vector2(50, -50),
-				new THREE.Vector2(this.width/2 + borderOffset, -50)
+				new THREE.Vector2(this.width / 2 + borderOffset, -50)
 			]);
 
 			const points = curve.getPoints(100);
 			const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-			const material = new THREE.LineBasicMaterial({ color: 0x0099ff, transparent: true, opacity: 0 });
+			const material = new THREE.LineBasicMaterial({
+				color: 0x0099ff,
+				transparent: true,
+				opacity: 0
+			});
 
 			// Create the final object to add to the scene
 			const splineObject = new THREE.Line(geometry, material);
-			const positionAttribute = splineObject.geometry.getAttribute( 'position' );
-			splineObject.geometry.attributes.position.original = [...positionAttribute.array];
+			const positionAttribute = splineObject.geometry.getAttribute('position');
+			splineObject.geometry.attributes.position.original = [
+				...positionAttribute.array
+			];
 			splineObject.indexToMove = [];
 			splineObject.indexToReturn = [];
 			splineObject.name = 'line';
 			this.line = splineObject;
 			this.scene.add(splineObject);
 		},
-		createPhoto() {
-			const geometry = new THREE.PlaneGeometry(this.width * 20/100, this.height/2);
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const photo = new THREE.Mesh(geometry, material);
+		async createPhoto() {
+			const geometry = new THREE.PlaneGeometry(
+				(this.width * 20) / 100,
+				this.height / 2,
+				8,
+				8
+			);
+			const loader = new THREE.TextureLoader();
+			const meRoller = await loader.loadAsync(TEXTURE_ME_ROLLER);
+			const meWife = await loader.loadAsync(TEXTURE_ME_WIFE);
+			this.photoMaterial = new THREE.ShaderMaterial({
+				uniforms: {
+					uTexture: { value: meRoller },
+					uTexture2: { value: meWife },
+					uResolution: {
+						value: new THREE.Vector2(
+							WINDOWS_HEIGHT / WINDOWS_WIDTH,
+							WINDOWS_HEIGHT / WINDOWS_WIDTH
+						)
+					},
+					uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+					uTime: { type: 'f', value: 0.0 },
+					uVelo: { value: 0.0 },
+					uOpacity: { value: 0.0 },
+					smoothness: { value: 0.01 },
+					scale: { value: 4.0 },
+					seed: { value: 12.9898 }
+				},
+				fragmentShader: ImageMaterial.fragmentShader(),
+				vertexShader: ImageMaterial.vertexShader(),
+				transparent: true
+			});
+			const photo = new THREE.Mesh(geometry, this.photoMaterial);
 			photo.name = 'photo';
 			photo.position.z = 0.01;
+			this.objectInteraction.push(photo);
 			this.scene.add(photo);
+		},
+		createTitle() {
+			var loader = new FontLoader();
+			loader.load('../assets/fonts/Barlow_Regular.json', (font) => {
+				var textGeometry = new TextGeometry('ABOUT ME', {
+					font: font,
+
+					size: 15,
+					height: 0.01,
+					curveSegments: 12,
+				});
+
+				var textMaterial = new THREE.MeshBasicMaterial({
+					color: 0x0099ff
+				});
+
+				var mesh = new THREE.Mesh(textGeometry, textMaterial);
+				textGeometry.computeBoundingBox();
+				mesh.position.y = this.height / 4 + 10;
+
+				if (textGeometry.boundingBox) {
+					textGeometry.translate(-textGeometry.boundingBox.max.x / 2, 0, 0);
+				}
+
+				this.scene.add(mesh);
+			});
 		},
 		renderWebGL() {
 			this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -190,7 +267,8 @@ export default {
 		},
 		startAnimation() {
 			this.line.material.opacity += 0.025;
-			
+			this.photoMaterial.uniforms.uOpacity.value += 0.1;
+
 			if (this.line.material.opacity === 1) {
 				this.isFirstAnimation = false;
 			}
@@ -199,24 +277,56 @@ export default {
 			requestAnimationFrame(this.animate);
 			this.delta += this.clock.getDelta();
 
-			if (this.delta  > 1 / 60) {
+			if (this.delta > 1 / 60) {
 				if (this.isFirstAnimation && this.clock.getElapsedTime() > 2) {
 					this.startAnimation();
 				}
+				this.searchingMatchMouseAndMesh();
 
-				const positionAttribute = this.line.geometry.getAttribute( 'position' );
+				const positionAttribute = this.line.geometry.getAttribute('position');
 
 				for (const index of this.line.indexToMove) {
-					const px = positionAttribute.array[0 + index*3] > this.x ? Math.max(positionAttribute.array[0 + index*3] - 0.5, this.x) : Math.min(positionAttribute.array[0 + index*3] + 0.5, this.x);
-					const py = positionAttribute.array[1 + index*3] > this.y ? Math.max(positionAttribute.array[1 + index*3] - 0.5, this.y) : Math.min(positionAttribute.array[1 + index*3] + 0.5, this.y);
-					positionAttribute.setXYZ( index, px, py, 0 );
+					const px =
+						positionAttribute.array[0 + index * 3] > this.x
+							? Math.max(positionAttribute.array[0 + index * 3] - 0.5, this.x)
+							: Math.min(positionAttribute.array[0 + index * 3] + 0.5, this.x);
+					const py =
+						positionAttribute.array[1 + index * 3] > this.y
+							? Math.max(positionAttribute.array[1 + index * 3] - 0.5, this.y)
+							: Math.min(positionAttribute.array[1 + index * 3] + 0.5, this.y);
+					positionAttribute.setXYZ(index, px, py, 0);
 				}
 
 				for (const [i, index] of this.line.indexToReturn.entries()) {
-					const px = positionAttribute.array[0 + index*3] > positionAttribute.original[0 + index*3] ? Math.max(positionAttribute.array[0 + index*3] - 0.8, positionAttribute.original[0 + index*3]) : Math.min(positionAttribute.array[0 + index*3] + 0.8, positionAttribute.original[0 + index*3]);
-					const py = positionAttribute.array[1 + index*3] > positionAttribute.original[1 + index*3] ? Math.max(positionAttribute.array[1 + index*3] - 0.8, positionAttribute.original[1 + index*3]) : Math.min(positionAttribute.array[1 + index*3] + 0.8, positionAttribute.original[1 + index*3]);
-					positionAttribute.setXYZ( index, px, py, 0 );
-					if (positionAttribute.original[0 + index*3] === positionAttribute.array[0 + index*3] && positionAttribute.original[1 + index*3] === positionAttribute.array[1 + index*3]) {
+					const px =
+						positionAttribute.array[0 + index * 3] >
+						positionAttribute.original[0 + index * 3]
+							? Math.max(
+								positionAttribute.array[0 + index * 3] - 0.8,
+								positionAttribute.original[0 + index * 3]
+							)
+							: Math.min(
+								positionAttribute.array[0 + index * 3] + 0.8,
+								positionAttribute.original[0 + index * 3]
+							);
+					const py =
+						positionAttribute.array[1 + index * 3] >
+						positionAttribute.original[1 + index * 3]
+							? Math.max(
+								positionAttribute.array[1 + index * 3] - 0.8,
+								positionAttribute.original[1 + index * 3]
+							)
+							: Math.min(
+								positionAttribute.array[1 + index * 3] + 0.8,
+								positionAttribute.original[1 + index * 3]
+							);
+					positionAttribute.setXYZ(index, px, py, 0);
+					if (
+						positionAttribute.original[0 + index * 3] ===
+						positionAttribute.array[0 + index * 3] &&
+						positionAttribute.original[1 + index * 3] ===
+						positionAttribute.array[1 + index * 3]
+					) {
 						this.line.indexToReturn.splice(i, 1);
 					}
 				}
@@ -225,6 +335,9 @@ export default {
 
 				this.backgroundMaterial.uniforms.uTime.value =
 					this.clock.getElapsedTime();
+				if (this.photoMaterial) {
+					this.photoMaterial.uniforms.uTime.value = this.clock.getElapsedTime();
+				}
 
 				if (this.camera.position.z < 100) {
 					this.camera.position.z += SPEED_LOGO;
@@ -232,7 +345,30 @@ export default {
 				}
 
 				this.moveCameraTo(this.nextBreakpoint);
-				this.renderer.render(this.scene, this.camera);
+			}
+			this.renderer.render(this.scene, this.camera);
+		},
+		searchingMatchMouseAndMesh() {
+			this.raycaster.setFromCamera(this.mouse, this.camera);
+			const intersects = this.raycaster.intersectObjects(
+				this.objectInteraction,
+				true
+			);
+
+			if (this.photoMaterial) {
+				if (intersects.length > 0) {
+					this.photoMaterial.uniforms.uMouse.value.x = intersects[0].uv.x;
+					this.photoMaterial.uniforms.uMouse.value.y = intersects[0].uv.y;
+					this.photoMaterial.uniforms.uVelo.value = Math.min(
+						this.photoMaterial.uniforms.uVelo.value + 0.1,
+						1.0
+					);
+				} else {
+					this.photoMaterial.uniforms.uVelo.value = Math.max(
+						this.photoMaterial.uniforms.uVelo.value - 0.1,
+						0.0
+					);
+				}
 			}
 		},
 		moveCameraTo(breakpoint) {
@@ -273,11 +409,16 @@ export default {
 				clearTimeout(this.limitMouseMove);
 			}
 			this.limitMouseMove = setTimeout(() => {
-				const positionAttribute = this.line.geometry.getAttribute( 'position' );
-				this.x = (this.width) * ((event.clientX / WINDOWS_WIDTH) - 0.5);
-				this.y = (this.height) * (0.5 - event.clientY / WINDOWS_HEIGHT);
-				for ( let i = 0; i < positionAttribute.count; i ++ ) {
-					if (positionAttribute.original[1 + i*3] > this.y - 10 && positionAttribute.original[1 + i*3] < this.y + 10 && positionAttribute.original[0 + i*3] > this.x - 10 && positionAttribute.original[0 + i*3] < this.x + 10) {
+				const positionAttribute = this.line.geometry.getAttribute('position');
+				this.x = this.width * (event.clientX / WINDOWS_WIDTH - 0.5);
+				this.y = this.height * (0.5 - event.clientY / WINDOWS_HEIGHT);
+				for (let i = 0; i < positionAttribute.count; i++) {
+					if (
+						positionAttribute.original[1 + i * 3] > this.y - 10 &&
+						positionAttribute.original[1 + i * 3] < this.y + 10 &&
+						positionAttribute.original[0 + i * 3] > this.x - 10 &&
+						positionAttribute.original[0 + i * 3] < this.x + 10
+					) {
 						if (!this.line.indexToMove.includes(i)) {
 							const index = this.line.indexToReturn.indexOf(i);
 							if (index !== -1) {
@@ -286,7 +427,10 @@ export default {
 							this.line.indexToMove.push(i);
 						}
 					} else {
-						if (this.line.indexToMove.includes(i) && !this.line.indexToReturn.includes(i)) {
+						if (
+							this.line.indexToMove.includes(i) &&
+							!this.line.indexToReturn.includes(i)
+						) {
 							const index = this.line.indexToMove.indexOf(i);
 							if (index !== -1) {
 								this.line.indexToMove.splice(index, 1);
@@ -300,6 +444,8 @@ export default {
 					event.clientX / WINDOWS_WIDTH;
 				this.backgroundMaterial.uniforms.uMouse.value.y =
 					1.0 - event.clientY / WINDOWS_HEIGHT;
+				this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			}, 2); // Reduce the number of call to the calculation
 		}
 	}
