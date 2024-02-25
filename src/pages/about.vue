@@ -40,7 +40,8 @@ export default {
 			line: null,
 			x: 0,
 			y: 0,
-			limitMouseMove: null
+			limitMouseMove: null,
+			isFirstAnimation: true
 		};
 	},
 	async mounted() {
@@ -125,29 +126,7 @@ export default {
 		createWorld() {
 			this.createBackground();
 			this.createLine();
-
-			/**
-			const curve = new THREE.SplineCurve([
-				new THREE.Vector2(-width, 0),
-				new THREE.Vector2(-50, 50),
-				new THREE.Vector2(50, -50),
-				new THREE.Vector2(width, 0)
-			]);
-
-			const points = curve.getPoints(50);
-			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
-
-			const material5 = new THREE.LineBasicMaterial({ color: 0xff0000 });
-
-			// Create the final object to add to the scene
-			const splineObject = new THREE.Line(geometry5, material5);
-			this.scene.add(splineObject);
-
-			this.createCube(25, 25, 0x001d2e);
-			this.createCube(-25, -25, 0x005c94);
-			this.createCube(-25, 25, 0x009bfa);
-			this.createCube(25, -25, 0x61c3ff);
-			**/
+			this.createPhoto();
 		},
 		createBackground() {
 			const geometry = new THREE.PlaneGeometry(this.width, this.height);
@@ -170,20 +149,21 @@ export default {
 			this.scene.add(background);
 		},
 		createLine() {
+			const borderOffset = 20;
 			const curve = new THREE.SplineCurve([
-				new THREE.Vector2(-this.width, 0),
+				new THREE.Vector2(-this.width/2 - borderOffset, 50),
 				new THREE.Vector2(-50, 50),
 				new THREE.Vector2(50, -50),
-				new THREE.Vector2(this.width, 0)
+				new THREE.Vector2(this.width/2 + borderOffset, -50)
 			]);
 
 			const points = curve.getPoints(100);
-			const geometry5 = new THREE.BufferGeometry().setFromPoints(points);
+			const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-			const material5 = new THREE.LineBasicMaterial({ color: 0x0099ff });
+			const material = new THREE.LineBasicMaterial({ color: 0x0099ff, transparent: true, opacity: 0 });
 
 			// Create the final object to add to the scene
-			const splineObject = new THREE.Line(geometry5, material5);
+			const splineObject = new THREE.Line(geometry, material);
 			const positionAttribute = splineObject.geometry.getAttribute( 'position' );
 			splineObject.geometry.attributes.position.original = [...positionAttribute.array];
 			splineObject.indexToMove = [];
@@ -192,21 +172,13 @@ export default {
 			this.line = splineObject;
 			this.scene.add(splineObject);
 		},
-		createCube(x, y, color) {
-			const geometry = new THREE.BoxGeometry(20, 20, 60);
-			const material = new THREE.MeshPhongMaterial({
-				color,
-				opacity: 1.0,
-				transparent: true
-			});
-			const cube = new THREE.Mesh(geometry, material);
-			cube.position.z = -10;
-			cube.position.x = x;
-			cube.origin = {};
-			cube.origin.x = x;
-			cube.origin.y = y;
-			this.groupCubeLogo.push(cube);
-			this.scene.add(cube);
+		createPhoto() {
+			const geometry = new THREE.PlaneGeometry(this.width * 20/100, this.height/2);
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			const photo = new THREE.Mesh(geometry, material);
+			photo.name = 'photo';
+			photo.position.z = 0.01;
+			this.scene.add(photo);
 		},
 		renderWebGL() {
 			this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -216,13 +188,22 @@ export default {
 			this.renderer.gammaOutput = true;
 			this.renderer.powerPreference = 'high-performance';
 		},
-		animate() {
+		startAnimation() {
+			this.line.material.opacity += 0.025;
 			
+			if (this.line.material.opacity === 1) {
+				this.isFirstAnimation = false;
+			}
+		},
+		animate() {
 			requestAnimationFrame(this.animate);
 			this.delta += this.clock.getDelta();
 
-
 			if (this.delta  > 1 / 60) {
+				if (this.isFirstAnimation && this.clock.getElapsedTime() > 2) {
+					this.startAnimation();
+				}
+
 				const positionAttribute = this.line.geometry.getAttribute( 'position' );
 
 				for (const index of this.line.indexToMove) {
@@ -249,7 +230,6 @@ export default {
 					this.camera.position.z += SPEED_LOGO;
 					this.camera.original.position.z = this.camera.position.z;
 				}
-				//this.originalCube.position.z -= SPEED_LOGO;
 
 				this.moveCameraTo(this.nextBreakpoint);
 				this.renderer.render(this.scene, this.camera);
