@@ -26,7 +26,7 @@ import introduction from '../components/introduction';
 import api from '../services/api';
 import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
-import * as THREE from '../libs/three.js';
+import * as THREE from 'three';
 
 const ABSCISSA = ['x','y','z'];
 const FOV = 50;
@@ -257,15 +257,13 @@ export default {
 			const distance = WINDOWS_WIDTH * 15;
 
 			for (let ps = 0; ps < CLUSTER_PARTICLES; ps++) {
-				const particles = new THREE.Geometry();
+				const particles = new THREE.BufferGeometry();
+				const vertices = [];
 				for (let p = 0; p < TOTAL_PARTICLES; p++) {
-					particles.vertices.push(new THREE.Vector3(
-						Math.random() * distance - distance / 2,
-						Math.random() * distance - distance / 2,
-						Math.random() * distance - distance / 2)
-					);
+					
+					vertices.push(Math.random() * distance - distance / 2, Math.random() * distance - distance / 2, Math.random() * distance - distance / 2);
 				}
-
+				particles.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 				this.particleSystem.push(new THREE.Points(particles, pMaterial));
 				this.scene.add(this.particleSystem[ps]);
 			}
@@ -499,11 +497,11 @@ export default {
 				} else {
 					this.positionReached[i] = true;
 				}
-				if(this.isMoveCameraTo(this.rotation[i], this.camera.rotation.toVector3().getComponent(i), this.rotationFinal[i])) {
+				if(this.isMoveCameraTo(this.rotation[i], this.toVector3(this.camera.rotation).getComponent(i), this.rotationFinal[i])) {
 					const add = this.delta * this.rotation[i] * this.speedRotation[i];
 					const rotation_perfected = this.rotation[i] > 0 ?
-						Math.min(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]) :
-						Math.max(this.camera.rotation.toVector3().getComponent(i) + add, this.rotationFinal[i]);
+						Math.min(this.toVector3(this.camera.rotation).getComponent(i) + add, this.rotationFinal[i]) :
+						Math.max(this.toVector3(this.camera.rotation).getComponent(i) + add, this.rotationFinal[i]);
 					this.camera.rotation[ABSCISSA[i]] = rotation_perfected;
 				} else {
 					this.rotationReached[i] = true;
@@ -757,13 +755,13 @@ export default {
 		getSpeedMovement() {
 			for(var i=ABSCISSA.length;i--;) {
 				this.speedTranslation[i] = Math.abs(this.camera.position.getComponent(i) - this.positionFinal[i])*DEFAULT_MOVEMENT_CAMERA_SPEED;
-				this.speedRotation[i] = Math.abs(this.camera.rotation.toVector3().getComponent(i) - this.rotationFinal[i])*DEFAULT_ROTATION_CAMERA_SPEED;
+				this.speedRotation[i] = Math.abs(this.toVector3(this.camera.rotation).getComponent(i) - this.rotationFinal[i])*DEFAULT_ROTATION_CAMERA_SPEED;
 			}
 		},
 		getMovementWay() {
 			for(var i=ABSCISSA.length;i--;) {
 				this.movements[i] = this.camera.position.getComponent(i) > this.positionFinal[i] ? -1 : 1;
-				this.rotation[i] = this.camera.rotation.toVector3().getComponent(i) > this.rotationFinal[i] ? -1 : 1;
+				this.rotation[i] = this.toVector3(this.camera.rotation).getComponent(i) > this.rotationFinal[i] ? -1 : 1;
 			}
 		},
 		backToStart() {
@@ -867,6 +865,13 @@ export default {
 		},
 		radians(degrees) {
 			return degrees * Math.PI / 180;
+		},
+		/**
+		 * Transform a rotation from a rotation Euler to vector3
+		 * @params {Euler} rotation The rotation to transfrom to vector 3
+		 */
+		toVector3(rotation) {
+			return new THREE.Vector3(rotation.x, rotation.y, rotation.z);
 		}
 	}
 };

@@ -4,6 +4,7 @@
 		ref="portfolio"
 		:class="{mounted: mounted, unmounted: unmounted_parent, locked: locked}">
 		<div>
+			<components_loading :invisible="invisible" />
 			<components_links
 				:invisible="invisible" />
 			<components_back
@@ -40,6 +41,7 @@ import sliders from '../components/sliders';
 import back from '../components/main/back';
 import links from '../components/main/links';
 import menu from '../components/main/menu';
+import loading from '../components/main/loading';
 import api from '../services/api';
 import helper_meta from '../helper/meta.js';
 import helper_navigation from '../helper/navigation.js';
@@ -47,6 +49,7 @@ import helper_navigation from '../helper/navigation.js';
 export default {
 	components: {
 		components_informations: informations,
+		components_loading: loading,
 		components_menu: menu,
 		components_sliders: sliders,
 		components_pubs: pubs,
