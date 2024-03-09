@@ -1,6 +1,6 @@
 <template>
 	<div id="LOADING" :class="{ invisible: invisible }" v-bind:style="{ 'width': '33%' }" />
-</template>
+</template> 
 <script>
 export default {
 	props: {
