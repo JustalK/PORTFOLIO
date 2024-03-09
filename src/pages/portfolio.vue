@@ -4,7 +4,7 @@
 		ref="portfolio"
 		:class="{mounted: mounted, unmounted: unmounted_parent, locked: locked}">
 		<div>
-			<components_loading :invisible="invisible" />
+			<components_loading :invisible="invisible" :load="load" />
 			<components_links
 				:invisible="invisible" />
 			<components_back
@@ -74,9 +74,11 @@ export default {
 			projects: [],
 			description: '',
 			slide: 0,
+			load: 0,
 			are_projects_loading: false,
 			timeout_update_projects: null,
 			timeout_update_projects_loading: null,
+			timeout_update_load: null,
 			help: 'Use the filter to list the projects by technology or skill.'
 		};
 	},
@@ -146,13 +148,18 @@ export default {
 			helper_navigation.change_page(this, slug);
 		},
 		async filter(tags_selected) {
+			clearTimeout(this.timeout_update_load);
 			clearTimeout(this.timeout_update_projects);
 			clearTimeout(this.timeout_update_projects_loading);
+			this.load = 0;
 			this.are_projects_loading = true;
 			this.update_tags_selected(tags_selected);
 			await this.$nextTick();
 			this.update_slide(0);
 			const projects = await this.get_all_projects_with_tags(this.tags_selected);
+			this.timeout_update_load = setTimeout(() => {
+				this.load = 100;
+			}, 200);
 			this.timeout_update_projects = setTimeout(() => {
 				this.update_projects(projects);
 			}, 1000);

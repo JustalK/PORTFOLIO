@@ -7,4 +7,10 @@
 	left: 0;
 	height: 3px;
 	background: @text-color;
+	z-index: @LAYER-SURANIMATION;
+	.transition(width 0.5s cubic-bezier(0.8, 0, 0.25, 1));
+
+	&.isLoaded {
+		opacity: 0;
+	}
 }
