@@ -48,8 +48,8 @@ module.exports = {
 			}
 			void main() {
 				vec3 color = vec3(0.035, 0.078, 0.356);
-				vec3 colorHover = vec3(0.38, 0.765, 1.0);
-				float circleMouse = circle(vUv, uMouse, 0.0005, 0.5);
+				vec3 colorHover = vec3(0.978, 1.0, 1.0);
+				float circleMouse = circle(vUv, uMouse, 0.00001, 0.5);
 				float cornerLeftBottom = circle(vUv, vec2(0, 0), 0.0005, 4.0);
 				float cornerRightTop = circle(vUv, vec2(1, 1), 0.0005, 4.0);
 				float maskLeftBottom = smoothstep(0.4, 0.5, cornerLeftBottom);
