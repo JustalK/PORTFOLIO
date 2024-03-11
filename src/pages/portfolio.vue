@@ -2,14 +2,11 @@
 	<div
 		id="PORTFOLIO"
 		ref="portfolio"
-		:class="{mounted: mounted, unmounted: unmounted_parent, locked: locked}">
+		:class="{ mounted: mounted, unmounted: unmounted_parent, locked: locked }">
 		<div>
 			<components_loading :invisible="invisible" :load="load" />
-			<components_links
-				:invisible="invisible" />
-			<components_back
-				:invisible="invisible"
-				@back="back" />
+			<components_links :invisible="invisible" />
+			<components_back :invisible="invisible" @back="back" />
 			<components_menu
 				:invisible="invisible"
 				@back="back"
@@ -57,7 +54,11 @@ export default {
 		components_links: links
 	},
 	metaInfo() {
-		return helper_meta.get_meta(this.$route.name, this.meta_title, this.meta_description);
+		return helper_meta.get_meta(
+			this.$route.name,
+			this.meta_title,
+			this.meta_description
+		);
 	},
 	data: () => {
 		return {
@@ -156,10 +157,12 @@ export default {
 			this.update_tags_selected(tags_selected);
 			await this.$nextTick();
 			this.update_slide(0);
-			const projects = await this.get_all_projects_with_tags(this.tags_selected);
-			this.timeout_update_load = setTimeout(() => {
+			const projects = await this.get_all_projects_with_tags(
+				this.tags_selected
+			);
+			setTimeout(() => {
 				this.load = 100;
-			}, 200);
+			}, 50);
 			this.timeout_update_projects = setTimeout(() => {
 				this.update_projects(projects);
 			}, 1000);
@@ -171,10 +174,14 @@ export default {
 			clearTimeout(this.timeout_update_projects);
 			clearTimeout(this.timeout_update_projects_loading);
 			this.are_projects_loading = true;
-			const next_slide = direction === 'previous' ? this.slide - 1 : this.slide + 1;
+			const next_slide =
+				direction === 'previous' ? this.slide - 1 : this.slide + 1;
 			this.update_slide(next_slide);
 			await this.$nextTick();
-			const projects = await api.get_projects_by_page(this.slide, this.tags_selected);
+			const projects = await api.get_projects_by_page(
+				this.slide,
+				this.tags_selected
+			);
 			this.timeout_update_projects = setTimeout(() => {
 				this.update_projects(projects);
 			}, 1000);
@@ -188,7 +195,10 @@ export default {
 			const project = await this.get_projects_by_id(id);
 			this.update_tags_selected(project.tags);
 			setTimeout(() => {
-				this.$router.push({ name: 'project', params: {slug: project.slug, project: project, tags: this.tags}});
+				this.$router.push({
+					name: 'project',
+					params: { slug: project.slug, project: project, tags: this.tags }
+				});
 			}, 2000);
 		}
 	}

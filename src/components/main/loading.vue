@@ -2,7 +2,10 @@
 	<div
 		id="LOADING"
 		:class="{ invisible: invisible, isLoaded: isLoaded }"
-		v-bind:style="{ width: loadPercent + '%' }" />
+		v-bind:style="{
+			width: loadPercent + '%',
+			transition: `width ${timeTransition}s cubic-bezier(0.8, 0, 0.25, 1)`
+		}" />
 </template>
 <script>
 export default {
@@ -20,20 +23,23 @@ export default {
 		return {
 			timeout_reset_load: null,
 			isLoaded: false,
-			loadPercent: 0
+			loadPercent: 0,
+			timeTransition: 1
 		};
 	},
 	watch: {
 		load(value) {
 			clearTimeout(this.timeout_reset_load);
-			this.isLoaded = false;
 			this.loadPercent = value;
+			this.isLoaded = false;
+			if (value === 0) {
+				this.timeTransition = 0;
+			} else {
+				this.timeTransition = 1;
+			}
 			this.timeout_reset_load = setTimeout(() => {
 				this.isLoaded = true;
-				setTimeout(() => {
-					this.loadPercent = 0;
-				}, 1);
-			}, 550);
+			}, 1050);
 		}
 	}
 };
