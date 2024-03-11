@@ -2,7 +2,7 @@
 	<div
 		id="LOADING"
 		:class="{ invisible: invisible, isLoaded: isLoaded }"
-		v-bind:style="{
+		:style="{
 			width: loadPercent + '%',
 			transition: `width ${timeTransition}s cubic-bezier(0.8, 0, 0.25, 1)`
 		}" />
