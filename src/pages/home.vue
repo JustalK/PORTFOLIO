@@ -27,6 +27,8 @@ import api from '../services/api';
 import utils from '../helper/utils.js';
 import helper_meta from '../helper/meta.js';
 import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const ABSCISSA = ['x','y','z'];
 const FOV = 50;
@@ -166,6 +168,7 @@ export default {
 			this.initSoundListener();
 			this.initRaycaster();
 			this.createWorld();
+			this.createTitle();
 			this.renderWebGL();
 
 			this.$refs.home.appendChild(this.renderer.domElement);
@@ -644,6 +647,33 @@ export default {
 			sideWireframe.position.set( x, y, z );
 			sideWireframe.rotation.set( rx, ry, rz );
 			return sideWireframe;
+		},
+		createTitle() {
+			var loader = new FontLoader();
+			loader.load('../assets/fonts/Barlow_Regular.json', (font) => {
+				var textGeometry = new TextGeometry('JUSTAL KEVIN', {
+					font: font,
+
+					size: 70,
+					height: 0.01,
+					curveSegments: 12,
+				});
+
+				var textMaterial = new THREE.MeshBasicMaterial({
+					color: 0x0099ff
+				});
+
+				var mesh = new THREE.Mesh(textGeometry, textMaterial);
+				textGeometry.computeBoundingBox();
+				mesh.position.z = 7500;
+				mesh.position.y -= 350;
+
+				if (textGeometry.boundingBox) {
+					textGeometry.translate(-textGeometry.boundingBox.max.x / 2, 0, 0);
+				}
+
+				this.scene.add(mesh);
+			});
 		},
 		onDocumentMouseDown() {
 			this.raycaster.setFromCamera( this.mouse, this.camera );
