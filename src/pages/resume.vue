@@ -3,6 +3,7 @@
 		id="RESUME"
 		ref="resume"
 		:class="{ unmounted: unmounted_parent, locked: locked }">
+		<div class="mask" />
 		<div>
 			<components_links :invisible="invisible" />
 			<components_menu
@@ -85,7 +86,7 @@ const WINDOWS_HEIGHT = window.innerHeight;
 const LIGHT_AMBIANT_COLOR = 0xffffff;
 const CAMERA_START_POSITION_X = 0;
 const CAMERA_START_POSITION_Y = 0;
-const CAMERA_START_POSITION_Z = 50;
+const CAMERA_START_POSITION_Z = 100;
 const CAMERA_START_ROTATION_X = 0;
 const CAMERA_START_ROTATION_Y = 0;
 const CAMERA_START_ROTATION_Z = 0;
@@ -229,7 +230,8 @@ export default {
 						)
 					},
 					uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-					uTime: { type: 'f', value: 0.0 }
+					uTime: { type: 'f', value: 0.0 },
+					uOpacity: { type: 'f', value: 0.0 }
 				},
 				fragmentShader: FogMaterial.fragmentShader(),
 				vertexShader: FogMaterial.vertexShader()
@@ -242,6 +244,12 @@ export default {
 			requestAnimationFrame(this.animate);
 			this.backgroundMaterial.uniforms.uTime.value =
 				this.clock.getElapsedTime();
+			if (!this.invisible) {
+				this.backgroundMaterial.uniforms.uOpacity.value = Math.min(
+					this.backgroundMaterial.uniforms.uOpacity.value + 0.05,
+					1.0
+				);
+			}
 			this.renderer.render(this.scene, this.camera);
 		},
 		change_by_menu(slug) {

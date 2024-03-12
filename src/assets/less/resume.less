@@ -107,8 +107,18 @@
 	overflow: hidden;
 
 	& > canvas {
-		position: fixed;
+		position: absolute;
 		top: 0;
+	}
+
+	& .mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		max-width: initial;
+		background: linear-gradient(0deg, rgba(17, 17, 22, 1) 19%, rgba(0, 0, 0, 0) 100%);
 	}
 
 	&.locked {
@@ -128,7 +138,7 @@
 		max-width: 1200px;
 		width: 100%;
 		position: relative;
-		z-index: 100;
+		z-index: 1;
 
 		& > span {
 			margin: 20px 0 20px;

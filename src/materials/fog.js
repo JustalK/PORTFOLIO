@@ -10,6 +10,7 @@ module.exports = {
 	fragmentShader: () => {
 		return `
 			uniform float uTime;
+			uniform float uOpacity;
 			uniform vec2 uResolution;
 			uniform vec2 uMouse;
 			varying vec2 vUv;
@@ -48,13 +49,10 @@ module.exports = {
 			}
 			void main() {
 				vec3 color = vec3(0.035, 0.078, 0.356);
-				vec3 colorHover = vec3(0.978, 1.0, 1.0);
+				vec3 colorHover = vec3(1.0, 1.0, 1.0);
 				float circleMouse = circle(vUv, uMouse, 0.00001, 0.5);
 				float cornerLeftBottom = circle(vUv, vec2(0, 0), 0.0005, 4.0);
-				float cornerRightTop = circle(vUv, vec2(1, 1), 0.0005, 4.0);
 				float maskLeftBottom = smoothstep(0.4, 0.5, cornerLeftBottom);
-				float maskRightTop = smoothstep(0.4, 0.5, cornerRightTop);
-				float maskCenter = circle(vUv, vec2(0.5), 0.1, 0.1);
 				vec2 st = gl_FragCoord.xy * 0.001 / uResolution.xy;
 
 				vec2 q = vec2(0.0);
@@ -69,9 +67,7 @@ module.exports = {
 				float coef = (f * f * f + (0.6 * f * f) + (0.5 * f));
 				vec4 mixed1 = mix(vec4(coef * color, 1.0), vec4(coef * colorHover, 1.0), circleMouse);
 				vec4 mixed2 = mix(mixed1, vec4(0.0, 0.0, 0.0, 1.0), maskLeftBottom);
-				vec4 mixed3 = mix(mixed2, vec4(0.0, 0.0, 0.0, 1.0), maskRightTop);
-				vec4 mixed4 = mix(mixed3, vec4(0.0, 0.0, 0.0, 1.0), maskCenter);
-				gl_FragColor = mixed4;
+				gl_FragColor = mixed2 * uOpacity;
 			}`;
 	}
 };
