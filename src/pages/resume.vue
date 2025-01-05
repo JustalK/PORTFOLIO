@@ -112,11 +112,6 @@ export default {
 					_id: 1,
 					name: 'Classic english resume',
 					filename: 'resume_en.pdf'
-				},
-				{
-					_id: 3,
-					name: 'Classic french resume',
-					filename: 'resume_fr.pdf'
 				}
 			],
 			selected_option: {

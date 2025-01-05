@@ -178,7 +178,7 @@ export default {
 
 			window.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
 			window.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
-			window.addEventListener( 'keypress', this.onDocumentKeypress, false );
+			//window.addEventListener( 'keypress', this.onDocumentKeypress, false );
 			window.addEventListener( 'resize', this.onWindowResize, false );
 		},
 		initCamera() {
@@ -672,7 +672,7 @@ export default {
 					textGeometry.translate(-textGeometry.boundingBox.max.x / 2, 0, 0);
 				}
 
-				this.scene.add(mesh);
+				//this.scene.add(mesh);
 			});
 		},
 		onDocumentMouseDown() {

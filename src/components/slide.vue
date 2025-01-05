@@ -282,7 +282,7 @@ export default {
 						DEFAULT_ROTATION_PERPETUAL_X_SPEED *
 						DEFAULT_ROTATION_PERPETUAL_X
 				) *
-					this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE);
+				this.radians(DEFAULT_ROTATION_PERPETUAL_X_AMPLITUDE);
 			board.rotation.y =
 				this.radians(DEFAULT_ROTATION_PERPETUAL_Y_START) +
 				Math.cos(
@@ -291,7 +291,7 @@ export default {
 						DEFAULT_ROTATION_PERPETUAL_Y +
 						300
 				) *
-					this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE);
+				this.radians(DEFAULT_ROTATION_PERPETUAL_Y_AMPLITUDE);
 		},
 		initialize_board_rotation() {
 			this.picture_loaded = false;
